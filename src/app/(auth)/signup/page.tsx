@@ -6,6 +6,7 @@ import Button from '@/components/button/button';
 import Link from 'next/link';
 import AccountTypeStep from '@/components/auth/signup-steps/account-type-step';
 import AccountInformationsStep from '@/components/auth/signup-steps/account-informations-step';
+import PlanStep from '@/components/auth/signup-steps/plan-step';
 
 function Page(): React.JSX.Element {
     const [step, setStep] = useState<number>(1);
@@ -13,6 +14,7 @@ function Page(): React.JSX.Element {
     const steps: React.JSX.Element[] = [
         <AccountTypeStep key={0} />,
         <AccountInformationsStep key={1} />,
+        <PlanStep key={2} />,
     ];
 
     const nextStep = () => {

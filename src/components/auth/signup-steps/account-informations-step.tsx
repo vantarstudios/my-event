@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from '@/components/form/input';
 
-function AccountInformationsStep() {
+function AccountInformationsStep(): React.JSX.Element {
     return (
         <div className={'w-full'}>
             <form className={'flex flex-col gap-5'}>

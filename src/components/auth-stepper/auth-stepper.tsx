@@ -1,71 +1,57 @@
 'use client';
 
 import cn from '@/lib/utils/cn';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function AuthStepper({ step }: { step: number }): React.JSX.Element {
+    const widths: number[] = [0, 35, 65, 100];
+
     return (
-        <div className="flex items-center justify-center">
-            <div className="bg-primary flex h-14 w-14 items-center justify-center rounded-full text-xl text-white">
-                1
-            </div>
-            <div className={cn('h-[4px] w-12 bg-black')}>
+        <div className={'relative w-96'}>
+            <div className={cn('absolute top-1/2 my-auto h-[4px] w-[95%] origin-center bg-black')}>
                 <motion.div
-                    className={'bg-primary h-[4px]'}
+                    className={'relative h-[4px] bg-primary'}
+                    initial={false}
                     animate={{
-                        width: step > 1 ? '100%' : 0,
+                        width: `${widths[step - 1]}%`,
                     }}
                     transition={{
-                        duration: 0.2,
+                        duration: 0.4,
                     }}
                 ></motion.div>
             </div>
-            <div
-                className={cn(
-                    'flex h-14 w-14 items-center justify-center rounded-full text-xl text-white',
-                    `${step >= 2 ? 'bg-primary' : 'bg-black'}`,
-                )}
-            >
-                2
-            </div>
-            <div className={cn('h-[4px] w-12 bg-black')}>
-                <motion.div
-                    className={'bg-primary h-[4px]'}
-                    animate={{
-                        width: step > 2 ? '100%' : 0,
-                    }}
-                    transition={{
-                        duration: 0.2,
-                    }}
-                ></motion.div>
-            </div>
-            <div
-                className={cn(
-                    'flex h-14 w-14 items-center justify-center rounded-full text-xl text-white',
-                    `${step >= 3 ? 'bg-primary' : 'bg-black'}`,
-                )}
-            >
-                3
-            </div>
-            <div className={cn('h-[4px] w-12 bg-black')}>
-                <motion.div
-                    className={'bg-primary h-[4px]'}
-                    animate={{
-                        width: step > 3 ? '100%' : 0,
-                    }}
-                    transition={{
-                        duration: 0.2,
-                    }}
-                ></motion.div>
-            </div>
-            <div
-                className={cn(
-                    'flex h-14 w-14 items-center justify-center rounded-full text-xl text-white',
-                    `${step >= 4 ? 'bg-primary' : 'bg-black'}`,
-                )}
-            >
-                4
+            <div className="relative flex w-full items-center justify-between">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xl text-white">
+                    1
+                </div>
+
+                <div
+                    className={cn(
+                        'flex h-14 w-14 items-center justify-center rounded-full text-xl text-white',
+                        `${step >= 2 ? 'bg-primary' : 'bg-black'}`,
+                    )}
+                >
+                    2
+                </div>
+
+                <div
+                    className={cn(
+                        'flex h-14 w-14 items-center justify-center rounded-full text-xl text-white',
+                        `${step >= 3 ? 'bg-primary' : 'bg-black'}`,
+                    )}
+                >
+                    3
+                </div>
+
+                <div
+                    className={cn(
+                        'flex h-14 w-14 items-center justify-center rounded-full text-xl text-white',
+                        `${step >= 4 ? 'bg-primary' : 'bg-black'}`,
+                    )}
+                >
+                    4
+                </div>
             </div>
         </div>
     );

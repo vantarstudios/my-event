@@ -5,11 +5,15 @@ import React, { useEffect, useState } from 'react';
 import Button from '@/components/button/button';
 import Link from 'next/link';
 import AccountTypeStep from '@/components/auth/signup-steps/account-type-step';
+import AccountInformationsStep from '@/components/auth/signup-steps/account-informations-step';
 
 function Page(): React.JSX.Element {
     const [step, setStep] = useState<number>(1);
 
-    const steps: React.JSX.Element[] = [<AccountTypeStep key={0} />];
+    const steps: React.JSX.Element[] = [
+        <AccountTypeStep key={0} />,
+        <AccountInformationsStep key={1} />,
+    ];
 
     const nextStep = () => {
         setStep((step) => {
@@ -30,7 +34,7 @@ function Page(): React.JSX.Element {
                 <span className="text-primary">up!</span>
             </h1>
 
-            {steps[0]}
+            {steps[step - 1]}
 
             <Button className={'mt-8'} onClick={nextStep}>
                 Next
@@ -38,7 +42,7 @@ function Page(): React.JSX.Element {
 
             <p className={'my-12'}>
                 Already have an account?{' '}
-                <Link href={'/signin'} className={'text-primary font-medium underline'}>
+                <Link href={'/signin'} className={'font-medium text-primary underline'}>
                     Sign in
                 </Link>
             </p>

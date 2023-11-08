@@ -3,11 +3,7 @@ import { cn } from '@/lib/utils';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
-const Button: FunctionComponent<ButtonProps> = ({
-    className,
-    children,
-    ...props
-}) => {
+const Button: FunctionComponent<ButtonProps> = ({ className, children, ...props }) => {
     return (
         <button
             className={cn(

@@ -5,18 +5,10 @@ import type { ReactNode } from 'react';
 import Link from 'next/link';
 import type { NextPage } from 'next';
 import { AuthStepper } from '@/components/auth';
-import {
-    AccountInformations,
-    AccountType,
-    Plan,
-} from '@/components/auth/signup-steps';
+import { AccountInformations, AccountType, Plan } from '@/components/auth/signup-steps';
 import { Button } from '@/components/buttons';
 
-const signUpSteps: ReactNode[] = [
-    <AccountType key={0} />,
-    <AccountInformations key={1} />,
-    <Plan key={2} />,
-];
+const signUpSteps: ReactNode[] = [<AccountType key={0} />, <AccountInformations key={1} />, <Plan key={2} />];
 
 const SignUpPage: NextPage = () => {
     const [step, setStep] = useState<number>(1);
@@ -49,10 +41,7 @@ const SignUpPage: NextPage = () => {
 
             <p className="my-12">
                 Already have an account?&nbsp;
-                <Link
-                    href="/signin"
-                    className="font-medium text-primary underline"
-                >
+                <Link href="/signin" className="font-medium text-primary underline">
                     Sign in
                 </Link>
             </p>

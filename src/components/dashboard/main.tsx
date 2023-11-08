@@ -9,13 +9,8 @@ const Main: FunctionComponent<PropsWithChildren> = ({ children }) => {
 
     return (
         <main className="flex w-screen h-full">
-            <Menu
-                activeViewIndex={activeViewIndex}
-                setActiveViewIndex={setActiveViewIndex}
-            />
-            <section className="flex-1 h-full pt-[20px] pl-[40px] pr-[80px]">
-                {children}
-            </section>
+            <Menu activeViewIndex={activeViewIndex} setActiveViewIndex={setActiveViewIndex} />
+            <section className="flex-1 h-full pt-[20px] pl-[40px] pr-[80px]">{children}</section>
         </main>
     );
 };

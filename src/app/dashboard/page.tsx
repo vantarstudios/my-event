@@ -8,12 +8,8 @@ const DashboardPage: NextPage = () => {
                 <ViewTitle>Hi, Gideon!</ViewTitle>
                 <CreateWorkspaceButton />
             </div>
-            <div>
-
-            </div>
-            <div>
-
-            </div>
+            <div></div>
+            <div></div>
         </div>
     );
 };

@@ -16,6 +16,8 @@ const tailwindConfig = {
             },
             colors: {
                 primary: '#f15a24',
+                slate: '#1e1e1e',
+                grey: '#676767',
             },
         },
     },

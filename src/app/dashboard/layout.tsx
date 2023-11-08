@@ -1,14 +1,14 @@
 import { Fragment } from 'react';
 import type { FunctionComponent, PropsWithChildren } from 'react';
-import { Header } from '@components/dashboard';
+import { Header, Main } from '@components/dashboard';
 
-const DashboardLayout: FunctionComponent<PropsWithChildren<{}>> = ({ children }) => {
+const DashboardLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
     return (
         <Fragment>
             <Header/>
-            <main>
+            <Main>
                 {children}
-            </main>
+            </Main>
         </Fragment>
     );
 };

@@ -13,7 +13,7 @@ const menuLinks: { readonly name: string, readonly href: string }[] = [
 
 const Header: FunctionComponent = () => {
     return (
-        <header className="flex justify-between items-start w-screen h-[220px] px-[58px] pt-[30px]">
+        <header className="flex justify-between items-start w-screen h-[200px] px-[108px] pt-[70px]">
             <Link href="/">
                 <Image
                     src="/event-media-logo.svg"
@@ -26,9 +26,9 @@ const Header: FunctionComponent = () => {
             <nav className="flex items-center gap-[50px] w-fit h-[80px]">
                 <ul className="flex items-center gap-[50px]">
                     {
-                        menuLinks.map((menuLink) => (
-                            <li key={menuLink.name} className="font-medium">
-                                <Link href={menuLink.href}>{menuLink.name}</Link>
+                        menuLinks.map(({ name, href}) => (
+                            <li key={name} className="font-medium">
+                                <Link href={href}>{name}</Link>
                             </li>
                         ))
                     }

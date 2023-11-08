@@ -5,7 +5,11 @@ import type { ReactNode } from 'react';
 import Link from 'next/link';
 import type { NextPage } from 'next';
 import { AuthStepper } from '@/components/auth';
-import { AccountInformations, AccountType, Plan } from '@/components/auth/signup-steps';
+import {
+    AccountInformations,
+    AccountType,
+    Plan,
+} from '@/components/auth/signup-steps';
 import { Button } from '@/components/buttons';
 
 const signUpSteps: ReactNode[] = [
@@ -20,10 +24,10 @@ const SignUpPage: NextPage = () => {
     const goToNextStep = () => {
         setStep((currentStep) => {
             if (currentStep > 4) {
-                return currentStep
+                return currentStep;
             }
 
-            return currentStep + 1
+            return currentStep + 1;
         });
     };
 
@@ -33,8 +37,7 @@ const SignUpPage: NextPage = () => {
 
             <h1 className="my-12 text-5xl font-bold">
                 Let&apos;s&nbsp;
-                <span className="text-primary">sign</span>&nbsp;
-                you&nbsp;
+                <span className="text-primary">sign</span>&nbsp; you&nbsp;
                 <span className="text-primary">up!</span>
             </h1>
 
@@ -55,6 +58,6 @@ const SignUpPage: NextPage = () => {
             </p>
         </div>
     );
-}
+};
 
 export default SignUpPage;

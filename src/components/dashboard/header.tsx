@@ -2,7 +2,7 @@ import type { FunctionComponent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const menuLinks: { readonly name: string, readonly href: string }[] = [
+const menuLinks: { readonly name: string; readonly href: string }[] = [
     { name: 'Home', href: '/' },
     { name: 'Discover', href: '/discover' },
     { name: 'Features', href: '/features' },
@@ -25,13 +25,11 @@ const Header: FunctionComponent = () => {
             </Link>
             <nav className="flex items-center gap-[50px] w-fit h-[80px]">
                 <ul className="flex items-center gap-[50px]">
-                    {
-                        menuLinks.map(({ name, href}) => (
-                            <li key={name} className="font-medium">
-                                <Link href={href}>{name}</Link>
-                            </li>
-                        ))
-                    }
+                    {menuLinks.map(({ name, href }) => (
+                        <li key={name} className="font-medium">
+                            <Link href={href}>{name}</Link>
+                        </li>
+                    ))}
                 </ul>
                 <Link href="/signup">
                     <Image

@@ -30,6 +30,6 @@ const Input: FunctionComponent<InputProps> = (props: InputProps) => {
             />
         </div>
     );
-}
+};
 
 export default Input;

@@ -61,6 +61,6 @@ const AuthStepper: FunctionComponent<AuthStepperProps> = ({ step }) => {
             </div>
         </div>
     );
-}
+};
 
 export default AuthStepper;

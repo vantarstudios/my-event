@@ -1,29 +1,29 @@
 'use client';
 
-import AuthStepper from '@/components/auth-stepper/auth-stepper';
-import React, { useEffect, useState } from 'react';
-import Button from '@/components/button/button';
+import { useState } from 'react';
+import type { ReactNode } from 'react';
 import Link from 'next/link';
-import AccountTypeStep from '@/components/auth/signup-steps/account-type-step';
-import AccountInformationsStep from '@/components/auth/signup-steps/account-informations-step';
-import PlanStep from '@/components/auth/signup-steps/plan-step';
+import type { NextPage } from 'next';
+import { AuthStepper } from '@/components/auth';
+import { AccountInformations, AccountType, Plan } from '@/components/auth/signup-steps';
+import { Button } from '@/components/buttons';
 
-function Page(): React.JSX.Element {
+const signUpSteps: ReactNode[] = [
+    <AccountType key={0} />,
+    <AccountInformations key={1} />,
+    <Plan key={2} />,
+];
+
+const SignUpPage: NextPage = () => {
     const [step, setStep] = useState<number>(1);
 
-    const steps: React.JSX.Element[] = [
-        <AccountTypeStep key={0} />,
-        <AccountInformationsStep key={1} />,
-        <PlanStep key={2} />,
-    ];
-
-    const nextStep = () => {
-        setStep((step) => {
-            if (step <= 4) {
-                return step + 1;
-            } else {
-                return step;
+    const goToNextStep = () => {
+        setStep((currentStep) => {
+            if (currentStep > 4) {
+                return currentStep
             }
+
+            return currentStep + 1
         });
     };
 
@@ -32,19 +32,24 @@ function Page(): React.JSX.Element {
             <AuthStepper step={step} />
 
             <h1 className="my-12 text-5xl font-bold">
-                Let's <span className="text-primary">sign</span> you{' '}
+                Let&apos;s&nbsp;
+                <span className="text-primary">sign</span>&nbsp;
+                you&nbsp;
                 <span className="text-primary">up!</span>
             </h1>
 
-            {steps[step - 1]}
+            {signUpSteps[step - 1]}
 
-            <Button className={'mt-8'} onClick={nextStep}>
+            <Button className="mt-8" onClick={goToNextStep}>
                 Next
             </Button>
 
-            <p className={'my-12'}>
-                Already have an account?{' '}
-                <Link href={'/signin'} className={'font-medium text-primary underline'}>
+            <p className="my-12">
+                Already have an account?&nbsp;
+                <Link
+                    href="/signin"
+                    className="font-medium text-primary underline"
+                >
                     Sign in
                 </Link>
             </p>
@@ -52,4 +57,4 @@ function Page(): React.JSX.Element {
     );
 }
 
-export default Page;
+export default SignUpPage;

@@ -1,20 +1,26 @@
-'use client';
-
-import cn from '@/lib/utils/cn';
-import React, { useEffect, useState } from 'react';
+import type { FunctionComponent } from 'react';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
-export default function AuthStepper({ step }: { step: number }): React.JSX.Element {
-    const widths: number[] = [0, 35, 65, 100];
+interface AuthStepperProps {
+    step: number;
+}
 
+const stepperWidths: number[] = [0, 35, 65, 100];
+
+const AuthStepper: FunctionComponent<AuthStepperProps> = ({ step }) => {
     return (
         <div className={'relative w-96'}>
-            <div className={cn('absolute top-1/2 my-auto h-[4px] w-[95%] origin-center bg-black')}>
+            <div
+                className={cn(
+                    'absolute top-1/2 my-auto h-[4px] w-[95%] origin-center bg-black',
+                )}
+            >
                 <motion.div
                     className={'relative h-[4px] bg-primary'}
                     initial={false}
                     animate={{
-                        width: `${widths[step - 1]}%`,
+                        width: `${stepperWidths[step - 1]}%`,
                     }}
                     transition={{
                         duration: 0.4,
@@ -56,3 +62,5 @@ export default function AuthStepper({ step }: { step: number }): React.JSX.Eleme
         </div>
     );
 }
+
+export default AuthStepper;

@@ -1,7 +1,7 @@
-import React from 'react';
+import type { NextPage } from 'next';
 
-function Page(): React.JSX.Element {
-    return <div></div>;
-}
+const SignInPage: NextPage = () => {
+    return <div></div>
+};
 
-export default Page;
+export default SignInPage;

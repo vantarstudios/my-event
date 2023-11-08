@@ -1,9 +1,9 @@
-import React, { ButtonHTMLAttributes, HTMLProps } from 'react';
-import cn from '@/lib/utils/cn';
+import type { FunctionComponent, ButtonHTMLAttributes } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
-function Button({ className, children, ...props }: ButtonProps): React.JSX.Element {
+const Button: FunctionComponent<ButtonProps> = ({ className, children, ...props }) => {
     return (
         <button
             className={cn(

@@ -1,18 +1,24 @@
 import './globals.css';
+import type { FunctionComponent, PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 
-const poppins = Poppins({ weight: ['200', '300', '400', '500'], subsets: ['latin'] });
+const poppinsFont = Poppins({
+    weight: ['200', '300', '400', '500'],
+    subsets: ['latin'],
+});
 
 export const metadata: Metadata = {
     title: 'My event',
     description: 'Event management platform',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+const AppLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
     return (
         <html lang="en">
-            <body className={poppins.className}>{children}</body>
+            <body className={poppinsFont.className}>{children}</body>
         </html>
     );
-}
+};
+
+export default AppLayout;

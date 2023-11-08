@@ -1,26 +1,21 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "extends": [
-    "next/core-web-vitals",
-    "next",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     },
-    "ecmaVersion": 12,
-    "sourceType": "module"
-  },
-  "plugins": ["@typescript-eslint"],
-  "rules": {
-    "no-unused-vars": "warn",
-    "react/no-unescaped-entities": 0,
-    "typescript-eslint/no-explicit-any": "off"
-  }
+    "extends": [
+        "eslint:recommended",
+        "next/core-web-vitals",
+        "next",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "react/prop-types": "off",
+        "react/no-deprecated": "error"
+    },
+    "ignorePatterns": ["node_modules/", "dist/"]
 }

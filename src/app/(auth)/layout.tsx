@@ -1,7 +1,7 @@
-import React from 'react';
+import type { FunctionComponent, PropsWithChildren } from 'react';
 
-function Layout({ children }: { children: React.ReactNode }): React.JSX.Element {
+const AuthLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
     return <main className={'flex justify-center py-20'}>{children}</main>;
-}
+};
 
-export default Layout;
+export default AuthLayout;

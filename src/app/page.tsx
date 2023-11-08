@@ -1,5 +1,9 @@
-import React from 'react';
+import type { NextPage } from 'next';
 
-export default function Home(): React.JSX.Element {
-    return <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>;
-}
+const AppPage: NextPage = () => {
+    return (
+        <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
+    );
+};
+
+export default AppPage;

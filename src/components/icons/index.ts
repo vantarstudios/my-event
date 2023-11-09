@@ -21,3 +21,5 @@ export { default as Pencil } from './pencil';
 export { default as Bell } from './bell';
 
 export { default as BankCard } from './bank-card';
+
+export { default as Photo } from './photo';

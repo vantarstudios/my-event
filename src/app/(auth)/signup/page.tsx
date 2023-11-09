@@ -35,7 +35,7 @@ const SignUpPage: NextPage = () => {
 
             {signUpSteps[step - 1]}
 
-            <Button className="mt-8" onClick={goToNextStep}>
+            <Button className="w-full mt-8" onClick={goToNextStep}>
                 Next
             </Button>
 

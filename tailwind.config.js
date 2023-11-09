@@ -16,7 +16,11 @@ const tailwindConfig = {
             },
         },
     },
-    plugins: [],
+    plugins: [
+        function ({ addVariant }) {
+            addVariant('child', '& > *');
+        },
+    ],
 };
 
 module.exports = tailwindConfig;

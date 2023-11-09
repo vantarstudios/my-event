@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { FunctionComponent, PropsWithChildren } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Home, Calendar, Stats, Dollar, Planning, Gear, Question } from '@components/icons';
 import type { IconProps } from '@/types';
 
@@ -21,11 +22,12 @@ const views: {
 ];
 
 const Main: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    const [activeViewIndex, setActiveViewIndex] = useState<number>(0);
+    const pathname = usePathname();
+    const [activeViewIndex, setActiveViewIndex] = useState<number>(views.findIndex(({ href }) => href === pathname));
 
     return (
         <main className="flex w-screen h-full">
-            <aside className="flex flex-col gap-5 w-1/5 min-w-[250px] h-full pt-8 text-white bg-black">
+            <aside className="flex flex-col gap-8 w-1/5 min-w-[250px] h-full pt-10 text-white bg-black">
                 <p className="pl-10 font-bold">Dashboard</p>
                 <ul className="flex flex-col gap-5 w-full flex-1 pl-5">
                     {views.map(({ name, href, icon }, index) => {
@@ -40,7 +42,7 @@ const Main: FunctionComponent<PropsWithChildren> = ({ children }) => {
                                 }`}
                             >
                                 <Icon className="w-6" />
-                                <Link href={href} className="flex justify-start items-center flex-1 h-12 pl-5">
+                                <Link href={href} className="flex justify-start items-center flex-1 h-14 pl-5">
                                     {name}
                                 </Link>
                                 {name === 'My plan' && (

@@ -5,7 +5,7 @@ import { Notifications, RecentEvents } from '@components/dashboard/overview';
 
 const DashboardPage: NextPage = () => {
     return (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-10">
             <div className="flex justify-between items-center">
                 <ViewTitle>Hi, Gideon!</ViewTitle>
                 <CreateWorkspaceButton />

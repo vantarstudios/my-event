@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Card } from '@components/common';
+import { Card, Button } from '@components/common';
 import { TitledArea } from '@components/common/layouts';
 
 type Notification = {
@@ -21,9 +21,9 @@ const Notifications: FunctionComponent = () => {
 
     return (
         <TitledArea title={`Notifications (${notifications.length})`} className="relative w-3/5 h-36 px-1.5">
-            <button className="absolute top-0 right-0 flex justify-center items-end w-fit h-fit text-sm font-medium text-primary -translate-x-3">
+            <Button className="absolute top-0 right-0 flex justify-center items-end w-fit h-fit text-sm font-medium text-primary bg-inherit -translate-x-3 hover:underline">
                 See all
-            </button>
+            </Button>
             <div className="flex flex-col gap-4 px-1.5 w-full h-full overflow-hidden">
                 {notifications.map(({ subject, description }, index) => (
                     <Card key={index} className="flex flex-col gap-2 w-full">

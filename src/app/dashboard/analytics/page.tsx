@@ -18,7 +18,7 @@ const DashboardAnalyticsPage: NextPage = () => {
                     middle={
                         <Fragment>
                             <p>54,569</p>
-                            <p className="text-xs font-medium text-green-700">+2.5%</p>
+                            <p className="text-lg font-medium text-green-700">+2.5%</p>
                         </Fragment>
                     }
                     bottom={<p className="font-medium">Total</p>}

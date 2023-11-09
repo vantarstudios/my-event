@@ -5,14 +5,7 @@ import { Button } from '@components/common';
 import { TitledArea } from '@components/common/layouts';
 import { PaymentMethod } from '@components/dashboard/finance';
 import { Dollar } from '@components/icons';
-import type { PaymentMethod as PaymentMethodType } from '@/types';
-
-const paymentMethods: { readonly type: PaymentMethodType; readonly label: string }[] = [
-    {
-        type: 'card',
-        label: 'MasterCard ****0000',
-    },
-];
+import paymentMethods from '@/data/payment-methods';
 
 const DashboardFinancePage: NextPage = () => {
     return (

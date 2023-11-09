@@ -14,6 +14,9 @@ const tailwindConfig = {
                 black: '#1e1e1e',
                 grey: '#676767',
             },
+            lineHeight: {
+                1: '.1rem',
+            },
         },
     },
     plugins: [

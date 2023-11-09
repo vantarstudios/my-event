@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { ViewTitle, CreateWorkspaceButton } from '@components/dashboard';
-import { RecentEvents } from '@components/dashboard/overview';
+import { EventsList } from '@components/dashboard/events';
 import { Button } from '@components/common';
 import { Calendar } from '@components/icons';
 
@@ -12,7 +12,7 @@ const DashboardEventsPage: NextPage = () => {
                 <Button className="px-8">+ New event</Button>
             </div>
             <div className="flex flex-col justify-between items-end h-1/2">
-                <RecentEvents />
+                <EventsList />
                 <CreateWorkspaceButton />
             </div>
         </div>

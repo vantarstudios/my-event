@@ -9,7 +9,7 @@ const poppinsFont = Poppins({
 });
 
 export const metadata: Metadata = {
-    title: 'My event',
+    title: 'My Event',
     description: 'Event management platform',
 };
 

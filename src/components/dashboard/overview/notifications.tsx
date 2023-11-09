@@ -1,24 +1,9 @@
 import type { FunctionComponent } from 'react';
 import { Card, Button } from '@components/common';
 import { TitledArea } from '@components/common/layouts';
-
-type Notification = {
-    readonly subject: string;
-    readonly description: string;
-};
+import notifications from '@/data/notifications';
 
 const Notifications: FunctionComponent = () => {
-    const notifications: Notification[] = [
-        {
-            subject: 'AfriTech 2023',
-            description: "You've reached a total of 1,000 sold tickets.",
-        },
-        {
-            subject: 'AfriTech 2023',
-            description: "You've reached a total of 1,000 sold tickets.",
-        },
-    ];
-
     return (
         <TitledArea title={`Notifications (${notifications.length})`} className="relative w-3/5 h-36 px-1.5">
             <Button className="absolute top-0 right-0 flex justify-center items-end w-fit h-fit text-sm font-medium text-primary bg-inherit -translate-x-3 hover:underline">

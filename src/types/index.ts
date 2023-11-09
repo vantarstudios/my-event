@@ -5,3 +5,17 @@ export interface IconProps {
 }
 
 export type PaymentMethod = 'card' | 'paypal';
+
+export type PlanPackage = {
+    name: string;
+    price: number;
+    monthly: boolean;
+    yearly?: number;
+    features: string[];
+    isCurrent: boolean;
+};
+
+export type Plan = {
+    name: string;
+    packages: PlanPackage[];
+};

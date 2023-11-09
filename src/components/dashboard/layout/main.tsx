@@ -48,7 +48,9 @@ const Main: FunctionComponent<PropsWithChildren> = ({ children }) => {
                                 {name === 'My plan' && (
                                     <Link
                                         href="/plan/upgrade"
-                                        className="flex justify-center items-center px-4 py-2 rounded-full text-black text-xs font-medium bg-white"
+                                        className={`flex justify-center items-center px-4 py-3 rounded-full text-xs font-medium transition-all ${
+                                            href === pathname ? 'text-white bg-black' : 'text-black bg-white'
+                                        }`}
                                     >
                                         Upgrade
                                     </Link>

@@ -4,9 +4,9 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import type { NextPage } from 'next';
-import { AuthStepper } from '@/components/auth';
-import { AccountInformations, AccountType, Plan } from '@/components/auth/signup-steps';
-import { Button } from '@/components/buttons';
+import { AuthStepper } from '@components/auth';
+import { AccountInformations, AccountType, Plan } from '@components/auth/signup-steps';
+import { Button } from '@components/common';
 
 const signUpSteps: ReactNode[] = [<AccountType key={0} />, <AccountInformations key={1} />, <Plan key={2} />];
 

@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import type { FunctionComponent, PropsWithChildren } from 'react';
-import { Header, Main } from '@components/dashboard';
+import { Header, Main } from '@components/dashboard/layout';
 
 const DashboardLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
     return (

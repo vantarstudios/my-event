@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Button } from '@components/buttons';
+import { Button } from '@components/common';
 
 const PeriodFilter: FunctionComponent = () => {
     return (

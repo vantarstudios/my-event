@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Input } from '@/components/form';
+import { Input } from '@components/form';
 
 const AccountInformations: FunctionComponent = () => {
     return (

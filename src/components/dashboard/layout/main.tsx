@@ -18,7 +18,7 @@ const views: {
     { name: 'Finance', href: '/dashboard/finance', icon: Dollar },
     { name: 'My plan', href: '/dashboard/plan', icon: Planning },
     { name: 'Settings', href: '/dashboard/settings', icon: Gear },
-    { name: 'Help', href: '/dashboard', icon: Question },
+    { name: 'Help', href: '/dashboard/help', icon: Question },
 ];
 
 const Main: FunctionComponent<PropsWithChildren> = ({ children }) => {

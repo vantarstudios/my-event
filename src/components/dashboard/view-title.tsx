@@ -1,13 +1,14 @@
-import type { FunctionComponent, PropsWithChildren, ReactNode } from 'react';
+import type { FunctionComponent, PropsWithChildren } from 'react';
+import type { IconProps } from '@/types';
 
 interface ViewTitleProps extends PropsWithChildren {
-    icon?: ReactNode;
+    Icon?: FunctionComponent<IconProps>;
 }
 
-const ViewTitle: FunctionComponent<ViewTitleProps> = ({ icon, children }) => {
+const ViewTitle: FunctionComponent<ViewTitleProps> = ({ Icon, children }) => {
     return (
-        <p className="text-2xl font-bold">
-            {icon}
+        <p className="flex items-center gap-4 text-2xl text-black font-bold">
+            {Icon && <Icon className="w-5" />}
             {children}
         </p>
     );

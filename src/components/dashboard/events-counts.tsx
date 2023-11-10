@@ -1,4 +1,5 @@
 import type { FunctionComponent, ReactNode } from 'react';
+import { leadingZeroFormat } from '@/lib/utils';
 import { Card } from '@components/common';
 
 interface CardProps {
@@ -14,15 +15,15 @@ const EventsCounts: FunctionComponent<CardProps> = ({ moreActions }) => {
             </div>
             <div className="flex justify-between items-center gap-10">
                 <div className="flex flex-col justify-center items-center gap-3">
-                    <p className="text-5xl font-medium">05</p>
+                    <p className="text-5xl font-medium">{leadingZeroFormat(5)}</p>
                     <p className="text-sm font-medium">Total</p>
                 </div>
                 <div className="flex flex-col justify-center items-center gap-3">
-                    <p className="text-5xl font-light">00</p>
+                    <p className="text-5xl font-light">{leadingZeroFormat(0)}</p>
                     <p className="text-sm font-light">On going</p>
                 </div>
                 <div className="flex flex-col justify-center items-center gap-3">
-                    <p className="text-5xl font-light">02</p>
+                    <p className="text-5xl font-light">{leadingZeroFormat(2)}</p>
                     <p className="text-sm font-light">Up Coming</p>
                 </div>
             </div>

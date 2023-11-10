@@ -11,18 +11,7 @@
 body {
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    max-height: 100vh;
     color: #1e1e1e;
-}
-
-*::-webkit-scrollbar {
-    width: 0.5rem;
-}
-
-*::-webkit-scrollbar-track {
-    background: #1e1e1e;
-}
-
-*::-webkit-scrollbar-thumb {
-    background: #888;
+    overflow: hidden;
 }

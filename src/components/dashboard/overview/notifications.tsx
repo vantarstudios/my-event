@@ -1,11 +1,15 @@
 import type { FunctionComponent } from 'react';
+import { leadingZeroFormat } from '@/lib/utils';
 import { Card, Button } from '@components/common';
 import { TitledArea } from '@components/common/layouts';
 import notifications from '@/data/notifications';
 
 const Notifications: FunctionComponent = () => {
     return (
-        <TitledArea title={`Notifications (${notifications.length})`} className="relative w-3/5 h-36 px-1.5">
+        <TitledArea
+            title={`Notifications (${leadingZeroFormat(notifications.length)})`}
+            className="relative w-3/5 h-36 px-1.5"
+        >
             <Button className="absolute top-0 right-0 flex justify-center items-end w-fit h-fit text-sm font-medium text-primary bg-inherit -translate-x-3 hover:underline">
                 See all
             </Button>

@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import type { NextPage } from 'next';
+import { thousandsCommaFormat } from '@/lib/utils';
 import { ViewTitle, CreateWorkspaceButton, PeriodFilter, CardWithTitle } from '@components/dashboard';
 import { Button } from '@components/common';
 import { TitledArea } from '@components/common/layouts';
@@ -20,7 +21,7 @@ const DashboardFinancePage: NextPage = () => {
                     title="Total balance"
                     middle={
                         <Fragment>
-                            <p>$25,690.30</p>
+                            <p>${thousandsCommaFormat(25690.3)}</p>
                             <p className="text-lg font-medium text-green-700">+2.5%</p>
                         </Fragment>
                     }
@@ -28,7 +29,7 @@ const DashboardFinancePage: NextPage = () => {
                 />
                 <CardWithTitle
                     title="Ticket processing fees"
-                    middle={<p>$3,512.10</p>}
+                    middle={<p>${thousandsCommaFormat(3512.1)}</p>}
                     bottom={<p className="font-medium">All</p>}
                     corner={<p className="text-lg font-medium">5%</p>}
                 />

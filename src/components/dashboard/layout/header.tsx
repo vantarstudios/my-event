@@ -23,8 +23,8 @@ const Header: FunctionComponent = () => {
                     className="w-[100px] h-[100px]"
                 />
             </Link>
-            <nav className="flex items-center gap-12 w-fit h-20 ml-28">
-                <ul className="flex flex-wrap items-center gap-12">
+            <nav className="flex items-center gap-14 w-fit h-20 ml-28">
+                <ul className="flex flex-wrap items-center gap-14 text-lg">
                     {menuLinks.map(({ name, href }) => (
                         <li key={name} className="font-medium">
                             <Link href={href}>{name}</Link>

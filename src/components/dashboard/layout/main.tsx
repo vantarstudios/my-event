@@ -26,9 +26,9 @@ const Main: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const [activeViewIndex, setActiveViewIndex] = useState<number>(views.findIndex(({ href }) => href === pathname));
 
     return (
-        <main className="flex w-screen h-full">
+        <main className="flex w-screen h-[calc(100%-192px)]">
             <aside className="flex flex-col gap-8 w-1/5 min-w-[250px] h-full pt-10 text-white bg-black">
-                <p className="pl-10 font-bold">Dashboard</p>
+                <p className="pl-10 text-lg font-bold">Dashboard</p>
                 <ul className="flex flex-col gap-5 w-full flex-1 pl-5">
                     {views.map(({ name, href, icon }, index) => {
                         const Icon = icon;

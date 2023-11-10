@@ -21,12 +21,9 @@ const PlanPackageCard: FunctionComponent<PlanCardProps> = ({ planPackage }) => {
                 ${thousandsCommaFormat(planPackage.price)}
                 {planPackage.monthly && <p className="text-sm">monthly</p>}
             </p>
-            {
-                planPackage.yearly
-                && <p className="text-sm text-primary font-semibold">
-                    ${thousandsCommaFormat(planPackage.yearly)} Yearly
-                </p>
-            }
+            {planPackage.yearly && (
+                <p className="text-sm text-primary font-semibold">${thousandsCommaFormat(planPackage.yearly)} Yearly</p>
+            )}
             <hr className="w-1/2 border-2 border-primary" />
             <ul className="flex flex-col gap-3 list-disc pt-2 text-sm">
                 {planPackage.features.map((feature) => (

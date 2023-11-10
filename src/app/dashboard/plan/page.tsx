@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { ViewTitle } from '@components/dashboard';
-import { Plans } from '@components/dashboard/plan';
+import { Plans } from '@components/plan';
 import { Button } from '@components/common';
 import { Planning } from '@components/icons';
 
@@ -11,7 +11,7 @@ const DashboardPlanPage: NextPage = () => {
                 <ViewTitle Icon={Planning}>My plan</ViewTitle>
                 <Button className="px-10">Compare</Button>
             </div>
-            <Plans />
+            <Plans layout="left" />
         </div>
     );
 };

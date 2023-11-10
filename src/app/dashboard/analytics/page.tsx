@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import type { NextPage } from 'next';
+import { thousandsCommaFormat } from '@/lib/utils';
 import { ViewTitle, CreateWorkspaceButton, PeriodFilter, EventsCounts, CardWithTitle } from '@components/dashboard';
 import { Stats } from '@components/icons';
 
@@ -17,7 +18,7 @@ const DashboardAnalyticsPage: NextPage = () => {
                     title="Tickets"
                     middle={
                         <Fragment>
-                            <p>54,569</p>
+                            <p>{thousandsCommaFormat(54569)}</p>
                             <p className="text-lg font-medium text-green-700">+2.5%</p>
                         </Fragment>
                     }

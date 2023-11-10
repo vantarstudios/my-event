@@ -8,7 +8,11 @@ interface PlanCardProps {
 
 const PlanPackagesList: FunctionComponent<PlanCardProps> = ({ packages }) => {
     return (
-        <div className={`flex items-start w-full ${packages.length === 1 ? 'justify-start' : 'justify-evenly'}`}>
+        <div
+            className={`flex flex-wrap items-start gap-5 w-full ${
+                packages.length === 1 ? 'justify-start' : 'justify-evenly'
+            }`}
+        >
             {packages.map((planPackage) => (
                 <PlanPackageCard key={planPackage.name} planPackage={planPackage} />
             ))}

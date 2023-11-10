@@ -10,7 +10,7 @@ interface PlanCardProps {
 const PlanPackageCard: FunctionComponent<PlanCardProps> = ({ planPackage }) => {
     return (
         <Card
-            className={`flex flex-col justify-center items-center gap-5 py-10 w-80 h-full ${
+            className={`flex flex-col justify-center items-center gap-5 py-10 w-80 h-fit ${
                 planPackage.isCurrent
                     ? 'border-2 border-primary border-opacity-100 shadow-none'
                     : 'shadow-lg cursor-pointer'

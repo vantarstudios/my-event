@@ -8,7 +8,7 @@ const RecentEvents: FunctionComponent = () => {
 
     return (
         <TitledArea title="Recents" className="w-full h-36">
-            <div className="flex gap-5 w-full overflow-hidden">
+            <div className="flex flex-wrap justify-start gap-5 w-full">
                 {recentEvents.map((event, index) => (
                     <EventCard key={index} {...event} />
                 ))}

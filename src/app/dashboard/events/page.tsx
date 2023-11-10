@@ -12,7 +12,7 @@ const DashboardEventsPage: NextPage = () => {
                 <Button className="px-8">+ New event</Button>
             </div>
             <div className="flex flex-col justify-between items-end h-full pb-10">
-                <div className="flex flex-wrap justify-between w-full">
+                <div className="flex flex-wrap justify-evenly gap-5 w-full">
                     {events.map((event) => (
                         <EventCard key={event.id} {...event} />
                     ))}

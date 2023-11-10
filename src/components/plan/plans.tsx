@@ -22,7 +22,7 @@ const Plans: FunctionComponent<PlansProps> = ({ layout }) => {
 
     return (
         <div className="flex flex-col justify-start items-start gap-10 h-full">
-            <div className={`flex gap-0.5 w-full ${layoutsStyle[layout]}`}>
+            <div className={`flex flex-wrap gap-0.5 w-full ${layoutsStyle[layout]}`}>
                 {plans.map((plan, index) => (
                     <Button
                         key={plan.name}

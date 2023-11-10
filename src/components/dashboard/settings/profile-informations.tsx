@@ -13,7 +13,7 @@ interface ProfileInformationsProps {
 const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode }) => {
     return (
         <TitledArea title="Profile informations" Icon={User}>
-            <div className="flex flex-wrap justify-between items-start pt-5">
+            <div className="flex flex-wrap justify-center items-start gap-5 pt-5 w-full">
                 <div className="relative">
                     <Image src="/dash-profile.svg" alt="User" width={100} height={100} />
                     <Button className="absolute bottom-0 right-0 p-2 aspect-square rounded-full">

@@ -5,12 +5,12 @@ import { Notifications, RecentEvents } from '@components/dashboard/overview';
 
 const DashboardPage: NextPage = () => {
     return (
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-10 h-full">
             <div className="flex justify-between items-center">
                 <ViewTitle>Hi, Gideon!</ViewTitle>
                 <CreateWorkspaceButton />
             </div>
-            <div className="flex justify-between items-start gap-8">
+            <div className="flex flex-wrap justify-between items-start w-full gap-10">
                 <Notifications />
                 <EventsCounts
                     moreActions={

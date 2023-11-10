@@ -8,7 +8,7 @@ interface CardProps {
 
 const EventsCounts: FunctionComponent<CardProps> = ({ moreActions }) => {
     return (
-        <Card className="flex flex-col gap-4 w-2/5 h-48 py-6 px-12 hover:shadow-md">
+        <Card className="flex flex-col gap-4 w-fit h-48 py-6 px-12 hover:shadow-md">
             <div className="flex justify-between items-center w-full h-10">
                 <p className="text-2xl font-bold text-primary">Events</p>
                 {moreActions}

@@ -14,12 +14,12 @@ const SettingsTable: FunctionComponent = () => {
         <div className="flex flex-col gap-10">
             <Button
                 onClick={() => setMode(mode === 'edit' ? 'view' : 'edit')}
-                className="absolute top-0 right-0 translate-y-16 px-8 py-1 border-2 border-black text-black bg-white hover:outline-none hover:text-white hover:bg-black"
+                className="absolute top-0 right-20 translate-y-16 px-8 py-1 border-2 border-black text-black bg-white hover:outline-none hover:text-white hover:bg-black"
             >
                 {mode === 'edit' ? 'Save' : 'Edit'}
             </Button>
             <ProfileInformations mode={mode} />
-            <div className="flex child:w-full w-full">
+            <div className="flex flex-wrap child:basis-2/5 w-full">
                 <NotificationsSettings />
                 <OtherSettings mode={mode} />
             </div>

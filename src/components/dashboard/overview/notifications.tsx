@@ -5,6 +5,8 @@ import { TitledArea } from '@components/common/layouts';
 import notifications from '@/data/notifications';
 
 const Notifications: FunctionComponent = () => {
+    const notificationsToShow = notifications.slice(0, 2);
+
     return (
         <TitledArea
             title={`Notifications (${leadingZeroFormat(notifications.length)})`}
@@ -14,7 +16,7 @@ const Notifications: FunctionComponent = () => {
                 See all
             </Button>
             <div className="flex flex-col gap-4 px-1.5 w-full h-full overflow-hidden">
-                {notifications.map(({ subject, description }, index) => (
+                {notificationsToShow.map(({ subject, description }, index) => (
                     <Card key={index} className="flex flex-col gap-2 w-full">
                         <p className="text-sm font-medium text-stone-900">{subject}</p>
                         <p className="text-sm">{description}</p>

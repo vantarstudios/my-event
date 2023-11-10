@@ -14,7 +14,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, date, image }
                 </p>
                 <p className="flex justify-center items-center leading-1 text-sm font-thin h-fit">{date.month}</p>
             </div>
-            <Image src={image} alt={title} width={270} height={150} />
+            <Image src={image} alt={title} width={270} height={170} className="w-[270px] h-[170px]" />
             <div className="w-full pl-3 text-sm font-semibold">{title}</div>
         </Link>
     );

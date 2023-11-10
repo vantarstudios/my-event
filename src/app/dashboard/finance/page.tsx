@@ -16,7 +16,7 @@ const DashboardFinancePage: NextPage = () => {
                 <CreateWorkspaceButton />
             </div>
             <PeriodFilter />
-            <div className="flex justify-start items-start gap-40">
+            <div className="flex flex-wrap justify-between items-start gap-10 child:2/5 w-full">
                 <CardWithTitle
                     title="Total balance"
                     middle={
@@ -34,7 +34,7 @@ const DashboardFinancePage: NextPage = () => {
                     corner={<p className="text-lg font-medium">5%</p>}
                 />
             </div>
-            <TitledArea title="Payment methods">
+            <TitledArea title="Payment methods" className="w-full">
                 <div className="relative flex flex-col w-full pt-5">
                     <Button className="absolute bottom-full right-0 px-8">+ Add payment method</Button>
                     {paymentMethods.map(({ type, label }) => (

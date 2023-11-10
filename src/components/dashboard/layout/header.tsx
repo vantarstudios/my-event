@@ -14,7 +14,7 @@ const menuLinks: { readonly name: string; readonly href: string }[] = [
 const Header: FunctionComponent = () => {
     return (
         <header className="flex justify-between items-start w-screen h-48 px-[5vw] md:px-28 pt-16">
-            <Link href="/">
+            <Link href="/" className="min-w-max min-h-max">
                 <Image
                     src="/event-media-logo.svg"
                     alt="Event Media Logo"
@@ -31,7 +31,7 @@ const Header: FunctionComponent = () => {
                         </li>
                     ))}
                 </ul>
-                <Link href="/signup">
+                <Link href="/signup" className="min-w-max min-h-max">
                     <Image
                         src="/dash-profile.svg"
                         alt="Profile Picture"

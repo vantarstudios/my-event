@@ -12,7 +12,7 @@ const DashboardAnalyticsPage: NextPage = () => {
                 <CreateWorkspaceButton />
             </div>
             <PeriodFilter />
-            <div className="flex justify-start items-start gap-40">
+            <div className="flex flex-wrap justify-start items-start gap-10 w-full">
                 <EventsCounts />
                 <CardWithTitle
                     title="Tickets"

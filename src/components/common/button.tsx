@@ -7,7 +7,7 @@ const Button: FunctionComponent<ButtonProps> = ({ className, children, ...props 
     return (
         <button
             className={cn(
-                'w-full rounded-3xl border-2 border-black bg-black py-2 text-white',
+                'w-fit rounded-3xl bg-black py-2.5 text-white',
                 'text-md font-medium transition-all duration-200 hover:border-opacity-80 hover:bg-opacity-80',
                 className,
             )}
@@ -16,6 +16,6 @@ const Button: FunctionComponent<ButtonProps> = ({ className, children, ...props 
             {children}
         </button>
     );
-}
+};
 
 export default Button;

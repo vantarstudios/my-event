@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Input } from '@/components/form';
+import { Input } from '@components/form';
 
 const AccountInformations: FunctionComponent = () => {
     return (
@@ -9,10 +9,10 @@ const AccountInformations: FunctionComponent = () => {
                 <Input name={'lastName'} label={'Lastname'} trailing={'*'} />
                 <Input name={'email'} label={'E-mail'} trailing={'*'} />
                 <Input name={'password'} label={'Password'} trailing={'*'} />
-                <Input name={'passwordConfirm'} label={'Confirm password'} trailing={'*'}/>
+                <Input name={'passwordConfirm'} label={'Confirm password'} trailing={'*'} />
             </form>
         </div>
     );
-}
+};
 
 export default AccountInformations;

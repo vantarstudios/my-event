@@ -22,6 +22,6 @@ const AccountType: FunctionComponent = () => {
             </div>
         </Fragment>
     );
-}
+};
 
 export default AccountType;

@@ -11,11 +11,7 @@ const stepperWidths: number[] = [0, 35, 65, 100];
 const AuthStepper: FunctionComponent<AuthStepperProps> = ({ step }) => {
     return (
         <div className={'relative w-96'}>
-            <div
-                className={cn(
-                    'absolute top-1/2 my-auto h-[4px] w-[95%] origin-center bg-black',
-                )}
-            >
+            <div className={cn('absolute top-1/2 my-auto h-[4px] w-[95%] origin-center bg-black')}>
                 <motion.div
                     className={'relative h-[4px] bg-primary'}
                     initial={false}
@@ -61,6 +57,6 @@ const AuthStepper: FunctionComponent<AuthStepperProps> = ({ step }) => {
             </div>
         </div>
     );
-}
+};
 
 export default AuthStepper;

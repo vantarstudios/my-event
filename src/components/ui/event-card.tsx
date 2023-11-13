@@ -1,0 +1,45 @@
+import type { FunctionComponent } from 'react';
+import Link from 'next/link';
+import { leadingZeroFormat, parseDateTime, monthNumToString } from '@/lib/utils';
+import type { Event } from '@/types';
+
+interface EventCardProps extends Partial<Pick<Event, 'id' | 'title' | 'startDate'>> {
+    cover: Event['cover'];
+    format: 'titled' | 'unconstrained';
+    asLink?: boolean;
+}
+
+const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startDate, cover, format, asLink = true }) => {
+    const date = startDate ? parseDateTime(startDate, 'date') : undefined;
+
+    return (
+        <Link
+            href={asLink && id ? `/dashboard/events/${id}` : ''}
+            className={`relative flex flex-col gap-2 ${format === 'unconstrained' ? 'w-full h-full' : 'w-[270px]'} ${
+                !asLink && 'pointer-events-none'
+            }`}
+        >
+            {date && (
+                <div className="absolute top-5 left-6 h-[50px] aspect-square text-white rounded-xl bg-primary">
+                    <p className="flex justify-center items-center text-2xl leading-relaxed font-semibold h-fit">
+                        {leadingZeroFormat(date.day)}
+                    </p>
+                    <p className="flex justify-center items-center leading-1 text-sm font-thin h-fit">
+                        {monthNumToString(date.month, true)}
+                    </p>
+                </div>
+            )}
+            <div
+                style={{
+                    backgroundImage: `url('/images/${cover}')`,
+                }}
+                className={`min-w-[270px] min-h-[170px] bg-cover bg-center rounded-3xl ${
+                    format === 'unconstrained' ? 'h-full' : 'w-[270px] h-[170px]'
+                }`}
+            />
+            {title && <div className="w-full break-words break-before-all text-sm font-semibold">{title}</div>}
+        </Link>
+    );
+};
+
+export default EventCard;

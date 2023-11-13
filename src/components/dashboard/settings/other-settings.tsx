@@ -1,9 +1,10 @@
 import type { FunctionComponent } from 'react';
-import { TitledArea } from '@components/common/layouts';
-import { Button } from '@components/common';
+import type { Mode } from '@/types';
+import { TitledArea } from '@components/ui/layouts';
+import { Button } from '@components/ui';
 
 interface OtherSettingsProps {
-    mode: 'edit' | 'view';
+    mode: Mode;
 }
 
 const OtherSettings: FunctionComponent<OtherSettingsProps> = ({ mode }) => {

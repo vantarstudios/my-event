@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { ViewTitle } from '@components/dashboard';
 import { Plans } from '@components/plan';
-import { Button } from '@components/common';
+import { Button } from '@components/ui';
 import { Planning } from '@components/icons';
 
 const DashboardPlanPage: NextPage = () => {

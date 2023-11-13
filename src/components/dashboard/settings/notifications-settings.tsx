@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
-import { TitledArea } from '@components/common/layouts';
-import { Switch } from '@components/form';
+import { TitledArea } from '@components/ui/layouts';
+import { Switch } from '@components/ui/form';
 import { Bell } from '@components/icons';
 
 const NotificationsSettings: FunctionComponent = () => {

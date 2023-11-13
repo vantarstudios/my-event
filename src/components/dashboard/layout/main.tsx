@@ -72,7 +72,7 @@ const Main: FunctionComponent<PropsWithChildren> = ({ children }) => {
                     })}
                 </ul>
             </aside>
-            <section className="flex-1 h-full pt-5 pl-10 child:pr-20 child:overflow-y-auto child:overflow-x-hidden">
+            <section className="flex-1 h-full py-5 pl-10 child:pr-20 child:overflow-y-auto child:overflow-x-hidden">
                 {children}
             </section>
         </main>

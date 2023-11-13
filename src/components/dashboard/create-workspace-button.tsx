@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { Button } from '@components/common';
+import { Button } from '@components/ui';
 
 const CreateWorkspaceButton: FunctionComponent = () => {
     return <Button className="min-w-max h-fit px-10">Create a workspace</Button>;

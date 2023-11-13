@@ -1,13 +1,14 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
-import { Button } from '@components/common';
-import { TitledArea } from '@components/common/layouts';
-import { Input } from '@components/form';
+import type { Mode } from '@/types';
+import { Button } from '@components/ui';
+import { TitledArea } from '@components/ui/layouts';
+import { Input } from '@components/ui/form';
 import { User, Photo } from '@components/icons';
 import OrganizerCard from './organizer-card';
 
 interface ProfileInformationsProps {
-    mode: 'edit' | 'view';
+    mode: Mode;
 }
 
 const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode }) => {

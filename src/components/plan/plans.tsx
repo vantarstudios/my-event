@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { FunctionComponent } from 'react';
 import type { Plan } from '@/types';
-import { Button } from '@components/common';
+import { Button } from '@components/ui';
 import plans from '@/data/plans';
 import PlanPackagesList from './plan-packages-list';
 

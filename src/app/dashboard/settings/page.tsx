@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { ViewTitle } from '@components/dashboard';
 import { SettingsTable } from '@components/dashboard/settings';
-import { Button } from '@components/common';
+import { Button } from '@components/ui';
 import { Gear } from '@components/icons';
 
 const DashboardSettingsPage: NextPage = () => {

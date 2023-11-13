@@ -23,3 +23,13 @@ export { default as Bell } from './bell';
 export { default as BankCard } from './bank-card';
 
 export { default as Photo } from './photo';
+
+export { default as ChevronLeft } from './chevron-left';
+
+export { default as Location } from './location';
+
+export { default as Eye } from './eye';
+
+export { default as HoledDisk } from './holed-disk';
+
+export { default as Cross } from './cross';

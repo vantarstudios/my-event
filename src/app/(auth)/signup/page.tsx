@@ -6,7 +6,7 @@ import Link from 'next/link';
 import type { NextPage } from 'next';
 import { AuthStepper } from '@components/auth';
 import { AccountInformations, AccountType, Plan } from '@components/auth/signup-steps';
-import { Button } from '@components/common';
+import { Button } from '@components/ui';
 
 const signUpSteps: ReactNode[] = [<AccountType key={0} />, <AccountInformations key={1} />, <Plan key={2} />];
 

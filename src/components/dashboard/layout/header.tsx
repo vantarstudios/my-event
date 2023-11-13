@@ -13,18 +13,18 @@ const menuLinks: { readonly name: string; readonly href: string }[] = [
 
 const Header: FunctionComponent = () => {
     return (
-        <header className="flex justify-between items-start w-screen h-48 px-[5vw] md:px-28 pt-16">
+        <header className="flex justify-between items-start w-screen h-48 px-[5vw] md:px-28 pt-10">
             <Link href="/" className="min-w-max min-h-max">
                 <Image
-                    src="/event-media-logo.svg"
+                    src="/logo.png"
                     alt="Event Media Logo"
-                    width={100}
-                    height={100}
-                    className="w-[100px] h-[100px]"
+                    width={150}
+                    height={150}
+                    className="w-[150px] h-[150px]"
                 />
             </Link>
-            <nav className="flex items-center gap-14 w-fit h-20 ml-28">
-                <ul className="flex flex-wrap items-center gap-14 text-lg">
+            <nav className="flex items-center gap-14 w-fit h-full ml-28">
+                <ul className="flex flex-wrap items-center gap-14 text-lg h-full overflow-y-auto">
                     {menuLinks.map(({ name, href }) => (
                         <li key={name} className="font-medium">
                             <Link href={href}>{name}</Link>

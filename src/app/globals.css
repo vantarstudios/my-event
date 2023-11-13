@@ -15,3 +15,27 @@ body {
     color: #1e1e1e;
     overflow: hidden;
 }
+
+*::-webkit-scrollbar {
+    width: 10px;
+    cursor: pointer;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #67676777;
+    border-radius: 9999px;
+}
+
+.react-date-picker__wrapper,
+.react-time-picker__wrapper {
+    border: none !important;
+}
+
+.react-date-picker__inputGroup__input:focus,
+.react-time-picker__inputGroup__input:focus {
+    outline: none !important;
+}

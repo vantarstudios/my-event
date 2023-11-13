@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import { leadingZeroFormat } from '@/lib/utils';
-import { Card, Button } from '@components/common';
-import { TitledArea } from '@components/common/layouts';
+import { Card, Button } from '@components/ui';
+import { TitledArea } from '@components/ui/layouts';
 import notifications from '@/data/notifications';
 
 const Notifications: FunctionComponent = () => {

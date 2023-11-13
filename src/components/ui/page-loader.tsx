@@ -5,10 +5,10 @@ const PageLoader: FunctionComponent = () => {
     return (
         <div className="flex justify-center items-center w-full h-full bg-white">
             <Image
-                src="/event-media-logo.svg"
+                src="/submark-logo.png"
                 alt="Loading"
-                width={100}
-                height={100}
+                width={150}
+                height={150}
                 priority={true}
                 className="animate-ping"
             />

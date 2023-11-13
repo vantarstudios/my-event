@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
-import { Card } from '@components/common';
+import { Card } from '@components/ui';
 
 interface OrganizerCardProps {
     firstName: string;

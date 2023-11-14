@@ -1,59 +1,46 @@
 import type { FunctionComponent } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
 
 interface AuthStepperProps {
-    step: number;
+    currentStep: number;
+    totalSteps: number;
+    onStepChange?: (step: number) => void;
 }
 
-const stepperWidths: number[] = [0, 35, 65, 100];
+const toPercent = (value: number, min: number, max: number) => {
+    return (100 * (value - min)) / (max - min);
+};
 
-const AuthStepper: FunctionComponent<AuthStepperProps> = ({ step }) => {
+const AuthStepper: FunctionComponent<AuthStepperProps> = ({ currentStep, totalSteps, onStepChange }) => {
     return (
-        <div className={'relative w-96'}>
-            <div className={cn('absolute top-1/2 my-auto h-[4px] w-[95%] origin-center bg-black')}>
+        <div className="relative" style={{ width: 48 * (2 * totalSteps - 1) }}>
+            <div
+                className="absolute top-1/2 my-auto h-1 origin-center bg-black"
+                style={{ width: 48 * (2 * totalSteps - 2) }}
+            >
                 <motion.div
-                    className={'relative h-[4px] bg-primary'}
+                    className="relative h-1 bg-primary"
                     initial={false}
                     animate={{
-                        width: `${stepperWidths[step - 1]}%`,
+                        width: `${toPercent(currentStep, 1, totalSteps)}%`,
                     }}
                     transition={{
-                        duration: 0.4,
+                        duration: 0.5,
                     }}
                 ></motion.div>
             </div>
             <div className="relative flex w-full items-center justify-between">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-xl text-white">
-                    1
-                </div>
-
-                <div
-                    className={cn(
-                        'flex h-14 w-14 items-center justify-center rounded-full text-xl text-white',
-                        `${step >= 2 ? 'bg-primary' : 'bg-black'}`,
-                    )}
-                >
-                    2
-                </div>
-
-                <div
-                    className={cn(
-                        'flex h-14 w-14 items-center justify-center rounded-full text-xl text-white',
-                        `${step >= 3 ? 'bg-primary' : 'bg-black'}`,
-                    )}
-                >
-                    3
-                </div>
-
-                <div
-                    className={cn(
-                        'flex h-14 w-14 items-center justify-center rounded-full text-xl text-white',
-                        `${step >= 4 ? 'bg-primary' : 'bg-black'}`,
-                    )}
-                >
-                    4
-                </div>
+                {new Array(totalSteps).fill(0).map((_, index) => (
+                    <div
+                        key={index}
+                        onClick={currentStep >= index + 1 ? () => onStepChange && onStepChange(index + 1) : undefined}
+                        className={`flex w-12 aspect-square items-center justify-center rounded-full text-xl text-white ${
+                            currentStep >= index + 1 ? 'bg-primary cursor-pointer' : 'bg-black cursor-not-allowed'
+                        }`}
+                    >
+                        {index + 1}
+                    </div>
+                ))}
             </div>
         </div>
     );

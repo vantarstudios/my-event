@@ -1,7 +1,8 @@
 import type { NextPage } from 'next';
+import { redirect } from 'next/navigation';
 
 const AppPage: NextPage = () => {
-    return <main className="flex min-h-full min-w-full flex-col items-center justify-between p-24"></main>;
+    redirect('/dashboard');
 };
 
 export default AppPage;

@@ -3,6 +3,10 @@ import tags from '@/data/tags';
 
 export type Mode = 'view' | 'edit';
 
+export const AccountTypes = ['individual', 'organization'] as const;
+
+export type AccountType = (typeof AccountTypes)[number];
+
 export interface IconProps {
     onClick?: () => void;
     className?: HTMLAttributes<SVGElement>['className'];

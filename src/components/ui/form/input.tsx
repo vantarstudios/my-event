@@ -15,14 +15,14 @@ interface InputProps extends HTMLAttributes<HTMLInputElement> {
 
 const Input: FunctionComponent<InputProps> = (props) => {
     return (
-        <div className={cn('flex flex-col items-start gap-2', props.wrapperClassName)}>
+        <div className={cn('flex flex-col items-start gap-1', props.wrapperClassName)}>
             <label className="flex w-full items-center justify-between px-3" htmlFor={props.name}>
-                <span className={cn('text-lg font-[500]', props.labelClassName)}>{props.label}</span>
+                <span className={cn('font-medium', props.labelClassName)}>{props.label}</span>
                 <span className="font-medium text-red-600">{props.trailing}</span>
             </label>
             <input
                 className={cn(
-                    'w-full rounded-full bg-gray-100 px-4 py-2 outline-none ring-transparent',
+                    'w-full rounded-full bg-gray-100 px-4 py-2 text-sm outline-none ring-transparent',
                     props.className,
                 )}
                 type={props.type ?? 'text'}

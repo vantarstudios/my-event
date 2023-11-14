@@ -33,3 +33,7 @@ export { default as Eye } from './eye';
 export { default as HoledDisk } from './holed-disk';
 
 export { default as Cross } from './cross';
+
+export { default as People } from './people';
+
+export { default as ArrowLeft } from './arrow-left';

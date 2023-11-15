@@ -3,7 +3,7 @@ import { capitalize } from '@/lib/utils';
 import { AccountTypes } from '@/types';
 import type { AccountType } from '@/types';
 import { Card } from '@components/ui';
-import { User, People } from '@components/icons';
+import { User, People } from '@components/ui/icons';
 
 interface AccountTypeChooserProps {
     currentType: AccountType | null;

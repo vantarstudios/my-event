@@ -9,3 +9,5 @@ export { default as LocationInput } from './location-input';
 export { default as DateInput } from './date-input';
 
 export { default as TimeInput } from './time-input';
+
+export { default as Checkbox } from './checkbox';

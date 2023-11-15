@@ -5,7 +5,7 @@ import { ViewTitle, CreateWorkspaceButton, PeriodFilter, CardWithTitle } from '@
 import { Button } from '@components/ui';
 import { TitledArea } from '@components/ui/layouts';
 import { PaymentMethod } from '@components/dashboard/finance';
-import { Dollar } from '@components/icons';
+import { Dollar } from '@components/ui/icons';
 import paymentMethods from '@/data/payment-methods';
 
 const DashboardFinancePage: NextPage = () => {

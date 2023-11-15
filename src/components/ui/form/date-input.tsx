@@ -6,7 +6,7 @@ import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import { cn, parseDateTime, serializeDateTime } from '@/lib/utils';
 import type { ParsedDate } from '@/types';
-import { Cross } from '@components/icons';
+import { Cross } from '@components/ui/icons';
 
 interface DateInputProps extends Omit<DatePickerProps, 'value' | 'onChange'> {
     value: ParsedDate | null;

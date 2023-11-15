@@ -6,7 +6,7 @@ import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import { cn } from '@/lib/utils';
 import type { ParsedTime } from '@/types';
-import { Cross } from '@components/icons';
+import { Cross } from '@components/ui/icons';
 
 interface DateInputProps extends Omit<TimePickerProps, 'value' | 'onChange'> {
     value: ParsedTime | null;

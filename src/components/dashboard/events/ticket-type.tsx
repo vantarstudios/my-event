@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
 import type { TicketType as TTicketTypeType, Mode } from '@/types';
 import { Button } from '@components/ui';
-import { User, Pencil, TrashCan, Eye } from '@components/icons';
+import { User, Pencil, TrashCan, Eye } from '@components/ui/icons';
 
 interface TicketTypeProps {
     ticket: TTicketTypeType; // Yep, I know it's funny

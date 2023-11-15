@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { redirect } from 'next/navigation';
 
 const AppPage: NextPage = () => {
-    redirect('/dashboard');
+    redirect('/signup');
 };
 
 export default AppPage;

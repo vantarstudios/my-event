@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { HoledDisk } from '@components/icons';
+import { HoledDisk } from '@components/ui/icons';
 
 interface EventEditionStepperProps {
     currentStepIndex: number;

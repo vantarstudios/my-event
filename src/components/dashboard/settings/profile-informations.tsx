@@ -4,7 +4,7 @@ import type { Mode } from '@/types';
 import { Button } from '@components/ui';
 import { TitledArea } from '@components/ui/layouts';
 import { Input } from '@components/ui/form';
-import { User, Photo } from '@components/icons';
+import { User, Photo } from '@components/ui/icons';
 import OrganizerCard from './organizer-card';
 
 interface ProfileInformationsProps {

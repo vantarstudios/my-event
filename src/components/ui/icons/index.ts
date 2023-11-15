@@ -30,6 +30,8 @@ export { default as Location } from './location';
 
 export { default as Eye } from './eye';
 
+export { default as EyeOff } from './eye-off';
+
 export { default as HoledDisk } from './holed-disk';
 
 export { default as Cross } from './cross';

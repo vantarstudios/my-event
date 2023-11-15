@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { ViewTitle } from '@components/dashboard';
 import { Plans } from '@components/plan';
 import { Button } from '@components/ui';
-import { Planning } from '@components/icons';
+import { Planning } from '@components/ui/icons';
 
 const DashboardPlanPage: NextPage = () => {
     return (

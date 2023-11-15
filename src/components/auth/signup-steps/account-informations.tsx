@@ -4,11 +4,17 @@ import { Input } from '@components/ui/form';
 const AccountInformations: FunctionComponent = () => {
     return (
         <form className="relative flex flex-col justify-start gap-5 w-full">
-            <Input name={'firstName'} label={'Firstname'} trailing={'*'} />
-            <Input name={'lastName'} label={'Lastname'} trailing={'*'} />
-            <Input name={'email'} label={'E-mail'} trailing={'*'} />
-            <Input name={'password'} label={'Password'} trailing={'*'} wrapperClassName="peer" />
-            <Input name={'passwordConfirm'} label={'Confirm password'} trailing={'*'} wrapperClassName="peer" />
+            <Input name="first-name" label="First name" trailing="*" autoComplete="given-name" />
+            <Input name="last-name" label="Last name" trailing="*" autoComplete="family-name" />
+            <Input name="email" label="Email" trailing="*" autoComplete="email" />
+            <Input name="password" label="Password" trailing="*" wrapperClassName="peer" autoComplete="new-password" />
+            <Input
+                name="password-confirm"
+                label="Confirm password"
+                trailing="*"
+                wrapperClassName="peer"
+                autoComplete="new-password"
+            />
             <div className="absolute left-full bottom-1/4 ml-10 p-8 text-white bg-black rounded-3xl w-max h-fit hidden peer-focus-within:block">
                 <p>Password must contain:</p>
                 <ul className="pl-5 list-disc">

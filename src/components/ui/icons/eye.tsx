@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import type { IconProps } from '@/types';
 
-const Eye: FunctionComponent<IconProps> = ({ className }) => {
+const Eye: FunctionComponent<IconProps> = ({ className, onClick }) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -9,6 +9,7 @@ const Eye: FunctionComponent<IconProps> = ({ className }) => {
             height="21"
             viewBox="0 0 32 21"
             fill="currentColor"
+            onClick={onClick}
             className={className}
         >
             <path d="M15.7513 14.7C18.0709 14.7 19.9513 12.8196 19.9513 10.5C19.9513 8.1804 18.0709 6.3 15.7513 6.3C13.4317 6.3 11.5513 8.1804 11.5513 10.5C11.5513 12.8196 13.4317 14.7 15.7513 14.7Z" />

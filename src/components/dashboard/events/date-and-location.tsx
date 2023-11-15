@@ -6,7 +6,7 @@ import { parseDateTime, serializeDateTime } from '@/lib/utils';
 import type { Event, ParsedDateTime } from '@/types';
 import { TitledArea } from '@components/ui/layouts';
 import { DateInput, TimeInput, LocationInput } from '@components/ui/form';
-import { Calendar, Location } from '@components/icons';
+import { Calendar, Location } from '@components/ui/icons';
 
 interface DateAndLocationProps extends Pick<Event, 'startDate' | 'endDate' | 'location'> {}
 

@@ -1,7 +1,7 @@
 'use client';
 
 import type { NextPage } from 'next';
-import { ChevronLeft } from '@components/icons';
+import { ChevronLeft } from '@components/ui/icons';
 import { EditOrView } from '@components/dashboard/events';
 import events from '@/data/events';
 

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import type { FunctionComponent, PropsWithChildren } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Calendar, Stats, Dollar, Planning, Gear, Question } from '@components/icons';
+import { Home, Calendar, Stats, Dollar, Planning, Gear, Question } from '@components/ui/icons';
 import type { IconProps } from '@/types';
 
 type DashboardView = {

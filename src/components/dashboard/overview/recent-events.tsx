@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react';
-import { EventCard } from '@components/ui';
+import { EventCard } from '@components/events';
 import { TitledArea } from '@components/ui/layouts';
 import events from '@/data/events';
 

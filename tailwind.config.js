@@ -17,6 +17,15 @@ const tailwindConfig = {
             lineHeight: {
                 1: '.1rem',
             },
+            keyframes: {
+                slide: {
+                    '0%': { transform: 'translateX(-5vw)' },
+                    '100%': { transform: 'translateX(0px)' },
+                },
+            },
+            animation: {
+                slide: 'slide 1s ease-out',
+            },
         },
     },
     plugins: [

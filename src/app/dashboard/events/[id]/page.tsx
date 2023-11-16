@@ -2,7 +2,7 @@
 
 import type { NextPage } from 'next';
 import { ChevronLeft } from '@components/ui/icons';
-import { EditOrView } from '@components/dashboard/events';
+import { EditOrView } from '@components/events';
 import events from '@/data/events';
 
 interface DashboardEditEventPageProps {

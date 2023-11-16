@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import { ViewTitle, CreateWorkspaceButton } from '@components/dashboard';
-import { Button, EventCard } from '@components/ui';
+import { EventCard } from '@components/events';
+import { Button } from '@components/ui';
 import { Calendar } from '@components/ui/icons';
 import events from '@/data/events';
 

@@ -6,14 +6,15 @@ interface CheckboxProps extends HTMLAttributes<HTMLInputElement> {
     label: ReactNode;
 }
 
-const Checkbox: FunctionComponent<CheckboxProps> = ({ name, checked, label, onClick, ...props }) => {
+const Checkbox: FunctionComponent<CheckboxProps> = ({ name, checked, label, onChange, ...props }) => {
     return (
-        <div onClick={onClick} className="flex justify-center items-center gap-2 w-fit">
+        <div className="flex justify-center items-center gap-2 w-fit">
             <input
                 {...props}
                 type="checkbox"
                 name={name}
                 checked={checked}
+                onChange={onChange}
                 className="appearance-none w-4 aspect-square border border-black bg-white rounded-sm cursor-pointer transition-all checked:bg-black"
             />
             <label htmlFor={name} className="text-sm">

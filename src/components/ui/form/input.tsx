@@ -30,6 +30,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
                 )}
                 type={props.type ?? 'text'}
                 value={props.value ?? ''}
+                onChange={props.onChange}
                 placeholder={props.placeholder}
                 name={props.name}
                 autoComplete={props.autoComplete}

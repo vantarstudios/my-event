@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
 import type { Event } from '@/types';
-import { EventCard, TagChip } from '@components/ui';
+import { EventCard, TagChip } from '@components/events';
 import { TitledArea } from '@components/ui/layouts';
 import TicketType from './ticket-type';
 

@@ -32,12 +32,19 @@ const SignInPage: NextPage = () => {
                 onSubmit={handleSubmit}
                 className="child:w-full flex flex-col justify-start items-center gap-10 w-full"
             >
-                <Input type="email" label="Email" name="email" autoComplete="email" />
+                <Input
+                    type="email"
+                    label="Email"
+                    name="email"
+                    autoComplete="email"
+                    onChange={() => console.log('Email')}
+                />
                 <Input
                     type={isPasswordVisible ? 'text' : 'password'}
                     label="Password"
                     name="password"
                     autoComplete="current-password"
+                    onChange={() => console.log('Email')}
                     icon={
                         isPasswordVisible ? (
                             <Eye className="w-4 h-4 cursor-pointer" onClick={toggleIsPasswordVisible} />
@@ -51,7 +58,7 @@ const SignInPage: NextPage = () => {
                         name="save-login-infos"
                         label="Remember me"
                         checked={saveLoginInfos}
-                        onClick={toggleSaveLoginInfos}
+                        onChange={toggleSaveLoginInfos}
                     />
                 </div>
                 <Button type="submit">Sign in</Button>

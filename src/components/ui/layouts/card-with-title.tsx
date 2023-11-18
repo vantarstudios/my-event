@@ -1,5 +1,5 @@
 import type { FunctionComponent, ReactNode } from 'react';
-import { Card } from '@components/ui';
+import { Card } from '@components/ui/layouts';
 
 interface CardProps {
     title: string;

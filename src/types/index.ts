@@ -17,21 +17,32 @@ export type Notification = {
     description: string;
 };
 
+export const ticketTypes = ['free', 'paid', 'invitation'] as const;
+
+export const invitationTypes = ['e-mail', 'unique link'] as const;
+
 export type TicketType = {
-    name: string;
+    title: string;
     quantity: number;
-    kind: 'free' | 'paid';
-    currency: string;
+    types: (typeof ticketTypes)[number][];
+    groupTicket: boolean;
 } & (
-    | {
-          kind: 'free';
-          price: 0;
-      }
-    | {
-          kind: 'paid';
-          price: number;
-      }
-);
+    | { types: ['free'] }
+    | { types: ['free', 'invitation']; invitationType: (typeof invitationTypes)[number] }
+    | { types: ['paid']; price: number }
+    | { types: ['paid', 'invitation']; price: number; invitationType: (typeof invitationTypes)[number] }
+    | { types: ['invitation']; invitationType: (typeof invitationTypes)[number] }
+) &
+    (
+        | {
+              groupTicket: false;
+          }
+        | {
+              groupTicket: true;
+              groupSize?: number;
+              numberOfGroups?: number;
+          }
+    );
 
 export type Tag = (typeof tags)[number];
 
@@ -42,6 +53,7 @@ export type Event = {
     startDate: string;
     endDate?: string;
     location: string;
+    currency: string;
     cover: string;
     tags: Tag[];
     ticketTypes: TicketType[];

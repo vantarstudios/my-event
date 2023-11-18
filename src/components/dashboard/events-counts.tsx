@@ -1,6 +1,6 @@
 import type { FunctionComponent, ReactNode } from 'react';
 import { leadingZeroFormat } from '@/lib/utils';
-import { Card } from '@components/ui';
+import { Card } from '@components/ui/layouts';
 
 interface CardProps {
     moreActions?: ReactNode;

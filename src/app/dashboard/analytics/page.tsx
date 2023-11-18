@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
 import type { NextPage } from 'next';
 import { thousandsCommaFormat } from '@/lib/utils';
-import { ViewTitle, CreateWorkspaceButton, PeriodFilter, EventsCounts, CardWithTitle } from '@components/dashboard';
+import { ViewTitle, CreateWorkspaceButton, PeriodFilter, EventsCounts } from '@components/dashboard';
+import { CardWithTitle } from '@components/ui/layouts';
 import { Stats } from '@components/ui/icons';
 
 const DashboardAnalyticsPage: NextPage = () => {

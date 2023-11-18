@@ -11,3 +11,7 @@ export { default as DateInput } from './date-input';
 export { default as TimeInput } from './time-input';
 
 export { default as Checkbox } from './checkbox';
+
+export { default as Select } from './select';
+
+export { default as NumberInput } from './number-input';

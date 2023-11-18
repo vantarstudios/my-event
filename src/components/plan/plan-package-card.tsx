@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import type { PlanPackage } from '@/types';
 import { thousandsCommaFormat } from '@/lib/utils';
-import { Card } from '@components/ui';
+import { Card } from '@components/ui/layouts';
 
 interface PlanCardProps {
     planPackage: PlanPackage;

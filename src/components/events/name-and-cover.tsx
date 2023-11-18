@@ -47,8 +47,14 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ cover, title, 
                 />
             </div>
             <div className="flex flex-col justify-start gap-5 w-2/3 h-full pl-5">
-                <TitledTextArea title="Event title:" value={title} maxLength={150} className="text-3xl font-bold" />
-                <TitledTextArea title="Description:" value={description} maxLength={700} rows={7} />
+                <TitledTextArea
+                    title="Event title:"
+                    value={title}
+                    maxLength={150}
+                    variant="edit"
+                    className="text-3xl font-bold"
+                />
+                <TitledTextArea title="Description:" value={description} maxLength={700} rows={7} variant="edit" />
                 <TitledArea title="Category:">
                     <div className="flex flex-col items-start gap-5 w-full">
                         <div className="flex justify-start items-center gap-5 w-full">

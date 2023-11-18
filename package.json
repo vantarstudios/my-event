@@ -18,7 +18,8 @@
         "react-date-picker": "^10.5.2",
         "react-dom": "^18",
         "react-time-picker": "^6.5.2",
-        "tailwind-merge": "^1.14.0"
+        "tailwind-merge": "^1.14.0",
+        "uuid": "^9.0.1"
     },
     "devDependencies": {
         "@types/node": "^20",

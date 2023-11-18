@@ -17,7 +17,11 @@ const DashboardEditEventLayout: NextPage<DashboardEditEventPageProps> = ({ param
             {event ? (
                 <div className="flex flex-col gap-10 w-full h-full">
                     <div className="flex justify-start items-center gap-10 text-2xl font-medium">
-                        <ChevronLeft onClick={() => window.history.back()} className="w-5 h-5 cursor-pointer" />
+                        <ChevronLeft
+                            onClick={() => window.history.back()}
+                            strokeWidth="bold"
+                            className="w-5 h-5 cursor-pointer"
+                        />
                         {event.title}
                     </div>
                     <EditOrView event={event} />

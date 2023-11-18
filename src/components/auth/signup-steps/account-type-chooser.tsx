@@ -2,8 +2,8 @@ import type { FunctionComponent, ReactNode } from 'react';
 import { capitalize } from '@/lib/utils';
 import { AccountTypes } from '@/types';
 import type { AccountType } from '@/types';
-import { Card } from '@components/ui';
-import { User, People } from '@components/ui/icons';
+import { Card } from '@components/ui/layouts';
+import { Person, People } from '@components/ui/icons';
 
 interface AccountTypeChooserProps {
     currentType: AccountType | null;
@@ -13,7 +13,7 @@ interface AccountTypeChooserProps {
 const unavailableTypes: AccountType[] = ['organization'];
 
 const accountTypeIcons: Record<AccountType, ReactNode> = {
-    individual: <User className="w-16 h-16" />,
+    individual: <Person className="w-16 h-16" />,
     organization: <People className="w-16 h-16" />,
 };
 

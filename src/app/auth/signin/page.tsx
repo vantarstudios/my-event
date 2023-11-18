@@ -57,6 +57,7 @@ const SignInPage: NextPage = () => {
                     <Checkbox
                         name="save-login-infos"
                         label="Remember me"
+                        labelSide="right"
                         checked={saveLoginInfos}
                         onChange={toggleSaveLoginInfos}
                     />

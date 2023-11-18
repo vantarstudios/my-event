@@ -12,7 +12,7 @@ export { default as Question } from './question';
 
 export { default as Stats } from './stats';
 
-export { default as User } from './user';
+export { default as Person } from './Person';
 
 export { default as TrashCan } from './trash-can';
 
@@ -39,3 +39,5 @@ export { default as Cross } from './cross';
 export { default as People } from './people';
 
 export { default as ArrowLeft } from './arrow-left';
+
+export { default as Copy } from './copy';

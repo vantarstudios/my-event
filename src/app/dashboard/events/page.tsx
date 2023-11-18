@@ -10,7 +10,7 @@ const DashboardEventsPage: NextPage = () => {
         <div className="relative flex flex-col gap-8 h-full">
             <div className="flex justify-between items-center">
                 <ViewTitle Icon={Calendar}>My events</ViewTitle>
-                <Button className="px-8">+ New event</Button>
+                <Button>+ New event</Button>
             </div>
             <div className="flex flex-col justify-between items-end h-full pb-10">
                 <div className="flex flex-wrap justify-evenly gap-5 w-full">

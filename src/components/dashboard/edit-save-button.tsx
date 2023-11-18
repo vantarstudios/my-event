@@ -19,7 +19,7 @@ const EditSaveButton: FunctionComponent<EditSaveButtonProps> = ({ mode, onClick,
         <Button
             onClick={handleClick}
             className={cn(
-                'px-8 py-1 border-2 border-black',
+                'py-1 border-2 border-black',
                 mode === 'view' ? 'text-black bg-white hover:text-white hover:bg-black' : 'text-white bg-black',
                 className,
             )}

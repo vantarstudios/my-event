@@ -26,7 +26,7 @@ const ViewEvent: FunctionComponent<ViewEventProps> = ({ event }) => {
                 <TitledArea title="Tickets" className="w-full">
                     <div className="flex flex-col justify-start items-center w-full">
                         {event.ticketTypes.map((ticket) => (
-                            <TicketType key={ticket.name} ticket={ticket} mode="view" />
+                            <TicketType key={ticket.title} ticket={ticket} mode="view" />
                         ))}
                     </div>
                 </TitledArea>

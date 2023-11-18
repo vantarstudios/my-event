@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import type { IconProps } from '@/types';
 
-const User: FunctionComponent<IconProps> = ({ className }) => {
+const Person: FunctionComponent<IconProps> = ({ className }) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -16,4 +16,4 @@ const User: FunctionComponent<IconProps> = ({ className }) => {
     );
 };
 
-export default User;
+export default Person;

@@ -4,7 +4,7 @@ import type { Mode } from '@/types';
 import { Button } from '@components/ui';
 import { TitledArea } from '@components/ui/layouts';
 import { Input } from '@components/ui/form';
-import { User, Photo } from '@components/ui/icons';
+import { Person, Photo } from '@components/ui/icons';
 import OrganizerCard from './organizer-card';
 
 interface ProfileInformationsProps {
@@ -13,7 +13,7 @@ interface ProfileInformationsProps {
 
 const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode }) => {
     return (
-        <TitledArea title="Profile informations" Icon={User}>
+        <TitledArea title="Profile informations" Icon={Person}>
             <div className="flex flex-wrap justify-center items-start gap-5 pt-5 w-full">
                 <div className="relative">
                     <Image src="/dash-profile.svg" alt="User" width={100} height={100} />

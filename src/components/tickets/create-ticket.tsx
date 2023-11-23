@@ -6,11 +6,16 @@ import { v4 as uuid4 } from 'uuid';
 import { useToggle } from '@/lib/hooks';
 import { capitalize, thousandsCommaFormat } from '@/lib/utils';
 import { ticketTypes, invitationTypes } from '@/types';
+import type { TicketType } from '@/types';
 import { Button } from '@components/ui';
 import { Switch, Input, Select, NumberInput } from '@components/ui/form';
 import { Person, People, Copy } from '@components/ui/icons';
 import { Modal, TitledArea, TitledTextArea, Card } from '@components/ui/layouts';
 import { encodeToBase64 } from 'next/dist/build/webpack/loaders/utils';
+
+interface CreateTicketProps {
+    onSave: (newTicket: TicketType) => void;
+}
 
 const userPlanInfos = {
     eventTitle: 'Event name',
@@ -43,7 +48,7 @@ const getExpectedParticipants = (eventSizeLimit: number) => {
     return buildOptions(eventSizeLimit);
 };
 
-const CreateTicket: FunctionComponent = () => {
+const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
     const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
     const [isGroup, setIsGroup] = useState<boolean>(false);
     const [ticketTitle, setTicketTitle] = useState<string>('');
@@ -129,6 +134,7 @@ const CreateTicket: FunctionComponent = () => {
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsModalOpened(false);
+        onSave({} as TicketType);
     };
 
     return (
@@ -138,7 +144,7 @@ const CreateTicket: FunctionComponent = () => {
                 <Card className="w-[35vw] h-[90vh] py-10 pl-10 pr-5 rounded-[50px]">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full h-full">
                         <div className="flex justify-between items-center">
-                            <p className="text-3xl font-semibold">New ticket</p>
+                            <p className="text-3xl font-semibold">{ticketTitle || 'New ticket'}</p>
                             <Button type="submit">Save</Button>
                         </div>
                         <div className="flex flex-col gap-8 pr-5 overflow-y-auto">

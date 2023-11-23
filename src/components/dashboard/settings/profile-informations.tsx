@@ -26,6 +26,7 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         name="full-name"
                         label="Full name:"
                         value="Gideon AMOUSSOU-CHOUH"
+                        variant="auth"
                         className={`text-sm ${mode === 'view' ? 'bg-white' : ''}`}
                         labelClassName="text-black text-sm font-semibold"
                         disabled={mode === 'view'}
@@ -35,6 +36,7 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         label="Phone number:"
                         type="tel"
                         value="+229 12345678"
+                        variant="auth"
                         className={`text-sm ${mode === 'view' ? 'bg-white' : ''}`}
                         labelClassName="text-sm font-semibold"
                         disabled={mode === 'view'}
@@ -44,6 +46,7 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         label="Email:"
                         type="email"
                         value="hged04@gmail.com"
+                        variant="auth"
                         className={`text-sm ${mode === 'view' ? 'bg-white' : ''}`}
                         labelClassName="text-sm font-semibold"
                         disabled={mode === 'view'}
@@ -53,6 +56,7 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         label="Password:"
                         type="password"
                         value="MyPassword"
+                        variant="auth"
                         className={`text-sm ${mode === 'view' ? 'bg-white' : ''}`}
                         labelClassName="text-sm font-semibold"
                         disabled={mode === 'view'}

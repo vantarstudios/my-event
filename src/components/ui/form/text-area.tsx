@@ -12,10 +12,11 @@ const TextArea: FunctionComponent<TextAreaProps> = ({ value, rows, variant, clas
     return (
         <textarea
             className={cn(
-                'resize-none focus:outline-none',
+                'resize-none rounded-3xl focus:outline-none',
                 variant === 'edit'
-                    ? 'border-none rounded-md caret-primary focus:p-2 focus:bg-gray-100'
-                    : 'w-full h-full rounded-3xl px-8 py-2 ring-transparent bg-white drop-shadow-md border border-opacity-5',
+                    ? 'px-5 py-2 border-none caret-primary placeholder-black placeholder:text-sm focus:px-5 focus:py-2 focus:bg-gray-100'
+                    : 'w-full h-full px-8 py-2 ring-transparent bg-white drop-shadow-md border border-opacity-5',
+                variant === 'edit' && value === '' && 'bg-gray-100',
                 className,
             )}
             value={value}

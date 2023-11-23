@@ -51,7 +51,25 @@ input[type='number'] {
     border: none !important;
 }
 
+.react-time-picker__wrapper {
+    flex-direction: row-reverse;
+}
+
+.react-time-picker__inputGroup {
+    min-width: calc(0.54em * 4) !important;
+}
+
+.react-time-picker__inputGroup__divider {
+    margin-inline: 2px !important;
+}
+
 .react-date-picker__inputGroup__input:focus,
 .react-time-picker__inputGroup__input:focus {
     outline: none !important;
+}
+
+.react-time-picker__inputGroup__amPm {
+    visibility: hidden !important;
+    width: 0;
+    height: 0;
 }

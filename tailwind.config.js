@@ -29,6 +29,9 @@ const tailwindConfig = {
         },
     },
     plugins: [
+        require('@tailwindcss/forms')({
+            strategy: 'class',
+        }),
         function ({ addVariant }) {
             addVariant('child', '& > *');
         },

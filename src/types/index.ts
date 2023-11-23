@@ -1,7 +1,12 @@
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import tags from '@/data/tags';
 
 export type Mode = 'view' | 'edit';
+
+export type EditOrCreateStep = {
+    title: string;
+    content: ReactNode;
+};
 
 export const AccountTypes = ['individual', 'organization'] as const;
 
@@ -44,12 +49,15 @@ export type TicketType = {
           }
     );
 
+export const eventTypes = ['online', 'live'] as const;
+
 export type Tag = (typeof tags)[number];
 
 export type Event = {
     id: string;
     title: string;
     description: string;
+    type: (typeof eventTypes)[number];
     startDate: string;
     endDate?: string;
     location: string;

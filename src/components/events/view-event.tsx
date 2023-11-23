@@ -3,7 +3,7 @@ import type { FunctionComponent } from 'react';
 import type { Event } from '@/types';
 import { EventCard, TagChip } from '@components/events';
 import { TitledArea } from '@components/ui/layouts';
-import TicketType from './ticket-type';
+import { TicketType } from '@components/tickets';
 
 interface ViewEventProps {
     event: Event;

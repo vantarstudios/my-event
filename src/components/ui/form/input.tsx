@@ -24,7 +24,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
         >
             <input
                 className={cn(
-                    'w-full rounded-full pl-8 text-sm outline-none ring-transparent',
+                    'w-full rounded-full pl-8 text-sm focus:outline-none ring-transparent',
                     props.icon ? 'pr-10' : 'pr-4',
                     props.variant === 'auth'
                         ? 'py-2 bg-gray-100'
@@ -39,7 +39,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
                 autoComplete={props.autoComplete}
                 disabled={props.disabled}
             />
-            <div className="absolute bottom-3 right-4">{props.icon}</div>
+            <div className="absolute bottom-2.5 right-4">{props.icon}</div>
         </InputWrapper>
     );
 };

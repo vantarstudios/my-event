@@ -10,6 +10,7 @@ const months = [
     'September',
     'October',
     'November',
+    'December',
 ] as const;
 
 export function monthNumToString(monthNum: number, short: boolean = false): string {

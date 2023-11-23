@@ -2,13 +2,16 @@
 
 import { useState } from 'react';
 import type { FunctionComponent, ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { parseDateTime, serializeDateTime } from '@/lib/utils';
+import Image from 'next/image';
+import { parseDateTime } from '@/lib/utils';
 import type { Event, ParsedDateTime } from '@/types';
 import { TitledArea } from '@components/ui/layouts';
-import { DateInput, TimeInput, LocationInput } from '@components/ui/form';
-import { Calendar, Location } from '@components/ui/icons';
+import { DateRangeInput, TimeRangeInput, LocationInput } from '@components/ui/form';
+import { Location } from '@components/ui/icons';
 
-interface DateAndLocationProps extends Pick<Event, 'startDate' | 'endDate' | 'location'> {}
+interface DateAndLocationProps
+    extends Partial<Pick<Event, 'startDate' | 'endDate' | 'location'>>,
+        Pick<Event, 'type'> {}
 
 const handleChange = <T extends 'date' | 'time'>(
     key: T,
@@ -38,9 +41,11 @@ const handleClear = <T extends 'date' | 'time'>(
     };
 };
 
-const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ startDate, endDate, location }) => {
-    const [locationInputValue, setLocation] = useState<Event['location']>(location);
-    const [startDateTime, setStartDateTime] = useState<ParsedDateTime>(parseDateTime(startDate, 'both'));
+const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ type, startDate, endDate, location }) => {
+    const [locationInputValue, setLocation] = useState<Event['location']>(location || '');
+    const [startDateTime, setStartDateTime] = useState<ParsedDateTime>(
+        startDate ? parseDateTime(startDate, 'both') : { date: null, time: null },
+    );
     const [endDateTime, setEndDateTime] = useState<ParsedDateTime>(
         endDate ? parseDateTime(endDate, 'both') : { date: null, time: null },
     );
@@ -50,82 +55,50 @@ const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ startDate, e
     };
 
     return (
-        <div className="flex flex-wrap justify-start items-start w-full child:pb-10 child:pr-32">
-            <TitledArea title="Date:" className="basis-1/2">
-                <div className="flex justify-between items-center gap-5 w-full px-10 py-4 shadow-md rounded-full border border-gray-100">
-                    <div className="flex items-center gap-5">
-                        <Calendar className="w-5 h-5" />
-                        <div className="flex flex-col items-start gap-2">
-                            <p className="flex justify-start items-center w-full text-primary font-medium">Start</p>
-                            <div className="flex justify-start items-center gap-4 h-full">
-                                <DateInput
-                                    name="startDate"
-                                    value={startDateTime.date}
-                                    minDate={new Date()}
-                                    maxDate={serializeDateTime(endDateTime.date, null)}
-                                    onChange={handleChange('date', setStartDateTime)}
-                                    onClear={handleClear('date', setStartDateTime)}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <hr className="h-1 w-2 bg-black rounded-full" />
-                    <div className="flex items-center gap-5">
-                        <div className="flex flex-col items-start gap-2">
-                            <p className="flex justify-end items-center w-full text-primary font-medium">End</p>
-                            <div className="flex justify-end items-center gap-4">
-                                <DateInput
-                                    name="endDate"
-                                    value={endDateTime.date}
-                                    minDate={serializeDateTime(startDateTime.date, null, new Date())}
-                                    onChange={handleChange('date', setEndDateTime)}
-                                    onClear={handleClear('date', setEndDateTime)}
-                                />
-                            </div>
-                        </div>
-                        <Calendar className={`w-5 h-5 ${endDateTime.date ? 'text-black' : 'text-gray-300'}`} />
-                    </div>
-                </div>
-            </TitledArea>
-            <TitledArea title="Location:" className="basis-1/2">
-                <div className="flex justify-between items-center gap-5 w-full px-5 py-4 shadow-md rounded-full border border-gray-100">
-                    <Location className="w-5 h-5" />
-                    <LocationInput
-                        name="location"
-                        placeholder="Your event's location"
-                        value={locationInputValue}
-                        onChange={handleLocationChange}
-                        className="w-full min-w-max h-full"
-                    />
-                </div>
-            </TitledArea>
-            <TitledArea title="Time:" className="basis-1/3">
-                <div className="flex flex-wrap justify-between items-center gap-5 w-full px-5 py-4 shadow-md rounded-full border border-gray-100">
-                    <div className="flex justify-between items-center gap-5 w-full">
-                        <div className="flex justify-start items-center gap-5 -mr-5">
-                            <p className="text-primary font-medium">Start</p>
-                            <TimeInput
-                                name="startTime"
-                                value={startDateTime.time}
-                                className="text-lg"
-                                onChange={handleChange('time', setStartDateTime)}
-                                onClear={handleClear('time', setStartDateTime)}
+        <div className="flex flex-wrap justify-between items-start w-full">
+            <div className="basis-1/4">
+                <DateRangeInput
+                    startDate={startDateTime.date}
+                    endDate={endDateTime.date}
+                    startDateLabel="Starting date:"
+                    endDateLabel="Ending date:"
+                    onStartDateChange={handleChange('date', setStartDateTime)}
+                    onEndDateChange={handleChange('date', setEndDateTime)}
+                    onStartDateClear={handleClear('date', setStartDateTime)}
+                    onEndDateClear={handleClear('date', setEndDateTime)}
+                />
+            </div>
+            {type === 'live' && (
+                <TitledArea title="Location:" className="basis-1/3">
+                    <div className="flex flex-col justify-start items-center gap-5 w-full">
+                        <div className="flex justify-between items-center gap-5 w-full h-12 px-8 rounded-full bg-gray-100">
+                            <Location className="w-5 h-5" />
+                            <LocationInput
+                                name="location"
+                                placeholder="Your event's location"
+                                value={locationInputValue}
+                                onChange={handleLocationChange}
+                                className="w-full min-w-max bg-inherit"
                             />
                         </div>
-                        <hr className="h-1 w-2 bg-black rounded-full" />
-                        <div className="flex justify-end items-center">
-                            <TimeInput
-                                name="endTime"
-                                value={endDateTime.time}
-                                className="text-lg"
-                                onChange={handleChange('time', setEndDateTime)}
-                                onClear={handleClear('time', setEndDateTime)}
-                            />
-                            <p className="text-primary font-medium">End</p>
+                        <div className="relative w-full aspect-square">
+                            <Image src="/images/map.png" alt="Event location" fill={true} />
                         </div>
                     </div>
-                </div>
-            </TitledArea>
+                </TitledArea>
+            )}
+            <div className="basis-1/4">
+                <TimeRangeInput
+                    startTime={startDateTime.time}
+                    endTime={endDateTime.time}
+                    startTimeLabel="Starting time:"
+                    endTimeLabel="Ending time:"
+                    onStartTimeChange={handleChange('time', setStartDateTime)}
+                    onEndTimeChange={handleChange('time', setEndDateTime)}
+                    onStartTimeClear={handleClear('time', setStartDateTime)}
+                    onEndTimeClear={handleClear('time', setEndDateTime)}
+                />
+            </div>
         </div>
     );
 };

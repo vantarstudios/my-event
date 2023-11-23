@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -61,7 +61,7 @@ const SignUpPage: NextPage = () => {
     ];
 
     return (
-        <Fragment>
+        <div className="flex flex-col justify-start items-center gap-12 w-[max(450px,25%)] animate-slide">
             <AuthStepper currentStep={step} totalSteps={signUpSteps.length} onStepChange={handleStepChange} />
             <h1 className="text-5xl font-bold">
                 Let&apos;s&nbsp;
@@ -87,7 +87,7 @@ const SignUpPage: NextPage = () => {
                     Sign in
                 </Link>
             </p>
-        </Fragment>
+        </div>
     );
 };
 

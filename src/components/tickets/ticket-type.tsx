@@ -7,9 +7,10 @@ import { Person, Pencil, TrashCan, Eye } from '@components/ui/icons';
 interface TicketTypeProps {
     ticket: TTicketTypeType; // Yep, I know it's funny
     mode: Mode;
+    onDelete?: () => void;
 }
 
-const TicketType: FunctionComponent<TicketTypeProps> = ({ ticket, mode }) => {
+const TicketType: FunctionComponent<TicketTypeProps> = ({ ticket, mode, onDelete }) => {
     return (
         <div key={ticket.title} className="flex justify-between items-center w-full p-5 font-bold bg-gray-50">
             <div className="flex gap-4">
@@ -26,7 +27,7 @@ const TicketType: FunctionComponent<TicketTypeProps> = ({ ticket, mode }) => {
                             <Pencil className="w-5 h-5" />
                             <p>Edit</p>
                         </Button>
-                        <Button className="px-0 flex gap-2 w-fit h-full text-inherit bg-inherit">
+                        <Button className="px-0 flex gap-2 w-fit h-full text-inherit bg-inherit" onClick={onDelete}>
                             <TrashCan className="w-5 h-5" />
                             <p>Delete</p>
                         </Button>

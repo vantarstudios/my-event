@@ -4,9 +4,9 @@ import { Input } from '@components/ui/form';
 const AccountInformations: FunctionComponent = () => {
     return (
         <form className="relative flex flex-col justify-start gap-5 w-full">
-            <Input name="first-name" label="First name" trailing="*" autoComplete="given-name" />
-            <Input name="last-name" label="Last name" trailing="*" autoComplete="family-name" />
-            <Input name="email" label="Email" trailing="*" autoComplete="email" type="email" />
+            <Input name="first-name" label="First name" trailing="*" autoComplete="given-name" variant="auth" />
+            <Input name="last-name" label="Last name" trailing="*" autoComplete="family-name" variant="auth" />
+            <Input name="email" label="Email" trailing="*" autoComplete="email" type="email" variant="auth" />
             <Input
                 name="password"
                 label="Password"
@@ -14,6 +14,7 @@ const AccountInformations: FunctionComponent = () => {
                 wrapperClassName="peer"
                 autoComplete="new-password"
                 type="password"
+                variant="auth"
             />
             <Input
                 name="password-confirm"
@@ -22,6 +23,7 @@ const AccountInformations: FunctionComponent = () => {
                 wrapperClassName="peer"
                 autoComplete="new-password"
                 type="password"
+                variant="auth"
             />
             <div className="absolute left-full bottom-1/4 ml-10 p-8 text-white bg-black rounded-3xl w-max h-fit hidden peer-focus-within:block">
                 <p>Password must contain:</p>

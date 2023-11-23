@@ -17,9 +17,7 @@ const AuthLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
                 <ArrowLeft className="w-6 h-6" />
                 Back
             </Button>
-            <div className="flex flex-col justify-start items-center gap-12 w-[max(450px,25%)] child:animate-slide">
-                {children}
-            </div>
+            {children}
         </main>
     );
 };

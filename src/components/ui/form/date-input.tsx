@@ -34,7 +34,7 @@ const DateInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
             format="dd/MM/yyyy"
             calendarIcon={null}
             showLeadingZeros={true}
-            clearIcon={value !== null ? <Cross onClick={onClear} className="w-4 h-4" /> : null}
+            clearIcon={<Cross onClick={onClear} className={`w-4 h-4 ${value === null && 'opacity-0'}`} />}
             dayPlaceholder="DD"
             monthPlaceholder="MM"
             yearPlaceholder="YYYY"

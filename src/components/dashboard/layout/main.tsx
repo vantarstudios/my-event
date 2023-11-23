@@ -27,6 +27,8 @@ const Main: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const pathname = usePathname();
     const [activeViewIndex, setActiveViewIndex] = useState<number>(0);
 
+    const isAsideVisible = pathname.indexOf('/dashboard/events/create') === -1;
+
     useEffect(() => {
         const activeView = views.reduce((prev, current) => {
             return pathname.startsWith(current.href) && current.href.length > prev!.href.length ? current : prev;
@@ -37,7 +39,11 @@ const Main: FunctionComponent<PropsWithChildren> = ({ children }) => {
 
     return (
         <main className="flex w-screen h-[calc(100%-192px)] max-h-[calc(100%-192px)]">
-            <aside className="flex flex-col gap-8 w-1/5 min-w-[250px] h-full pt-10 text-white bg-black">
+            <aside
+                className={`flex flex-col gap-8 w-1/5 min-w-[250px] h-full pt-10 text-white bg-black transition-all ${
+                    !isAsideVisible && 'hidden'
+                }`}
+            >
                 <p className="pl-10 text-lg font-bold">Dashboard</p>
                 <ul className="flex flex-col gap-5 w-full flex-1 pl-5">
                     {views.map(({ name, href, icon }, index) => {

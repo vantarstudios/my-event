@@ -10,6 +10,7 @@ const events: Event[] = [
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget fermentum aliquam, elit nunc aliquet nunc, vitae aliquam nisi nunc eget nunc. Donec euismod, nisl eget fermentum aliquam, elit nunc aliquet nunc, vitae aliquam nisi nunc eget nunc.',
         title: 'NBA Party',
+        type: 'live',
         startDate: getDaysFromToday(),
         cover: 'image_3.png',
         location: 'Continental Hotel, Victoria Island, Lagos, Nigeria',
@@ -30,6 +31,7 @@ const events: Event[] = [
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget fermentum aliquam, elit nunc aliquet nunc, vitae aliquam nisi nunc eget nunc. Donec euismod, nisl eget fermentum aliquam, elit nunc aliquet nunc, vitae aliquam nisi nunc eget nunc.',
         title: 'AfricaTech 2023: Digitalisation and e-commerce',
+        type: 'live',
         startDate: getDaysFromToday(3),
         cover: 'image_2.png',
         location: 'Continental Hotel, Victoria Island, Lagos, Nigeria',
@@ -50,6 +52,7 @@ const events: Event[] = [
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget fermentum aliquam, elit nunc aliquet nunc, vitae aliquam nisi nunc eget nunc. Donec euismod, nisl eget fermentum aliquam, elit nunc aliquet nunc, vitae aliquam nisi nunc eget nunc.',
         title: 'AfricaTech 2023: Digitalisation and e-commerce',
+        type: 'live',
         startDate: getDaysFromToday(10),
         cover: 'image_3.png',
         location: 'Continental Hotel, Victoria Island, Lagos, Nigeria',
@@ -75,6 +78,7 @@ const events: Event[] = [
             'aliquet nunc, vitae aliquam nisi nunc eget nunc. Donec euismod, nisl eget fermentum aliquam, ' +
             'elit nunc aliquet nunc, vitae aliquam nisi nunc eget nunc.',
         title: 'AfricaTech 2023: Digitalisation and e-commerce',
+        type: 'live',
         startDate: getDaysFromToday(60),
         cover: 'image_1.png',
         location: 'Continental Hotel, Victoria Island, Lagos, Nigeria',

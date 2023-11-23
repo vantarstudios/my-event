@@ -1,6 +1,5 @@
 'use client';
 
-import { Fragment } from 'react';
 import type { FormEvent } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/navigation';
@@ -22,7 +21,7 @@ const SignInPage: NextPage = () => {
     };
 
     return (
-        <Fragment>
+        <div className="flex flex-col justify-start items-center gap-12 w-[max(450px,25%)] animate-slide">
             <h1 className="text-5xl font-bold py-10">
                 Let&apos;s&nbsp;
                 <span className="text-primary">sign</span>&nbsp; you&nbsp;
@@ -36,6 +35,7 @@ const SignInPage: NextPage = () => {
                     type="email"
                     label="Email"
                     name="email"
+                    variant="auth"
                     autoComplete="email"
                     onChange={() => console.log('Email')}
                 />
@@ -43,6 +43,7 @@ const SignInPage: NextPage = () => {
                     type={isPasswordVisible ? 'text' : 'password'}
                     label="Password"
                     name="password"
+                    variant="auth"
                     autoComplete="current-password"
                     onChange={() => console.log('Email')}
                     icon={
@@ -57,7 +58,6 @@ const SignInPage: NextPage = () => {
                     <Checkbox
                         name="save-login-infos"
                         label="Remember me"
-                        labelSide="right"
                         checked={saveLoginInfos}
                         onChange={toggleSaveLoginInfos}
                     />
@@ -80,7 +80,7 @@ const SignInPage: NextPage = () => {
                     Sign up
                 </Link>
             </p>
-        </Fragment>
+        </div>
     );
 };
 

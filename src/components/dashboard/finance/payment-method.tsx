@@ -1,14 +1,14 @@
 import type { FunctionComponent } from 'react';
-import type { IconProps, PaymentMethod, PaymentMethodType } from '@/types';
+import type { IconProps, PaymentMethod as PaymentMethodType, PaymentMethodType as PaymentMethodTypeType } from '@/types';
 import { Button } from '@components/ui';
 import { BankCard, Pencil, TrashCan } from '@components/ui/icons';
 
-const paymentMethodIcons: Record<PaymentMethodType, FunctionComponent<IconProps>> = {
+const paymentMethodIcons: Record<PaymentMethodTypeType, FunctionComponent<IconProps>> = {
     card: BankCard,
     paypal: BankCard,
 };
 
-interface PaymentMethodProps extends PaymentMethod {}
+interface PaymentMethodProps extends PaymentMethodType {}
 
 const PaymentMethod: FunctionComponent<PaymentMethodProps> = ({ type, label }) => {
     const PaymentMethodIcon = paymentMethodIcons[type];

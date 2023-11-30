@@ -16,7 +16,7 @@ const ViewEvent: FunctionComponent<ViewEventProps> = ({ event }) => {
                 <EventCard startDate={event.startDate} cover={event.cover} format="unconstrained" asLink={false} />
             </div>
             <div className="flex flex-col gap-8 overflow-y-auto w-2/3 h-full pl-10">
-                <p className="text-3xl font-semibold">{event.title}</p>
+                <p className="text-2xl font-semibold">{event.title}</p>
                 <p>{event.description}</p>
                 <div className="flex flex-wrap justify-start items-center gap-2 w-full h-fit">
                     {event.tags.map((tag) => (

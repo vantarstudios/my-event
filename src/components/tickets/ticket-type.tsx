@@ -12,29 +12,29 @@ interface TicketTypeProps {
 
 const TicketType: FunctionComponent<TicketTypeProps> = ({ ticket, mode, onDelete }) => {
     return (
-        <div key={ticket.title} className="flex justify-between items-center w-full p-5 font-bold bg-gray-50">
+        <div key={ticket.title} className="flex justify-between items-center w-full p-3 text-black font-bold bg-gray-50">
             <div className="flex gap-4">
                 <span className="w-1 min-h-full rounded-full border-2 border-black bg-black" />
-                <div className="flex gap-4 w-fit py-2 h-full">
+                <div className="flex items-center gap-4 w-fit py-2 h-full">
                     <p>{ticket.title}</p>
-                    <Person className="w-6 h-6" />
+                    <Person className="w-5 h-5" />
                 </div>
             </div>
             <div className="flex gap-10">
                 {mode === 'edit' && (
                     <Fragment>
-                        <Button className="px-0 flex gap-2 w-fit h-full text-inherit bg-inherit">
-                            <Pencil className="w-5 h-5" />
+                        <Button className="px-0 flex items-center gap-2 w-fit h-full text-inherit bg-inherit hover:underline">
+                            <Pencil className="w-4 h-4" />
                             <p>Edit</p>
                         </Button>
-                        <Button className="px-0 flex gap-2 w-fit h-full text-inherit bg-inherit" onClick={onDelete}>
-                            <TrashCan className="w-5 h-5" />
+                        <Button className="px-0 flex items-center gap-2 w-fit h-full text-inherit bg-inherit hover:underline" onClick={onDelete}>
+                            <TrashCan className="w-4 h-4" />
                             <p>Delete</p>
                         </Button>
                     </Fragment>
                 )}
-                <Button className="px-0 flex gap-2 w-fit h-full text-inherit bg-inherit">
-                    <Eye className="w-5 h-5" />
+                <Button className="px-0 flex items-center gap-2 w-fit h-ful text-black bg-inherit hover:underline">
+                    <Eye className="w-4 h-4" />
                     <p>Show</p>
                 </Button>
             </div>

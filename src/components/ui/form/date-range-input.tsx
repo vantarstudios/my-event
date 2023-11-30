@@ -29,8 +29,8 @@ const DateRangeInput: FunctionComponent<DateRangeInputProps> = ({
         <div className="flex justify-between items-center gap-5 w-full">
             <div className="flex flex-col justify-center items-start gap-3">
                 <p className="flex justify-start items-center w-full text-primary font-semibold">{startDateLabel}</p>
-                <div className="flex justify-between items-center gap-4 px-8 h-12 bg-gray-100 rounded-full">
-                    <Calendar className={`w-5 h-5 ${endDate ? 'text-black' : 'text-gray-400'}`} />
+                <div className="flex justify-between items-center gap-4 px-8 h-10 bg-gray-100 rounded-full">
+                    <Calendar className={`w-4 h-4 ${startDate ? 'text-black' : 'text-gray-400'}`} />
                     <DateInput
                         name="startDate"
                         value={startDate}
@@ -43,8 +43,8 @@ const DateRangeInput: FunctionComponent<DateRangeInputProps> = ({
             </div>
             <div className="flex flex-col justify-center items-start gap-3">
                 <p className="flex justify-start items-center w-full text-primary font-semibold">{endDateLabel}</p>
-                <div className="flex justify-between items-center gap-4 px-8 h-12 bg-gray-100 rounded-full">
-                    <Calendar className={`w-5 h-5 ${endDate ? 'text-black' : 'text-gray-400'}`} />
+                <div className="flex justify-between items-center gap-4 px-8 h-10 bg-gray-100 rounded-full">
+                    <Calendar className={`w-4 h-4 ${endDate ? 'text-black' : 'text-gray-400'}`} />
                     <DateInput
                         name="endDate"
                         value={endDate}

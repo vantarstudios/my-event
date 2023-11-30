@@ -21,7 +21,7 @@ const EventEditionStepper: FunctionComponent<EventEditionStepperProps> = ({
                     className="flex justify-center items-center gap-5 cursor-pointer h-full"
                 >
                     <HoledDisk
-                        className={`w-8 h-8 ${
+                        className={`w-7 h-7 ${
                             currentStepIndex === index
                                 ? 'text-black'
                                 : currentStepIndex > index
@@ -30,7 +30,7 @@ const EventEditionStepper: FunctionComponent<EventEditionStepperProps> = ({
                         }`}
                     />
                     <div
-                        className={`text-lg ${currentStepIndex === index ? 'font-bold' : 'font-medium'} ${
+                        className={`${currentStepIndex === index ? 'font-bold' : 'font-medium'} ${
                             currentStepIndex >= index ? 'text-black' : 'text-gray-300'
                         }`}
                     >

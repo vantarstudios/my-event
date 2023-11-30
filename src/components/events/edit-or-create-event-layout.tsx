@@ -30,7 +30,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
             {layout === 'create' && (
                 <div className="flex justify-between items-center w-full">
                     <p className="text-2xl text-primary font-semibold">Event</p>
-                    <Button onClick={handleStepChange(currentStepIndex + 1)}>
+                    <Button onClick={handleStepChange(currentStepIndex + 1)} className="text-sm">
                         {currentStepIndex === steps.length - 1 ? 'Finish' : 'Save and continue'}
                     </Button>
                 </div>

@@ -16,7 +16,7 @@ const DashboardFinancePage: NextPage = () => {
                 <CreateWorkspaceButton />
             </div>
             <PeriodFilter />
-            <div className="flex flex-wrap justify-between items-start gap-10 child:2/5 w-full">
+            <div className="flex flex-wrap justify-start items-start gap-10 child:2/5 w-full">
                 <CardWithTitle
                     title="Total balance"
                     middle={

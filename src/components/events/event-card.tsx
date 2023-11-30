@@ -15,7 +15,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startDate, co
     return (
         <Link
             href={asLink && id ? `/dashboard/events/${id}` : ''}
-            className={`relative flex flex-col gap-2 ${format === 'unconstrained' ? 'w-full h-full' : 'w-[270px]'} ${
+            className={`relative flex flex-col gap-2 ${format === 'unconstrained' ? 'w-full h-full' : 'w-[250px]'} ${
                 !asLink && 'pointer-events-none'
             }`}
         >
@@ -33,8 +33,8 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startDate, co
                 style={{
                     backgroundImage: `url('/images/${cover}')`,
                 }}
-                className={`min-w-[270px] min-h-[170px] bg-cover bg-center rounded-3xl ${
-                    format === 'unconstrained' ? 'h-full' : 'w-[270px] h-[170px]'
+                className={`min-w-[250px] min-h-[170px] bg-cover bg-center rounded-3xl ${
+                    format === 'unconstrained' ? 'h-full' : 'w-[250px] h-[170px]'
                 }`}
             />
             {title && <div className="w-full break-words break-before-all text-sm font-semibold">{title}</div>}

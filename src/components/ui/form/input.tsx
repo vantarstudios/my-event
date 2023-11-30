@@ -38,6 +38,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
                 name={props.name}
                 autoComplete={props.autoComplete}
                 disabled={props.disabled}
+                autoFocus={props.autoFocus}
             />
             <div className="absolute bottom-2.5 right-4">{props.icon}</div>
         </InputWrapper>

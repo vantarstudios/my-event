@@ -4,7 +4,7 @@ import { Input } from '@components/ui/form';
 const AccountInformations: FunctionComponent = () => {
     return (
         <form className="relative flex flex-col justify-start gap-5 w-full">
-            <Input name="first-name" label="First name" trailing="*" autoComplete="given-name" variant="auth" />
+            <Input name="first-name" label="First name" trailing="*" autoComplete="given-name" variant="auth" autoFocus />
             <Input name="last-name" label="Last name" trailing="*" autoComplete="family-name" variant="auth" />
             <Input name="email" label="Email" trailing="*" autoComplete="email" type="email" variant="auth" />
             <Input

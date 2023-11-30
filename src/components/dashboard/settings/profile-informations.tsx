@@ -1,7 +1,6 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
 import type { Mode } from '@/types';
-import { Button } from '@components/ui';
 import { TitledArea } from '@components/ui/layouts';
 import { Input } from '@components/ui/form';
 import { Person, Photo } from '@components/ui/icons';
@@ -17,9 +16,17 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
             <div className="flex flex-wrap justify-center items-start gap-5 pt-5 w-full">
                 <div className="relative">
                     <Image src="/dash-profile.svg" alt="User" width={100} height={100} />
-                    <Button className="absolute bottom-0 right-0 p-2 aspect-square rounded-full">
-                        <Photo />
-                    </Button>
+                    <div className="absolute bottom-0 right-0 w-fit aspect-square text-white bg-black rounded-full overflow-hidden hover:bg-opacity-90">
+                        <div className="relative flex justify-center items-center w-full h-full p-2">
+                            <Photo />
+                            <input
+                                type="file"
+                                name="profile-picture"
+                                accept="image/*"
+                                className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                            />
+                        </div>
+                    </div>
                 </div>
                 <div className="flex flex-wrap gap-5 justify-evenly flex-1 child:w-2/5">
                     <Input

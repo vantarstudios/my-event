@@ -139,7 +139,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
 
     return (
         <Fragment>
-            <Button onClick={handleModalOpen}>+ Add a ticket</Button>
+            <Button onClick={handleModalOpen} className="text-sm">+ Add a ticket</Button>
             <Modal isOpened={isModalOpened}>
                 <Card className="w-[35vw] h-[90vh] py-10 pl-10 pr-5 rounded-[50px]">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full h-full">

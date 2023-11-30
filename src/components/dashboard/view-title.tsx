@@ -7,8 +7,8 @@ interface ViewTitleProps extends PropsWithChildren {
 
 const ViewTitle: FunctionComponent<ViewTitleProps> = ({ Icon, children }) => {
     return (
-        <p className="flex items-center gap-4 text-2xl text-black font-bold">
-            {Icon && <Icon className="w-7 h-7" />}
+        <p className="flex items-center gap-4 text-xl text-black font-bold">
+            {Icon && <Icon className="w-6 h-6" />}
             {children}
         </p>
     );

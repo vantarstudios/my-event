@@ -21,7 +21,7 @@ const Plans: FunctionComponent<PlansProps> = ({ layout }) => {
     const [selectedPlan, setSelectedPlan] = useState<Plan>(plans[0] as Plan);
 
     return (
-        <div className="flex flex-col justify-start items-start gap-10 h-full">
+        <div className="flex flex-col justify-start items-start gap-5 h-full">
             <div className={`flex flex-wrap gap-0.5 w-full ${layoutsStyle[layout]}`}>
                 {plans.map((plan, index) => (
                     <Button

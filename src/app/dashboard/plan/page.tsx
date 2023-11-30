@@ -9,7 +9,7 @@ const DashboardPlanPage: NextPage = () => {
         <div className="relative flex flex-col gap-8 h-full">
             <div className="flex justify-between items-center">
                 <ViewTitle Icon={Planning}>My plan</ViewTitle>
-                <Button className="px-10">Compare</Button>
+                <Button className="px-10 text-sm">Compare</Button>
             </div>
             <Plans layout="left" />
         </div>

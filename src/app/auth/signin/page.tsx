@@ -13,7 +13,7 @@ import { Eye, EyeOff } from '@components/ui/icons';
 const SignInPage: NextPage = () => {
     const router = useRouter();
     const [isPasswordVisible, toggleIsPasswordVisible] = useToggle<boolean>(false, true);
-    const [saveLoginInfos, toggleSaveLoginInfos] = useToggle<boolean>(true, false);
+    const [saveLoginInfos, toggleSaveLoginInfos] = useToggle<boolean>(false, true);
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -21,15 +21,15 @@ const SignInPage: NextPage = () => {
     };
 
     return (
-        <div className="flex flex-col justify-start items-center gap-12 w-[max(450px,25%)] animate-slide">
-            <h1 className="text-5xl font-bold py-10">
+        <div className="flex flex-col justify-start items-center gap-10 w-[max(450px,25%)] animate-slide">
+            <h1 className="text-5xl font-bold">
                 Let&apos;s&nbsp;
                 <span className="text-primary">sign</span>&nbsp; you&nbsp;
                 <span className="text-primary">in!</span>
             </h1>
             <form
                 onSubmit={handleSubmit}
-                className="child:w-full flex flex-col justify-start items-center gap-10 w-full"
+                className="child:w-full flex flex-col justify-start items-center gap-10 w-full pb-5"
             >
                 <Input
                     type="email"
@@ -38,6 +38,7 @@ const SignInPage: NextPage = () => {
                     variant="auth"
                     autoComplete="email"
                     onChange={() => console.log('Email')}
+                    autoFocus
                 />
                 <Input
                     type={isPasswordVisible ? 'text' : 'password'}
@@ -74,7 +75,7 @@ const SignInPage: NextPage = () => {
                 height={50}
                 className="shadow-sm border rounded-full cursor-pointer"
             />
-            <p className="flex justify-center items-center w-full pb-20">
+            <p className="flex justify-center items-center w-full pb-10">
                 Don&apos;t have an account?&nbsp;
                 <Link href="/auth/signup" className="font-medium text-primary underline">
                     Sign up

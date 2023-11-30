@@ -31,15 +31,15 @@ const AuthStepper: FunctionComponent<AuthStepperProps> = ({ currentStep, totalSt
             </div>
             <div className="relative flex w-full items-center justify-between">
                 {new Array(totalSteps).fill(0).map((_, index) => (
-                    <div
+                    <button
                         key={index}
                         onClick={currentStep >= index + 1 ? () => onStepChange && onStepChange(index + 1) : undefined}
                         className={`flex w-12 aspect-square items-center justify-center rounded-full text-xl text-white ${
-                            currentStep >= index + 1 ? 'bg-primary cursor-pointer' : 'bg-black cursor-not-allowed'
+                            currentStep >= index + 1 ? 'bg-primary outline-black cursor-pointer' : 'bg-black outline-primary cursor-not-allowed'
                         }`}
                     >
                         {index + 1}
-                    </div>
+                    </button>
                 ))}
             </div>
         </div>

@@ -61,7 +61,7 @@ const SignUpPage: NextPage = () => {
     ];
 
     return (
-        <div className="flex flex-col justify-start items-center gap-12 w-[max(450px,25%)] animate-slide">
+        <div className="flex flex-col justify-start items-center gap-10 w-[max(450px,25%)] animate-slide">
             <AuthStepper currentStep={step} totalSteps={signUpSteps.length} onStepChange={handleStepChange} />
             <h1 className="text-5xl font-bold">
                 Let&apos;s&nbsp;
@@ -81,7 +81,7 @@ const SignUpPage: NextPage = () => {
                     className="shadow-sm border rounded-full cursor-pointer"
                 />
             )}
-            <p className="flex justify-center items-center w-full pb-20">
+            <p className="flex justify-center items-center w-full pt-5 pb-20">
                 Already have an account?&nbsp;
                 <Link href="/auth/signin" className="font-medium text-primary underline">
                     Sign in

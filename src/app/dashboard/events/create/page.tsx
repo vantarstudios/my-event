@@ -12,8 +12,8 @@ import { ChevronLeft, Online, Location } from '@components/ui/icons';
 import { CreateEvent } from '@components/events';
 
 const eventTypeIcons: Record<(typeof eventTypes)[number], ReactNode> = {
-    online: <Online className="w-16 h-16" />,
-    live: <Location className="w-14 h-14" />,
+    online: <Online className="w-14 h-14" />,
+    live: <Location className="w-12 h-12" />,
 };
 
 const DashboardEditCreatePage: NextPage = () => {
@@ -29,15 +29,15 @@ const DashboardEditCreatePage: NextPage = () => {
     return (
         <div className="w-full h-full">
             <Button
-                className="flex justify-center items-center gap-2 mb-5 bg-inherit text-3xl text-black font-bold"
+                className="flex justify-center items-center gap-2 mb-5 bg-inherit text-xl text-black font-bold"
                 onClick={() => router.back()}
             >
-                <ChevronLeft strokeWidth="regular" className="w-5 h-5" />
+                <ChevronLeft strokeWidth="regular" className="w-4 h-4" />
                 New event
             </Button>
             {!startCreation && (
                 <div className="flex flex-col justify-start items-center gap-10">
-                    <p className="text-4xl text-primary font-bold">What type of event are you creating?</p>
+                    <p className="text-2xl text-primary font-bold">What type of event are you creating?</p>
                     <div className="flex justify-between items-center gap-10 py-10">
                         {eventTypes.map((type) => (
                             <Card
@@ -46,7 +46,7 @@ const DashboardEditCreatePage: NextPage = () => {
                                 className="flex flex-col justify-center items-center gap-5 h-48 aspect-square rounded-xl shadow-md cursor-pointer"
                             >
                                 {eventTypeIcons[type]}
-                                <p className="text-2xl font-medium">{capitalize(type)}</p>
+                                <p className="text-xl font-medium">{capitalize(type)}</p>
                                 <Radio name="event-type" checked={eventType === type} />
                             </Card>
                         ))}

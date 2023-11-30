@@ -9,7 +9,7 @@ interface PlanCardProps {
 const PlanPackagesList: FunctionComponent<PlanCardProps> = ({ packages }) => {
     return (
         <div
-            className={`flex flex-wrap items-start gap-5 w-full ${
+            className={`flex flex-wrap items-start gap-5 w-full py-5 ${
                 packages.length === 1 ? 'justify-start' : 'justify-evenly'
             }`}
         >

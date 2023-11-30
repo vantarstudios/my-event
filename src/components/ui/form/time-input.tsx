@@ -99,7 +99,7 @@ const TimeInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
     };
 
     return (
-        <div className="relative flex justify-between items-center gap-4 px-5 h-12 bg-gray-100 rounded-full min-w-max">
+        <div className="relative flex justify-between items-center gap-4 px-5 h-10 bg-gray-100 rounded-full min-w-max">
             <TimePicker
                 {...props}
                 id={props.name}
@@ -112,9 +112,9 @@ const TimeInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
                 minutePlaceholder="00"
                 onChange={handleChange}
                 clockClassName="border-0 outline-none"
-                className={cn('border-0 focus:outline-none font-semibold', className)}
+                className={cn('border-0 focus:outline-none font-medium', className)}
             />
-            <div className="flex gap-3 text-lg child:cursor-pointer">
+            <div className="flex gap-3 child:cursor-pointer">
                 <span
                     onClick={handleAmPmChange('am')}
                     className={`text-gray-400 ${amPm === 'am' && 'text-primary font-semibold'}`}

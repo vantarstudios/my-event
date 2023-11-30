@@ -55,7 +55,7 @@ const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ type, startD
     };
 
     return (
-        <div className="flex flex-wrap justify-between items-start w-full">
+        <div className="flex flex-wrap justify-between items-start w-full pb-5">
             <div className="basis-1/4">
                 <DateRangeInput
                     startDate={startDateTime.date}
@@ -71,8 +71,8 @@ const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ type, startD
             {type === 'live' && (
                 <TitledArea title="Location:" className="basis-1/3">
                     <div className="flex flex-col justify-start items-center gap-5 w-full">
-                        <div className="flex justify-between items-center gap-5 w-full h-12 px-8 rounded-full bg-gray-100">
-                            <Location className="w-5 h-5" />
+                        <div className="flex justify-between items-center gap-5 w-full h-10 px-8 rounded-full bg-gray-100">
+                            <Location className={`w-4 h-4 ${locationInputValue ? 'text-black' : 'text-gray-400'}`} />
                             <LocationInput
                                 name="location"
                                 placeholder="Your event's location"

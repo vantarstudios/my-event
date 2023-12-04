@@ -8,7 +8,7 @@ import { capitalize, thousandsCommaFormat } from '@/lib/utils';
 import { ticketTypes, invitationTypes } from '@/types';
 import type { TicketType } from '@/types';
 import { Button } from '@components/ui';
-import { Switch, Input, Select, NumberInput } from '@components/ui/form';
+import { Switch, Input, Select, NumberInput, Checkbox } from '@components/ui/form';
 import { Person, People, Copy } from '@components/ui/icons';
 import { Modal, TitledArea, TitledTextArea, Card } from '@components/ui/layouts';
 import { encodeToBase64 } from 'next/dist/build/webpack/loaders/utils';
@@ -21,7 +21,7 @@ const userPlanInfos = {
     eventTitle: 'Event name',
     currency: 'XOF',
     eventSizeLimit: 100,
-    ticketsProcessingFeesPercentage: 2,
+    ticketsProcessingFeesPercentage: 20,
 };
 
 const MAX_GROUP_SIZE = 10;
@@ -65,6 +65,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
     const [price, setPrice] = useState<number>(0);
     const [ticketDescription, setTicketDescription] = useState<string>('');
     const [expectedParticipants, setExpectedParticipants] = useState<string>('Unlimited');
+    const [transferFees, toggleTransferFees] = useToggle<boolean>(false, true);
 
     const pricePerParticipant = `${thousandsCommaFormat(
         price / (selectedGroupSize === 'Unlimited' ? MAX_GROUP_SIZE : Number(selectedGroupSize)),
@@ -141,17 +142,17 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
         <Fragment>
             <Button onClick={handleModalOpen} className="text-sm">+ Add a ticket</Button>
             <Modal isOpened={isModalOpened}>
-                <Card className="w-[35vw] h-[90vh] py-10 pl-10 pr-5 rounded-[50px]">
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full h-full">
+                <Card className="w-[35vw] h-[90vh] py-5 pl-5 pr-5">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full h-full pl-5">
                         <div className="flex justify-between items-center">
-                            <p className="text-3xl font-semibold">{ticketTitle || 'New ticket'}</p>
+                            <p className="text-2xl font-semibold">{ticketTitle || 'New ticket'}</p>
                             <Button type="submit">Save</Button>
                         </div>
-                        <div className="flex flex-col gap-8 pr-5 overflow-y-auto">
+                        <div className="flex flex-col gap-7 pr-5 pb-5 overflow-y-auto">
                             <div className="flex justify-center items-center gap-5">
                                 <Card
                                     onClick={handleIsGroupClick(false)}
-                                    className={`flex justify-between items-center gap-5 h-20 border border-opacity-10 cursor-pointer ${
+                                    className={`flex justify-between items-center gap-5 h-16 border border-opacity-10 cursor-pointer ${
                                         isGroup ? 'text-black bg-white' : 'text-white bg-primary'
                                     }`}
                                 >
@@ -160,7 +161,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                 </Card>
                                 <Card
                                     onClick={handleIsGroupClick(true)}
-                                    className={`flex justify-between items-center gap-5 h-20 border border-opacity-10 cursor-pointer ${
+                                    className={`flex justify-between items-center gap-5 h-16 border border-opacity-10 cursor-pointer ${
                                         isGroup ? 'text-white bg-primary' : 'text-black bg-white'
                                     }`}
                                 >
@@ -176,6 +177,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                 rows={1}
                                 maxLength={150}
                                 variant="form"
+                                className="text-sm"
                             />
                             <TitledArea
                                 title="Type of ticket:"
@@ -186,12 +188,12 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                     </div>
                                 }
                             >
-                                <div className="flex justify-between items-center gap-10">
+                                <div className="flex justify-between items-center gap-10 text-sm">
                                     {ticketTypes.map((ticketType) => (
                                         <Button
                                             key={ticketType}
                                             onClick={handleTicketTypeClick(ticketType)}
-                                            className={`w-full ${
+                                            className={`w-full py-2 ${
                                                 selectedTicketTypes.includes(ticketType) && 'bg-primary'
                                             }`}
                                         >
@@ -208,6 +210,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                             value={selectedGroupSize}
                                             options={getGroupSizes(userPlanInfos.eventSizeLimit)}
                                             onChange={handleGroupSizeChange}
+                                            wrapperClassName="text-sm"
                                         />
                                     </TitledArea>
                                     <TitledArea title="Groups limit:">
@@ -216,6 +219,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                             value={selectedGroupsLimit}
                                             options={getGroupsLimit(userPlanInfos.eventSizeLimit, selectedGroupSize)}
                                             onChange={setSelectedGroupsLimit}
+                                            wrapperClassName="text-sm"
                                         />
                                     </TitledArea>
                                 </div>
@@ -228,7 +232,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                         selectedGroupSize !== 'Unlimited' && (
                                             <div className="flex justify-center items-center gap-2">
                                                 <Person className="w-4 h-4" />
-                                                <p className="text-sm font-bold">
+                                                <p className="text-sm font-medium">
                                                     {pricePerParticipant} {userPlanInfos.currency}
                                                 </p>
                                             </div>
@@ -242,6 +246,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                         icon={
                                             <span className="text-primary font-medium">{userPlanInfos.currency}</span>
                                         }
+                                        wrapperClassName="text-sm"
                                     />
                                 </TitledArea>
                             )}
@@ -255,6 +260,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                                 capitalize(invitationType),
                                             )}
                                             onChange={handleInvitationTypeChange}
+                                            wrapperClassName="text-sm"
                                         />
                                         {selectedInvitationType === 'unique link' && (
                                             <Input
@@ -298,7 +304,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                 rows={5}
                                 maxLength={150}
                                 variant="form"
-                                className="py-5"
+                                className="py-5 text-sm"
                             />
                             <TitledArea title="Expected participants:">
                                 <Select
@@ -306,12 +312,21 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                     value={expectedParticipants}
                                     options={getExpectedParticipants(userPlanInfos.eventSizeLimit)}
                                     onChange={setExpectedParticipants}
+                                    wrapperClassName="text-sm"
                                 />
                             </TitledArea>
-                            <p className="text-xs text-primary">
-                                {userPlanInfos.ticketsProcessingFeesPercentage}% of tickets sales will be subtracted as
-                                processing fees
-                            </p>
+                            <div className="flex flex-col gap-5">
+                                <p className="text-xs text-primary">
+                                    {userPlanInfos.ticketsProcessingFeesPercentage}% of tickets sales will be subtracted
+                                    as processing fees
+                                </p>
+                                <Checkbox
+                                    name="transfer-fees"
+                                    label="Transfer processing fees to user"
+                                    checked={transferFees}
+                                    onChange={toggleTransferFees}
+                                />
+                            </div>
                         </div>
                     </form>
                 </Card>

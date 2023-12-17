@@ -64,14 +64,15 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         )
                     }
                 </div>
-                <div className="flex flex-wrap gap-5 justify-evenly flex-1 child:w-2/5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 flex-1">
                     <Input
                         name="full-name"
                         label="Full name:"
                         value={`${user.firstName} ${user.lastName}`}
                         variant="auth"
-                        className="text-sm bg-white"
+                        className="pl-3 w-full text-sm bg-white"
                         labelClassName="text-black text-sm font-semibold"
+                        wrapperClassName="w-full"
                         disabled={true}
                     />
                     <Input
@@ -83,8 +84,9 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         label="Phone number:"
                         type="tel"
                         variant="auth"
-                        className={`text-sm ${mode === 'view' ? 'bg-white' : ''}`}
+                        className={`pl-3 w-full text-sm ${mode === 'view' ? 'bg-white' : ''}`}
                         labelClassName="text-sm font-semibold"
+                        wrapperClassName="w-full"
                         disabled={mode === 'view'}
                     />
                     <Input
@@ -93,8 +95,9 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         type="email"
                         value={user.email}
                         variant="auth"
-                        className="text-sm bg-white"
+                        className="pl-3 w-full text-sm bg-white"
                         labelClassName="text-sm font-semibold"
+                        wrapperClassName="w-full"
                         disabled={true}
                     />
                     <Input
@@ -106,8 +109,9 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         label="Username:"
                         type="text"
                         variant="auth"
-                        className={`text-sm ${mode === 'view' ? 'bg-white' : ''}`}
+                        className={`pl-3 w-full text-sm ${mode === 'view' ? 'bg-white' : ''}`}
                         labelClassName="text-sm font-semibold"
+                        wrapperClassName="w-full"
                         disabled={mode === 'view'}
                     />
                 </div>

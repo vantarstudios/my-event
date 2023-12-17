@@ -65,7 +65,7 @@ const SignUpPage: NextPage = () => {
                 setFormErrors((previousErrors) => {
                     return {
                         ...previousErrors,
-                        [information]: (error as ZodError).formErrors.fieldErrors[information]?.[0] ?? '',
+                        [information]: (error as ZodError).formErrors.fieldErrors[information] ?? '',
                     }
                 });
             }
@@ -88,16 +88,14 @@ const SignUpPage: NextPage = () => {
             try {
                 signUpSchema.parse(formData);
                 setFormErrors({} as SignUpErrors);
-            } catch (error) {
-                setFormErrors(Object.fromEntries(
-                    Object.entries((error as ZodError).formErrors.fieldErrors)
-                        .map(([key, value]) => [key, value ? value.join('\n') : ''])
-                ) as SignUpErrors);
                 
-                return;
+                await trigger(formData);
+                
+                router.push('/dashboard');
+            } catch (error) {
+                setFormErrors((error as ZodError).formErrors.fieldErrors as SignUpErrors);
             }
             
-            await trigger(formData);
             return;
         }
 

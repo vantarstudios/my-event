@@ -30,7 +30,7 @@ export const UserProvider: FunctionComponent<PropsWithChildren> = ({ children })
         if (!isLoading && !error && user?.success) {
             setUserProfile(user.data);
         }
-    }, [isLoading, error, userProfile]);
+    }, [isLoading, error, user]);
     
     return (
         <UserContext.Provider value={{

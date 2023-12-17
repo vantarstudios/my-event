@@ -7,9 +7,9 @@ const nextConfig = {
     distDir: 'dist',
     poweredByHeader: false,
     skipTrailingSlashRedirect: true,
-     images: {
-          domains: ['localhost', 'api-staging.eventmediapp.com']
-     },
+    images: {
+        domains: ['localhost', 'api-staging.eventmediapp.com']
+    },
 };
 
 module.exports = nextConfig;

@@ -13,17 +13,19 @@ export interface InputWrapperProps {
 
 const InputWrapper: FunctionComponent<PropsWithChildren<InputWrapperProps>> = (props) => {
     return (
-        <div className={cn('relative flex flex-col items-start gap-1', props.wrapperClassName)}>
-            <label className="flex w-full items-center justify-between px-3" htmlFor={props.name}>
-                <span className={cn('font-medium', props.labelClassName)}>{props.label}</span>
-                <span className="font-medium text-red-600">{props.trailing}</span>
-            </label>
-            {props.children}
-            <div className="absolute bottom-3 right-4">{props.icon}</div>
+        <div className="flex flex-col items-start gap-1 w-full">
+            <div className={cn('relative flex flex-col items-start gap-1 w-full', props.wrapperClassName)}>
+                <label className="flex w-full items-center justify-between px-3" htmlFor={props.name}>
+                    <span className={cn('font-medium', props.labelClassName)}>{props.label}</span>
+                    <span className="font-medium text-red-600">{props.trailing}</span>
+                </label>
+                {props.children}
+                <div className="absolute bottom-2.5 right-4">{props.icon}</div>
+            </div>
             {
                 Array.isArray(props.errors)
                     ? (
-                        <ul className="text-xs text-red-500">
+                        <ul className="pl-3 text-xs text-red-500">
                             {
                                 props.errors.map((error, index) => (
                                     <li key={index}>{error}</li>

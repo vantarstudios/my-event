@@ -1,9 +1,11 @@
 import type { FunctionComponent, HTMLAttributes } from 'react';
+import type { UseFormRegisterReturn } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 
 interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
-    value: HTMLTextAreaElement['value'];
+    value?: HTMLTextAreaElement['value'];
     rows?: HTMLTextAreaElement['rows'];
+    register?: UseFormRegisterReturn;
     variant: 'edit' | 'form';
     className?: HTMLAttributes<HTMLTextAreaElement>['className'];
 }
@@ -19,9 +21,10 @@ const TextArea: FunctionComponent<TextAreaProps> = ({ value, rows, variant, clas
                 variant === 'edit' && value === '' && 'bg-gray-100',
                 className,
             )}
-            value={value}
+            value={!props.register ? (value ?? '') : undefined}
             rows={rows}
             {...props}
+            {...props.register}
         />
     );
 };

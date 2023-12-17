@@ -11,8 +11,8 @@ interface DateRangeInputProps {
     endDateLabel?: string;
     onStartDateChange: (newValue: ParsedDate) => void;
     onEndDateChange: (newValue: ParsedDate) => void;
-    onStartDateClear: () => void;
-    onEndDateClear: () => void;
+    onStartDateClear: (newValue?: ParsedDate) => void;
+    onEndDateClear: (newValue?: ParsedDate) => void;
 }
 
 const DateRangeInput: FunctionComponent<DateRangeInputProps> = ({

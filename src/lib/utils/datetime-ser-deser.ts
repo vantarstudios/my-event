@@ -45,3 +45,17 @@ export function serializeDateTime(date: ParsedDate | null, time: ParsedTime | nu
 
     return fallback;
 }
+
+export function getISOString(dateTime: ParsedDateTime): string {
+    if (dateTime.date === null && dateTime.time === null) {
+        return '';
+    }
+    
+    const now = new Date();
+    
+    const date = dateTime.date ?? parseDateTime(now.toISOString(), 'date');
+    
+    const time = dateTime.time ?? parseDateTime(now.toISOString(), 'time');
+    
+    return new Date(date.year, date.month, date.day, time.hour, time.minute).toISOString();
+}

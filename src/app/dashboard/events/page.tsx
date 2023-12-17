@@ -1,9 +1,8 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { ViewTitle, CreateWorkspaceButton } from '@components/dashboard';
-import { EventCard } from '@components/events';
 import { Calendar } from '@components/ui/icons';
-import events from '@/data/events';
+import { EventsList } from '@/components/events';
 
 const DashboardEventsPage: NextPage = () => {
     return (
@@ -15,11 +14,7 @@ const DashboardEventsPage: NextPage = () => {
                 </Link>
             </div>
             <div className="flex flex-col justify-between items-end gap-10 h-full pb-10">
-                <div className="grid grid-cols-4 gap-5 w-full">
-                    {events.map(({ id, title, startingDate, cover }) => (
-                        <EventCard key={id} id={id} title={title} startingDate={startingDate} cover={cover} format="titled" />
-                    ))}
-                </div>
+                <EventsList />
                 <CreateWorkspaceButton />
             </div>
         </div>

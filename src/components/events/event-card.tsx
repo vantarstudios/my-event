@@ -1,5 +1,6 @@
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { leadingZeroFormat, parseDateTime, monthNumToString } from '@/lib/utils';
 import type { Event } from '@/types';
 
@@ -29,14 +30,30 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                     </p>
                 </div>
             )}
-            <div
-                style={{
-                    backgroundImage: `url('/images/${cover}')`,
-                }}
-                className={`min-w-[250px] min-h-[170px] bg-cover bg-center rounded-3xl ${
-                    format === 'unconstrained' ? 'h-full' : 'w-[250px] h-[170px]'
-                }`}
-            />
+            {
+                cover
+                    ? (
+                        <Image
+                            src={cover}
+                            alt={title || 'Event cover'}
+                            width={format === 'titled' ? 250 : undefined}
+                            height={format === 'titled' ? 170 : undefined}
+                            fill={format === 'unconstrained'}
+                            className={`min-w-[250px] min-h-[170px] object-cover object-center rounded-3xl ${
+                                format === 'unconstrained' ? 'h-full' : 'w-[250px] h-[170px]'
+                            }`}
+                        />
+                    )
+                    : (
+                        <div
+                            className={`min-w-[250px] min-h-[170px] bg-cover bg-center rounded-3xl ${
+                                format === 'unconstrained' ? 'h-full' : 'w-[250px] h-[170px]'
+                            } ${
+                                !cover && ' bg-gradient-to-tl from-primary to-secondary opacity-50'
+                            }`}
+                        />
+                    )
+            }
             {title && <div className="w-full break-words break-before-all text-sm font-semibold">{title}</div>}
         </Link>
     );

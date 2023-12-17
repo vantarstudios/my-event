@@ -1,10 +1,9 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-
 import {
     Role,
-    Plan,
+    Plan as PlanEnum,
     SubscriptionStatus,
-    PaymentMethod,
+    PaymentMethod as PaymentMethodEnum,
     FacturationType,
     MediaType,
     Country,
@@ -38,14 +37,14 @@ export type ApiResponse<T = null> = {
     }
 );
 
-export type MediaType = (typeof MediaType)[keyof typeof MediaType];
+export type MediaTypeUnion = (typeof MediaType)[keyof typeof MediaType];
 
 export type Media = {
     id: string,
     url: string,
     description?: string,
     format: string,
-    type: MediaType,
+    type: MediaTypeUnion,
     createdAt: string,
     updatedAt: string,
 };
@@ -54,11 +53,11 @@ export type CountryUnion = (typeof Country)[keyof typeof Country];
 
 export type RoleUnion = (typeof Role)[keyof typeof Role];
 
-export type PlanUnion = (typeof Plan)[keyof typeof Plan];
+export type PlanUnion = (typeof PlanEnum)[keyof typeof PlanEnum];
 
 export type SubscriptionStatusUnion = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus];
 
-export type PaymentMethodUnion = (typeof PaymentMethod)[keyof typeof PaymentMethod];
+export type PaymentMethodUnion = (typeof PaymentMethodEnum)[keyof typeof PaymentMethodEnum];
 
 export type FacturationTypeUnion = (typeof FacturationType)[keyof typeof FacturationType];
 
@@ -124,18 +123,17 @@ export type Event = {
     mapUrl?: string,
     status: EventStatusUnion,
     type: EventTypeUnion,
-    currency: string,
     isPrivate: boolean,
     likesCount: number,
     attendeesCount: number,
     followersCount: number,
     cover: string,
     organizer?: User,
+    organizerName?: string,
     country: CountryUnion,
     likers?: User[],
     attendees?: User[],
     followers?: User[],
-    tickets: Ticket[],
     createdAt: string,
     updatedAt: string,
     deletedAt?: string,
@@ -184,7 +182,7 @@ export type Ticket = {
     limited: boolean,
     maxQuantity?: number,
     availableQuantity?: number,
-    event?: Event,
+    eventId: Event['id'],
     soldTickets?: UserTicket[],
     ticketOrders?: TicketOrderItem[],
     createdAt: string,
@@ -216,47 +214,6 @@ export type Notification = {
 export const ticketTypes = ['free', 'paid', 'invitation'] as const;
 
 export const invitationTypes = ['e-mail', 'unique link'] as const;
-
-export type TicketType = {
-    title: string;
-    quantity: number;
-    types: (typeof ticketTypes)[number][];
-    groupTicket: boolean;
-} & (
-    | { types: ['free'] }
-    | { types: ['free', 'invitation']; invitationType: (typeof invitationTypes)[number] }
-    | { types: ['paid']; price: number }
-    | { types: ['paid', 'invitation']; price: number; invitationType: (typeof invitationTypes)[number] }
-    | { types: ['invitation']; invitationType: (typeof invitationTypes)[number] }
-) &
-    (
-        | {
-              groupTicket: false;
-          }
-        | {
-              groupTicket: true;
-              groupSize?: number;
-              numberOfGroups?: number;
-          }
-    );
-
-export const eventTypes = ['online', 'live'] as const;
-
-/*
-export type Event = {
-    id: string;
-    title: string;
-    description: string;
-    type: (typeof eventTypes)[number];
-    startDate: string;
-    endDate?: string;
-    location: string;
-    currency: string;
-    cover: string;
-    tags: Tag[];
-    ticketTypes: TicketType[];
-};
-*/
 
 export type ParsedDate = {
     day: number;

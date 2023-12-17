@@ -36,7 +36,7 @@ const SignInPage: NextPage = () => {
     const onSubmit = async (data: SignInPayload) => {
         const userProfile = await trigger(data);
         
-        if (userProfile.success && userProfile.data.role !== Role.ORGANIZER) {
+        if (userProfile.success && ![Role.ORGANIZER, Role.ADMIN].includes(userProfile.data.role)) {
             toast.error('You are not allowed to access this website!');
             router.push('/auth/signup');
             return;

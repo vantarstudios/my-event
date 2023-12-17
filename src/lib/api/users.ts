@@ -4,24 +4,22 @@ import type { UserProfile, UserProfileUpdatePayload } from '@/types/users';
 import type { ApiResponse } from '@/types';
 
 class UsersAPI {
-    private readonly client: AxiosInstance;
-    
-    constructor(client: AxiosInstance) {
+    constructor(private readonly client: AxiosInstance) {
         this.client = client;
     }
 
-    public getProfile() {
-        return this.client.get<ApiResponse<UserProfile>>('users/me');
+    public async getProfile() {
+        return await this.client.get<ApiResponse<UserProfile>>('users/me');
     }
     
-    public updateProfile(userId: UserProfile['id'], payload: UserProfileUpdatePayload) {
-        let response: Promise<AxiosResponse<ApiResponse<UserProfile>>>;
+    public async updateProfile(userId: UserProfile['id'], payload: UserProfileUpdatePayload) {
+        let response: AxiosResponse<ApiResponse<UserProfile>>;
         const { profilePicture, ...payloadRest } = payload;
         
-        response = this.client.patch<ApiResponse<UserProfile>>(`users/${userId}`, payloadRest);
+        response = await this.client.patch<ApiResponse<UserProfile>>(`users/${userId}`, payloadRest);
         
         if (profilePicture) {
-            response = this.client.put<ApiResponse<UserProfile>>(`users/${userId}/profile-picture`, {
+            response = await this.client.put<ApiResponse<UserProfile>>(`users/${userId}/profile-picture`, {
                 profilePicture,
             }, {
                 headers: {

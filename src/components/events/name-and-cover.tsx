@@ -1,123 +1,130 @@
-'use client';
-
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import type { FunctionComponent, ChangeEvent } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
 import { capitalize } from '@/lib/utils';
 import { EventCategory } from '@/types/constants';
-import type { Event } from '@/types';
+import { createEventSchema } from '@/types/events';
+import type { CreateEventPayload } from '@/types/events';
+import type { EventCategoryUnion } from '@/types';
 import { Button } from '@components/ui';
 import { Input } from '@components/ui/form';
 import { Picture, Cross } from '@components/ui/icons';
 import { TitledTextArea, TitledArea } from '@components/ui/layouts';
 
-interface EditNameAndCoverProps extends Partial<Pick<Event, 'cover' | 'title' | 'description' | 'categories'>> {}
+type NameAndCoverProps = Partial<Pick<CreateEventPayload, 'cover' | 'title' | 'description' | 'categories'>>
 
-const buildCategoriesString = (categories: string[]) => {
-    return categories.map((category) => `#${capitalize(category)}`).join(',');
-};
+interface EditNameAndCoverProps extends NameAndCoverProps {
+    initialCover?: string;
+    setOtherData: <T extends keyof CreateEventPayload>(key: T) => (value: CreateEventPayload[T]) => void;
+}
 
-const parseCategoriesString = (categories: string) => {
-    return categories.split(',').map((category) => category.replace('#', '').toUpperCase());
-};
-
-const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ cover, title, description, categories }) => {
-    const [titleValue, setTitleValue] = useState<string>(title || '');
-    const [descriptionValue, setDescriptionValue] = useState<string>(description || '');
-    const [categoriesValue, setCategoriesValue] = useState<string>(buildCategoriesString(categories || []));
-    const [categoriesList, setCategoriesList] = useState<string[]>(categories || []);
-    const [coverFileURL, setCoverFileURL] = useState<string | null>(cover ? `/images/${cover}` : null);
-
-    const suggestedCategories = Object.values(EventCategory).filter((category) => !categoriesList.includes(category)).slice(0, 10);
-
-    const handleSuggestedCategoryClick = (category: string) => {
-        setCategoriesList((currentCategories) => {
-            const newCategories = [...currentCategories, category];
-            setCategoriesValue(buildCategoriesString(newCategories));
-            return newCategories;
-        });
+const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, description, categories, initialCover, setOtherData }) => {
+    const { register } = useForm({
+        resolver: zodResolver(createEventSchema),
+        defaultValues: {
+            title,
+            description,
+        },
+    });
+    
+    const [coverImage, setCoverImage] = useState<File | undefined>();
+    const coverImageInputRef = useRef<HTMLInputElement>(null);
+    const categoriesValue = (categories || []).map((category) => `#${capitalize(category)}`).join(',')
+    const suggestedCategories = categories && categories.length > 0
+        ? Object.values(EventCategory).filter((category) => !categories.includes(category)).slice(0, 10)
+        : Object.values(EventCategory).slice(0, 10);
+    
+    const handleCoverImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        setCoverImage(file);
+        setOtherData('cover')(file);
+    };
+    
+    const handleCoverImageClear = () => {
+        setCoverImage(undefined);
+        setOtherData('cover')(undefined);
+        coverImageInputRef.current?.value && (coverImageInputRef.current.value = '');
     };
 
-    const handleCategoriesChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-
-        if (value) {
-            setCategoriesValue(value);
-            setCategoriesList(parseCategoriesString(value));
-        }
-    };
-
-    const handleCoverChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files![0];
-
-        if (file) {
-            setCoverFileURL(URL.createObjectURL(file));
-        }
-    };
-
-    const handleCoverClear = () => {
-        if (coverFileURL === null) {
-            return;
-        }
-
-        URL.revokeObjectURL(coverFileURL);
-        setCoverFileURL(null);
+    const handleSuggestedCategoryClick = (category: EventCategoryUnion) => {
+        setOtherData('categories')([...(categories || []), category]);
     };
 
     return (
-        <div className="flex gap-5 w-full h-full pb-5 overflow-y-auto">
+        <div className="flex gap-5 w-full pb-5">
             <div
-                style={{
-                    backgroundImage: `url(${coverFileURL})`,
-                }}
+                style={{ backgroundImage: coverImage ? `url(${URL.createObjectURL(coverImage)})` : '' }}
                 className={`overflow-hidden relative w-1/3 min-h-full bg-cover bg-center rounded-3xl ${
-                    coverFileURL === null && 'bg-black bg-opacity-60'
+                    (!coverImage && !initialCover) && 'bg-black bg-opacity-60'
                 }`}
             >
                 {
-                    coverFileURL !== null ? (
-                        <Button
-                            onClick={handleCoverClear}
-                            className="absolute top-0 right-0 z-30 p-3 text-white rounded-none rounded-bl-xl drop-shadow-lg cursor-pointer bg-opacity-40 bg-primary hover:bg-opacity-100"
-                        >
-                            <Cross className="w-8 h-8"/>
-                        </Button>
-                    ) : (
-                        <div className="flex flex-col justify-center items-center gap-5 w-full h-full">
-                            <Picture className="w-1/2 aspect-square text-white"/>
-                            <div
-                                className="flex flex-col justify-center items-center gap-2.5 text-white child:w-2/3 child:text-center">
-                                <p className="min-w-max font-medium">Upload event cover image</p>
-                                <p className="text-xs">Cover image must have a specific size: 333 x 225 pixels.</p>
-                            </div>
-                        </div>
+                    (initialCover && !coverImage) && (
+                        <Image
+                            src={initialCover}
+                            alt="Event cover image"
+                            objectFit="cover"
+                            objectPosition="center"
+                            fill
+                        />
                     )
                 }
+                {
+                    coverImage
+                        ? (
+                            <Button
+                                onClick={handleCoverImageClear}
+                                className="absolute top-0 right-0 z-30 p-3 text-white rounded-none rounded-bl-xl drop-shadow-lg cursor-pointer bg-opacity-40 bg-primary hover:bg-opacity-100"
+                            >
+                                <Cross className="w-8 h-8"/>
+                            </Button>
+                        )
+                        : (
+                            <div className="flex flex-col justify-center items-center gap-5 w-full h-full">
+                                <Picture className="w-1/2 aspect-square text-white"/>
+                                <div
+                                    className="flex flex-col justify-center items-center gap-2.5 text-white child:w-2/3 child:text-center">
+                                    <p className="min-w-max font-medium">Upload event cover image</p>
+                                    <p className="text-xs">Cover image must have a specific size: 333 x 225 pixels.</p>
+                                </div>
+                            </div>
+                        )
+                }
                 <input
+                    ref={coverImageInputRef}
                     type="file"
                     name="event-cover"
                     accept="image/*"
-                    onChange={handleCoverChange}
+                    onChange={handleCoverImageChange}
                     className="absolute top-0 left-0 w-full h-full cursor-pointer opacity-0"
                 />
             </div>
-            <div className="flex flex-col justify-start gap-5 w-2/3 h-full pl-5">
+            <div className="flex flex-col justify-start gap-5 w-2/3 h-full px-5">
                 <TitledTextArea
+                    register={register('title', {
+                        required: 'Event title is required',
+                        onChange: (event) => setOtherData('title')(event.target.value),
+                    })}
                     title="Event title:"
-                    value={titleValue}
+                    value={title}
                     placeholder="Enter your event title"
                     rows={1}
                     maxLength={150}
-                    onChange={setTitleValue}
                     variant="edit"
                     className="text-xl font-bold placeholder:text-xl"
                 />
                 <TitledTextArea
+                    register={register('description', {
+                        required: 'Event description is required',
+                        onChange: (event) => setOtherData('description')(event.target.value),
+                    })}
+                    value={description}
                     title="Description:"
-                    value={descriptionValue}
                     placeholder="Briefly describe your event to your participants"
                     maxLength={700}
                     rows={7}
-                    onChange={setDescriptionValue}
                     variant="edit"
                 />
                 <TitledArea title="Category:">
@@ -138,10 +145,10 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ cover, title, 
                             name="category"
                             value={categoriesValue}
                             placeholder="Separate each category with a comma"
-                            onChange={handleCategoriesChange}
                             variant="auth"
                             className="text-sm font-medium"
-                            wrapperClassName="w-1/2"
+                            wrapperClassName="w-1/2 w-full"
+                            disabled={true}
                         />
                     </div>
                 </TitledArea>

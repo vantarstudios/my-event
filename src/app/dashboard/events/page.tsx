@@ -16,8 +16,8 @@ const DashboardEventsPage: NextPage = () => {
             </div>
             <div className="flex flex-col justify-between items-end gap-10 h-full pb-10">
                 <div className="grid grid-cols-4 gap-5 w-full">
-                    {events.map(({ id, title, startDate, cover }) => (
-                        <EventCard key={id} id={id} title={title} startDate={startDate} cover={cover} format="titled" />
+                    {events.map(({ id, title, startingDate, cover }) => (
+                        <EventCard key={id} id={id} title={title} startingDate={startingDate} cover={cover} format="titled" />
                     ))}
                 </div>
                 <CreateWorkspaceButton />

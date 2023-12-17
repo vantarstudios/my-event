@@ -1,17 +1,19 @@
 import type { FunctionComponent } from 'react';
-import type { IconProps, PaymentMethod as PaymentMethodType, PaymentMethodType as PaymentMethodTypeType } from '@/types';
+import { PaymentMethod as PaymentMethodConstant } from '@/types/constants';
+import type { IconProps, PaymentMethod as PaymentMethodType } from '@/types';
 import { Button } from '@components/ui';
 import { BankCard, Pencil, TrashCan } from '@components/ui/icons';
 
-const paymentMethodIcons: Record<PaymentMethodTypeType, FunctionComponent<IconProps>> = {
-    card: BankCard,
-    paypal: BankCard,
+const paymentMethodIcons: Record<PaymentMethodType['type'], FunctionComponent<IconProps>> = {
+    [PaymentMethodConstant.VISA]: BankCard,
+    [PaymentMethodConstant.PAYPAL]: BankCard,
+    [PaymentMethodConstant.MOBILE_MONEY]: BankCard,
 };
 
 interface PaymentMethodProps extends PaymentMethodType {}
 
 const PaymentMethod: FunctionComponent<PaymentMethodProps> = ({ type, label }) => {
-    const PaymentMethodIcon = paymentMethodIcons[type];
+    const PaymentMethodIcon = paymentMethodIcons[type] || BankCard;
 
     return (
         <div className="flex justify-between items-center w-full p-3 text-sm bg-gray-50">

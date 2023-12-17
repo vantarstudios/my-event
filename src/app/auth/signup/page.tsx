@@ -6,6 +6,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import type { NextPage } from 'next';
+import type { ZodError } from 'zod';
+import { authAPI } from '@/lib/api/auth';
+import { useMutationRequest } from '@/lib/hooks';
+import { signUpSchema } from '@/types/auth';
+import type { SignUpPayload, SignUpErrors } from '@/types/auth';
 import type { AccountType } from '@/types';
 import { AuthStepper } from '@components/auth';
 import { AccountInformations, AccountTypeChooser } from '@components/auth/signup-steps';
@@ -19,6 +24,18 @@ const SignUpPage: NextPage = () => {
     const router = useRouter();
     const [step, setStep] = useState<number>(1);
     const [accountType, setAccountType] = useState<AccountType | null>(null);
+    const [formData, setFormData] = useState<SignUpPayload>({} as SignUpPayload);
+    const [formErrors, setFormErrors] = useState<SignUpErrors>({} as SignUpErrors);
+    
+    const { trigger, isMutating } = useMutationRequest(
+        'sign-up',
+        async (_: string, { arg: data }: { arg: SignUpPayload }) => {
+            const { confirmPassword, ...payload } = data;
+            const response = await authAPI.signUp(payload);
+            return response.data;
+        },
+        'Your account has been created!'
+    );
 
     const handleStepChange = (step: number) => {
         setStep(step);
@@ -33,8 +50,31 @@ const SignUpPage: NextPage = () => {
             return type;
         });
     };
+    
+    const handleInputChange = <T extends keyof SignUpPayload>(information: T, value: SignUpPayload[T]) => {
+        setFormData((currentFormData) => {
+            const newFormData = {
+                ...currentFormData,
+                [information]: value,
+            };
+            
+            try {
+                signUpSchema.parse(newFormData);
+                setFormErrors({} as SignUpErrors);
+            } catch (error) {
+                setFormErrors((previousErrors) => {
+                    return {
+                        ...previousErrors,
+                        [information]: (error as ZodError).formErrors.fieldErrors[information]?.[0] ?? '',
+                    }
+                });
+            }
+            
+            return newFormData;
+        });
+    };
 
-    const goToNextStep = () => {
+    const goToNextStep = async () => {
         if (accountType === null) {
             return;
         }
@@ -45,10 +85,19 @@ const SignUpPage: NextPage = () => {
         }
 
         if (step == signUpSteps.length) {
-            alert('Successfully signed up!');
-
-            router.push('/auth/signin');
-
+            try {
+                signUpSchema.parse(formData);
+                setFormErrors({} as SignUpErrors);
+            } catch (error) {
+                setFormErrors(Object.fromEntries(
+                    Object.entries((error as ZodError).formErrors.fieldErrors)
+                        .map(([key, value]) => [key, value ? value.join('\n') : ''])
+                ) as SignUpErrors);
+                
+                return;
+            }
+            
+            await trigger(formData);
             return;
         }
 
@@ -57,7 +106,7 @@ const SignUpPage: NextPage = () => {
 
     const signUpSteps: ReactNode[] = [
         <AccountTypeChooser key={accountType} currentType={accountType} onTypeChange={handleAccountTypeChange} />,
-        <AccountInformations key={1} />,
+        <AccountInformations key={1} setInformation={handleInputChange} informationsErrors={formErrors} />,
     ];
 
     return (
@@ -70,7 +119,11 @@ const SignUpPage: NextPage = () => {
             </h1>
             {signUpSteps[step - 1]}
             <Button className="w-full hover:bg-primary" onClick={goToNextStep}>
-                {step === signUpSteps.length ? 'Sign up' : 'Next'}
+                {
+                    isMutating
+                        ? 'Loading...'
+                        : step === signUpSteps.length ? 'Sign up' : 'Next'
+                }
             </Button>
             {step === 2 && (
                 <Image

@@ -2,7 +2,7 @@ import type { PaymentMethod } from '@/types';
 
 const paymentMethods: PaymentMethod[] = [
     {
-        type: 'card',
+        type: 'VISA',
         label: 'MasterCard ****0000',
     },
 ];

@@ -1,11 +1,11 @@
 import type { FunctionComponent, HTMLAttributes } from 'react';
 
-interface TagChipProps {
+interface CategoryChipProps {
     text: string;
     onClick?: HTMLAttributes<HTMLDivElement>['onClick'];
 }
 
-const TagChip: FunctionComponent<TagChipProps> = ({ text, onClick }) => {
+const CategoryChip: FunctionComponent<CategoryChipProps> = ({ text, onClick }) => {
     return (
         <div
             onClick={onClick}
@@ -16,4 +16,4 @@ const TagChip: FunctionComponent<TagChipProps> = ({ text, onClick }) => {
     );
 };
 
-export default TagChip;
+export default CategoryChip;

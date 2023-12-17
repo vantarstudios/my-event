@@ -1,20 +1,72 @@
 'use client';
 
+import { useContext, useState } from 'react';
 import type { FunctionComponent } from 'react';
-import { useToggle } from '@/lib/hooks';
+import { useRouter } from 'next/navigation';
+import { useToggle, useMutationRequest } from '@/lib/hooks';
+import { usersAPI } from '@/lib/api/users';
+import type { UserProfileUpdatePayload } from '@/types/users';
 import type { Mode } from '@/types';
+import { UserContext } from '@/contexts/user-context';
 import { EditSaveButton } from '@components/dashboard';
 import ProfileInformations from './profile-informations';
 import NotificationsSettings from './notifications-settings';
 import OtherSettings from './other-settings';
 
 const SettingsTable: FunctionComponent = () => {
+    const { userProfile, setUserProfile } = useContext(UserContext);
+    const router = useRouter();
     const [mode, toggleMode] = useToggle<Mode>('view', 'edit');
+    const [formData, setFormData] = useState<UserProfileUpdatePayload>({} as UserProfileUpdatePayload);
+    
+    const { trigger, isMutating } = useMutationRequest(
+        `update-user-${userProfile.id}`,
+        async (_: string, { arg: data }: { arg: UserProfileUpdatePayload }) => {
+            const response = await usersAPI.updateProfile(userProfile.id, data);
+            return response.data;
+        },
+        'Profile updated successfully!'
+    );
+    
+    const updateFormData = <T extends keyof UserProfileUpdatePayload>(key: T) => (value: UserProfileUpdatePayload[T]) => {
+        setFormData((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
+    };
+    
+    const handleSave = async () => {
+        if (
+            mode === 'edit'
+            && !isMutating
+            && (
+                Object.entries(formData)
+                    .map(([key, value]) => userProfile[key as keyof UserProfileUpdatePayload] !== value)
+                    .some(Boolean)
+                || formData.profilePicture
+            )
+        ) {
+            const newUserProfile = await trigger(formData);
+            
+            if (newUserProfile.success) {
+                setUserProfile(newUserProfile.data);
+                setFormData({} as UserProfileUpdatePayload);
+                router.refresh();
+            }
+        }
+        
+        toggleMode();
+    };
 
     return (
         <div className="flex flex-col gap-10">
-            <EditSaveButton mode={mode} onClick={toggleMode} className="absolute top-0 right-20 translate-y-16" />
-            <ProfileInformations mode={mode} />
+            <EditSaveButton
+                mode={mode}
+                loading={isMutating}
+                onClick={handleSave}
+                className="absolute top-0 right-20 translate-y-16"
+            />
+            <ProfileInformations mode={mode} user={userProfile} setInformation={updateFormData} />
             <div className="flex flex-wrap child:basis-2/5 w-full">
                 <NotificationsSettings />
                 <OtherSettings mode={mode} />

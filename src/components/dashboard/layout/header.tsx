@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import ProfilePicture from '@/components/dashboard/profile-picture';
 
 const menuLinks: { readonly name: string; readonly href: string }[] = [
     { name: 'Home', href: '/' },
@@ -31,14 +32,8 @@ const Header: FunctionComponent = () => {
                         </li>
                     ))}
                 </ul>
-                <Link href="/signup" className="min-w-max min-h-max">
-                    <Image
-                        src="/dash-profile.svg"
-                        alt="Profile Picture"
-                        width={60}
-                        height={60}
-                        className="w-[60px] h-[60px]"
-                    />
+                <Link href="/auth/signup" className="min-w-max min-h-max">
+                    <ProfilePicture />
                 </Link>
             </nav>
         </header>

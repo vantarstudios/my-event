@@ -10,7 +10,7 @@ import { DateRangeInput, TimeRangeInput, LocationInput } from '@components/ui/fo
 import { Location } from '@components/ui/icons';
 
 interface DateAndLocationProps
-    extends Partial<Pick<Event, 'startDate' | 'endDate' | 'location'>>,
+    extends Partial<Pick<Event, 'startingDate' | 'endingDate' | 'location'>>,
         Pick<Event, 'type'> {}
 
 const handleChange = <T extends 'date' | 'time'>(
@@ -41,13 +41,13 @@ const handleClear = <T extends 'date' | 'time'>(
     };
 };
 
-const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ type, startDate, endDate, location }) => {
+const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ type, startingDate, endingDate, location }) => {
     const [locationInputValue, setLocation] = useState<Event['location']>(location || '');
     const [startDateTime, setStartDateTime] = useState<ParsedDateTime>(
-        startDate ? parseDateTime(startDate, 'both') : { date: null, time: null },
+        startingDate ? parseDateTime(startingDate, 'both') : { date: null, time: null },
     );
     const [endDateTime, setEndDateTime] = useState<ParsedDateTime>(
-        endDate ? parseDateTime(endDate, 'both') : { date: null, time: null },
+        endingDate ? parseDateTime(endingDate, 'both') : { date: null, time: null },
     );
 
     const handleLocationChange = (event: ChangeEvent<HTMLInputElement>) => {

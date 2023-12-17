@@ -1,6 +1,7 @@
 'use client';
 
 import type { NextPage } from 'next';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft } from '@components/ui/icons';
 import { EditOrView } from '@components/events';
 import events from '@/data/events';
@@ -10,6 +11,7 @@ interface DashboardEditEventPageProps {
 }
 
 const DashboardEditEventLayout: NextPage<DashboardEditEventPageProps> = ({ params }) => {
+    const router = useRouter();
     const event = events.find(({ id }) => id === params.id);
 
     return (
@@ -18,7 +20,7 @@ const DashboardEditEventLayout: NextPage<DashboardEditEventPageProps> = ({ param
                 <div className="flex flex-col gap-10 w-full h-full">
                     <div className="flex justify-start items-center gap-10 text-2xl font-medium">
                         <ChevronLeft
-                            onClick={() => window.history.back()}
+                            onClick={() => router.back()}
                             strokeWidth="bold"
                             className="w-5 h-5 cursor-pointer"
                         />

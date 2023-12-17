@@ -18,7 +18,7 @@ const EditEvent: FunctionComponent<EditEventProps> = ({ event }) => {
                     cover={event.cover}
                     title={event.title}
                     description={event.description}
-                    tags={event.tags}
+                    categories={event.categories}
                 />
             ),
         },
@@ -27,15 +27,15 @@ const EditEvent: FunctionComponent<EditEventProps> = ({ event }) => {
             content: (
                 <DateAndLocation
                     type={event.type}
-                    startDate={event.startDate}
-                    endDate={event.endDate}
+                    startingDate={event.startingDate}
+                    endingDate={event.endingDate}
                     location={event.location}
                 />
             ),
         },
         {
             title: 'Ticketing',
-            content: <Ticketing ticketTypes={event.ticketTypes} />,
+            content: <Ticketing ticketTypes={event.tickets} />,
         },
     ];
 

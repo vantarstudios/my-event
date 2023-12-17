@@ -24,6 +24,8 @@ export { default as HoledDisk } from './holed-disk';
 
 export { default as Home } from './home';
 
+export { default as Loader } from './loader';
+
 export { default as Location } from './location';
 
 export { default as Online } from './online';

@@ -11,16 +11,22 @@
         "format": "prettier --write ./ '!dist'"
     },
     "dependencies": {
+        "@hookform/resolvers": "^3.3.2",
         "@tailwindcss/forms": "^0.5.7",
+        "axios": "^1.6.2",
         "clsx": "^2.0.0",
         "framer-motion": "^10.16.4",
         "next": "13.5.4",
         "react": "^18",
         "react-date-picker": "^10.5.2",
         "react-dom": "^18",
+        "react-hook-form": "^7.49.0",
         "react-time-picker": "^6.5.2",
+        "sonner": "^1.2.4",
+        "swr": "^2.2.4",
         "tailwind-merge": "^1.14.0",
-        "uuid": "^9.0.1"
+        "uuid": "^9.0.1",
+        "zod": "^3.22.4"
     },
     "devDependencies": {
         "@types/node": "^20",

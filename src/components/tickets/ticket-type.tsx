@@ -1,11 +1,11 @@
 import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
-import type { TicketType as TTicketTypeType, Mode } from '@/types';
+import type { Ticket, Mode } from '@/types';
 import { Button } from '@components/ui';
 import { Person, Pencil, TrashCan, Eye } from '@components/ui/icons';
 
 interface TicketTypeProps {
-    ticket: TTicketTypeType; // Yep, I know it's funny
+    ticket: Ticket; // Yep, I know it's funny
     mode: Mode;
     onDelete?: () => void;
 }

@@ -8,6 +8,7 @@ export interface InputWrapperProps {
     icon?: ReactNode;
     labelClassName?: HTMLAttributes<HTMLSpanElement>['className'];
     wrapperClassName?: HTMLAttributes<HTMLDivElement>['className'];
+    errors?: string | string[];
 }
 
 const InputWrapper: FunctionComponent<PropsWithChildren<InputWrapperProps>> = (props) => {
@@ -18,7 +19,20 @@ const InputWrapper: FunctionComponent<PropsWithChildren<InputWrapperProps>> = (p
                 <span className="font-medium text-red-600">{props.trailing}</span>
             </label>
             {props.children}
-            <div className="absolute bottom-2.5 right-4">{props.icon}</div>
+            <div className="absolute bottom-3 right-4">{props.icon}</div>
+            {
+                Array.isArray(props.errors)
+                    ? (
+                        <ul className="text-xs text-red-500">
+                            {
+                                props.errors.map((error, index) => (
+                                    <li key={index}>{error}</li>
+                                ))
+                            }
+                        </ul>
+                    )
+                    : <p className="pl-3 text-xs text-red-500">{props.errors}</p>
+            }
         </div>
     );
 };

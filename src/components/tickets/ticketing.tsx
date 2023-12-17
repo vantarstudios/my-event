@@ -2,22 +2,22 @@
 
 import { useState } from 'react';
 import type { FunctionComponent } from 'react';
-import type { TicketType as TTicketType } from '@/types';
+import type { Ticket } from '@/types';
 import { CreateTicket } from '@components/tickets';
 import TicketType from './ticket-type';
 
 interface TicketingProps {
-    ticketTypes?: TTicketType[];
+    ticketTypes?: Ticket[];
 }
 
 const Ticketing: FunctionComponent<TicketingProps> = ({ ticketTypes }) => {
-    const [ticketTypesList, setTicketTypesList] = useState<TTicketType[]>(ticketTypes || []);
+    const [ticketTypesList, setTicketTypesList] = useState<Ticket[]>(ticketTypes || []);
 
-    const addTicketType = (ticketType: TTicketType) => {
+    const addTicketType = (ticketType: Ticket) => {
         setTicketTypesList([...ticketTypesList, ticketType]);
     };
 
-    const deleteTicketType = (ticketTypeTitle: TTicketType['title']) => () => {
+    const deleteTicketType = (ticketTypeTitle: Ticket['title']) => () => {
         setTicketTypesList(ticketTypesList.filter((tt) => tt.title !== ticketTypeTitle));
     };
 

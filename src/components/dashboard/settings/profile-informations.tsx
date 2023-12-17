@@ -1,5 +1,10 @@
-import type { FunctionComponent } from 'react';
+import { useState } from 'react';
+import type { FunctionComponent, ChangeEvent } from 'react';
+import { useForm } from 'react-hook-form';
 import Image from 'next/image';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { userProfileUpdateSchema } from '@/types/users';
+import type { UserProfile, UserProfileUpdatePayload } from '@/types/users';
 import type { Mode } from '@/types';
 import { TitledArea } from '@components/ui/layouts';
 import { Input } from '@components/ui/form';
@@ -8,41 +13,75 @@ import OrganizerCard from './organizer-card';
 
 interface ProfileInformationsProps {
     mode: Mode;
+    user: UserProfile;
+    setInformation: <T extends keyof UserProfileUpdatePayload>(key: T) => (value: UserProfileUpdatePayload[T]) => void;
 }
 
-const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode }) => {
+const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode, user, setInformation }) => {
+    const [profilePicture, setProfilePicture] = useState<File | null>(null);
+    const { register } = useForm<UserProfileUpdatePayload>({
+        resolver: zodResolver(userProfileUpdateSchema),
+    });
+    
+    const handleProfilePictureChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setProfilePicture(file);
+            setInformation('profilePicture')(file);
+        }
+    };
+    
     return (
         <TitledArea title="Profile informations" Icon={Person}>
-            <div className="flex flex-wrap justify-center items-start gap-5 pt-5 w-full">
+            <form className="flex flex-wrap justify-center items-start gap-5 pt-5 w-full">
                 <div className="relative">
-                    <Image src="/dash-profile.svg" alt="User" width={100} height={100} />
-                    <div className="absolute bottom-0 right-0 w-fit aspect-square text-white bg-black rounded-full overflow-hidden hover:bg-opacity-90">
-                        <div className="relative flex justify-center items-center w-full h-full p-2">
-                            <Photo />
-                            <input
-                                type="file"
-                                name="profile-picture"
-                                accept="image/*"
-                                className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                            />
-                        </div>
-                    </div>
+                    <Image
+                        src={
+                            profilePicture
+                                ? URL.createObjectURL(profilePicture)
+                                : user.profilePicture || '/dash-profile.svg'
+                        }
+                        alt="Profile picture"
+                        width={125}
+                        height={125}
+                        className="aspect-square object-cover rounded-full"
+                    />
+                    {
+                        mode === 'edit' && (
+                            <div
+                                className="absolute bottom-0 right-0 w-fit aspect-square text-white bg-black rounded-full overflow-hidden hover:bg-opacity-90">
+                                <div className="relative flex justify-center items-center w-full h-full p-2">
+                                    <Photo/>
+                                    <input
+                                        onChange={handleProfilePictureChange}
+                                        type="file"
+                                        name="profile-picture"
+                                        accept="image/*"
+                                        className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                                    />
+                                </div>
+                            </div>
+                        )
+                    }
                 </div>
                 <div className="flex flex-wrap gap-5 justify-evenly flex-1 child:w-2/5">
                     <Input
                         name="full-name"
                         label="Full name:"
-                        value="Gideon AMOUSSOU-CHOUH"
+                        value={`${user.firstName} ${user.lastName}`}
                         variant="auth"
-                        className={`text-sm ${mode === 'view' ? 'bg-white' : ''}`}
+                        className="text-sm bg-white"
                         labelClassName="text-black text-sm font-semibold"
-                        disabled={mode === 'view'}
+                        disabled={true}
                     />
                     <Input
+                        register={register('phoneNumber', {
+                            onChange: (event) => setInformation('phoneNumber')(event.target.value),
+                        })}
+                        defaultValue={user.phoneNumber}
                         name="phone-number"
                         label="Phone number:"
                         type="tel"
-                        value="+229 12345678"
                         variant="auth"
                         className={`text-sm ${mode === 'view' ? 'bg-white' : ''}`}
                         labelClassName="text-sm font-semibold"
@@ -52,17 +91,20 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         name="email"
                         label="Email:"
                         type="email"
-                        value="hged04@gmail.com"
+                        value={user.email}
                         variant="auth"
-                        className={`text-sm ${mode === 'view' ? 'bg-white' : ''}`}
+                        className="text-sm bg-white"
                         labelClassName="text-sm font-semibold"
-                        disabled={mode === 'view'}
+                        disabled={true}
                     />
                     <Input
-                        name="password"
-                        label="Password:"
-                        type="password"
-                        value="MyPassword"
+                        register={register('username', {
+                            onChange: (event) => setInformation('username')(event.target.value),
+                        })}
+                        defaultValue={user.username}
+                        name="text"
+                        label="Username:"
+                        type="text"
                         variant="auth"
                         className={`text-sm ${mode === 'view' ? 'bg-white' : ''}`}
                         labelClassName="text-sm font-semibold"
@@ -70,12 +112,12 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                     />
                 </div>
                 <OrganizerCard
-                    firstName="Gideon"
-                    lastName="AMOUSSOU-CHOUH"
-                    profilePicture="/dash-profile.svg"
+                    firstName={user.firstName}
+                    lastName={user.lastName}
+                    profilePicture={user.profilePicture || '/dash-profile.svg'}
                     eventName="Event name"
                 />
-            </div>
+            </form>
         </TitledArea>
     );
 };

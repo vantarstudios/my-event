@@ -1,11 +1,17 @@
 'use client';
 
-import type { FormEvent } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useToggle } from '@/lib/hooks';
+import { toast } from '@/lib/utils/toast';
+import { authAPI } from '@/lib/api/auth';
+import { useToggle, useMutationRequest } from '@/lib/hooks';
+import { Role } from '@/types/constants';
+import { signInSchema } from '@/types/auth';
+import type { SignInPayload } from '@/types/auth';
 import { Button } from '@components/ui';
 import { Input, Checkbox } from '@components/ui/form';
 import { Eye, EyeOff } from '@components/ui/icons';
@@ -14,9 +20,29 @@ const SignInPage: NextPage = () => {
     const router = useRouter();
     const [isPasswordVisible, toggleIsPasswordVisible] = useToggle<boolean>(false, true);
     const [saveLoginInfos, toggleSaveLoginInfos] = useToggle<boolean>(false, true);
+    
+    const { register, handleSubmit, formState: { errors } } = useForm<SignInPayload>({
+        resolver: zodResolver(signInSchema),
+    });
+    
+    const { trigger, isMutating } = useMutationRequest(
+        'sign-in',
+        async (_: string, { arg: payload }: { arg: SignInPayload }) => {
+            const response = await authAPI.signIn(payload);
+            return response.data;
+        }
+    );
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const onSubmit = async (data: SignInPayload) => {
+        const userProfile = await trigger(data);
+        
+        if (userProfile.success && userProfile.data.role !== Role.ORGANIZER) {
+            toast.error('You are not allowed to access this website!');
+            router.push('/auth/signup');
+            return;
+        }
+        
+        toast.success('You are now logged in!');
         router.push('/dashboard');
     };
 
@@ -28,25 +54,27 @@ const SignInPage: NextPage = () => {
                 <span className="text-primary">in!</span>
             </h1>
             <form
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmit(onSubmit)}
                 className="child:w-full flex flex-col justify-start items-center gap-10 w-full pb-5"
             >
                 <Input
+                    register={register('email')}
+                    errors={errors.email?.message}
                     type="email"
                     label="Email"
                     name="email"
                     variant="auth"
                     autoComplete="email"
-                    onChange={() => console.log('Email')}
                     autoFocus
                 />
                 <Input
+                    register={register('password')}
+                    errors={errors.password?.message}
                     type={isPasswordVisible ? 'text' : 'password'}
                     label="Password"
                     name="password"
                     variant="auth"
                     autoComplete="current-password"
-                    onChange={() => console.log('Email')}
                     icon={
                         isPasswordVisible ? (
                             <Eye className="w-4 h-4 cursor-pointer" onClick={toggleIsPasswordVisible} />
@@ -63,7 +91,13 @@ const SignInPage: NextPage = () => {
                         onChange={toggleSaveLoginInfos}
                     />
                 </div>
-                <Button type="submit">Sign in</Button>
+                <Button type="submit">
+                    {
+                        isMutating
+                            ? 'Loading...'
+                            : 'Sign in'
+                    }
+                </Button>
             </form>
             <Link href="/auth/password-reset" className="flex justify-center items-center w-full font-medium underline">
                 Forgot password?

@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { leadingZeroFormat, parseDateTime, monthNumToString } from '@/lib/utils';
 import type { Event } from '@/types';
 
-interface EventCardProps extends Partial<Pick<Event, 'id' | 'title' | 'startDate'>> {
+interface EventCardProps extends Partial<Pick<Event, 'id' | 'title' | 'startingDate'>> {
     cover: Event['cover'];
     format: 'titled' | 'unconstrained';
     asLink?: boolean;
 }
 
-const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startDate, cover, format, asLink = true }) => {
-    const date = startDate ? parseDateTime(startDate, 'date') : undefined;
+const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate, cover, format, asLink = true }) => {
+    const date = startingDate ? parseDateTime(startingDate, 'date') : undefined;
 
     return (
         <Link

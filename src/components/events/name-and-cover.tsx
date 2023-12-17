@@ -2,46 +2,47 @@
 
 import { useState } from 'react';
 import type { FunctionComponent, ChangeEvent } from 'react';
+import { capitalize } from '@/lib/utils';
+import { EventCategory } from '@/types/constants';
 import type { Event } from '@/types';
 import { Button } from '@components/ui';
 import { Input } from '@components/ui/form';
 import { Picture, Cross } from '@components/ui/icons';
 import { TitledTextArea, TitledArea } from '@components/ui/layouts';
-import availableTags from '@/data/tags';
 
-interface EditNameAndCoverProps extends Partial<Pick<Event, 'cover' | 'title' | 'description' | 'tags'>> {}
+interface EditNameAndCoverProps extends Partial<Pick<Event, 'cover' | 'title' | 'description' | 'categories'>> {}
 
-const buildTagsString = (tags: string[]) => {
-    return tags.map((tag) => `#${tag}`).join(',');
+const buildCategoriesString = (categories: string[]) => {
+    return categories.map((category) => `#${capitalize(category)}`).join(',');
 };
 
-const parseTagsString = (tags: string) => {
-    return tags.split(',').map((tag) => tag.replace('#', ''));
+const parseCategoriesString = (categories: string) => {
+    return categories.split(',').map((category) => category.replace('#', '').toUpperCase());
 };
 
-const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ cover, title, description, tags }) => {
+const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ cover, title, description, categories }) => {
     const [titleValue, setTitleValue] = useState<string>(title || '');
     const [descriptionValue, setDescriptionValue] = useState<string>(description || '');
-    const [tagsValue, setTagsValue] = useState<string>(buildTagsString(tags || []));
-    const [tagsList, setTagsList] = useState<string[]>(tags || []);
+    const [categoriesValue, setCategoriesValue] = useState<string>(buildCategoriesString(categories || []));
+    const [categoriesList, setCategoriesList] = useState<string[]>(categories || []);
     const [coverFileURL, setCoverFileURL] = useState<string | null>(cover ? `/images/${cover}` : null);
 
-    const suggestedTags = availableTags.filter((tag) => !tagsList.includes(tag));
+    const suggestedCategories = Object.values(EventCategory).filter((category) => !categoriesList.includes(category)).slice(0, 10);
 
-    const handleSuggestedTagClick = (tag: string) => {
-        setTagsList((currentTags) => {
-            const newTags = [...currentTags, tag];
-            setTagsValue(buildTagsString(newTags));
-            return newTags;
+    const handleSuggestedCategoryClick = (category: string) => {
+        setCategoriesList((currentCategories) => {
+            const newCategories = [...currentCategories, category];
+            setCategoriesValue(buildCategoriesString(newCategories));
+            return newCategories;
         });
     };
 
-    const handleTagsChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleCategoriesChange = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
 
         if (value) {
-            setTagsValue(value);
-            setTagsList(parseTagsString(value));
+            setCategoriesValue(value);
+            setCategoriesList(parseCategoriesString(value));
         }
     };
 
@@ -121,23 +122,23 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ cover, title, 
                 />
                 <TitledArea title="Category:">
                     <div className="flex flex-col items-start gap-5 w-full">
-                        <div className="flex justify-start items-center gap-5 w-full">
+                        <div className="flex flex-wrap justify-start items-center gap-5 w-full">
                             <p className="text-sm">Suggestions:</p>
-                            {suggestedTags.map((tag) => (
+                            {suggestedCategories.map((category) => (
                                 <Button
-                                    key={tag}
-                                    onClick={() => handleSuggestedTagClick(tag)}
-                                    className="px-3 py-1.5 text-xs"
+                                    key={category}
+                                    onClick={() => handleSuggestedCategoryClick(category)}
+                                    className="min-w-max px-3 py-1.5 text-xs"
                                 >
-                                    #{tag}
+                                    #{capitalize(category)}
                                 </Button>
                             ))}
                         </div>
                         <Input
                             name="category"
-                            value={tagsValue}
+                            value={categoriesValue}
                             placeholder="Separate each category with a comma"
-                            onChange={handleTagsChange}
+                            onChange={handleCategoriesChange}
                             variant="auth"
                             className="text-sm font-medium"
                             wrapperClassName="w-1/2"

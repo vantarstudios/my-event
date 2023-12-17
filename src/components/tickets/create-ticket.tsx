@@ -6,7 +6,7 @@ import { v4 as uuid4 } from 'uuid';
 import { useToggle } from '@/lib/hooks';
 import { capitalize, thousandsCommaFormat } from '@/lib/utils';
 import { ticketTypes, invitationTypes } from '@/types';
-import type { TicketType } from '@/types';
+import type { Ticket } from '@/types';
 import { Button } from '@components/ui';
 import { Switch, Input, Select, NumberInput, Checkbox } from '@components/ui/form';
 import { Person, People, Copy } from '@components/ui/icons';
@@ -14,7 +14,7 @@ import { Modal, TitledArea, TitledTextArea, Card } from '@components/ui/layouts'
 import { encodeToBase64 } from 'next/dist/build/webpack/loaders/utils';
 
 interface CreateTicketProps {
-    onSave: (newTicket: TicketType) => void;
+    onSave: (newTicket: Ticket) => void;
 }
 
 const userPlanInfos = {
@@ -135,7 +135,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsModalOpened(false);
-        onSave({} as TicketType);
+        onSave({} as Ticket);
     };
 
     return (

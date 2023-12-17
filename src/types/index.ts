@@ -1,5 +1,196 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import tags from '@/data/tags';
+
+import {
+    Role,
+    Plan,
+    SubscriptionStatus,
+    PaymentMethod,
+    FacturationType,
+    MediaType,
+    Country,
+    EventCategory,
+    EventStatus,
+    EventType,
+    UserTicketStatus,
+    InvitationType,
+} from './constants';
+
+export type ValidationErrors<T> = Partial<Record<keyof T, string>>;
+
+export type ApiError = {
+    readonly code: number;
+    readonly message: string;
+    readonly path: string;
+    readonly details: unknown;
+};
+
+export type ApiResponse<T = null> = {
+    success: boolean;
+    timestamp: string;
+} & (
+    | {
+        success: true;
+        data: T;
+    }
+    | {
+        success: false;
+        error: ApiError;
+    }
+);
+
+export type MediaType = (typeof MediaType)[keyof typeof MediaType];
+
+export type Media = {
+    id: string,
+    url: string,
+    description?: string,
+    format: string,
+    type: MediaType,
+    createdAt: string,
+    updatedAt: string,
+};
+
+export type CountryUnion = (typeof Country)[keyof typeof Country];
+
+export type RoleUnion = (typeof Role)[keyof typeof Role];
+
+export type PlanUnion = (typeof Plan)[keyof typeof Plan];
+
+export type SubscriptionStatusUnion = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus];
+
+export type PaymentMethodUnion = (typeof PaymentMethod)[keyof typeof PaymentMethod];
+
+export type FacturationTypeUnion = (typeof FacturationType)[keyof typeof FacturationType];
+
+export type EventCategoryUnion = (typeof EventCategory)[keyof typeof EventCategory];
+
+export type EventStatusUnion = (typeof EventStatus)[keyof typeof EventStatus];
+
+export type EventTypeUnion = (typeof EventType)[keyof typeof EventType];
+
+export type UserTicketStatusUnion = (typeof UserTicketStatus)[keyof typeof UserTicketStatus];
+
+export type InvitationTypeUnion = (typeof InvitationType)[keyof typeof InvitationType];
+
+export type Subscription = {
+    id: string,
+    userId: string,
+    plan: PlanUnion,
+    status: SubscriptionStatusUnion,
+    price: number,
+    billingDate: string,
+    paymentReference: string,
+    paymentMethod: PaymentMethodUnion,
+    facturationType: FacturationTypeUnion,
+};
+
+export type User = {
+    id: string,
+    email: string,
+    username: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber?: string,
+    role: RoleUnion,
+    bio: string | null,
+    followersCount: number,
+    deviceNotificationToken?: string,
+    interestedCategories: EventCategoryUnion[],
+    country: CountryUnion,
+    profilePicture?: string,
+    subscriptions?: Subscription[],
+    ownedEvents?: Event[],
+    likedEvents?: Event[],
+    attendingEvents?: Event[],
+    followedEvents?: Event[],
+    ownedTickets?: UserTicket[],
+    ticketOrders?: TicketOrder[],
+    isActivated: boolean,
+    isSuspended: boolean,
+    createdAt: string,
+    updatedAt: string,
+};
+
+export type Event = {
+    id: string,
+    title: string,
+    description: string,
+    categories: EventCategoryUnion[],
+    startingDate: string,
+    endingDate: string,
+    countryCode?: string,
+    location: string,
+    mapUrl?: string,
+    status: EventStatusUnion,
+    type: EventTypeUnion,
+    currency: string,
+    isPrivate: boolean,
+    likesCount: number,
+    attendeesCount: number,
+    followersCount: number,
+    cover: string,
+    organizer?: User,
+    country: CountryUnion,
+    likers?: User[],
+    attendees?: User[],
+    followers?: User[],
+    tickets: Ticket[],
+    createdAt: string,
+    updatedAt: string,
+    deletedAt?: string,
+};
+
+export type TicketOrder = {
+    id: string,
+    buyerId: string,
+    totalPrice: number,
+    paymentReference: string,
+    createdAt: string,
+    updatedAt: string,
+    deletedAt?: string,
+};
+
+export type TicketOrderItem = {
+    id: string,
+    ticket: Ticket,
+    order: TicketOrder,
+    quantity: number,
+    createdAt: string,
+    updatedAt: string,
+    deletedAt?: string,
+};
+
+export type UserTicket = {
+    id: string,
+    code: string,
+    ticket: Ticket,
+    owner?: User,
+    status: UserTicketStatusUnion,
+    createdAt: string,
+    updatedAt: string,
+    deletedAt?: string,
+};
+
+export type Ticket = {
+    id: string,
+    title: string,
+    description: string,
+    price: number,
+    salesEndDate: string,
+    allowedPeople: number,
+    type?: InvitationTypeUnion[],
+    groupTicket: boolean,
+    limited: boolean,
+    maxQuantity?: number,
+    availableQuantity?: number,
+    event?: Event,
+    soldTickets?: UserTicket[],
+    ticketOrders?: TicketOrderItem[],
+    createdAt: string,
+    updatedAt: string,
+    deletedAt?: string,
+};
 
 export type Mode = 'view' | 'edit';
 
@@ -51,8 +242,7 @@ export type TicketType = {
 
 export const eventTypes = ['online', 'live'] as const;
 
-export type Tag = (typeof tags)[number];
-
+/*
 export type Event = {
     id: string;
     title: string;
@@ -66,6 +256,7 @@ export type Event = {
     tags: Tag[];
     ticketTypes: TicketType[];
 };
+*/
 
 export type ParsedDate = {
     day: number;
@@ -83,10 +274,8 @@ export type ParsedDateTime = {
     time: ParsedTime | null;
 };
 
-export type PaymentMethodType = 'card' | 'paypal';
-
 export type PaymentMethod = {
-    type: PaymentMethodType;
+    type: PaymentMethodUnion;
     label: string;
 };
 

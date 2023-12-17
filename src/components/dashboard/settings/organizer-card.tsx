@@ -20,7 +20,13 @@ const OrganizerCard: FunctionComponent<OrganizerCardProps> = ({ firstName, lastN
                 <Image src="/images/qr-code.png" alt="QR Code" width={50} height={50} />
             </div>
             <div className="flex justify-start items-center gap-5 w-full h-full">
-                <Image src={profilePicture} alt="User" width={50} height={50} />
+                <Image
+                    src={profilePicture}
+                    alt="User"
+                    width={50}
+                    height={50}
+                    className="aspect-square object-cover rounded-full"
+                />
                 <div className="flex flex-col justify-between items-start h-full">
                     <p className="text-sm">{firstName}</p>
                     <p className="text-sm font-medium">{lastName}</p>

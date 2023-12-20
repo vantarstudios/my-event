@@ -1,20 +1,26 @@
 'use client';
 
-import { useState, Fragment } from 'react';
-import type { FunctionComponent, MouseEvent, FormEvent } from 'react';
+import type { FormEvent, FunctionComponent, MouseEvent } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { v4 as uuid4 } from 'uuid';
-import { useToggle } from '@/lib/hooks';
-import { capitalize, thousandsCommaFormat } from '@/lib/utils';
-import { ticketTypes, invitationTypes } from '@/types';
-import type { Ticket } from '@/types';
+import { useToggle, useToggleVisibility } from '@/lib/hooks';
+import { capitalize, monthNumToString, thousandsCommaFormat, getISOString, parseDateTime } from '@/lib/utils';
+import { InvitationType } from '@/types/constants';
+import type { InvitationTypeUnion, ParsedDate, Event } from '@/types';
+import { ticketTypes } from '@/types';
+import { createTicketSchema } from '@/types/tickets';
+import type { CreateTicketPayload, CreateTicketErrors } from '@/types/tickets';
 import { Button } from '@components/ui';
-import { Switch, Input, Select, NumberInput, Checkbox } from '@components/ui/form';
-import { Person, People, Copy } from '@components/ui/icons';
-import { Modal, TitledArea, TitledTextArea, Card } from '@components/ui/layouts';
+import { Checkbox, DateInput, Input, NumberInput, Select, Switch } from '@components/ui/form';
+import { Copy, People, Person } from '@components/ui/icons';
+import { Card, Modal, TitledArea, TitledTextArea } from '@components/ui/layouts';
 import { encodeToBase64 } from 'next/dist/build/webpack/loaders/utils';
+import type { ZodError } from 'zod';
 
 interface CreateTicketProps {
-    onSave: (newTicket: Ticket) => void;
+    eventStartingDate?: Event['startingDate'];
+    eventEndingDate?: Event['endingDate'];
+    onSave: (newTicket: CreateTicketPayload) => void;
 }
 
 const userPlanInfos = {
@@ -48,24 +54,59 @@ const getExpectedParticipants = (eventSizeLimit: number) => {
     return buildOptions(eventSizeLimit);
 };
 
-const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
-    const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
+const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate, eventEndingDate, onSave }) => {
+    const {
+        ref: modalRef,
+        isVisible: isModalOpened,
+        setIsVisible: setIsModalOpened
+    } = useToggleVisibility<HTMLFormElement>(false);
     const [isGroup, setIsGroup] = useState<boolean>(false);
-    const [ticketTitle, setTicketTitle] = useState<string>('');
     const [isCombo, toggleIsCombo] = useToggle<boolean>(false, true);
-    const [selectedTicketTypes, setSelectedTicketTypes] = useState<(typeof ticketTypes)[number][]>([]);
-    const [selectedInvitationType, setSelectedInvitationType] = useState<(typeof invitationTypes)[number]>(
-        invitationTypes[0]!,
-    );
     const [invitationsEmails, setInvitationsEmails] = useState<string[]>([]);
     const [invitationLink, setInvitationLink] = useState('');
     const [isInvitationLinkCopied, setIsInvitationLinkCopied] = useState<boolean>(false);
-    const [selectedGroupSize, setSelectedGroupSize] = useState<string>('Unlimited');
     const [selectedGroupsLimit, setSelectedGroupsLimit] = useState<string>('Unlimited');
-    const [price, setPrice] = useState<number>(0);
-    const [ticketDescription, setTicketDescription] = useState<string>('');
-    const [expectedParticipants, setExpectedParticipants] = useState<string>('Unlimited');
     const [transferFees, toggleTransferFees] = useToggle<boolean>(false, true);
+    const [selectedTicketTypes, setSelectedTicketTypes] = useState<(typeof ticketTypes)[number][]>([]);
+    const [endSalesOnStartDate, toggleEndSalesOnStartDate] = useToggle<boolean>(false, true);
+    const [formErrors, setFormErrors] = useState<CreateTicketErrors>({} as CreateTicketErrors);
+    
+    const [ticketTitle, setTicketTitle] = useState<string>('');
+    const [ticketDescription, setTicketDescription] = useState<string>('');
+    const [salesEndDate, setSalesEndDate] = useState<ParsedDate | null>(null);
+    const [price, setPrice] = useState<number>(0);
+    const [selectedInvitationType, setSelectedInvitationType] = useState<InvitationTypeUnion>(InvitationType.FREE);
+    const [expectedParticipants, setExpectedParticipants] = useState<string>('Unlimited');
+    const [selectedGroupSize, setSelectedGroupSize] = useState<string>('Unlimited');
+    
+    const resetForm = () => {
+        setIsGroup(false);
+        setInvitationsEmails([]);
+        setInvitationLink('');
+        setIsInvitationLinkCopied(false);
+        setSelectedGroupsLimit('Unlimited');
+        setSelectedTicketTypes([]);
+        setFormErrors({} as CreateTicketErrors);
+        setTicketTitle('');
+        setTicketDescription('');
+        setSalesEndDate(null);
+        setPrice(0);
+        setSelectedInvitationType(InvitationType.FREE);
+        setExpectedParticipants('Unlimited');
+        setSelectedGroupSize('Unlimited');
+        
+        if (isCombo) {
+            toggleIsCombo();
+        }
+        
+        if (transferFees) {
+            toggleTransferFees();
+        }
+        
+        if (endSalesOnStartDate) {
+            toggleEndSalesOnStartDate();
+        }
+    }
 
     const pricePerParticipant = `${thousandsCommaFormat(
         price / (selectedGroupSize === 'Unlimited' ? MAX_GROUP_SIZE : Number(selectedGroupSize)),
@@ -117,7 +158,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
         };
 
     const handleInvitationTypeChange = (value: string) => {
-        setSelectedInvitationType(value.toLowerCase() as (typeof invitationTypes)[number]);
+        setSelectedInvitationType(value.toLowerCase() as InvitationTypeUnion);
     };
 
     const handleInvitationsEmailsChange = (event: FormEvent<HTMLInputElement>) => {
@@ -131,19 +172,65 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
             setTimeout(() => setIsInvitationLinkCopied(false), 2000);
         });
     };
+    
+    const handleSalesEndDateChange = (value: ParsedDate) => {
+        if (endSalesOnStartDate) {
+            toggleEndSalesOnStartDate();
+        }
+        
+        setSalesEndDate(value);
+    };
+    
+    const handleEndSalesOnStartDateChange = () => {
+        if (!endSalesOnStartDate && eventStartingDate) {
+            setSalesEndDate(parseDateTime(eventStartingDate, 'date'));
+        } else {
+            setSalesEndDate(null);
+        }
+        
+        toggleEndSalesOnStartDate();
+    };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        
+        const maxQuantity = expectedParticipants === 'Unlimited' ? undefined : Number(expectedParticipants);
+        
+        const newTicket: CreateTicketPayload = {
+            title: ticketTitle,
+            description: ticketDescription,
+            salesEndDate: getISOString({ date: salesEndDate, time: null }),
+            price: price,
+            invitationType: selectedInvitationType,
+            allowedPeople: isGroup && selectedGroupSize !== 'Unlimited' ? Number(selectedGroupSize) : undefined,
+            maxQuantity: maxQuantity,
+            limited: maxQuantity !== undefined,
+        };
+        
+        const validatedTicket = createTicketSchema.safeParse(newTicket);
+        
+        if (!validatedTicket.success) {
+            setFormErrors((validatedTicket.error as ZodError).formErrors.fieldErrors);
+            return;
+        }
+        
+        setFormErrors({} as CreateTicketErrors);
         setIsModalOpened(false);
-        onSave({} as Ticket);
+        onSave(validatedTicket.data);
     };
+    
+    useEffect(() => {
+        if (!isModalOpened) {
+            resetForm();
+        }
+    }, [isModalOpened]);
 
     return (
         <Fragment>
             <Button onClick={handleModalOpen} className="text-sm">+ Add a ticket</Button>
             <Modal isOpened={isModalOpened}>
-                <Card className="w-[35vw] h-[90vh] py-5 pl-5 pr-5">
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full h-full pl-5">
+                <Card className="w-[40vw] h-[90vh] py-5 pl-5 pr-5">
+                    <form ref={modalRef} onSubmit={handleSubmit} className="flex flex-col gap-5 w-full h-full pl-5">
                         <div className="flex justify-between items-center">
                             <p className="text-2xl font-semibold">{ticketTitle || 'New ticket'}</p>
                             <Button type="submit">Save</Button>
@@ -173,6 +260,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                 title="Ticket title:"
                                 value={ticketTitle}
                                 onChange={setTicketTitle}
+                                errors={formErrors.title}
                                 placeholder="ex: Standard Pass"
                                 rows={1}
                                 maxLength={150}
@@ -196,6 +284,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                             className={`w-full py-2 ${
                                                 selectedTicketTypes.includes(ticketType) && 'bg-primary'
                                             }`}
+                                            disabled={ticketType === 'invitation'}
                                         >
                                             {capitalize(ticketType)}
                                         </Button>
@@ -224,7 +313,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                     </TitledArea>
                                 </div>
                             )}
-                            {selectedTicketTypes.includes('paid') && (
+                            {!selectedTicketTypes.includes('paid') && (
                                 <TitledArea
                                     title="Price"
                                     indicator={
@@ -240,6 +329,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                     }
                                 >
                                     <NumberInput
+                                        errors={formErrors.price}
                                         name="price"
                                         value={String(price)}
                                         onChange={setPrice}
@@ -256,13 +346,13 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                         <Select
                                             name="invitation-type"
                                             value={capitalize(selectedInvitationType)}
-                                            options={invitationTypes.map((invitationType) =>
+                                            options={Object.values(InvitationType).map((invitationType) =>
                                                 capitalize(invitationType),
                                             )}
                                             onChange={handleInvitationTypeChange}
                                             wrapperClassName="text-sm"
                                         />
-                                        {selectedInvitationType === 'unique link' && (
+                                        {selectedInvitationType === InvitationType.UNIQUE_LINK && (
                                             <Input
                                                 name="invitation-link"
                                                 value={invitationLink}
@@ -284,7 +374,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                                 disabled
                                             />
                                         )}
-                                        {selectedInvitationType === 'e-mail' && (
+                                        {selectedInvitationType === InvitationType.EMAIL && (
                                             <Input
                                                 name="invitation-emails"
                                                 value={invitationsEmails.join(',')}
@@ -300,12 +390,51 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ onSave }) => {
                                 title="Description:"
                                 value={ticketDescription}
                                 onChange={setTicketDescription}
+                                errors={formErrors.description}
                                 placeholder="Let participants know what are the advantages or limits of this ticket"
                                 rows={5}
                                 maxLength={150}
                                 variant="form"
                                 className="py-5 text-sm"
                             />
+                            <TitledArea title="Sales ending date:">
+                                <div className="flex justify-between items-center w-full h-full">
+                                    <div className="flex flex-col justify-start mb-auto">
+                                        <DateInput
+                                            name="sales-end-date"
+                                            value={salesEndDate}
+                                            onChange={handleSalesEndDateChange}
+                                            onClear={() => setSalesEndDate(null)}
+                                            minDate={new Date()}
+                                            maxDate={eventEndingDate ? new Date(eventEndingDate) : undefined}
+                                            className="w-fit"
+                                        />
+                                        <p className="py-2 text-xs text-red-500">
+                                            {formErrors.salesEndDate?.[0]}
+                                        </p>
+                                        <Checkbox
+                                            name="transfer-fees"
+                                            label="End sales when event starts"
+                                            checked={endSalesOnStartDate}
+                                            onChange={handleEndSalesOnStartDateChange}
+                                            className="text-xs"
+                                        />
+                                    </div>
+                                    <div className="mb-auto p-5 text-white bg-black rounded-2xl">
+                                        {salesEndDate && (
+                                            <p className="mb-3 text-sm">
+                                                Sales will end on&nbsp;
+                                                <span className="text-primary">
+                                                    {salesEndDate.day} {monthNumToString(salesEndDate.month)} {salesEndDate.year}
+                                                </span>
+                                            </p>
+                                        )}
+                                        <p className="text-xs break-words">
+                                            Sales will end at 11:59 PM of that day
+                                        </p>
+                                    </div>
+                                </div>
+                            </TitledArea>
                             <TitledArea title="Expected participants:">
                                 <Select
                                     name="expected-participants"

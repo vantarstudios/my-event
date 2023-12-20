@@ -177,7 +177,7 @@ export type Ticket = {
     price: number,
     salesEndDate: string,
     allowedPeople: number,
-    type?: InvitationTypeUnion[],
+    invitationType: InvitationTypeUnion,
     groupTicket: boolean,
     limited: boolean,
     maxQuantity?: number,
@@ -212,8 +212,6 @@ export type Notification = {
 };
 
 export const ticketTypes = ['free', 'paid', 'invitation'] as const;
-
-export const invitationTypes = ['e-mail', 'unique link'] as const;
 
 export type ParsedDate = {
     day: number;

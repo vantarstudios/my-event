@@ -1,8 +1,6 @@
 import { z } from 'zod';
-import { EventType, EventCategory } from '@/types/constants';
+import { EventType, EventCategory, dateRegex } from '@/types/constants';
 import type { Event } from '@/types';
-
-const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
 
 export const createEventSchema = z.object({
     title: z.string(),

@@ -1,16 +1,16 @@
 import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
-import type { Ticket, Mode } from '@/types';
+import type { Ticket as TicketType, Mode } from '@/types';
 import { Button } from '@components/ui';
 import { Person, Pencil, TrashCan, Eye } from '@components/ui/icons';
 
-interface TicketTypeProps {
-    ticket: Ticket; // Yep, I know it's funny
+interface TicketProps {
+    ticket: TicketType; // Yep, I know it's funny
     mode: Mode;
     onDelete?: () => void;
 }
 
-const TicketType: FunctionComponent<TicketTypeProps> = ({ ticket, mode, onDelete }) => {
+const Ticket: FunctionComponent<TicketProps> = ({ ticket, mode, onDelete }) => {
     return (
         <div key={ticket.title} className="flex justify-between items-center w-full p-3 text-black font-bold bg-gray-50">
             <div className="flex gap-4">
@@ -42,4 +42,4 @@ const TicketType: FunctionComponent<TicketTypeProps> = ({ ticket, mode, onDelete
     );
 };
 
-export default TicketType;
+export default Ticket;

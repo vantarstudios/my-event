@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import type { Key, Fetcher } from 'swr';
 import type { AxiosError } from 'axios';
 import type { ApiResponse } from '@/types';
-import { toast } from '@/lib/utils/toast';
+import { toast } from '@/lib/utils';
 
 export const useRequest = <Data, SWRKey extends Key = Key>(
     key: SWRKey,

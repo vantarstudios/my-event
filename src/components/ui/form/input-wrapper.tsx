@@ -23,17 +23,19 @@ const InputWrapper: FunctionComponent<PropsWithChildren<InputWrapperProps>> = (p
                 <div className="absolute bottom-2.5 right-4">{props.icon}</div>
             </div>
             {
-                Array.isArray(props.errors)
-                    ? (
-                        <ul className="pl-3 text-xs text-red-500">
-                            {
-                                props.errors.map((error, index) => (
-                                    <li key={index}>{error}</li>
-                                ))
-                            }
-                        </ul>
-                    )
-                    : <p className="pl-3 text-xs text-red-500">{props.errors}</p>
+                props.errors && (
+                    Array.isArray(props.errors)
+                        ? (
+                            <ul className="pl-3 text-xs text-red-500">
+                                {
+                                    props.errors.map((error, index) => (
+                                        <li key={index}>{error}</li>
+                                    ))
+                                }
+                            </ul>
+                        )
+                        : <p className="pl-3 text-xs text-red-500">{props.errors}</p>
+                )
             }
         </div>
     );

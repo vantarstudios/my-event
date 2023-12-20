@@ -9,3 +9,5 @@ export * from './thousands-comma-format';
 export * from './month-num-to-string';
 
 export * from './capitalize';
+
+export * from './toast';

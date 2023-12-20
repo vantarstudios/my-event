@@ -3,17 +3,18 @@
 import { useState } from 'react';
 import type { FunctionComponent } from 'react';
 import { useMutationRequest } from '@/lib/hooks';
-import { toast } from '@/lib/utils/toast';
+import { toast } from '@/lib/utils';
 import { eventsAPI } from '@/lib/api/events';
+import { ticketsAPI } from '@/lib/api/tickets';
 import { createEventSchema } from '@/types/events';
 import type { CreateEventPayload, UpdateEventPayload } from '@/types/events';
+import type { CreateTicketPayload } from '@/types/tickets';
 import type { EditOrCreateStep, Event, EventTypeUnion } from '@/types';
 import { Button } from '@components/ui';
 import { Ticketing } from '@/components/tickets';
 import EventEditionStepper from './event-edition-stepper';
 import NameAndCover from './name-and-cover';
 import DateAndLocation from './date-and-location';
-import tickets from '@/data/tickets';
 
 interface EditOrCreateEventLayoutProps {
     layout: 'create' | 'edit';
@@ -23,9 +24,8 @@ interface EditOrCreateEventLayoutProps {
 }
 
 const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> = ({ layout, onModeToggle, event, eventType }) => {
-    const eventTickets = event ? tickets.filter((ticket) => ticket.eventId === event.id) : [];
-    
     const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
+    const [newTickets, setNewTickets] = useState<CreateTicketPayload[]>([]);
     const [formData, setFormData] = useState<CreateEventPayload>({
         title: event?.title || '',
         description: event?.description || '',
@@ -47,15 +47,40 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 response = await eventsAPI.updateEvent(event!.id, data as UpdateEventPayload);
             }
             
+            if (response.data.success) {
+                const createdEvent = response.data.data;
+                
+                for (const ticket of newTickets) {
+                    await ticketsAPI.createTicket(
+                        layout === 'create' ? createdEvent.id : event!.id,
+                        ticket
+                    );
+                }
+            }
+            
             return response.data;
         },
         layout === 'edit'
-            ? 'Event updated successfully'
-            : 'Event created successfully',
+            ? newTickets.length > 0
+                ? 'Event and tickets updated successfully'
+                : 'Event updated successfully'
+            : newTickets.length > 0
+                ? 'Event and tickets created successfully'
+                : 'Event created successfully',
     );
     
     const handleDataChange = <T extends keyof CreateEventPayload>(key: T) => (value: CreateEventPayload[T]) => {
         setFormData((currentData) => ({ ...currentData, [key]: value }));
+    };
+    
+    const handleTicketChange = (ticket: CreateTicketPayload, toDelete: boolean = false) => {
+        setNewTickets((currentTickets) => {
+            if (toDelete) {
+                return currentTickets.filter((currentTicket) => currentTicket.title !== ticket.title);
+            }
+            
+            return [...currentTickets, ticket];
+        });
     };
     
     const steps: EditOrCreateStep[] = [
@@ -80,7 +105,12 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
         },
         {
             title: 'Ticketing',
-            content: <Ticketing ticketTypes={eventTickets}/>,
+            content: <Ticketing
+                layout={layout}
+                event={event}
+                newTickets={newTickets}
+                onTicketAdd={handleTicketChange}
+            />,
         },
     ];
 
@@ -102,7 +132,6 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                         type: eventType,
                     } as CreateEventPayload);
                 } catch (error) {
-                    console.log(error);
                     toast.error('An error occurred, please try again later');
                 }
             }

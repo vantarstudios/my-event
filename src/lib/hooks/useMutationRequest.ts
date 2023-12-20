@@ -3,7 +3,7 @@ import type { Key } from 'swr';
 import type { MutationFetcher } from 'swr/mutation';
 import type { AxiosError } from 'axios';
 import type { ApiResponse } from '@/types';
-import { toast } from '@/lib/utils/toast';
+import { toast } from '@/lib/utils';
 
 export const useMutationRequest = <Data = unknown, SWRMutationKey extends Key = Key, ExtraArg = never>(
     key: Key,

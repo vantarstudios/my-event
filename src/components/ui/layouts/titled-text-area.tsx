@@ -15,6 +15,7 @@ interface TitledTextAreaProps {
     maxLength?: HTMLTextAreaElement['maxLength'];
     rows?: HTMLTextAreaElement['rows'];
     register?: UseFormRegisterReturn;
+    errors?: string | string[];
     variant: 'edit' | 'form';
     className?: HTMLAttributes<HTMLDivElement>['className'];
 }
@@ -27,6 +28,7 @@ const TitledTextArea: FunctionComponent<TitledTextAreaProps> = ({
     maxLength,
     rows,
     register,
+    errors,
     variant,
     className,
 }) => {
@@ -55,12 +57,13 @@ const TitledTextArea: FunctionComponent<TitledTextAreaProps> = ({
                 </span>
             }
         >
-            <div className="flex justify-between items-center gap-5 w-full h-fit">
+            <div className="flex flex-col justify-center gap-2 w-full h-fit">
                 <TextArea
                     value={value}
                     placeholder={placeholder}
                     spellCheck={false}
                     rows={rows}
+                    onChange={!register ? handleValueChange : undefined}
                     register={register && {
                         ...register,
                         onChange: (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -71,6 +74,21 @@ const TitledTextArea: FunctionComponent<TitledTextAreaProps> = ({
                     variant={variant}
                     className={cn('w-full', className)}
                 />
+                {
+                    errors && (
+                        Array.isArray(errors)
+                            ? (
+                                <ul className="text-xs text-red-500">
+                                    {
+                                        errors.map((error, index) => (
+                                            <li key={index}>{error}</li>
+                                        ))
+                                    }
+                                </ul>
+                            )
+                            : <p className="text-xs text-red-500">{errors}</p>
+                    )
+                }
             </div>
         </TitledArea>
     );

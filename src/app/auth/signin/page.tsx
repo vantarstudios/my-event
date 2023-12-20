@@ -6,7 +6,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { toast } from '@/lib/utils/toast';
+import { toast } from '@/lib/utils';
 import { authAPI } from '@/lib/api/auth';
 import { useToggle, useMutationRequest } from '@/lib/hooks';
 import { Role } from '@/types/constants';

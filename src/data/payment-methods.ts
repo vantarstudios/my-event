@@ -1,8 +1,9 @@
-import type { PaymentMethod } from '@/types';
+import type { PaymentMethod as PaymentMethodType } from '@/types';
+import { PaymentMethod } from '@/types/constants';
 
-const paymentMethods: PaymentMethod[] = [
+const paymentMethods: PaymentMethodType[] = [
     {
-        type: 'VISA',
+        type: PaymentMethod.VISA,
         label: 'MasterCard ****0000',
     },
 ];

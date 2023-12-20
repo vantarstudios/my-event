@@ -6,6 +6,7 @@ import type { InputWrapperProps } from './input-wrapper';
 
 interface InputProps extends HTMLAttributes<HTMLInputElement>, InputWrapperProps {
     value?: HTMLInputElement['value'];
+    placeholder?: HTMLInputElement['placeholder'];
     disabled?: HTMLInputElement['disabled'];
     type?: 'text' | 'password' | 'email' | 'number' | 'tel';
     autoComplete?: HTMLInputElement['autocomplete'];

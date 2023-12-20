@@ -1,0 +1,48 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - development
+      - master
+
+jobs:
+  build:
+    name: Build and push the Docker Image
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-event:${{ github.sha }}
+
+  deploy:
+    name: Deploy the Docker image to the EC2 instance
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Deploy to EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-event:${{ github.sha }}
+            docker stop ${{ env.DOCKER_APP_NAME }} || true
+            docker rm ${{ env.DOCKER_APP_NAME }} || true
+            docker run -d --name ${{ env.DOCKER_APP_NAME }} -p 5000:5000 ${{ secrets.DOCKERHUB_USERNAME }}/my-event:${{ github.sha }}

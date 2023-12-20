@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build and push the Docker Image
+    name: Build and push the Docker image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,18 +17,18 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
-      - name: Build Docker Image
+      - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/my-event:${{ github.sha }}
+          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}
 
   deploy:
-    name: Deploy the Docker image to the EC2 instance
+    name: Deploy the Docker image to the server
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -38,11 +38,11 @@ jobs:
       - name: Deploy to EC2 instance
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-event:${{ github.sha }}
+            docker pull ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}
             docker stop ${{ env.DOCKER_APP_NAME }} || true
             docker rm ${{ env.DOCKER_APP_NAME }} || true
-            docker run -d --name ${{ env.DOCKER_APP_NAME }} -p 5000:5000 ${{ secrets.DOCKERHUB_USERNAME }}/my-event:${{ github.sha }}
+            docker run -d --name ${{ env.DOCKER_APP_NAME }} -p 5000:5000 ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}

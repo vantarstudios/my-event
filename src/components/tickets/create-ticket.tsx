@@ -223,7 +223,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
         if (!isModalOpened) {
             resetForm();
         }
-    }, [isModalOpened, resetForm]);
+    }, [isModalOpened]);
 
     return (
         <Fragment>

@@ -77,7 +77,7 @@ const Sidebar = () => {
                 })}
             </ul>
         </aside>
-    ), [activeViewIndex, isVisible]);
+    ), [activeViewIndex, isVisible, pathname]);
 };
 
 export default Sidebar;

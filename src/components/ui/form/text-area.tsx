@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 
 interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
     value?: HTMLTextAreaElement['value'];
+    placeholder?: HTMLTextAreaElement['placeholder'];
     rows?: HTMLTextAreaElement['rows'];
     register?: UseFormRegisterReturn;
     variant: 'edit' | 'form';

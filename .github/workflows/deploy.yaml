@@ -27,8 +27,8 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}
           build-args: |
-            "NODE_ENV=${{ env.NODE_ENV }}" \
-            "NEXT_PUBLIC_API_URL=${{ env.NEXT_PUBLIC_API_URL }}" \
+            "NODE_ENV=$NODE_ENV" \
+            "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL" \
 
   deploy:
     name: Deploy the Docker image to the server
@@ -46,6 +46,6 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             docker pull ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}
-            docker stop ${{ env.DOCKER_APP_NAME }} || true
-            docker rm ${{ env.DOCKER_APP_NAME }} || true
-            docker run -d --name ${{ env.DOCKER_APP_NAME }} -p 5000:5000 ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}
+            docker stop $DOCKER_APP_NAME || true
+            docker rm $DOCKER_APP_NAME || true
+            docker run -d --name $DOCKER_APP_NAME -p 5000:5000 ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}

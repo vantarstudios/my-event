@@ -1,11 +1,11 @@
 FROM node:20-alpine
 
+ARG NODE_ENV
+ARG NEXT_PUBLIC_API_URL
+
 WORKDIR /app
 
 COPY package.json /app/
-
-ARG NODE_ENV
-ARG NEXT_PUBLIC_API_URL
 
 RUN echo "NODE_ENV=$NODE_ENV" >> .env.production
 RUN echo "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL" >> .env.production

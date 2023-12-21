@@ -6,7 +6,6 @@ const serverEnvSchema = z.object({
 
 const clientEnvSchema = z.object({
     API_URL: z.string().trim().url(),
-    APP_HOST: z.string().trim().optional(),
 });
 
 export type ServerEnvironmentVariables = z.infer<typeof serverEnvSchema>;
@@ -29,7 +28,6 @@ export { serverEnv };
 
 export const clientEnv: ClientEnvironmentVariables = clientEnvSchema.parse({
     API_URL: process.env.NEXT_PUBLIC_API_URL,
-    APP_HOST: process.env.NEXT_PUBLIC_APP_HOST
 });
 
 export const isProduction = serverEnv.NODE_ENV === 'production';

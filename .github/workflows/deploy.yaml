@@ -26,6 +26,9 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}
+        env:
+          NODE_ENV: ${{ env.NODE_ENV }}
+          API_URL: ${{ env.API_URL }}
 
   deploy:
     name: Deploy the Docker image to the server

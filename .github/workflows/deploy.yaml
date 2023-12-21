@@ -26,9 +26,9 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}
-          build-args: |
-            "NODE_ENV=${{ secrets.NODE_ENV }}" \
-            "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" \
+          secrets: |
+            "NODE_ENV=${{ secrets.NODE_ENV }}"
+            "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}"
 
   deploy:
     name: Deploy the Docker image to the server
@@ -38,7 +38,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Deploy to EC2 instance
+      - name: Deploy to the server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}

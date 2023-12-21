@@ -1,15 +1,14 @@
 FROM node:20-alpine
 
-ARG NODE_ENV
-ARG NEXT_PUBLIC_API_URL
-
 WORKDIR /app
 
 COPY package.json /app/
 
-RUN echo "NODE_ENV=production" >> .env.production
-RUN echo "NEXT_PUBLIC_API_URL=https://api-staging.eventmediapp.com" >> .env.production
-RUN cat .env.production
+RUN --mount=type=secret,id=NODE_ENV \
+    --mount=type=secret,id=NEXT_PUBLIC_API_URL \
+    cat /run/secrets/NODE_ENV >> .env.production && \
+    cat /run/secrets/NEXT_PUBLIC_API_URL >> .env.production \
+    && cat .env.production
 
 RUN npm install -g @nestjs/cli
 

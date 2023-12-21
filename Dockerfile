@@ -7,8 +7,8 @@ WORKDIR /app
 
 COPY package.json /app/
 
-RUN echo "NODE_ENV=$NODE_ENV" >> .env.production
-RUN echo "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL" >> .env.production
+RUN echo "NODE_ENV=production" >> .env.production
+RUN echo "NEXT_PUBLIC_API_URL=https://api-staging.eventmediapp.com" >> .env.production
 RUN cat .env.production
 
 RUN npm install -g @nestjs/cli

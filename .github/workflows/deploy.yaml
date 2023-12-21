@@ -4,28 +4,30 @@ on:
   push:
     branches:
       - development
-      - master
+
+env:
+  DOCKER_APP_NAME: my-event
 
 jobs:
   build:
     name: Build and push the Docker image
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
-      - name: Login to Docker Hub
+      - name: Login to the Docker registry
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
-      - name: Build Docker image
+      - name: Build and publish the Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}
+          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/${{ env.DOCKER_APP_NAME }}:${{ github.sha }}
           secrets: |
             "NODE_ENV=${{ secrets.NODE_ENV }}"
             "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}"
@@ -35,17 +37,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
-      - name: Deploy to the server
+      - name: Pull the Docker image on the server and start the container
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            docker pull ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}
-            docker stop ${{ secrets.DOCKER_APP_NAME }} || true
-            docker rm ${{ secrets.DOCKER_APP_NAME }} || true
-            docker run -d --name ${{ secrets.DOCKER_APP_NAME }} -p 5000:5000 ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event:${{ github.sha }}
+            docker pull ${{ secrets.DOCKER_REGISTRY_USERNAME }}/${{ env.DOCKER_APP_NAME }}:${{ github.sha }}
+            docker stop ${{ env.DOCKER_APP_NAME }} || true
+            docker rm ${{ env.DOCKER_APP_NAME }} || true
+            docker run -d --name ${{ env.DOCKER_APP_NAME }} -p 5000:5000 ${{ secrets.DOCKER_REGISTRY_USERNAME }}/${{ env.DOCKER_APP_NAME }}:${{ github.sha }}

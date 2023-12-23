@@ -4,7 +4,6 @@
 const nextConfig = {
     reactStrictMode: true,
     trailingSlash: true,
-    distDir: 'dist',
     poweredByHeader: false,
     skipTrailingSlashRedirect: true,
     images: {

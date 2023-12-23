@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:20-alpine as build
 
 WORKDIR /app
 
@@ -17,6 +17,16 @@ RUN yarn install
 COPY . /app
 
 RUN yarn build
+
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/node_modules /app/node_modules
+COPY --from=build /app/package.json /app/
+COPY --from=build /app/.env.production /app/
+COPY --from=build /app/.next /app/.next
+COPY --from=build /app/public /app/public
 
 EXPOSE 5000
 

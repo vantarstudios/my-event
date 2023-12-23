@@ -11,11 +11,11 @@ const nextConfig = {
         remotePatterns: [
             {
               protocol: 'https',
-              host: '**.eventmediapp.com',
+              hostname: '**.eventmediapp.com',
             },
             {
               protocol: 'http',
-              host: 'localhost',
+              hostname: 'localhost',
             },
         ],
     },

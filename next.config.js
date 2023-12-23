@@ -8,7 +8,16 @@ const nextConfig = {
     poweredByHeader: false,
     skipTrailingSlashRedirect: true,
     images: {
-        domains: ['localhost', 'api-staging.eventmediapp.com']
+        remotePatterns: [
+            {
+              protocol: 'https',
+              host: '**.eventmediapp.com',
+            },
+            {
+              protocol: 'http',
+              host: 'localhost',
+            },
+        ],
     },
 };
 

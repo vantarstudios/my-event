@@ -50,5 +50,6 @@ jobs:
           script: |
             docker pull ${{ env.DOCKER_IMAGE_NAME }}
             docker stop ${{ env.DOCKER_APP_NAME }} || true
+            docker rm ${{ env.DOCKER_APP_NAME }} || true
             docker image rm $(docker images | grep ${{ env.DOCKER_APP_NAME }} | tail -n +2 | awk '{print $3}' | cut -c 1-3 --output-delimiter=' ') || true
             docker run -d --name ${{ env.DOCKER_APP_NAME }} -p 5000:5000 ${{ env.DOCKER_IMAGE_NAME }}

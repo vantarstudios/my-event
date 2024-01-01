@@ -2,6 +2,7 @@
 
 import { useContext } from 'react';
 import type { FunctionComponent } from 'react';
+import { useRouter } from 'next/navigation';
 import { UserContext } from '@/contexts/user-context';
 import { useRequest } from '@/lib/hooks';
 import { eventsAPI } from '@/lib/api/events';
@@ -14,6 +15,8 @@ interface EventsListProps {
 
 const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
     const { userProfile } = useContext(UserContext);
+    const router = useRouter();
+    
     const { data: events, error, isLoading } = useRequest(
         `my-events`,
         async () => {
@@ -27,14 +30,15 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
                     response = await eventsAPI.getAllEventsForOrganizer(userProfile.id);
                     break;
                 default:
-                    throw new Error('User role not supported');
+                    router.push('/auth/signup');
+                    break;
             }
             
-            if (response.data.success === false) {
-                throw new Error(response.data.error.message);
+            if (response!.data.success === false) {
+                throw new Error(response!.data.error.message);
             }
             
-            return response.data;
+            return response!.data;
         }
     );
     

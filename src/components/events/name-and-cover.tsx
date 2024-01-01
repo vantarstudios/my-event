@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import type { FunctionComponent, ChangeEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,7 +20,7 @@ interface EditNameAndCoverProps extends NameAndCoverProps {
     setOtherData: <T extends keyof CreateEventPayload>(key: T) => (value: CreateEventPayload[T]) => void;
 }
 
-const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, description, categories, initialCover, setOtherData }) => {
+const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, description, categories, cover, initialCover, setOtherData }) => {
     const { register } = useForm({
         resolver: zodResolver(createEventSchema),
         defaultValues: {
@@ -29,7 +29,7 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
         },
     });
     
-    const [coverImage, setCoverImage] = useState<File | undefined>();
+    const coverImage = cover;
     const coverImageInputRef = useRef<HTMLInputElement>(null);
     const suggestedCategories = categories && categories.length > 0
         ? Object.values(EventCategory).filter((category) => !categories.includes(category)).slice(0, 10)
@@ -37,12 +37,10 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
     
     const handleCoverImageChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
-        setCoverImage(file);
         setOtherData('cover')(file);
     };
     
     const handleCoverImageClear = () => {
-        setCoverImage(undefined);
         setOtherData('cover')(undefined);
         coverImageInputRef.current?.value && (coverImageInputRef.current.value = '');
     };

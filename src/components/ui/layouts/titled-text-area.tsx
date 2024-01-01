@@ -16,7 +16,6 @@ interface TitledTextAreaProps {
     rows?: HTMLTextAreaElement['rows'];
     register?: UseFormRegisterReturn;
     errors?: string | string[];
-    variant: 'edit' | 'form';
     className?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
@@ -29,7 +28,6 @@ const TitledTextArea: FunctionComponent<TitledTextAreaProps> = ({
     rows,
     register,
     errors,
-    variant,
     className,
 }) => {
     const [valueLength, setValueLength] = useState<number>(value?.length || 0);
@@ -71,7 +69,6 @@ const TitledTextArea: FunctionComponent<TitledTextAreaProps> = ({
                             handleValueChange(event);
                         }
                     } as UseFormRegisterReturn}
-                    variant={variant}
                     className={cn('w-full', className)}
                 />
                 {

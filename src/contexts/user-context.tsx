@@ -2,6 +2,7 @@
 
 import { createContext, useState, useEffect } from 'react';
 import type { FunctionComponent, PropsWithChildren, Dispatch, SetStateAction } from 'react';
+import { useRouter } from 'next/navigation';
 import { useRequest } from '@/lib/hooks/useRequest';
 import { usersAPI } from '@/lib/api/users';
 import type { UserProfile } from '@/types/users';
@@ -15,7 +16,9 @@ export const UserContext = createContext<{
 });
 
 export const UserProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
+    const router = useRouter();
     const [userProfile, setUserProfile] = useState<UserProfile>({} as UserProfile);
+    
     const { data: user, error, isLoading } = useRequest('user-profile', async () => {
         const response = await usersAPI.getProfile();
         
@@ -27,7 +30,12 @@ export const UserProvider: FunctionComponent<PropsWithChildren> = ({ children })
     });
     
     useEffect(() => {
-        if (!isLoading && !error && user?.success) {
+        if (!isLoading) {
+            if (error || !user?.success) {
+                router.push('/auth/signin');
+                return;
+            }
+            
             setUserProfile(user.data);
         }
     }, [isLoading, error, user]);
@@ -38,7 +46,7 @@ export const UserProvider: FunctionComponent<PropsWithChildren> = ({ children })
             setUserProfile,
         }}>
             {
-                !isLoading && children
+                (!isLoading && !error) && children
             }
         </UserContext.Provider>
     );

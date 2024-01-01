@@ -24,12 +24,12 @@ const Select: FunctionComponent<SelectInputProps> = ({ value, options, onChange,
         <InputWrapper
             {...props}
             wrapperClassName={cn(props.wrapperClassName, 'relative')}
-            icon={<ChevronLeft strokeWidth="thin" className="font-thin w-4 h-4 mb-0.5 rotate-180" />}
+            icon={<ChevronLeft strokeWidth="thin" className="font-thin w-3 h-3 mb-0.5 rotate-180" />}
         >
             <div
                 ref={ref}
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="w-full h-full rounded-full px-8 py-2 outline-none ring-transparent font-medium bg-white drop-shadow-md border border-opacity-5"
+                className="w-full h-full rounded-full px-8 py-2 outline-none ring-transparent font-medium bg-gray-100 border border-opacity-5"
             >
                 {value}
             </div>

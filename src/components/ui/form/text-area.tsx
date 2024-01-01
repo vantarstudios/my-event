@@ -7,19 +7,15 @@ interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement> {
     placeholder?: HTMLTextAreaElement['placeholder'];
     rows?: HTMLTextAreaElement['rows'];
     register?: UseFormRegisterReturn;
-    variant: 'edit' | 'form';
     className?: HTMLAttributes<HTMLTextAreaElement>['className'];
 }
 
-const TextArea: FunctionComponent<TextAreaProps> = ({ value, rows, variant, className, ...props }) => {
+const TextArea: FunctionComponent<TextAreaProps> = ({ value, rows, className, ...props }) => {
     return (
         <textarea
             className={cn(
-                'resize-none rounded-3xl focus:outline-none',
-                variant === 'edit'
-                    ? 'px-5 py-2 border-none caret-primary placeholder-black placeholder:text-sm focus:px-5 focus:py-2 focus:bg-gray-100'
-                    : 'w-full h-full px-8 py-2 ring-transparent bg-white drop-shadow-md border border-opacity-5',
-                variant === 'edit' && value === '' && 'bg-gray-100',
+                'resize-none rounded-3xl focus:outline-none px-5 py-2 border-none caret-primary placeholder-black placeholder:text-sm focus:bg-gray-100',
+                value === '' && 'bg-gray-100',
                 className,
             )}
             value={!props.register ? (value ?? '') : undefined}

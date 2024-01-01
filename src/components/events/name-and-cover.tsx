@@ -8,8 +8,8 @@ import { EventCategory } from '@/types/constants';
 import { createEventSchema } from '@/types/events';
 import type { CreateEventPayload } from '@/types/events';
 import type { EventCategoryUnion } from '@/types';
+import CategoryChip from './category-chip';
 import { Button } from '@components/ui';
-import { Input } from '@components/ui/form';
 import { Picture, Cross } from '@components/ui/icons';
 import { TitledTextArea, TitledArea } from '@components/ui/layouts';
 
@@ -31,7 +31,6 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
     
     const [coverImage, setCoverImage] = useState<File | undefined>();
     const coverImageInputRef = useRef<HTMLInputElement>(null);
-    const categoriesValue = (categories || []).map((category) => `#${capitalize(category)}`).join(',')
     const suggestedCategories = categories && categories.length > 0
         ? Object.values(EventCategory).filter((category) => !categories.includes(category)).slice(0, 10)
         : Object.values(EventCategory).slice(0, 10);
@@ -48,8 +47,12 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
         coverImageInputRef.current?.value && (coverImageInputRef.current.value = '');
     };
 
-    const handleSuggestedCategoryClick = (category: EventCategoryUnion) => {
+    const handleSuggestedCategoryClick = (category: EventCategoryUnion) => () => {
         setOtherData('categories')([...(categories || []), category]);
+    };
+    
+    const handleCategoryDelete = (deletedCategory: EventCategoryUnion) => () => {
+        setOtherData('categories')((categories || []).filter((category) => category !== deletedCategory));
     };
 
     return (
@@ -112,8 +115,7 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
                     placeholder="Enter your event title"
                     rows={1}
                     maxLength={150}
-                    variant="edit"
-                    className="text-xl font-bold placeholder:text-xl"
+                    className=""
                 />
                 <TitledTextArea
                     register={register('description', {
@@ -125,7 +127,6 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
                     placeholder="Briefly describe your event to your participants"
                     maxLength={700}
                     rows={7}
-                    variant="edit"
                 />
                 <TitledArea title="Category:">
                     <div className="flex flex-col items-start gap-5 w-full">
@@ -134,22 +135,33 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
                             {suggestedCategories.map((category) => (
                                 <Button
                                     key={category}
-                                    onClick={() => handleSuggestedCategoryClick(category)}
+                                    onClick={handleSuggestedCategoryClick(category)}
                                     className="min-w-max px-3 py-1.5 text-xs"
                                 >
                                     #{capitalize(category)}
                                 </Button>
                             ))}
                         </div>
-                        <Input
-                            name="category"
-                            value={categoriesValue}
-                            placeholder="Separate each category with a comma"
-                            variant="auth"
-                            className="text-sm font-medium"
-                            wrapperClassName="w-1/2 w-full"
-                            disabled={true}
-                        />
+                        <div className="flex flex-wrap items-center gap-2 min-w-[50%] max-w-full min-h-[2.5rem] px-5 py-1 rounded-xl bg-gray-100">
+                            {
+                                (!categories || categories.length === 0) && (
+                                    <p className="text-xs text-gray-500">No category selected</p>
+                                )
+                            }
+                            {
+                                categories && categories.map((category, index) => (
+                                    <>
+                                        <CategoryChip
+                                            key={category}
+                                            category={category}
+                                            onDelete={handleCategoryDelete(category)}
+                                            deletable
+                                        />
+                                        {index < categories.length - 1 && <span>-</span> }
+                                    </>
+                                ))
+                            }
+                        </div>
                     </div>
                 </TitledArea>
             </div>

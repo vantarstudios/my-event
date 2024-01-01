@@ -1,4 +1,5 @@
 import type { FunctionComponent, ChangeEvent } from 'react';
+import { cn } from '@/lib/utils';
 import InputWrapper from './input-wrapper';
 import type { InputWrapperProps } from './input-wrapper';
 
@@ -21,7 +22,10 @@ const NumberInput: FunctionComponent<NumberInputProps> = ({ value, ...props }) =
             <input
                 name={props.name}
                 type="number"
-                className="w-full h-full rounded-full px-8 py-2 outline-none ring-transparent font-semibold bg-white drop-shadow-md border border-opacity-5"
+                className={cn(
+                    'w-full h-full rounded-full px-8 py-2 outline-none ring-transparent font-semibold focus:bg-gray-100',
+                    value && 'bg-gray-100',
+                )}
                 value={value}
                 onChange={handleNumberChange}
             />

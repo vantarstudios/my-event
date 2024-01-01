@@ -158,7 +158,8 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
         };
 
     const handleInvitationTypeChange = (value: string) => {
-        setSelectedInvitationType(value.toLowerCase() as InvitationTypeUnion);
+        console.log(value)
+        setSelectedInvitationType(value.toUpperCase() as InvitationTypeUnion);
     };
 
     const handleInvitationsEmailsChange = (event: FormEvent<HTMLInputElement>) => {
@@ -229,7 +230,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
         <Fragment>
             <Button onClick={handleModalOpen} className="text-sm">+ Add a ticket</Button>
             <Modal isOpened={isModalOpened}>
-                <Card className="w-[40vw] h-[90vh] py-5 pl-5 pr-5">
+                <Card className="w-[30vw] h-[90vh] py-5 pl-5 pr-5">
                     <form ref={modalRef} onSubmit={handleSubmit} className="flex flex-col gap-5 w-full h-full pl-5">
                         <div className="flex justify-between items-center">
                             <p className="text-2xl font-semibold">{ticketTitle || 'New ticket'}</p>
@@ -264,7 +265,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                 placeholder="ex: Standard Pass"
                                 rows={1}
                                 maxLength={150}
-                                variant="form"
                                 className="text-sm"
                             />
                             <TitledArea
@@ -276,7 +276,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                     </div>
                                 }
                             >
-                                <div className="flex justify-between items-center gap-10 text-sm">
+                                <div className="flex justify-between items-center gap-5 text-sm">
                                     {ticketTypes.map((ticketType) => (
                                         <Button
                                             key={ticketType}
@@ -284,7 +284,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                             className={`w-full py-2 ${
                                                 selectedTicketTypes.includes(ticketType) && 'bg-primary'
                                             }`}
-                                            disabled={ticketType === 'invitation'}
                                         >
                                             {capitalize(ticketType)}
                                         </Button>
@@ -292,7 +291,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                 </div>
                             </TitledArea>
                             {isGroup && (
-                                <div className="flex justify-between items-center child:basis-2/5">
+                                <div className="flex justify-between items-center">
                                     <TitledArea title="Members per group:">
                                         <Select
                                             name="group-size"
@@ -313,7 +312,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                     </TitledArea>
                                 </div>
                             )}
-                            {!selectedTicketTypes.includes('paid') && (
+                            {selectedTicketTypes.includes('paid') && (
                                 <TitledArea
                                     title="Price"
                                     indicator={
@@ -356,7 +355,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                             <Input
                                                 name="invitation-link"
                                                 value={invitationLink}
-                                                variant="default"
+                                                variant="auth"
                                                 icon={
                                                     <div className="relative">
                                                         {isInvitationLinkCopied && (
@@ -365,7 +364,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                                             </p>
                                                         )}
                                                         <Copy
-                                                            className="w-5 h-5 cursor-pointer"
+                                                            className="w-4 h-4 cursor-pointer"
                                                             onClick={handleCopyInvitationLink}
                                                         />
                                                     </div>
@@ -380,7 +379,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                                 value={invitationsEmails.join(',')}
                                                 onChange={handleInvitationsEmailsChange}
                                                 placeholder="Separate e-mails with a comma"
-                                                variant="default"
+                                                variant="auth"
                                             />
                                         )}
                                     </div>
@@ -394,7 +393,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                 placeholder="Let participants know what are the advantages or limits of this ticket"
                                 rows={5}
                                 maxLength={150}
-                                variant="form"
                                 className="py-5 text-sm"
                             />
                             <TitledArea title="Sales ending date:">
@@ -420,7 +418,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                             className="text-xs"
                                         />
                                     </div>
-                                    <div className="mb-auto p-5 text-white bg-black rounded-2xl">
+                                    <div className="mb-auto p-3 text-white bg-black rounded-2xl">
                                         {salesEndDate && (
                                             <p className="mb-3 text-sm">
                                                 Sales will end on&nbsp;

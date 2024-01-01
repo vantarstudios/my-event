@@ -1,12 +1,12 @@
 'use client';
 
-import { useContext } from 'react';
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
-import { UserContext } from '@/contexts/user-context';
+import { useSelector } from '@/lib/hooks';
+import { selectProfile } from '@/lib/store/profile';
 
 const ProfilePicture: FunctionComponent = () => {
-    const { userProfile } = useContext(UserContext);
+    const userProfile = useSelector(selectProfile);
     
     return (
         <Image
@@ -14,6 +14,7 @@ const ProfilePicture: FunctionComponent = () => {
             alt="Profile Picture"
             width={60}
             height={60}
+            quality={100}
             className="aspect-square object-cover rounded-full"
         />
     );

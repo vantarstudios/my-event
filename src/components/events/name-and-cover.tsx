@@ -68,6 +68,7 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
                             alt="Event cover image"
                             objectFit="cover"
                             objectPosition="center"
+                            quality={100}
                             fill
                         />
                     )

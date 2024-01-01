@@ -17,7 +17,7 @@ const OrganizerCard: FunctionComponent<OrganizerCardProps> = ({ firstName, lastN
                     <p className="text-primary font-medium">ORGANIZER</p>
                     <p className="text-sm">{eventName}</p>
                 </div>
-                <Image src="/images/qr-code.png" alt="QR Code" width={50} height={50} />
+                <Image src="/images/qr-code.png" alt="QR Code" width={50} height={50} quality={100} />
             </div>
             <div className="flex justify-start items-center gap-5 w-full h-full">
                 <Image
@@ -25,6 +25,7 @@ const OrganizerCard: FunctionComponent<OrganizerCardProps> = ({ firstName, lastN
                     alt="User"
                     width={50}
                     height={50}
+                    quality={100}
                     className="aspect-square object-cover rounded-full"
                 />
                 <div className="flex flex-col justify-between items-start h-full">

@@ -1,20 +1,22 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import type { FunctionComponent } from 'react';
 import { useRouter } from 'next/navigation';
-import { useToggle, useMutationRequest } from '@/lib/hooks';
+import { useToggle, useMutationRequest, useSelector, useDispatch } from '@/lib/hooks';
+import { selectProfile, setProfile } from '@/lib/store/profile';
 import { usersAPI } from '@/lib/api/users';
 import type { UserProfileUpdatePayload } from '@/types/users';
 import type { Mode } from '@/types';
-import { UserContext } from '@/contexts/user-context';
 import { EditSaveButton } from '@components/dashboard';
 import ProfileInformations from './profile-informations';
 import NotificationsSettings from './notifications-settings';
 import OtherSettings from './other-settings';
 
 const SettingsTable: FunctionComponent = () => {
-    const { userProfile, setUserProfile } = useContext(UserContext);
+    const userProfile = useSelector(selectProfile);
+    const dispatch = useDispatch();
+    
     const router = useRouter();
     const [mode, toggleMode] = useToggle<Mode>('view', 'edit');
     const [formData, setFormData] = useState<UserProfileUpdatePayload>({} as UserProfileUpdatePayload);
@@ -49,7 +51,7 @@ const SettingsTable: FunctionComponent = () => {
             const newUserProfile = await trigger(formData);
             
             if (newUserProfile.success) {
-                setUserProfile(newUserProfile.data);
+                dispatch(setProfile(newUserProfile.data));
                 setFormData({} as UserProfileUpdatePayload);
                 router.refresh();
             }

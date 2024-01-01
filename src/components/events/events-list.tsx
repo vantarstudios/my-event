@@ -1,9 +1,8 @@
 'use client';
 
-import { useContext } from 'react';
 import type { FunctionComponent } from 'react';
-import { UserContext } from '@/contexts/user-context';
-import { useRequest } from '@/lib/hooks';
+import { useRequest, useSelector } from '@/lib/hooks';
+import { selectProfile } from '@/lib/store/profile';
 import { eventsAPI } from '@/lib/api/events';
 import { Role } from '@/types/constants';
 import { EventCard } from '@components/events';
@@ -13,7 +12,7 @@ interface EventsListProps {
 }
 
 const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
-    const { userProfile } = useContext(UserContext);
+    const userProfile = useSelector(selectProfile);
     
     const { data: events, error, isLoading } = useRequest(
         `my-events`,
@@ -35,22 +34,31 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
     );
     
     return (
-        <div className="grid grid-cols-4 gap-5 w-full">
+        <>
             {
                 (!isLoading && !error && events) && (
-                    events.data.slice(0, maxEvents).map(({ id, title, startingDate, cover }) => (
-                        <EventCard
-                            key={id}
-                            id={id}
-                            title={title}
-                            startingDate={startingDate}
-                            cover={cover}
-                            format="titled"
-                        />
-                    ))
+                    <div className="grid grid-cols-4 gap-5 w-full">
+                        {
+                            events.data.slice(0, maxEvents).map(({ id, title, startingDate, cover }) => (
+                                <EventCard
+                                    key={id}
+                                    id={id}
+                                    title={title}
+                                    startingDate={startingDate}
+                                    cover={cover}
+                                    format="titled"
+                                />
+                            ))
+                        }
+                    </div>
                 )
             }
-        </div>
+            {
+                (!isLoading && !error && events?.data.length === 0) && (
+                    <p className="w-full text-sm text-gray-500">No events found</p>
+                )
+            }
+        </>
     );
 };
 

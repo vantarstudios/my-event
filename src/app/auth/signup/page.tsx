@@ -8,7 +8,8 @@ import { useRouter } from 'next/navigation';
 import type { NextPage } from 'next';
 import type { ZodError } from 'zod';
 import { authAPI } from '@/lib/api/auth';
-import { useMutationRequest } from '@/lib/hooks';
+import { useMutationRequest, useDispatch } from '@/lib/hooks';
+import { setProfile } from '@/lib/store/profile';
 import { signUpSchema } from '@/types/auth';
 import type { SignUpPayload, SignUpErrors } from '@/types/auth';
 import type { AccountType } from '@/types';
@@ -22,6 +23,7 @@ const accountTypesRedirections: Partial<Record<AccountType, string>> = {
 
 const SignUpPage: NextPage = () => {
     const router = useRouter();
+    const dispatch = useDispatch();
     const [step, setStep] = useState<number>(1);
     const [accountType, setAccountType] = useState<AccountType | null>(null);
     const [formData, setFormData] = useState<SignUpPayload>({} as SignUpPayload);
@@ -32,6 +34,11 @@ const SignUpPage: NextPage = () => {
         async (_: string, { arg: data }: { arg: SignUpPayload }) => {
             const { confirmPassword, ...payload } = data;
             const response = await authAPI.signUp(payload);
+            
+            if (response.data.success) {
+                dispatch(setProfile(response.data.data));
+            }
+            
             return response.data;
         },
         'Your account has been created!'
@@ -116,7 +123,7 @@ const SignUpPage: NextPage = () => {
                 <span className="text-primary">up!</span>
             </h1>
             {signUpSteps[step - 1]}
-            <Button className="w-full hover:bg-primary" onClick={goToNextStep}>
+            <Button className="w-full hover:bg-primary" onClick={goToNextStep} disabled={isMutating}>
                 {
                     isMutating
                         ? 'Loading...'

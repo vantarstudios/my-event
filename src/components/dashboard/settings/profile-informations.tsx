@@ -44,7 +44,8 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         alt="Profile picture"
                         width={125}
                         height={125}
-                        className="aspect-square object-cover rounded-full"
+                        quality={100}
+                        className="aspect-square object-center object-cover rounded-full"
                     />
                     {
                         mode === 'edit' && (

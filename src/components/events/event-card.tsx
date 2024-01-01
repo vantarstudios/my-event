@@ -39,6 +39,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                             width={format === 'titled' ? 250 : undefined}
                             height={format === 'titled' ? 170 : undefined}
                             fill={format === 'unconstrained'}
+                            quality={100}
                             className={`min-w-[250px] min-h-[170px] object-cover object-center rounded-3xl ${
                                 format === 'unconstrained' ? 'h-full' : 'w-[250px] h-[170px]'
                             }`}

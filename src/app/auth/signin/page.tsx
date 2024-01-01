@@ -8,7 +8,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from '@/lib/utils';
 import { authAPI } from '@/lib/api/auth';
-import { useToggle, useMutationRequest } from '@/lib/hooks';
+import { useToggle, useMutationRequest, useDispatch } from '@/lib/hooks';
+import { setProfile } from '@/lib/store/profile';
 import { Role } from '@/types/constants';
 import { signInSchema } from '@/types/auth';
 import type { SignInPayload } from '@/types/auth';
@@ -18,6 +19,7 @@ import { Eye, EyeOff } from '@components/ui/icons';
 
 const SignInPage: NextPage = () => {
     const router = useRouter();
+    const dispatch = useDispatch();
     const [isPasswordVisible, toggleIsPasswordVisible] = useToggle<boolean>(false, true);
     const [saveLoginInfos, toggleSaveLoginInfos] = useToggle<boolean>(false, true);
     
@@ -42,10 +44,17 @@ const SignInPage: NextPage = () => {
             return;
         }
         
+        if (!userProfile.success) {
+            toast.error(userProfile.error.message);
+            return;
+        }
+        
+        dispatch(setProfile(userProfile.data));
         toast.success('You are now logged in!');
+        
         setTimeout(() => {
             router.push('/dashboard');
-        }, 1500);
+        }, 1000);
     };
 
     return (
@@ -93,7 +102,7 @@ const SignInPage: NextPage = () => {
                         onChange={toggleSaveLoginInfos}
                     />
                 </div>
-                <Button type="submit">
+                <Button type="submit" disabled={isMutating} className="hover:bg-primary">
                     {
                         isMutating
                             ? 'Loading...'

@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import type { FunctionComponent } from 'react';
-import { useRouter } from 'next/navigation';
 import { useToggle, useMutationRequest, useSelector, useDispatch } from '@/lib/hooks';
 import { selectProfile, setProfile } from '@/lib/store/profile';
 import { usersAPI } from '@/lib/api/users';
@@ -17,7 +16,6 @@ const SettingsTable: FunctionComponent = () => {
     const userProfile = useSelector(selectProfile);
     const dispatch = useDispatch();
     
-    const router = useRouter();
     const [mode, toggleMode] = useToggle<Mode>('view', 'edit');
     const [formData, setFormData] = useState<UserProfileUpdatePayload>({} as UserProfileUpdatePayload);
     
@@ -53,7 +51,6 @@ const SettingsTable: FunctionComponent = () => {
             if (newUserProfile.success) {
                 dispatch(setProfile(newUserProfile.data));
                 setFormData({} as UserProfileUpdatePayload);
-                router.refresh();
             }
         }
         

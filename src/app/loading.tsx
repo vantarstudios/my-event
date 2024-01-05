@@ -1,8 +1,8 @@
 import type { FunctionComponent } from 'react';
-import { PageLoader } from '@components/ui';
+import { Loader } from '@components/ui';
 
 const AppLoading: FunctionComponent = () => {
-    return <PageLoader />;
+    return <Loader />;
 };
 
 export default AppLoading;

@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
 
-const PageLoader: FunctionComponent = () => {
+const Loader: FunctionComponent = () => {
     return (
         <div className="flex justify-center items-center w-full h-full bg-white">
             <Image
@@ -16,4 +16,4 @@ const PageLoader: FunctionComponent = () => {
     );
 };
 
-export default PageLoader;
+export default Loader;

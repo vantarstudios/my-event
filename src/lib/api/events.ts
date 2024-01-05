@@ -14,7 +14,7 @@ class EventsAPI {
     }
     
     public async getAllEventsForOrganizer(organizerId: User['id']) {
-        return await this.client.get<ApiResponse<EventData[]>>(`/events/by-organizer/${organizerId}`);
+        return await this.client.get<ApiResponse<EventData[]>>(`/events/organizer/${organizerId}`);
     }
     
     public async getEvent(id: EventData['id']) {

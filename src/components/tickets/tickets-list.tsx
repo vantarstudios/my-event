@@ -11,9 +11,9 @@ interface TicketsListProps {
 
 const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event }) => {
     const { data: eventTickets, error, isLoading } = useRequest(
-        `event-${event.id}-tickets`,
-        async () => {
-            const response = await ticketsAPI.getTicketsForEvent(event.id);
+        event?.id ? [`event-${event.id}-tickets`, event.id] : null,
+        async ([_, eventId]) => {
+            const response = await ticketsAPI.getTicketsForEvent(eventId);
             
             if (!response.data.success) {
                 throw new Error('Unable to fetch tickets for this event');
@@ -21,6 +21,7 @@ const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event }) => {
             
             return response.data;
         },
+        { showError: false }
     );
     
     const deleteTicket = (ticketId: TicketType['id']) => () => {

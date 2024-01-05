@@ -1,8 +1,8 @@
 import type { FunctionComponent } from 'react';
-import { PageLoader } from '@components/ui';
+import { Loader } from '@components/ui';
 
 const DashboardLoading: FunctionComponent = () => {
-    return <PageLoader />;
+    return <Loader />;
 };
 
 export default DashboardLoading;

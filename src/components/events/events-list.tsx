@@ -6,6 +6,7 @@ import { selectProfile } from '@/lib/store/profile';
 import { eventsAPI } from '@/lib/api/events';
 import { Role } from '@/types/constants';
 import { EventCard } from '@components/events';
+import { Loader } from '@components/ui';
 
 interface EventsListProps {
     maxEvents?: number;
@@ -15,14 +16,14 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
     const userProfile = useSelector(selectProfile);
     
     const { data: events, error, isLoading } = useRequest(
-        `my-events`,
-        async () => {
+        userProfile?.id ? [`${userProfile.id}-events`, userProfile.id] : null,
+        async ([_, organizerId]) => {
             let response;
             
             if (userProfile.role === Role.ADMIN) {
                 response = await eventsAPI.getAllEvents();
             } else {
-                response = await eventsAPI.getAllEventsForOrganizer(userProfile.id);
+                response = await eventsAPI.getAllEventsForOrganizer(organizerId);
             }
             
             if (response.data.success === false) {
@@ -30,11 +31,17 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
             }
             
             return response.data;
-        }
+        },
+        { showError: false }
     );
     
     return (
         <>
+            {
+                (isLoading) && (
+                    <Loader />
+                )
+            }
             {
                 (!isLoading && !error && events) && (
                     <div className="grid grid-cols-4 gap-5 w-full">
@@ -55,7 +62,12 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
             }
             {
                 (!isLoading && !error && events?.data.length === 0) && (
-                    <p className="w-full text-sm text-gray-500">No events found</p>
+                    <p className="w-full my-10 text-sm text-gray-500">No events found</p>
+                )
+            }
+            {
+                (!isLoading && error) && (
+                    <p className="w-full my-10 text-sm text-gray-500">Something went wrong</p>
                 )
             }
         </>

@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import ProfilePicture from '@/components/dashboard/profile-picture';
+import ProfilePicture from '@components/dashboard/profile-picture';
 
 const menuLinks: { readonly name: string; readonly href: string }[] = [
     { name: 'Home', href: '/' },

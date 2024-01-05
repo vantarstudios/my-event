@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { ViewTitle, CreateWorkspaceButton } from '@components/dashboard';
 import { Calendar } from '@components/ui/icons';
-import { EventsList } from '@/components/events';
+import { EventsList } from '@components/events';
 
 const DashboardEventsPage: NextPage = () => {
     return (

@@ -1,8 +1,14 @@
 import type { NextPage } from 'next';
-import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 const AppPage: NextPage = () => {
-    redirect('/dashboard');
+    return (
+        <div className="flex items-center justify-center w-screen h-screen">
+            <Link href="/dashboard" className="underline">
+                Go to Dashboard
+            </Link>
+        </div>
+    )
 };
 
 export default AppPage;

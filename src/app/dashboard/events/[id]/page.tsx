@@ -15,16 +15,17 @@ const DashboardEditEventLayout: NextPage<DashboardEditEventPageProps> = ({ param
     const router = useRouter();
     
     const { data: event, error, isLoading } = useRequest(
-        `event-${params.id}`,
-        async () => {
-            const response = await eventsAPI.getEvent(params.id);
+        params?.id ? [`event-${params.id}`, params.id] : null,
+        async ([_, eventId]) => {
+            const response = await eventsAPI.getEvent(eventId);
             
             if (response.data.success === false) {
                 throw new Error(response.data.error.message);
             }
             
             return response.data;
-        }
+        },
+        { showError: false }
     );
 
     return (

@@ -1,5 +1,5 @@
 import type { FunctionComponent, HTMLAttributes } from 'react';
-import { Cross } from '@/components/ui/icons';
+import { Cross } from '@components/ui/icons';
 
 interface CategoryChipProps {
     category: string;

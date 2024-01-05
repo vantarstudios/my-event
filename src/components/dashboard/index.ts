@@ -7,3 +7,5 @@ export { default as EventsCounts } from './events-counts';
 export { default as PeriodFilter } from './period-filter';
 
 export { default as EditSaveButton } from './edit-save-button';
+
+export { default as Greetings } from './greetings';

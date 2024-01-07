@@ -29,7 +29,7 @@ const Select: FunctionComponent<SelectInputProps> = ({ value, options, onChange,
             <div
                 ref={ref}
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="w-full h-full rounded-full px-8 py-2 outline-none ring-transparent font-medium bg-gray-100 border border-opacity-5"
+                className="w-full h-full rounded-full px-8 py-2 outline-none ring-transparent font-medium bg-gray-100"
             >
                 {value}
             </div>

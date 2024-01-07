@@ -240,7 +240,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                             <div className="flex justify-center items-center gap-5">
                                 <Card
                                     onClick={handleIsGroupClick(false)}
-                                    className={`flex justify-between items-center gap-5 h-16 border border-opacity-10 cursor-pointer ${
+                                    className={`flex justify-between items-center gap-2 h-16 px-5 border border-opacity-10 cursor-pointer ${
                                         isGroup ? 'text-black bg-white' : 'text-white bg-primary'
                                     }`}
                                 >
@@ -249,7 +249,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                 </Card>
                                 <Card
                                     onClick={handleIsGroupClick(true)}
-                                    className={`flex justify-between items-center gap-5 h-16 border border-opacity-10 cursor-pointer ${
+                                    className={`flex justify-between items-center gap-2 h-16 px-5 border border-opacity-10 cursor-pointer ${
                                         isGroup ? 'text-white bg-primary' : 'text-black bg-white'
                                     }`}
                                 >

@@ -1,9 +1,7 @@
 import type { FunctionComponent } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { OverlappingImages } from '@components/root';
 import { Button } from '@components/ui';
-import landingImageOne from '@public/images/landing-1.png';
-import landingImageTwo from '@public/images/landing-2.png';
 
 const HeroSection: FunctionComponent = () => {
     return (
@@ -23,20 +21,7 @@ const HeroSection: FunctionComponent = () => {
                     <Button className="px-[8vh] text-lg font-normal hover:bg-primary">Get Started</Button>
                 </Link>
             </div>
-            <div className="relative w-[45%]">
-                <Image
-                    src={landingImageTwo}
-                    alt="hero-section"
-                    className="ml-[40%] rounded-3xl shadow-2xl"
-                />
-                <div className="absolute left-[15%] top-1/2 -translate-y-1/2 w-1/2">
-                    <Image
-                        src={landingImageOne}
-                        alt="hero-section"
-                        className="rounded-3xl shadow-2xl"
-                    />
-                </div>
-            </div>
+            <OverlappingImages/>
         </section>
     );
 };

@@ -57,6 +57,7 @@ const TitledTextArea: FunctionComponent<TitledTextAreaProps> = ({
         >
             <div className="flex flex-col justify-center gap-2 w-full h-fit">
                 <TextArea
+                    name={title}
                     value={value}
                     placeholder={placeholder}
                     spellCheck={false}

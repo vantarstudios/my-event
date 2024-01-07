@@ -6,7 +6,7 @@ import {
     AppsIntegrationSection,
     FreeSection,
     NewsletterSection
-} from '@components/home';
+} from '@components/root/home';
 import { SectionDivider } from '@components/ui';
 
 const HomePage: NextPage = () => {

@@ -29,11 +29,8 @@ const Input: FunctionComponent<InputProps> = (props) => {
         >
             <input
                 className={cn(
-                    'w-full rounded-full pl-8 text-sm focus:outline-none ring-transparent',
+                    'w-full rounded-full pl-8 py-2 h-10 bg-gray-100 text-sm focus:outline-none ring-transparent',
                     props.icon ? 'pr-10' : 'pr-4',
-                    props.variant === 'auth'
-                        ? 'py-2 bg-gray-100'
-                        : 'py-3 font-medium bg-white drop-shadow-md border border-opacity-10',
                     props.className,
                 )}
                 type={props.type ?? 'text'}

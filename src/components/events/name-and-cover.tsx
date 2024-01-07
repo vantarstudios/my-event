@@ -138,9 +138,8 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
                             }
                             {
                                 categories && categories.map((category, index) => (
-                                    <Fragment>
+                                    <Fragment key={category}>
                                         <CategoryChip
-                                            key={category}
                                             category={category}
                                             onDelete={handleCategoryDelete(category)}
                                             deletable

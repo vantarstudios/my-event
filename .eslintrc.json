@@ -15,6 +15,7 @@
     "rules": {
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
+        "react/no-unescaped-entities": "off",
         "react/no-deprecated": "error",
         "@typescript-eslint/no-unused-vars": "off"
     },

@@ -9,8 +9,7 @@ import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import { cn } from '@/lib/utils';
 import type { ParsedTime } from '@/types';
-import { Button } from '@components/ui';
-import { Cross } from '@components/ui/icons';
+import { Check, Cross } from '@components/ui/icons';
 
 interface DateInputProps extends Omit<TimePickerProps, 'value' | 'onChange'> {
     value: ParsedTime | null;
@@ -107,7 +106,14 @@ const TimeInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
                 value={getTimeString(time)}
                 clockIcon={null}
                 shouldOpenClock={() => false}
-                clearIcon={showClear ? <Cross onClick={handleClear} className="w-4 h-4" /> : null}
+                clearIcon={(showSave || showClear)
+                    ? (
+                        <div className="flex justify-center items-center gap-3">
+                            {showSave && <Check onClick={saveChange} className="size-5 text-green-500"/>}
+                            {showClear && <Cross onClick={handleClear} className="size-4 text-red-500"/>}
+                        </div>
+                    )
+                    : null}
                 hourPlaceholder="00"
                 minutePlaceholder="00"
                 onChange={handleChange}
@@ -128,14 +134,6 @@ const TimeInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
                     PM
                 </span>
             </div>
-            <Button
-                className={`absolute top-full left-1/4 w-1/2 mt-1 text-sm text-primary bg-white hover:bg-inherit transition-all ${
-                    !showSave && 'hidden'
-                }`}
-                onClick={saveChange}
-            >
-                Save
-            </Button>
         </div>
     );
 };

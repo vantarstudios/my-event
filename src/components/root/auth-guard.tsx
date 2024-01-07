@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import type { FunctionComponent, PropsWithChildren } from 'react';
 import { useRouter } from 'next/navigation';
 import { useRequest, useDispatch } from '@/lib/hooks';
@@ -34,9 +34,9 @@ const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
     }, [isLoading, error, user]);
     
     return (
-        <>
+        <Fragment>
             {!isLoading && children}
-        </>
+        </Fragment>
     );
 };
 

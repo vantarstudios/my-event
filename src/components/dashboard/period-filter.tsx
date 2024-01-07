@@ -3,7 +3,7 @@ import { Button } from '@components/ui';
 
 const PeriodFilter: FunctionComponent = () => {
     return (
-        <div className="flex flex-wrap justify-start items-center gap-5 w-full text-xs">
+        <div className="flex flex-wrap justify-start items-center gap-5 w-full text-sm">
             <Button className="px-10 bg-primary">All</Button>
             <Button className="px-10">This month</Button>
             <Button className="px-10">Last 30 days</Button>

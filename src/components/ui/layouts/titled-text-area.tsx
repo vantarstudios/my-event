@@ -75,7 +75,7 @@ const TitledTextArea: FunctionComponent<TitledTextAreaProps> = ({
                     errors && (
                         Array.isArray(errors)
                             ? (
-                                <ul className="text-xs text-red-500">
+                                <ul className="text-sm text-red-500">
                                     {
                                         errors.map((error, index) => (
                                             <li key={index}>{error}</li>
@@ -83,7 +83,7 @@ const TitledTextArea: FunctionComponent<TitledTextAreaProps> = ({
                                     }
                                 </ul>
                             )
-                            : <p className="text-xs text-red-500">{errors}</p>
+                            : <p className="text-sm text-red-500">{errors}</p>
                     )
                 }
             </div>

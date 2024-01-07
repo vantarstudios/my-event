@@ -34,7 +34,7 @@ export { default as Pencil } from './pencil';
 
 export { default as People } from './people';
 
-export { default as Person } from './Person';
+export { default as Person } from './person';
 
 export { default as Photo } from './photo';
 
@@ -47,3 +47,13 @@ export { default as Question } from './question';
 export { default as Stats } from './stats';
 
 export { default as TrashCan } from './trash-can';
+
+export { default as Mail } from './mail';
+
+export { default as Phone } from './phone';
+
+export { default as Instagram } from './instagram';
+
+export { default as LinkedIn } from './linkedin';
+
+export { default as Power } from './power';

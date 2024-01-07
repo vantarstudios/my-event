@@ -1,12 +1,12 @@
-import './globals.css';
 import type { FunctionComponent, PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { AuthGuard, StoreProvider } from '@components/root';
+import './globals.css';
 
 const poppinsFont = Poppins({
-    weight: ['200', '300', '400', '500'],
+    weight: ['100', '200', '300', '400', '500', '600', '700'],
     subsets: ['latin'],
 });
 

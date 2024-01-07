@@ -26,7 +26,7 @@ const InputWrapper: FunctionComponent<PropsWithChildren<InputWrapperProps>> = (p
                 props.errors && (
                     Array.isArray(props.errors)
                         ? (
-                            <ul className="pl-3 text-xs text-red-500">
+                            <ul className="pl-3 text-sm text-red-500">
                                 {
                                     props.errors.map((error, index) => (
                                         <li key={index}>{error}</li>
@@ -34,7 +34,7 @@ const InputWrapper: FunctionComponent<PropsWithChildren<InputWrapperProps>> = (p
                                 }
                             </ul>
                         )
-                        : <p className="pl-3 text-xs text-red-500">{props.errors}</p>
+                        : <p className="pl-3 text-sm text-red-500">{props.errors}</p>
                 )
             }
         </div>

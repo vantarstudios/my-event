@@ -1,5 +1,6 @@
 'use client';
 
+import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
 import { useRequest, useSelector } from '@/lib/hooks';
 import { selectProfile } from '@/lib/store/profile';
@@ -36,7 +37,7 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
     );
     
     return (
-        <>
+        <Fragment>
             {
                 (isLoading) && (
                     <Loader />
@@ -70,7 +71,7 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
                     <p className="w-full my-10 text-sm text-gray-500">Something went wrong</p>
                 )
             }
-        </>
+        </Fragment>
     );
 };
 

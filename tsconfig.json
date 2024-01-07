@@ -30,6 +30,7 @@
             }
         ],
         "paths": {
+            "@public/*": ["./public/*"],
             "@/*": ["./src/*"],
             "@components/*": ["./src/components/*"]
         }

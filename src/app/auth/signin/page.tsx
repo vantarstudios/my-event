@@ -61,8 +61,8 @@ const SignInPage: NextPage = () => {
         <div className="flex flex-col justify-start items-center gap-10 w-[max(450px,25%)] animate-slide">
             <h1 className="text-5xl font-bold">
                 Let&apos;s&nbsp;
-                <span className="text-primary">sign</span>&nbsp; you&nbsp;
-                <span className="text-primary">in!</span>
+                <span className="text-5xl text-primary">sign</span>&nbsp; you&nbsp;
+                <span className="text-5xl text-primary">in!</span>
             </h1>
             <form
                 onSubmit={handleSubmit(onSubmit)}

@@ -11,8 +11,6 @@ export const signUpSchema = z.object({
         .refine((value) => /[+0-9]/.test(value), 'Phone number should have only numbers'),
     password: z.string()
         .min(8, 'Password should have at least 8 characters')
-        .refine((value) => !/\s/.test(value), 'Password should not have spaces')
-        .refine((value) => !value.toLowerCase().includes('password'), 'Password should not contain the word "password"')
         .refine((value) => /[a-z]/.test(value), 'Password should have at least one lowercase letter')
         .refine((value) => /[A-Z]/.test(value), 'Password should have at least one uppercase letter')
         .refine((value) => /[0-9]/.test(value), 'Password should have at least one number')

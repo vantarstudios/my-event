@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode, FunctionComponent } from 'react';
 import {
     Role,
     Plan as PlanEnum,
@@ -189,6 +189,12 @@ export type Ticket = {
     updatedAt: string,
     deletedAt?: string,
 };
+
+export type NavigationLink = Readonly<{
+    name: string;
+    href: string;
+    icon?: FunctionComponent<IconProps>;
+}>;
 
 export type Mode = 'view' | 'edit';
 

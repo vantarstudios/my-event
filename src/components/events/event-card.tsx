@@ -25,7 +25,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                     <p className="flex justify-center items-center text-2xl leading-relaxed font-semibold h-fit">
                         {leadingZeroFormat(date.day)}
                     </p>
-                    <p className="flex justify-center items-center leading-1 text-sm font-thin h-fit">
+                    <p className="flex justify-center items-center leading-1 text-sm font-light h-fit">
                         {monthNumToString(date.month, true)}
                     </p>
                 </div>

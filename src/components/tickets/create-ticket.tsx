@@ -407,7 +407,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                             maxDate={eventEndingDate ? new Date(eventEndingDate) : undefined}
                                             className="w-fit"
                                         />
-                                        <p className="py-2 text-xs text-red-500">
+                                        <p className="py-2 text-sm text-red-500">
                                             {formErrors.salesEndDate?.[0]}
                                         </p>
                                         <Checkbox
@@ -415,7 +415,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                             label="End sales when event starts"
                                             checked={endSalesOnStartDate}
                                             onChange={handleEndSalesOnStartDateChange}
-                                            className="text-xs"
+                                            className="text-sm"
                                         />
                                     </div>
                                     <div className="mb-auto p-3 text-white bg-black rounded-2xl">
@@ -427,7 +427,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                                 </span>
                                             </p>
                                         )}
-                                        <p className="text-xs break-words">
+                                        <p className="text-sm break-words">
                                             Sales will end at 11:59 PM of that day
                                         </p>
                                     </div>
@@ -443,7 +443,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                 />
                             </TitledArea>
                             <div className="flex flex-col gap-5">
-                                <p className="text-xs text-primary">
+                                <p className="text-sm text-primary">
                                     {userPlanInfos.ticketsProcessingFeesPercentage}% of tickets sales will be subtracted
                                     as processing fees
                                 </p>

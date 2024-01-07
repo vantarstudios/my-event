@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
 import { useRequest } from '@/lib/hooks';
 import { ticketsAPI } from '@/lib/api/tickets';
@@ -29,12 +30,12 @@ const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event }) => {
     };
     
     return (
-        <>
+        <Fragment>
             {
                 isLoading
-                    ? <p className="text-xs text-center w-full">Loading tickets...</p>
+                    ? <p className="text-sm text-center w-full">Loading tickets...</p>
                     : error
-                        ? <p className="text-xs text-center w-full">Unable to fetch existing tickets</p>
+                        ? <p className="text-sm text-center w-full">Unable to fetch existing tickets</p>
                         : eventTickets?.data && eventTickets.data.length > 0
                             ? eventTickets?.data.map((ticket, index) => (
                                 <Ticket
@@ -46,7 +47,7 @@ const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event }) => {
                             ))
                             : <p className="text-sm text-center w-full">No tickets available</p>
             }
-        </>
+        </Fragment>
     );
 };
 

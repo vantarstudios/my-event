@@ -119,8 +119,8 @@ const SignUpPage: NextPage = () => {
             <AuthStepper currentStep={step} totalSteps={signUpSteps.length} onStepChange={handleStepChange} />
             <h1 className="text-5xl font-bold">
                 Let&apos;s&nbsp;
-                <span className="text-primary">sign</span>&nbsp; you&nbsp;
-                <span className="text-primary">up!</span>
+                <span className="text-5xl text-primary">sign</span>&nbsp; you&nbsp;
+                <span className="text-5xl text-primary">up!</span>
             </h1>
             {signUpSteps[step - 1]}
             <Button className="w-full hover:bg-primary" onClick={goToNextStep} disabled={isMutating}>

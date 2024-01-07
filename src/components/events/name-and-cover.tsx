@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { Fragment, useRef } from 'react';
 import type { FunctionComponent, ChangeEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -32,8 +32,8 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
     const coverImage = cover;
     const coverImageInputRef = useRef<HTMLInputElement>(null);
     const suggestedCategories = categories && categories.length > 0
-        ? Object.values(EventCategory).filter((category) => !categories.includes(category)).slice(0, 10)
-        : Object.values(EventCategory).slice(0, 10);
+        ? Object.values(EventCategory).filter((category) => !categories.includes(category))
+        : Object.values(EventCategory);
     
     const handleCoverImageChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -89,7 +89,7 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
                                 <div
                                     className="flex flex-col justify-center items-center gap-2.5 text-white child:w-2/3 child:text-center">
                                     <p className="min-w-max font-medium">Upload event cover image</p>
-                                    <p className="text-xs">Cover image must have a specific size: 333 x 225 pixels.</p>
+                                    <p className="text-sm">Cover image must have a specific size: 333 x 225 pixels.</p>
                                 </div>
                             </div>
                         )
@@ -129,37 +129,37 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
                 />
                 <TitledArea title="Category:">
                     <div className="flex flex-col items-start gap-5 w-full">
-                        <div className="flex flex-wrap justify-start items-center gap-5 w-full">
-                            <p className="text-sm">Suggestions:</p>
-                            {suggestedCategories.map((category) => (
-                                <Button
-                                    key={category}
-                                    onClick={handleSuggestedCategoryClick(category)}
-                                    className="min-w-max px-3 py-1.5 text-xs"
-                                >
-                                    #{capitalize(category)}
-                                </Button>
-                            ))}
-                        </div>
-                        <div className="flex flex-wrap items-center gap-2 min-w-[50%] max-w-full min-h-[2.5rem] px-5 py-1 rounded-xl bg-gray-100">
+                        <div
+                            className="flex flex-wrap items-center gap-2 min-w-[50%] max-w-full min-h-[2.5rem] px-5 py-1 rounded-xl bg-gray-100">
                             {
                                 (!categories || categories.length === 0) && (
-                                    <p className="text-xs text-gray-500">No category selected</p>
+                                    <p className="text-sm text-gray-500">No category selected</p>
                                 )
                             }
                             {
                                 categories && categories.map((category, index) => (
-                                    <>
+                                    <Fragment>
                                         <CategoryChip
                                             key={category}
                                             category={category}
                                             onDelete={handleCategoryDelete(category)}
                                             deletable
                                         />
-                                        {index < categories.length - 1 && <span>-</span> }
-                                    </>
+                                        {index < categories.length - 1 && <span>-</span>}
+                                    </Fragment>
                                 ))
                             }
+                        </div>
+                        <div className="flex flex-wrap justify-start gap-x-5 gap-y-3 w-full h-28 py-2 pr-2 overflow-y-auto">
+                            {suggestedCategories.map((category) => (
+                                <Button
+                                    key={category}
+                                    onClick={handleSuggestedCategoryClick(category)}
+                                    className="flex items-center min-w-max px-3 h-8 text-sm"
+                                >
+                                    #{capitalize(category)}
+                                </Button>
+                            ))}
                         </div>
                     </div>
                 </TitledArea>

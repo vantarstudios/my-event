@@ -69,13 +69,24 @@ const tailwindConfig = {
                 1: '.1rem',
             },
             keyframes: {
-                slide: {
+                slideRight: {
                     '0%': { transform: 'translateX(-5vw)' },
                     '100%': { transform: 'translateX(0px)' },
                 },
+                slideLeft: {
+                    '0%': { transform: 'translateX(5vw)' },
+                    '100%': { transform: 'translateX(0px)' },
+                },
+                float: {
+                    '0%': { transform: 'translateY(0px)' },
+                    '50%': { transform: 'translateY(-1.5vh)' },
+                    '100%': { transform: 'translateY(0px)' },
+                },
             },
             animation: {
-                slide: 'slide 1s ease-out',
+                'slide-right': 'slideRight 1s ease-out',
+                'slide-left': 'slideLeft 1s ease-out',
+                float: 'float 1.5s ease-in-out infinite',
             },
         },
     },

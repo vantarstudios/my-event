@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, type FunctionComponent } from 'react';
+import { useRef, useState, type FunctionComponent } from 'react';
 import Image from 'next/image';
+import { useAnimateOnScroll } from '@/lib/hooks';
 import landingImageThree from '@public/images/landing-3.png';
 
 interface EventStepProps {
@@ -37,6 +38,8 @@ const EventStep: FunctionComponent<EventStepProps> = ({ number, title, descripti
 
 const EventsSection: FunctionComponent = () => {
     const [activeStep, setActiveStep] = useState<number>(1);
+    const ref = useRef<HTMLDivElement>(null);
+    useAnimateOnScroll<HTMLDivElement>(ref, 'animate-slide-left');
     
     return (
         <section className="flex flex-col gap-[5vh] w-full">
@@ -75,11 +78,13 @@ const EventsSection: FunctionComponent = () => {
                         onClick={() => setActiveStep(3)}
                     />
                 </div>
-                <div className="absolute top-0 left-full w-[150vh]">
+                <div
+                    ref={ref}
+                    className="absolute top-0 left-full w-[150vh]">
                     <Image
                         src={landingImageThree}
                         alt="Event Creation"
-                        className="shadow-2xl rounded-2xl"
+                        className="shadow-2xl rounded-3xl"
                     />
                 </div>
             </div>

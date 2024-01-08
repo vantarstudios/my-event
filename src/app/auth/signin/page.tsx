@@ -58,7 +58,7 @@ const SignInPage: NextPage = () => {
     };
 
     return (
-        <div className="flex flex-col justify-start items-center gap-10 w-[max(450px,25%)] animate-slide">
+        <div className="flex flex-col justify-start items-center gap-10 w-[max(450px,25%)] animate-slide-right">
             <h1 className="text-5xl font-bold">
                 Let&apos;s&nbsp;
                 <span className="text-5xl text-primary">sign</span>&nbsp; you&nbsp;

@@ -44,7 +44,7 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
                 )
             }
             {
-                (!isLoading && !error && events) && (
+                (!isLoading && !error && events && events.data.length > 0) && (
                     <div className="grid grid-cols-4 gap-5 w-full">
                         {
                             events.data.slice(0, maxEvents).map(({ id, title, startingDate, cover }) => (
@@ -63,12 +63,12 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
             }
             {
                 (!isLoading && !error && events?.data.length === 0) && (
-                    <p className="w-full my-10 text-sm text-gray-500">No events found</p>
+                    <p className="w-full mt-10 text-gray-500">No events found</p>
                 )
             }
             {
                 (!isLoading && error) && (
-                    <p className="w-full my-10 text-sm text-gray-500">Something went wrong</p>
+                    <p className="w-full my-10 text-gray-500">Something went wrong</p>
                 )
             }
         </Fragment>

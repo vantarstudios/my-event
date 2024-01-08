@@ -1,7 +1,8 @@
 import type { NextPage } from 'next';
+import { redirect } from 'next/navigation';
 
 const DashboardHelpPage: NextPage = () => {
-    return <div>Coming soon...</div>;
+    redirect('/contact-us');
 };
 
 export default DashboardHelpPage;

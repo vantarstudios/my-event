@@ -14,7 +14,7 @@ const CategoryChip: FunctionComponent<CategoryChipProps> = ({ category, deletabl
             onClick={onClick}
             className="relative group flex justify-center items-center gap-1 w-fit h-fit px-2 py-2 rounded-full bg-gray-100 cursor-pointer transition-all hover:text-white hover:bg-black"
         >
-            <p className="text-sm font-medium">#{category.toLowerCase()}</p>
+            <p className="font-medium">#{category.toLowerCase()}</p>
             {
                 deletable && (
                     <Cross

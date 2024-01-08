@@ -19,8 +19,8 @@ const Notifications: FunctionComponent = () => {
         >
             <div className="flex flex-col gap-4 px-1.5 w-full h-full overflow-hidden">
                 {notificationsToShow.map(({ subject, description }, index) => (
-                    <Card key={index} className="flex flex-col gap-2 w-full">
-                        <p className="text-sm font-medium text-stone-900">{subject}</p>
+                    <Card key={index} className="flex flex-col gap-2 w-full rounded-2xl">
+                        <p className="font-medium text-stone-900">{subject}</p>
                         <p className="text-sm">{description}</p>
                     </Card>
                 ))}

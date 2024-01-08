@@ -58,7 +58,7 @@ const SettingsTable: FunctionComponent = () => {
     };
 
     return (
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-20">
             <EditSaveButton
                 mode={mode}
                 loading={isMutating}

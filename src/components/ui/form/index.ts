@@ -21,3 +21,5 @@ export { default as TextArea } from './text-area';
 export { default as TimeInput } from './time-input';
 
 export { default as TimeRangeInput } from './time-range-input';
+
+export { default as PhoneNumberInput } from './phone-number-input';

@@ -54,7 +54,7 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
     };
 
     return (
-        <div className="flex gap-5 w-full pb-5">
+        <div className="flex gap-5 w-full flex-1">
             <div
                 style={{ backgroundImage: coverImage ? `url(${URL.createObjectURL(coverImage)})` : '' }}
                 className={`overflow-hidden relative w-1/3 min-h-full bg-cover bg-center rounded-3xl ${
@@ -133,7 +133,7 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
                             className="flex flex-wrap items-center gap-2 min-w-[50%] max-w-full min-h-[2.5rem] px-5 py-1 rounded-xl bg-gray-100">
                             {
                                 (!categories || categories.length === 0) && (
-                                    <p className="text-sm text-gray-500">No category selected</p>
+                                    <p className="text-gray-500">No category selected</p>
                                 )
                             }
                             {

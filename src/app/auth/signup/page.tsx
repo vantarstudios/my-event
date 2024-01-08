@@ -115,7 +115,7 @@ const SignUpPage: NextPage = () => {
     ];
 
     return (
-        <div className="flex flex-col justify-start items-center gap-10 w-[max(450px,25%)] animate-slide-right">
+        <div className="flex flex-col justify-start items-center gap-10 w-[max(450px,25%)] mt-10 animate-slide-right">
             <AuthStepper currentStep={step} totalSteps={signUpSteps.length} onStepChange={handleStepChange} />
             <h1 className="text-5xl font-bold">
                 Let&apos;s&nbsp;
@@ -123,7 +123,13 @@ const SignUpPage: NextPage = () => {
                 <span className="text-5xl text-primary">up!</span>
             </h1>
             {signUpSteps[step - 1]}
-            <Button className="w-full hover:bg-primary" onClick={goToNextStep} disabled={isMutating}>
+            <Button
+                className={`w-full ${
+                    (accountType !== null && !isMutating) && 'hover:bg-primary'
+                }`}
+                onClick={goToNextStep}
+                disabled={accountType === null || isMutating}
+            >
                 {
                     isMutating
                         ? 'Loading...'

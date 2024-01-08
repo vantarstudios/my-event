@@ -9,7 +9,7 @@ const DashboardEventsPage: NextPage = () => {
         <div className="relative flex flex-col gap-8 h-full">
             <div className="flex justify-between items-center">
                 <ViewTitle Icon={Calendar}>My events</ViewTitle>
-                <Link href="/dashboard/events/create" className="px-8 py-2.5 rounded-full text-sm text-white bg-black">
+                <Link href="/dashboard/events/create" className="px-8 py-2.5 rounded-full text-white bg-black">
                     + New event
                 </Link>
             </div>

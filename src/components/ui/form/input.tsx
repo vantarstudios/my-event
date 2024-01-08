@@ -29,7 +29,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
         >
             <input
                 className={cn(
-                    'w-full rounded-full pl-8 py-2 h-10 bg-gray-100 text-sm focus:outline-none ring-transparent',
+                    'w-full rounded-full pl-8 py-2 h-10 bg-gray-100 focus:outline-none ring-transparent',
                     props.icon ? 'pr-10' : 'pr-4',
                     props.className,
                 )}

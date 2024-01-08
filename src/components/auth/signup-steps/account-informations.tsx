@@ -5,7 +5,7 @@ import type { FunctionComponent, } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToggle } from '@/lib/hooks';
 import type { SignUpPayload, SignUpErrors } from '@/types/auth';
-import { Input } from '@components/ui/form';
+import { Input, PhoneNumberInput } from '@components/ui/form';
 import { Eye, EyeOff } from '@components/ui/icons';
 
 interface AccountInformationsProps {
@@ -74,18 +74,13 @@ const AccountInformations: FunctionComponent<AccountInformationsProps> = ({ setI
                 type="text"
                 variant="auth"
             />
-            <Input
-                register={register('phoneNumber', {
-                    required: true,
-                    onChange: handleInputChange('phoneNumber')
-                })}
+            <PhoneNumberInput
+                onChange={(value) => setInformation('phoneNumber', value)}
                 errors={informationsErrors.phoneNumber}
                 name="phone-number"
                 label="Phone number"
                 trailing="*"
                 autoComplete="tel"
-                type="number"
-                variant="auth"
             />
             <Input
                 register={register('password', {

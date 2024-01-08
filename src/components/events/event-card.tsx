@@ -22,10 +22,10 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
         >
             {date && (
                 <div className="absolute top-5 left-6 h-[50px] aspect-square text-white rounded-xl bg-primary">
-                    <p className="flex justify-center items-center text-2xl leading-relaxed font-semibold h-fit">
+                    <p className="flex justify-center items-center text-2xl font-semibold h-fit">
                         {leadingZeroFormat(date.day)}
                     </p>
-                    <p className="flex justify-center items-center leading-1 text-sm font-light h-fit">
+                    <p className="flex justify-center items-center text-sm font-light h-fit">
                         {monthNumToString(date.month, true)}
                     </p>
                 </div>
@@ -55,7 +55,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                         />
                     )
             }
-            {title && <div className="w-full break-words break-before-all text-sm font-semibold">{title}</div>}
+            {title && <div className="w-full break-words break-before-all font-semibold">{title}</div>}
         </Link>
     );
 };

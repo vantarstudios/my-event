@@ -144,7 +144,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
     };
 
     return (
-        <div className="flex flex-col gap-8 w-full h-full -mt-5">
+        <div className="flex flex-col gap-8 w-full h-full">
             <div className="flex justify-between items-center w-full">
                 <p className="text-2xl text-primary font-semibold">Event</p>
                 <Button

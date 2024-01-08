@@ -10,8 +10,8 @@ interface OtherSettingsProps {
 const OtherSettings: FunctionComponent<OtherSettingsProps> = ({ mode }) => {
     return (
         <TitledArea title="Others">
-            <div className="flex flex-col gap-8 pt-5 child:w-fit child:text-sm child:font-semibold">
-                <p className="flex justify-between items-center gap-20">
+            <div className="flex flex-col gap-5 pt-5 child:w-fit child:font-semibold">
+                <p className="flex justify-between items-center gap-20 mb-10">
                     Language
                     <Button
                         disabled={mode === 'view'}

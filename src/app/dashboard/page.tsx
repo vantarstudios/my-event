@@ -10,7 +10,7 @@ const DashboardPage: NextPage = () => {
                 <Greetings/>
                 <CreateWorkspaceButton/>
             </div>
-            <div className="flex flex-wrap justify-between items-start w-full gap-10">
+            <div className="flex flex-wrap justify-between items-start w-full gap-10 mb-10">
                 <Notifications/>
                 <EventsCounts
                     moreActions={

@@ -12,20 +12,32 @@ interface TextAreaProps extends HTMLAttributes<HTMLTextAreaElement>, InputWrappe
     className?: HTMLAttributes<HTMLTextAreaElement>['className'];
 }
 
-const TextArea: FunctionComponent<TextAreaProps> = ({ value, rows, className, ...props }) => {
+const TextArea: FunctionComponent<TextAreaProps> = ({
+    name,
+    label,
+    trailing,
+    icon,
+    errors,
+    wrapperClassName,
+    labelClassName,
+    value,
+    rows,
+    className,
+    ...props
+}) => {
     return (
         <InputWrapper
-            name={props.name}
-            label={props.label}
-            trailing={props.trailing}
-            icon={props.icon}
-            errors={props.errors}
-            wrapperClassName={props.wrapperClassName}
-            labelClassName={props.labelClassName}
+            name={name}
+            label={label}
+            trailing={trailing}
+            icon={icon}
+            errors={errors}
+            wrapperClassName={wrapperClassName}
+            labelClassName={labelClassName}
         >
             <textarea
                 className={cn(
-                    'w-full resize-none rounded-3xl focus:outline-none px-5 py-2 border-none placeholder-gray-500 text-sm focus:bg-gray-100',
+                    'w-full resize-none rounded-3xl focus:outline-none px-5 py-2 border-none placeholder-gray-500 focus:bg-gray-100',
                     (!value || value === '') && 'bg-gray-100',
                     className,
                 )}

@@ -10,8 +10,6 @@ RUN --mount=type=secret,id=NODE_ENV \
     && echo "NEXT_PUBLIC_API_URL=$(cat /run/secrets/NEXT_PUBLIC_API_URL)" >> .env.production \
     && cat .env.production
 
-RUN npm install -g @nestjs/cli
-
 RUN yarn install
 
 COPY . /app

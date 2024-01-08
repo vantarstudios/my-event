@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import { PaymentMethod as PaymentMethodConstant } from '@/types/constants';
 import type { IconProps, PaymentMethod as PaymentMethodType } from '@/types';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { BankCard, Pencil, TrashCan } from '@components/ui/icons';
 
 const paymentMethodIcons: Record<PaymentMethodType['type'], FunctionComponent<IconProps>> = {

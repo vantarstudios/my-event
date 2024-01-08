@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { capitalize } from '@/lib/utils';
 import { EventType } from '@/types/constants';
 import type { EventTypeUnion } from '@/types';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { Radio } from '@components/ui/form';
 import { Card } from '@components/ui/layouts';
 import { ChevronLeft, Online, Location } from '@components/ui/icons';

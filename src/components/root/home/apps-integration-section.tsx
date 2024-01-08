@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import googleImage from '@public/images/landing-google.png';
 import figmaImage from '@public/images/landing-figma.png';
 import slackImage from '@public/images/landing-slack.png';

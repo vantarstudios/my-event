@@ -31,7 +31,7 @@ const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
                 dispatch(setProfile(user.data));
             }
         }
-    }, [isLoading, error, user]);
+    }, [router, dispatch, isLoading, error, user]);
     
     return (
         <Fragment>

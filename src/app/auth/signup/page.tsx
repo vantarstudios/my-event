@@ -15,7 +15,7 @@ import type { SignUpPayload, SignUpErrors } from '@/types/auth';
 import type { AccountType } from '@/types';
 import { AuthStepper } from '@components/auth';
 import { AccountInformations, AccountTypeChooser } from '@components/auth/signup-steps';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 
 const accountTypesRedirections: Partial<Record<AccountType, string>> = {
     organization: '/workspaces/signup',

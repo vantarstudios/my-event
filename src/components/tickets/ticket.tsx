@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
 import type { Ticket as TicketType, Mode } from '@/types';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { Person, Pencil, TrashCan, Eye } from '@components/ui/icons';
 
 interface TicketProps {

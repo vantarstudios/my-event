@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSelector } from '@/lib/hooks';
 import { selectProfile } from '@/lib/store/profile';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 
 const ProfilePicture: FunctionComponent = () => {
     const userProfile = useSelector(selectProfile);

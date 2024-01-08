@@ -9,7 +9,7 @@ import { createEventSchema } from '@/types/events';
 import type { CreateEventPayload } from '@/types/events';
 import type { EventCategoryUnion } from '@/types';
 import CategoryChip from './category-chip';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { Picture, Cross } from '@components/ui/icons';
 import { TitledTextArea, TitledArea } from '@components/ui/layouts';
 

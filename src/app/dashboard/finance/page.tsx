@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { thousandsCommaFormat } from '@/lib/utils';
 import { ViewTitle, CreateWorkspaceButton, PeriodFilter } from '@components/dashboard';
 import { PaymentMethod } from '@components/dashboard/finance';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { TitledArea, CardWithTitle } from '@components/ui/layouts';
 import { Dollar } from '@components/ui/icons';
 import paymentMethods from '@/data/payment-methods';

@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
 import { OverlappingImages } from '@components/root';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 
 const HeroSection: FunctionComponent = () => {
     return (

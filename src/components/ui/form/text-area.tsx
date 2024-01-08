@@ -25,7 +25,7 @@ const TextArea: FunctionComponent<TextAreaProps> = ({ value, rows, className, ..
         >
             <textarea
                 className={cn(
-                    'w-full resize-none rounded-3xl focus:outline-none px-5 py-2 border-none caret-primary placeholder-black placeholder:text-sm focus:bg-gray-100',
+                    'w-full resize-none rounded-3xl focus:outline-none px-5 py-2 border-none placeholder-gray-500 text-sm focus:bg-gray-100',
                     (!value || value === '') && 'bg-gray-100',
                     className,
                 )}

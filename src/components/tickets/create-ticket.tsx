@@ -10,7 +10,7 @@ import type { InvitationTypeUnion, ParsedDate, Event } from '@/types';
 import { ticketTypes } from '@/types';
 import { createTicketSchema } from '@/types/tickets';
 import type { CreateTicketPayload, CreateTicketErrors } from '@/types/tickets';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { Checkbox, DateInput, Input, NumberInput, Select, Switch } from '@components/ui/form';
 import { Copy, People, Person } from '@components/ui/icons';
 import { Card, Modal, TitledArea, TitledTextArea } from '@components/ui/layouts';
@@ -78,35 +78,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
     const [selectedInvitationType, setSelectedInvitationType] = useState<InvitationTypeUnion>(InvitationType.FREE);
     const [expectedParticipants, setExpectedParticipants] = useState<string>('Unlimited');
     const [selectedGroupSize, setSelectedGroupSize] = useState<string>('Unlimited');
-    
-    const resetForm = () => {
-        setIsGroup(false);
-        setInvitationsEmails([]);
-        setInvitationLink('');
-        setIsInvitationLinkCopied(false);
-        setSelectedGroupsLimit('Unlimited');
-        setSelectedTicketTypes([]);
-        setFormErrors({} as CreateTicketErrors);
-        setTicketTitle('');
-        setTicketDescription('');
-        setSalesEndDate(null);
-        setPrice(0);
-        setSelectedInvitationType(InvitationType.FREE);
-        setExpectedParticipants('Unlimited');
-        setSelectedGroupSize('Unlimited');
-        
-        if (isCombo) {
-            toggleIsCombo();
-        }
-        
-        if (transferFees) {
-            toggleTransferFees();
-        }
-        
-        if (endSalesOnStartDate) {
-            toggleEndSalesOnStartDate();
-        }
-    }
 
     const pricePerParticipant = `${thousandsCommaFormat(
         price / (selectedGroupSize === 'Unlimited' ? MAX_GROUP_SIZE : Number(selectedGroupSize)),
@@ -221,6 +192,36 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
     };
     
     useEffect(() => {
+        
+        const resetForm = () => {
+            setIsGroup(false);
+            setInvitationsEmails([]);
+            setInvitationLink('');
+            setIsInvitationLinkCopied(false);
+            setSelectedGroupsLimit('Unlimited');
+            setSelectedTicketTypes([]);
+            setFormErrors({} as CreateTicketErrors);
+            setTicketTitle('');
+            setTicketDescription('');
+            setSalesEndDate(null);
+            setPrice(0);
+            setSelectedInvitationType(InvitationType.FREE);
+            setExpectedParticipants('Unlimited');
+            setSelectedGroupSize('Unlimited');
+            
+            if (isCombo) {
+                toggleIsCombo();
+            }
+            
+            if (transferFees) {
+                toggleTransferFees();
+            }
+            
+            if (endSalesOnStartDate) {
+                toggleEndSalesOnStartDate();
+            }
+        };
+        
         if (!isModalOpened) {
             resetForm();
         }

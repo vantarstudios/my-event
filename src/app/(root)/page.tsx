@@ -7,7 +7,7 @@ import {
     FreeSection,
     NewsletterSection
 } from '@components/root/home';
-import { SectionDivider } from '@components/ui';
+import { SectionDivider } from '@components/ui/layouts';
 
 const HomePage: NextPage = () => {
     return (

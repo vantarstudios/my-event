@@ -35,8 +35,6 @@ const Header: FunctionComponent = () => {
                     <Image
                         src="/logo.png"
                         alt="Event Media Logo"
-                        objectFit="contain"
-                        objectPosition="center"
                         fill
                     />
                 </div>

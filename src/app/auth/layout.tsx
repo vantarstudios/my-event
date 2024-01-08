@@ -2,7 +2,7 @@
 
 import type { FunctionComponent, PropsWithChildren } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { ArrowLeft } from '@components/ui/icons';
 
 const AuthLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {

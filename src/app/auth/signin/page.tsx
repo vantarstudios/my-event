@@ -13,7 +13,7 @@ import { setProfile } from '@/lib/store/profile';
 import { Role } from '@/types/constants';
 import { signInSchema } from '@/types/auth';
 import type { SignInPayload } from '@/types/auth';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { Input, Checkbox } from '@components/ui/form';
 import { Eye, EyeOff } from '@components/ui/icons';
 

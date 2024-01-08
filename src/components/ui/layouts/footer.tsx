@@ -34,8 +34,6 @@ const Footer = () => {
                 <Image
                     src="/logo-white.png"
                     alt="Vantar Studios Logo"
-                    objectFit="contain"
-                    objectPosition="center"
                     fill
                 />
             </div>

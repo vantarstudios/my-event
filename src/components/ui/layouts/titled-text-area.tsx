@@ -70,16 +70,16 @@ const TitledTextArea: FunctionComponent<TitledTextAreaProps> = ({
                             handleValueChange(event);
                         }
                     } as UseFormRegisterReturn}
-                    className={cn('w-full', className)}
+                    className={cn('w-full caret-primary', className)}
                 />
                 {
                     errors && (
                         Array.isArray(errors)
                             ? (
-                                <ul className="text-sm text-red-500">
+                                <ul>
                                     {
                                         errors.map((error, index) => (
-                                            <li key={index}>{error}</li>
+                                            <li key={index} className="text-sm text-red-500">{error}</li>
                                         ))
                                     }
                                 </ul>

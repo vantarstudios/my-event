@@ -1,7 +1,7 @@
 'use client';
 
 import type { FunctionComponent } from 'react';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { Input, TextArea } from '@components/ui/form';
 
 const ContactForm: FunctionComponent = () => {

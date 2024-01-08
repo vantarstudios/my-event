@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import type { Mode } from '@/types';
 import { TitledArea } from '@components/ui/layouts';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 
 interface OtherSettingsProps {
     mode: Mode;

@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 
 const CreateWorkspaceButton: FunctionComponent = () => {
     return (

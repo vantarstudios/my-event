@@ -10,7 +10,7 @@ import { createEventSchema } from '@/types/events';
 import type { CreateEventPayload, UpdateEventPayload } from '@/types/events';
 import type { CreateTicketPayload } from '@/types/tickets';
 import type { EditOrCreateStep, Event, EventTypeUnion } from '@/types';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { Ticketing } from '@components/tickets';
 import EventEditionStepper from './event-edition-stepper';
 import NameAndCover from './name-and-cover';

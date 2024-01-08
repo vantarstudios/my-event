@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import type { FunctionComponent, PropsWithChildren } from 'react';
-import { Header, Footer } from '@components/ui';
+import { Header, Footer } from '@components/ui/layouts';
 
 const RootLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
     return (

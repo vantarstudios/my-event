@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, type FunctionComponent, type ChangeEvent, type FormEvent } from 'react';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { Input } from '@components/ui/form';
 
 const NewsletterForm: FunctionComponent = () => {

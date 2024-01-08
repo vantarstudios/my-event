@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { leadingZeroFormat } from '@/lib/utils';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { Card, TitledArea } from '@components/ui/layouts';
 import notifications from '@/data/notifications';
 

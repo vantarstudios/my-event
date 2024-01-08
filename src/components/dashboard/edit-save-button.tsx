@@ -1,5 +1,5 @@
 import type { FunctionComponent, MouseEvent, HTMLAttributes } from 'react';
-import { Button } from '@components/ui';
+import { Button } from '@components/ui/buttons';
 import { cn } from '@/lib/utils';
 import type { Mode } from '@/types';
 

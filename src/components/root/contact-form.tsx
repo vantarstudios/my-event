@@ -22,9 +22,6 @@ const ContactForm: FunctionComponent = () => {
                 labelClassName="font-bold"
             />
             <PhoneNumberInput
-                register={register('phone', {
-                    required: true,
-                })}
                 name="phone"
                 label="Phone number"
                 labelClassName="font-bold"

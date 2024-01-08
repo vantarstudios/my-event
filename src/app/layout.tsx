@@ -11,8 +11,8 @@ const poppinsFont = Poppins({
 });
 
 export const metadata: Metadata = {
-    title: 'My Event',
-    description: 'Event management platform',
+    title: 'MyEvent',
+    description: 'The most powerful management tool for your events.',
 };
 
 const AppLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {

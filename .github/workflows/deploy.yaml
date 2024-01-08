@@ -10,8 +10,8 @@ on:
       - completed
 
 env:
-  DOCKER_APP_NAME: my-event
-  DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/my-event
+  DOCKER_APP_NAME: myevent
+  DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/myevent
 
 jobs:
   build:

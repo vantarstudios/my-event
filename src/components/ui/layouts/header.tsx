@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getMatchingPath } from '@/lib/utils';
 import type { NavigationLink } from '@/types';
-import ProfilePicture from '@components/dashboard/profile-picture';
+import ProfilePicture from './profile-picture';
 
 const menuLinks: NavigationLink[] = [
     { name: 'Home', href: '/' },

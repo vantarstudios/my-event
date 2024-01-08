@@ -16,14 +16,13 @@ const ProfilePicture: FunctionComponent = () => {
             {
                 userProfile?.profilePicture
                     ? (
-                        <Link href="/dashboard">
+                        <Link href="/dashboard" className="relative w-14 h-14 rounded-full overflow-hidden">
                             <Image
                                 src={userProfile.profilePicture || '/dash-profile.svg'}
                                 alt="Profile Picture"
-                                width={60}
-                                height={60}
                                 quality={100}
-                                className="aspect-square object-cover rounded-full"
+                                fill
+                                className="object-cover object-center"
                             />
                         </Link>
                     ) : (

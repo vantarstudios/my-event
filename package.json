@@ -1,5 +1,6 @@
 {
     "name": "myevent",
+    "description": "The most powerful management tool for your events.",
     "version": "0.1.0",
     "private": true,
     "scripts": {

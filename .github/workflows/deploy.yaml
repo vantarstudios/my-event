@@ -35,8 +35,8 @@ jobs:
       - name: Set the Docker image tag
         run: |
           OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          echo "DOCKER_IMAGE_NAME=ghcr.io/${OWNER}/${{ env.DOCKER_APP_NAME }}:latest" >> $GITHUB_ENV
-      
+          echo "DOCKER_IMAGE_NAME=${{ env.REGISTRY }}/${OWNER}/${{ env.DOCKER_APP_NAME }}:latest" >> $GITHUB_ENV
+
       - name: Build and publish the Docker image
         uses: docker/build-push-action@v2
         with:
@@ -54,6 +54,11 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
+
+      - name: Set the Docker image tag
+        run: |
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "DOCKER_IMAGE_NAME=${{ env.REGISTRY }}/${OWNER}/${{ env.DOCKER_APP_NAME }}:latest" >> $GITHUB_ENV
 
       - name: Pull the Docker image on the server and start the container
         uses: appleboy/ssh-action@master

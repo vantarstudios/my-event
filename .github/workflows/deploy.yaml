@@ -67,6 +67,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
+            docker login ${{ env.REGISTRY }} -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
             docker pull ${{ env.DOCKER_IMAGE_NAME }}
             docker stop ${{ env.DOCKER_APP_NAME }} || true
             docker rm ${{ env.DOCKER_APP_NAME }} || true

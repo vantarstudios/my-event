@@ -10,23 +10,28 @@ on:
       - completed
 
 env:
+  REGISTRY: ghcr.io
   DOCKER_APP_NAME: myevent
-  DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/myevent
+  DOCKER_IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/myevent:latest
 
 jobs:
   build:
     name: Build and push the Docker image
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+        contents: read
+        packages: write
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
 
-      - name: Login to the Docker registry
+      - name: Login to the GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
-          password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and publish the Docker image
         uses: docker/build-push-action@v2

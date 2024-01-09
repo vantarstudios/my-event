@@ -19,7 +19,7 @@ const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
         }
         
         return response.data;
-    });
+    }, { showError: false });
     
     useEffect(() => {
         if (!isLoading) {
@@ -35,7 +35,7 @@ const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
     
     return (
         <Fragment>
-            {!isLoading && children}
+            {(!isLoading && !error) && children}
         </Fragment>
     );
 };

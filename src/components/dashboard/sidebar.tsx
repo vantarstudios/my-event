@@ -40,7 +40,7 @@ const Sidebar: FunctionComponent = () => {
                     />
                 </Link>
             </div>
-            <ul className="flex flex-col gap-3 w-full flex-1 -mt-5 pl-5 overflow-y-auto">
+            <ul className="flex flex-col gap-2 w-full flex-1 -mt-5 pl-5 overflow-y-auto">
                 {views.map(({name, href, icon}, index) => {
                     const Icon = icon;
 

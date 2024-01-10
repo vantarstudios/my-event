@@ -15,21 +15,23 @@ interface EventStepProps {
 
 const EventStep: FunctionComponent<EventStepProps> = ({ number, title, description, focus, onClick }) => {
     return (
-        <div className="flex flex-col gap-[5vh] w-full h-full pr-[10vh]">
+        <div className="flex flex-col gap-5 w-full h-full pr-20">
             <div
                 onClick={onClick}
-                className={`flex items-center gap-[5vh] cursor-pointer ${
+                className={`flex items-center gap-12 cursor-pointer ${
                     focus && 'text-primary'
                 }`}
             >
-                <p className={`flex justify-center items-center w-[10vh] aspect-square text-5xl text-white bg-black rounded-full ${
+                <p className={`flex justify-center items-center w-20 aspect-square text-5xl text-white bg-black rounded-full ${
                     focus && 'bg-primary'
                 }`}>
                     {number}
                 </p>
                 <p className="text-2xl font-medium">{title}</p>
             </div>
-            <p className={`transition-all duration-300 ease-out ${focus ? 'opacity-100 h-fit' : 'opacity-0 h-0'}`}>
+            <p className={`pl-32 leading-[3vh] transition-all duration-300 ease-out ${
+                focus ? 'opacity-100 h-fit' : 'opacity-0 h-0'
+            }`}>
                 {description}
             </p>
         </div>
@@ -42,16 +44,16 @@ const EventsSection: FunctionComponent = () => {
     useAnimateOnScroll<HTMLDivElement>(ref, 'animate-slide-left');
     
     return (
-        <section className="flex flex-col gap-[5vh] w-full">
+        <section className="flex flex-col gap-10 w-full">
             <p className="w-full text-5xl text-primary text-center font-bold">
                 All you need to bring your event to life
             </p>
-            <p className="text-xl text-center">
+            <p className="w-3/5 mx-auto leading-[3.5vh] text-lg text-center">
                 From creation to team management and social medias presence, your workspace is equipped with all the
                 necessary tools to easily control every step of your event.
             </p>
             <div className="relative w-2/5 h-[70vh]">
-                <div className="flex flex-col gap-[5vh]">
+                <div className="flex flex-col gap-10">
                     <EventStep
                         number={1}
                         title="Create"

@@ -11,8 +11,10 @@ interface EventCardProps extends Partial<Pick<Event, 'id' | 'title' | 'startingD
 }
 
 const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate, cover, format, asLink = true }) => {
-    const date = startingDate ? parseDateTime(startingDate, 'date') : undefined;
-
+    const { date, time } = startingDate
+        ? parseDateTime(startingDate, 'both')
+        : { date: undefined, time: undefined };
+    
     return (
         <Link
             href={asLink && id ? `/dashboard/events/${id}` : ''}
@@ -20,16 +22,6 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                 !asLink && 'pointer-events-none'
             }`}
         >
-            {date && (
-                <div className="absolute top-5 left-6 h-[50px] aspect-square text-white rounded-xl bg-primary">
-                    <p className="flex justify-center items-center text-2xl font-semibold h-fit">
-                        {leadingZeroFormat(date.day)}
-                    </p>
-                    <p className="flex justify-center items-center font-light h-fit">
-                        {monthNumToString(date.month, true)}
-                    </p>
-                </div>
-            )}
             {
                 cover
                     ? (
@@ -55,6 +47,23 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                         />
                     )
             }
+            {date && (
+                <div className="absolute top-5 left-6 flex flex-col justify-center items-center h-14 aspect-square text-white rounded-xl bg-primary">
+                    <p className="flex justify-center items-center text-2xl font-semibold h-fit">
+                        {leadingZeroFormat(date.day)}
+                    </p>
+                    <p className="flex justify-center items-center text-sm font-light h-fit">
+                        {monthNumToString(date.month, true)}
+                    </p>
+                </div>
+            )}
+            {time && (
+                <div className="absolute top-20 left-6 translate-y-1 flex flex-col justify-center items-center w-14 h-8 text-white rounded-lg bg-white">
+                    <p className="flex justify-center items-center text-black font-semibold h-fit">
+                        {leadingZeroFormat(time.hour)}h
+                    </p>
+                </div>
+            )}
             {title && <div className="w-full break-words break-before-all font-semibold">{title}</div>}
         </Link>
     );

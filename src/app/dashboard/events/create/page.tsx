@@ -38,14 +38,16 @@ const DashboardEditCreatePage: NextPage = () => {
                 New event
             </Button>
             {!startCreation && (
-                <div className="flex flex-col justify-start items-center gap-10">
+                <div className="flex flex-col justify-start items-center gap-10 pt-20">
                     <p className="text-2xl text-primary font-bold">What type of event are you creating?</p>
                     <div className="flex justify-between items-center gap-10 py-10">
                         {Object.values(EventType).map((type) => (
                             <Card
                                 key={type}
-                                onClick={() => setEventType(type)}
-                                className="flex flex-col justify-center items-center gap-5 h-48 aspect-square rounded-xl shadow-md cursor-pointer"
+                                onClick={(type !== EventType.ONLINE) ? (() => setEventType(type)) : undefined}
+                                className={`flex flex-col justify-center items-center gap-5 h-48 aspect-square rounded-xl shadow-md ${
+                                    type === EventType.ONLINE ? 'opacity-50 cursor-not-allowed hover:shadow-md' : 'cursor-pointer'
+                                }`}
                             >
                                 {eventTypeIcons[type]}
                                 <p className="w-fit mx-auto text-xl text-center font-medium">{capitalize(type)}</p>
@@ -53,7 +55,7 @@ const DashboardEditCreatePage: NextPage = () => {
                             </Card>
                         ))}
                     </div>
-                    <Button onClick={handleStartCreation} className="px-10">
+                    <Button onClick={handleStartCreation} className="px-10" disabled={eventType === null}>
                         Create my event
                     </Button>
                 </div>

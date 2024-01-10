@@ -4,32 +4,32 @@ export function useAnimateOnScroll<T extends HTMLElement>(targetRef: RefObject<T
     const [isAnimated, setIsAnimated] = useState<boolean>(false);
 
     useEffect(() => {
+        const target = targetRef.current;
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    console.log('isIntersecting')
                     entry.target.classList.add(animationClass);
-                    setIsAnimated(true);
                 } else {
-                    console.log('not isIntersecting')
                     entry.target.classList.remove(animationClass);
-                    setIsAnimated(false);
                 }
+                
+                setIsAnimated(entry.isIntersecting);
             });
         });
         
-        if (targetRef.current) {
-            observer.observe(targetRef.current);
+        if (target) {
+            observer.observe(target);
         }
         
         return () => {
-            if (targetRef.current) {
-                observer.unobserve(targetRef.current);
+            if (target) {
+                observer.unobserve(target);
             }
             
             observer.disconnect();
         };
-    }, [targetRef]);
+    }, [targetRef, animationClass]);
 
     return { isAnimated };
 }

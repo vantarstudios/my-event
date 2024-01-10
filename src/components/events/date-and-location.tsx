@@ -42,8 +42,8 @@ const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ type, starti
     }
 
     return (
-        <div className="flex flex-wrap justify-between items-start w-full pb-5">
-            <div className="basis-1/4">
+        <div className="flex justify-between items-start gap-40 w-full pb-5">
+            <div className="flex flex-col gap-10 basis-2/5">
                 <DateRangeInput
                     startDate={startDateTime.date}
                     endDate={endDateTime.date}
@@ -54,29 +54,6 @@ const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ type, starti
                     onStartDateClear={handleStartDateTimeChange('date')}
                     onEndDateClear={handleEndDateTimeChange('date')}
                 />
-            </div>
-            {type === EventType.LIVE && (
-                <TitledArea title="Location:" className="basis-1/3">
-                    <div className="flex flex-col justify-start items-center gap-5 w-full">
-                        <div className="flex justify-between items-center gap-5 w-full h-10 px-8 rounded-full bg-gray-100">
-                            <Location className={`w-4 h-4 ${location ? 'text-black' : 'text-gray-400'}`} />
-                            <LocationInput
-                                name="location"
-                                placeholder="Your event's location"
-                                value={location}
-                                onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                                    setOtherData('location')(event.target.value);
-                                }}
-                                className="w-full min-w-max bg-inherit"
-                            />
-                        </div>
-                        <div className="relative w-full aspect-square">
-                            <Image src="/images/map.png" alt="Event location" fill={true} />
-                        </div>
-                    </div>
-                </TitledArea>
-            )}
-            <div className="basis-1/4">
                 <TimeRangeInput
                     startTime={startDateTime.time}
                     endTime={endDateTime.time}
@@ -88,6 +65,27 @@ const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ type, starti
                     onEndTimeClear={handleEndDateTimeChange('time')}
                 />
             </div>
+            {type === EventType.LIVE && (
+                <TitledArea title="Location:" className="group w-full">
+                    <div className="flex flex-col justify-start items-center gap-5 w-full">
+                        <div className="peer flex justify-between items-center gap-5 w-full h-10 px-8 rounded-full bg-gray-100">
+                            <Location className={`w-4 h-4 ${location ? 'text-black' : 'text-gray-400'}`} />
+                            <LocationInput
+                                name="location"
+                                placeholder="Your event's location"
+                                value={location}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                    setOtherData('location')(event.target.value);
+                                }}
+                                className="w-full min-w-max bg-inherit"
+                            />
+                        </div>
+                        <div className="hidden group-focus-within:block relative w-3/4 aspect-square">
+                            <Image src="/images/map.png" alt="Event location" fill={true} />
+                        </div>
+                    </div>
+                </TitledArea>
+            )}
         </div>
     );
 };

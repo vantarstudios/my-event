@@ -29,9 +29,9 @@ const Header: FunctionComponent = () => {
     }, [pathname]);
     
     return (
-        <header className="fixed top-0 left-0 z-50 flex justify-between items-center w-screen h-[15vh] max-h-[15vh] px-[14vh] bg-white shadow-md">
+        <header className="fixed top-0 left-0 z-50 flex justify-between items-center w-screen h-[15vh] max-h-[15vh] px-28 bg-white shadow-md">
             <Link href="/" className="min-w-max min-h-max">
-                <div className="relative w-[20vh] h-[20vh]">
+                <div className="relative w-40 h-40">
                     <Image
                         src="/logo.png"
                         alt="Event Media Logo"
@@ -39,8 +39,8 @@ const Header: FunctionComponent = () => {
                     />
                 </div>
             </Link>
-            <nav className="flex items-center gap-[7vh] w-fit h-full ml-[14vh]">
-                <ul className="flex flex-wrap items-center gap-[7vh] h-full overflow-y-auto">
+            <nav className="flex items-center gap-10 w-fit h-full ml-28">
+                <ul className="flex flex-wrap items-center gap-10 h-full overflow-y-auto">
                     {menuLinks.map(({ name, href }, index) => (
                         <li
                             key={name}

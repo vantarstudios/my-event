@@ -201,6 +201,7 @@ export type Mode = 'view' | 'edit';
 export type EditOrCreateStep = {
     title: string;
     content: ReactNode;
+    isCompleted: boolean;
 };
 
 export const AccountTypes = ['individual', 'organization'] as const;

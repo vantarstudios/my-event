@@ -93,6 +93,10 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                     setOtherData={handleDataChange}
                 />
             ),
+            isCompleted: formData.title !== ''
+                && formData.description !== ''
+                && formData.categories.length > 0
+                && formData.cover !== undefined,
         },
         {
             title: 'Date & location',
@@ -102,6 +106,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                     setOtherData={handleDataChange}
                 />
             ),
+            isCompleted: formData.startingDate !== '' && formData.endingDate !== '' && formData.location !== '',
         },
         {
             title: 'Ticketing',
@@ -111,6 +116,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 newTickets={newTickets}
                 onTicketAdd={handleTicketChange}
             />,
+            isCompleted: true,
         },
     ];
 
@@ -150,6 +156,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 <Button
                     loading={isMutating}
                     onClick={handleStepChange(currentStepIndex + 1)}
+                    disabled={!steps[currentStepIndex]!.isCompleted}
                     className="text-sm"
                 >
                     {currentStepIndex === steps.length - 1 ? 'Finish' : 'Save and continue'}
@@ -159,6 +166,10 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 currentStepIndex={currentStepIndex}
                 onStepClick={setCurrentStepIndex}
                 editingSteps={steps.map(({ title }) => title)}
+                canGoToNextStep={layout === 'create'
+                    ? steps[currentStepIndex]!.isCompleted
+                    : true
+                }
             />
             {steps[currentStepIndex]!.content}
         </div>

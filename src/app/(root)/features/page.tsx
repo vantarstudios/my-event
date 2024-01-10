@@ -72,9 +72,9 @@ const FeaturesPage: NextPage = () => {
     
     return (
         <PageContainer>
-            <section className="flex flex-col gap-[5vh]">
-                <p className="w-full pl-[10vh] text-10xl text-start font-bold">Features</p>
-                <div className="flex justify-center gap-[10vh]">
+            <section className="flex flex-col gap-10">
+                <p className="w-full pl-20 text-10xl text-start font-bold">Features</p>
+                <div className="flex justify-center gap-20">
                     {
                         filters.map(({ label, value }) => (
                             <Button
@@ -95,7 +95,7 @@ const FeaturesPage: NextPage = () => {
             {
                 filteredFeatures.map((feature, index) => (
                     <Fragment key={index}>
-                        <section className="flex flex-col items-center gap-[5vh]">
+                        <section className="flex flex-col items-center gap-10">
                             <p className="w-full text-center text-5xl text-primary font-bold">
                                 {feature.title}
                             </p>
@@ -110,8 +110,8 @@ const FeaturesPage: NextPage = () => {
                                     className="rounded-2xl shadow-xl"
                                 />
                             </div>
-                            <Link href="/auth/signup" className="w-fit focus:outline-none mt-[5vh]">
-                                <Button className="px-[8vh] text-lg font-normal hover:bg-primary">
+                            <Link href="/auth/signup" className="w-fit focus:outline-none mt-10">
+                                <Button className="px-16 text-lg font-normal hover:bg-primary">
                                     Try it now
                                 </Button>
                             </Link>

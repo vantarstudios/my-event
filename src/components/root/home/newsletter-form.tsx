@@ -18,7 +18,7 @@ const NewsletterForm: FunctionComponent = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="flex flex-col items-center gap-[2.5vh] w-full"
+            className="flex flex-col items-center gap-5 w-full"
         >
             <label
                 htmlFor="email"
@@ -30,7 +30,7 @@ const NewsletterForm: FunctionComponent = () => {
                 type="email"
                 name="email"
                 placeholder="user@gmail.com"
-                className="w-full h-[6vh] text-lg"
+                className="w-full h-12 text-lg"
                 variant="auth"
                 value={email}
                 onChange={handleEmailChange}

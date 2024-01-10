@@ -1,17 +1,14 @@
-import { Fragment, useRef } from 'react';
-import type { FunctionComponent, ChangeEvent } from 'react';
+import { Fragment, type FunctionComponent } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Image from 'next/image';
 import { capitalize } from '@/lib/utils';
 import { EventCategory } from '@/types/constants';
-import { createEventSchema } from '@/types/events';
-import type { CreateEventPayload } from '@/types/events';
+import { createEventSchema, type CreateEventPayload } from '@/types/events';
 import type { EventCategoryUnion } from '@/types';
 import CategoryChip from './category-chip';
 import { Button } from '@components/ui/buttons';
-import { Picture, Cross } from '@components/ui/icons';
 import { TitledTextArea, TitledArea } from '@components/ui/layouts';
+import CoverInput from './cover-input';
 
 type NameAndCoverProps = Partial<Pick<CreateEventPayload, 'cover' | 'title' | 'description' | 'categories'>>
 
@@ -20,7 +17,7 @@ interface EditNameAndCoverProps extends NameAndCoverProps {
     setOtherData: <T extends keyof CreateEventPayload>(key: T) => (value: CreateEventPayload[T]) => void;
 }
 
-const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, description, categories, cover, initialCover, setOtherData }) => {
+const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, cover, description, categories, initialCover, setOtherData }) => {
     const { register } = useForm({
         resolver: zodResolver(createEventSchema),
         defaultValues: {
@@ -29,21 +26,9 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
         },
     });
     
-    const coverImage = cover;
-    const coverImageInputRef = useRef<HTMLInputElement>(null);
     const suggestedCategories = categories && categories.length > 0
         ? Object.values(EventCategory).filter((category) => !categories.includes(category))
         : Object.values(EventCategory);
-    
-    const handleCoverImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        setOtherData('cover')(file);
-    };
-    
-    const handleCoverImageClear = () => {
-        setOtherData('cover')(undefined);
-        coverImageInputRef.current?.value && (coverImageInputRef.current.value = '');
-    };
 
     const handleSuggestedCategoryClick = (category: EventCategoryUnion) => () => {
         setOtherData('categories')([...(categories || []), category]);
@@ -55,54 +40,11 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, descrip
 
     return (
         <div className="flex gap-5 w-full flex-1">
-            <div
-                style={{ backgroundImage: coverImage ? `url(${URL.createObjectURL(coverImage)})` : '' }}
-                className={`overflow-hidden relative w-1/3 min-h-full bg-cover bg-center rounded-3xl ${
-                    (!coverImage && !initialCover) && 'bg-black bg-opacity-60'
-                }`}
-            >
-                {
-                    (initialCover && !coverImage) && (
-                        <Image
-                            src={initialCover}
-                            alt="Event cover image"
-                            objectFit="cover"
-                            objectPosition="center"
-                            quality={100}
-                            fill
-                        />
-                    )
-                }
-                {
-                    coverImage
-                        ? (
-                            <Button
-                                onClick={handleCoverImageClear}
-                                className="absolute top-0 right-0 z-30 p-3 text-white rounded-none rounded-bl-xl drop-shadow-lg cursor-pointer bg-opacity-40 bg-primary hover:bg-opacity-100"
-                            >
-                                <Cross className="w-8 h-8"/>
-                            </Button>
-                        )
-                        : (
-                            <div className="flex flex-col justify-center items-center gap-5 w-full h-full">
-                                <Picture className="w-1/2 aspect-square text-white"/>
-                                <div
-                                    className="flex flex-col justify-center items-center gap-2.5 text-white child:w-2/3 child:text-center">
-                                    <p className="min-w-max font-medium">Upload event cover image</p>
-                                    <p className="text-sm">Cover image must have a specific size: 333 x 225 pixels.</p>
-                                </div>
-                            </div>
-                        )
-                }
-                <input
-                    ref={coverImageInputRef}
-                    type="file"
-                    name="event-cover"
-                    accept="image/*"
-                    onChange={handleCoverImageChange}
-                    className="absolute top-0 left-0 w-full h-full cursor-pointer opacity-0"
-                />
-            </div>
+            <CoverInput
+                initialCover={initialCover}
+                cover={cover}
+                setCoverData={setOtherData('cover')}
+            />
             <div className="flex flex-col justify-start gap-5 w-2/3 h-full px-5">
                 <TitledTextArea
                     register={register('title', {

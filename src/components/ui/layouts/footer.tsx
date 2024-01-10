@@ -29,7 +29,7 @@ const thirdColumnLinks: Required<NavigationLink>[] = [
 
 const Footer = () => {
     return (
-        <footer className="flex justify-between items-center w-screen h-[45vh] px-[5vh] text-white font-extralight bg-black">
+        <footer className="flex justify-between items-center w-screen h-[45vh] px-10 text-white font-extralight bg-black">
             <div className="relative h-full aspect-square">
                 <Image
                     src="/logo-white.png"
@@ -37,7 +37,7 @@ const Footer = () => {
                     fill
                 />
             </div>
-            <div className="flex justify-evenly items-center flex-1 h-full py-[10vh]">
+            <div className="flex justify-evenly items-center flex-1 h-full py-20">
                 {
                     [
                         firstColumnLinks,
@@ -63,8 +63,8 @@ const Footer = () => {
                         thirdColumnLinks.map(({ name, href, icon }) => {
                             const LinkIcon = icon;
                             return (
-                                <Link key={name} href={href} target="_blank" className="flex gap-[2vh]">
-                                    <LinkIcon className="w-[2.5vh] h-[2.5vh]"/>
+                                <Link key={name} href={href} target="_blank" className="flex gap-4">
+                                    <LinkIcon className="w-5 h-5"/>
                                     {name}
                                 </Link>
                             )

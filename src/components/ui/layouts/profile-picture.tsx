@@ -5,7 +5,7 @@ import type { FunctionComponent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSelector } from '@/lib/hooks';
-import { selectProfile } from '@/lib/store/profile';
+import { selectProfile } from '@/lib/store/states/profile';
 import { Button } from '@components/ui/buttons';
 
 const ProfilePicture: FunctionComponent = () => {

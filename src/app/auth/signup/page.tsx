@@ -9,7 +9,7 @@ import type { NextPage } from 'next';
 import type { ZodError } from 'zod';
 import { authAPI } from '@/lib/api/auth';
 import { useMutationRequest, useDispatch } from '@/lib/hooks';
-import { setProfile } from '@/lib/store/profile';
+import { setProfile } from '@/lib/store/states/profile';
 import { signUpSchema } from '@/types/auth';
 import type { SignUpPayload, SignUpErrors } from '@/types/auth';
 import type { AccountType } from '@/types';

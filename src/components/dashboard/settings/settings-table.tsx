@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { FunctionComponent } from 'react';
 import { useToggle, useMutationRequest, useSelector, useDispatch } from '@/lib/hooks';
-import { selectProfile, setProfile } from '@/lib/store/profile';
+import { selectProfile, setProfile } from '@/lib/store/states/profile';
 import { usersAPI } from '@/lib/api/users';
 import type { UserProfileUpdatePayload } from '@/types/users';
 import type { Mode } from '@/types';

@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { toast } from '@/lib/utils';
 import { authAPI } from '@/lib/api/auth';
 import { useToggle, useMutationRequest, useDispatch } from '@/lib/hooks';
-import { setProfile } from '@/lib/store/profile';
+import { setProfile } from '@/lib/store/states/profile';
 import { Role } from '@/types/constants';
 import { signInSchema } from '@/types/auth';
 import type { SignInPayload } from '@/types/auth';

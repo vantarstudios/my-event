@@ -3,7 +3,7 @@
 import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
 import { useRequest, useSelector } from '@/lib/hooks';
-import { selectProfile } from '@/lib/store/profile';
+import { selectProfile } from '@/lib/store/states/profile';
 import { eventsAPI } from '@/lib/api/events';
 import { Role } from '@/types/constants';
 import { EventCard } from '@components/events';

@@ -2,7 +2,7 @@
 
 import type { FunctionComponent } from 'react';
 import { useSelector } from '@/lib/hooks';
-import { selectProfile } from '@/lib/store/profile';
+import { selectProfile } from '@/lib/store/states/profile';
 import { ViewTitle } from '@components/dashboard';
 import { ProfilePicture } from '@components/ui/layouts';
 

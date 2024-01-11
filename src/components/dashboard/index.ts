@@ -1,5 +1,3 @@
-export { default as AuthGuard } from './auth-guard';
-
 export { default as Sidebar } from './sidebar';
 
 export { default as ViewTitle } from './view-title';

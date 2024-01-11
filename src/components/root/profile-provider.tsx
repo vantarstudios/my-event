@@ -2,19 +2,12 @@
 
 import { Fragment, useEffect } from 'react';
 import type { FunctionComponent, PropsWithChildren } from 'react';
-import { useRouter } from 'next/navigation';
-import { useRequest, useDispatch, useSelector } from '@/lib/hooks';
-import { setProfile, selectProfile } from '@/lib/store/profile';
+import { useRequest, useDispatch } from '@/lib/hooks';
+import { setProfile, clearProfile } from '@/lib/store/states/profile';
 import { usersAPI } from '@/lib/api/users';
 
-const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    const router = useRouter();
-    const profile = useSelector(selectProfile);
+const ProfileProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const dispatch = useDispatch();
-    
-    if (!profile) {
-        router.push('/auth/signin');
-    }
     
     const { data: user, error, isLoading } = useRequest('user-profile', async () => {
         const response = await usersAPI.getProfile();
@@ -28,21 +21,19 @@ const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
     
     useEffect(() => {
         if (!isLoading) {
-            if (error?.response.status === 401) {
-                router.push('/auth/signin');
-            }
-            
-            if (user?.success) {
+            if (!error && user?.success) {
                 dispatch(setProfile(user.data));
+            } else {
+                dispatch(clearProfile());
             }
         }
-    }, [router, dispatch, isLoading, error, user]);
+    }, [dispatch, isLoading, error, user]);
     
     return (
         <Fragment>
-            {(!isLoading && !error) && children}
+            {!isLoading && children}
         </Fragment>
     );
 };
 
-export default AuthGuard;
+export default ProfileProvider;

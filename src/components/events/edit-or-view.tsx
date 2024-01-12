@@ -8,9 +8,11 @@ import EditOrCreateEventLayout from './edit-or-create-event-layout';
 
 interface EditOrViewEventProps {
     event: Event;
+    eventIsLoading: boolean;
+    eventError: boolean;
 }
 
-const DashboardEditEventPage: FunctionComponent<EditOrViewEventProps> = ({ event }) => {
+const DashboardEditEventPage: FunctionComponent<EditOrViewEventProps> = ({ event, eventIsLoading, eventError }) => {
     const [mode, toggleMode] = useToggle<Mode>('view', 'edit');
 
     return (
@@ -19,6 +21,8 @@ const DashboardEditEventPage: FunctionComponent<EditOrViewEventProps> = ({ event
                 mode === 'view'
                     ? <ViewEvent
                         event={event}
+                        eventIsLoading={eventIsLoading}
+                        eventError={eventError}
                         onModeToggle={toggleMode}
                     />
                     : <EditOrCreateEventLayout

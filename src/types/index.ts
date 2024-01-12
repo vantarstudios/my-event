@@ -198,6 +198,8 @@ export type NavigationLink = Readonly<{
 
 export type Mode = 'view' | 'edit';
 
+export type Layout = 'create' | 'edit';
+
 export type EditOrCreateStep = {
     title: string;
     content: ReactNode;

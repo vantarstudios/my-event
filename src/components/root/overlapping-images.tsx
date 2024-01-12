@@ -10,11 +10,15 @@ const OverlappingImages: FunctionComponent = () => {
                 src={landingImageTwo}
                 alt="hero-section"
                 className="ml-[40%] rounded-3xl shadow-2xl animate-slide-left"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcNXdnPQAGegKBnteyAwAAAABJRU5ErkJggg=="
             />
             <div className="absolute left-[15%] top-1/2 -translate-y-1/2 w-1/2">
                 <Image
                     src={landingImageOne}
                     alt="hero-section"
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPcumVbPQAG5QKgKkVifwAAAABJRU5ErkJggg=="
                     className="rounded-3xl shadow-2xl animate-slide-right"
                 />
             </div>

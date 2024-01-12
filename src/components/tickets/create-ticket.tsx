@@ -129,7 +129,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
         };
 
     const handleInvitationTypeChange = (value: string) => {
-        console.log(value)
         setSelectedInvitationType(value.toUpperCase() as InvitationTypeUnion);
     };
 

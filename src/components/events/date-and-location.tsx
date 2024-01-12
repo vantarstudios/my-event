@@ -3,21 +3,22 @@
 import { useState } from 'react';
 import type { FunctionComponent, ChangeEvent } from 'react';
 import Image from 'next/image';
-import { parseDateTime, getISOString } from '@/lib/utils';
+import { parseDateTime, getISOString, serializeDateTime } from '@/lib/utils';
 import { EventType} from '@/types/constants';
-import type { Event, ParsedDateTime } from '@/types';
+import type { CreateEventPayload } from '@/types/events';
+import type { Event, ParsedDateTime, Layout } from '@/types';
 import { TitledArea } from '@components/ui/layouts';
 import { DateRangeInput, TimeRangeInput, LocationInput } from '@components/ui/form';
 import { Location } from '@components/ui/icons';
-import type { CreateEventPayload } from '../../types/events';
 
 interface DateAndLocationProps
     extends Partial<Pick<Event, 'startingDate' | 'endingDate' | 'location'>>,
         Pick<Event, 'type'> {
+    layout: Layout;
     setOtherData: <T extends keyof CreateEventPayload>(key: T) => (value: CreateEventPayload[T]) => void;
 }
 
-const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ type, startingDate, endingDate, location, setOtherData }) => {
+const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ layout, type, startingDate, endingDate, location, setOtherData }) => {
     const [startDateTime, setStartDateTime] = useState<ParsedDateTime>(
         startingDate ? parseDateTime(startingDate, 'both') : { date: null, time: null },
     );
@@ -26,39 +27,38 @@ const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ type, starti
     );
     
     const handleStartDateTimeChange = (key: keyof ParsedDateTime) => (value?: ParsedDateTime[keyof ParsedDateTime]) => {
-        setStartDateTime((currentValue) => {
-            const newValue = { ...currentValue, [key]: value ?? null };
-            setOtherData('startingDate')(getISOString(newValue));
-            return newValue;
-        });
+        const newValue = { ...startDateTime, [key]: value ?? null };
+        setStartDateTime(newValue);
+        setOtherData('startingDate')(getISOString(newValue));
     };
     
     const handleEndDateTimeChange = (key: keyof ParsedDateTime) => (value?: ParsedDateTime[keyof ParsedDateTime]) => {
-        setEndDateTime((currentValue) => {
-            const newValue = { ...currentValue, [key]: value ?? null };
-            setOtherData('endingDate')(getISOString(newValue));
-            return newValue;
-        });
-    }
+        const newValue = { ...endDateTime, [key]: value ?? null };
+        setEndDateTime(newValue);
+        setOtherData('endingDate')(getISOString(newValue));
+    };
 
     return (
         <div className="flex justify-between items-start gap-40 w-full pb-5">
             <div className="flex flex-col gap-10 basis-2/5">
                 <DateRangeInput
-                    startDate={startDateTime.date}
-                    endDate={endDateTime.date}
                     startDateLabel="Starting date:"
                     endDateLabel="Ending date:"
+                    startDate={startDateTime.date}
+                    endDate={endDateTime.date}
+                    minStartDate={layout === 'create' ? new Date() : undefined}
+                    maxStartDate={layout === 'create' ? serializeDateTime(endDateTime.date, null) : undefined}
+                    minEndDate={layout === 'create' ? serializeDateTime(startDateTime.date, null, new Date()) : undefined}
                     onStartDateChange={handleStartDateTimeChange('date')}
                     onEndDateChange={handleEndDateTimeChange('date')}
                     onStartDateClear={handleStartDateTimeChange('date')}
                     onEndDateClear={handleEndDateTimeChange('date')}
                 />
                 <TimeRangeInput
-                    startTime={startDateTime.time}
-                    endTime={endDateTime.time}
                     startTimeLabel="Starting time:"
                     endTimeLabel="Ending time:"
+                    startTime={startDateTime.time}
+                    endTime={endDateTime.time}
                     onStartTimeChange={handleStartDateTimeChange('time')}
                     onEndTimeChange={handleEndDateTimeChange('time')}
                     onStartTimeClear={handleStartDateTimeChange('time')}

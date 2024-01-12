@@ -1,5 +1,4 @@
 import type { FunctionComponent } from 'react';
-import { serializeDateTime } from '@/lib/utils';
 import type { ParsedDate } from '@/types';
 import { DateInput } from '@components/ui/form';
 import { Calendar } from '@components/ui/icons';
@@ -7,6 +6,10 @@ import { Calendar } from '@components/ui/icons';
 interface DateRangeInputProps {
     startDate: ParsedDate | null;
     endDate: ParsedDate | null;
+    minStartDate?: Date;
+    maxStartDate?: Date;
+    minEndDate?: Date;
+    maxEndDate?: Date;
     startDateLabel?: string;
     endDateLabel?: string;
     onStartDateChange: (newValue: ParsedDate) => void;
@@ -18,6 +21,10 @@ interface DateRangeInputProps {
 const DateRangeInput: FunctionComponent<DateRangeInputProps> = ({
     startDate,
     endDate,
+    minStartDate,
+    maxStartDate,
+    minEndDate,
+    maxEndDate,
     startDateLabel = 'Start',
     endDateLabel = 'End',
     onStartDateChange,
@@ -34,8 +41,8 @@ const DateRangeInput: FunctionComponent<DateRangeInputProps> = ({
                     <DateInput
                         name="startDate"
                         value={startDate}
-                        minDate={new Date()}
-                        maxDate={serializeDateTime(endDate, null)}
+                        minDate={minStartDate}
+                        maxDate={maxStartDate}
                         onChange={onStartDateChange}
                         onClear={onStartDateClear}
                     />
@@ -48,7 +55,8 @@ const DateRangeInput: FunctionComponent<DateRangeInputProps> = ({
                     <DateInput
                         name="endDate"
                         value={endDate}
-                        minDate={serializeDateTime(startDate, null, new Date())}
+                        minDate={minEndDate}
+                        maxDate={maxEndDate}
                         onChange={onEndDateChange}
                         onClear={onEndDateClear}
                     />

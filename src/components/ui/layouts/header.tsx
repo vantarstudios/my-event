@@ -53,7 +53,7 @@ const Header: FunctionComponent = () => {
                         </li>
                     ))}
                 </ul>
-                <ProfilePicture/>
+                <ProfilePicture asLink={true} showSignUp={true}/>
             </nav>
         </header>
     );

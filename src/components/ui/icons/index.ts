@@ -59,3 +59,5 @@ export { default as LinkedIn } from './linkedin';
 export { default as Power } from './power';
 
 export { default as Check } from './check';
+
+export { default as GoogleColored } from './google-colored';

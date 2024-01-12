@@ -86,6 +86,8 @@ const EventsSection: FunctionComponent = () => {
                     <Image
                         src={landingImageThree}
                         alt="Event Creation"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP88OR5PQAIwwM81armiAAAAABJRU5ErkJggg=="
                         className="shadow-2xl rounded-3xl"
                     />
                 </div>

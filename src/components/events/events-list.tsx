@@ -7,7 +7,7 @@ import { selectProfile } from '@/lib/store/states/profile';
 import { eventsAPI } from '@/lib/api/events';
 import { Role } from '@/types/constants';
 import { EventCard } from '@components/events';
-import { Loader } from '@components/ui';
+import { EventsListSkeleton } from '@components/ui/skeletons';
 
 interface EventsListProps {
     maxEvents?: number;
@@ -39,8 +39,8 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
     return (
         <Fragment>
             {
-                (isLoading) && (
-                    <Loader />
+                (isLoading && !error) && (
+                    <EventsListSkeleton number={maxEvents || 4} cardFormat="titled"/>
                 )
             }
             {
@@ -68,7 +68,7 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
             }
             {
                 (!isLoading && error) && (
-                    <p className="w-full my-10 text-gray-500">Something went wrong</p>
+                    <p className="w-full my-10 text-gray-500">Sorry, something went wrong</p>
                 )
             }
         </Fragment>

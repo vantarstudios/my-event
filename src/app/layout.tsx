@@ -2,7 +2,7 @@ import type { FunctionComponent, PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
-import { StoreProvider, ProfileProvider, AuthGuard } from '@components/root';
+import { StoreProvider, ProfileProvider, AuthGuard } from '@components/app';
 import './globals.css';
 
 const poppinsFont = Poppins({

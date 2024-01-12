@@ -1,14 +1,14 @@
 'use client';
 
 import type { FunctionComponent } from 'react';
-import type { Ticket as TicketType, Event } from '@/types';
+import type { Ticket as TicketType, Event, Layout } from '@/types';
 import type { CreateTicketPayload } from '@/types/tickets';
 import { CreateTicket, TicketsList, Ticket } from '@components/tickets';
 import { TitledArea } from '@components/ui/layouts';
 import { Input } from '@components/ui/form';
 
 interface TicketingProps {
-    layout: 'create' | 'edit';
+    layout: Layout;
     event?: Event;
     newTickets: CreateTicketPayload[];
     onTicketAdd: (ticket: CreateTicketPayload, toDelete?: boolean) => void;

@@ -4,6 +4,7 @@ import { useRequest } from '@/lib/hooks';
 import { ticketsAPI } from '@/lib/api/tickets';
 import type { Mode, Event, Ticket as TicketType } from '@/types';
 import { Ticket } from '@components/tickets';
+import { TicketsListSkeleton } from '@components/ui/skeletons';
 
 interface TicketsListProps {
     mode: Mode;
@@ -33,7 +34,7 @@ const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event }) => {
         <Fragment>
             {
                 isLoading
-                    ? <p className="text-sm text-center w-full">Loading tickets...</p>
+                    ? <TicketsListSkeleton number={3}/>
                     : error
                         ? <p className="text-sm text-center w-full">Unable to fetch existing tickets</p>
                         : eventTickets?.data && eventTickets.data.length > 0
@@ -45,7 +46,7 @@ const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event }) => {
                                     onDelete={deleteTicket(ticket.id)}
                                 />
                             ))
-                            : <p className="text-sm text-center w-full">No tickets available</p>
+                            : <p className="text-center w-full mt-10">No tickets available</p>
             }
         </Fragment>
     );

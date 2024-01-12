@@ -9,7 +9,7 @@ import { ticketsAPI } from '@/lib/api/tickets';
 import { createEventSchema } from '@/types/events';
 import type { CreateEventPayload, UpdateEventPayload } from '@/types/events';
 import type { CreateTicketPayload } from '@/types/tickets';
-import type { EditOrCreateStep, Event, EventTypeUnion } from '@/types';
+import type { EditOrCreateStep, Event, EventTypeUnion, Layout } from '@/types';
 import { Button } from '@components/ui/buttons';
 import { Ticketing } from '@components/tickets';
 import EventEditionStepper from './event-edition-stepper';
@@ -17,7 +17,7 @@ import NameAndCover from './name-and-cover';
 import DateAndLocation from './date-and-location';
 
 interface EditOrCreateEventLayoutProps {
-    layout: 'create' | 'edit';
+    layout: Layout;
     onModeToggle: () => void;
     eventType: EventTypeUnion;
     event?: Event;
@@ -102,6 +102,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
             title: 'Date & location',
             content: (
                 <DateAndLocation
+                    layout={layout}
                     {...formData}
                     setOtherData={handleDataChange}
                 />
@@ -156,7 +157,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 <Button
                     loading={isMutating}
                     onClick={handleStepChange(currentStepIndex + 1)}
-                    disabled={!steps[currentStepIndex]!.isCompleted}
+                    disabled={layout === 'create' && !steps[currentStepIndex]!.isCompleted}
                     className="text-sm"
                 >
                     {currentStepIndex === steps.length - 1 ? 'Finish' : 'Save and continue'}

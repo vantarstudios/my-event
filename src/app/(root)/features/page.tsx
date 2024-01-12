@@ -15,7 +15,8 @@ const features: Readonly<{
     topics: string[];
     title: string;
     description: string;
-    picture: StaticImageData
+    picture: StaticImageData,
+    blurDataURL: string;
 }>[] = [
     {
         topics: ['all'],
@@ -26,6 +27,7 @@ const features: Readonly<{
             'all in an eco-friendly workspace customized with the best possible options: ' +
             'chat, analytics, social medias, extensions etc...',
         picture: imageOne,
+        blurDataURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPcumVbPQAG5QKgKkVifwAAAABJRU5ErkJggg=='
     },
     {
         topics: ['all', 'workspace'],
@@ -36,6 +38,7 @@ const features: Readonly<{
             'your team and even contractors and start getting the work done now. ' +
             'Assign tasks, manage your staff and keep track of your overall performance with deep analytics.',
         picture: imageTwo,
+        blurDataURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP88OR5PQAIwwM81armiAAAAABJRU5ErkJggg=='
     },
     {
         topics: ['all', 'events'],
@@ -45,6 +48,7 @@ const features: Readonly<{
             'That’s it! Now, set a timeline for event and assign task to your staff. ' +
             'To make it easier, you can team your staff members in groups with common or individual tasks.',
         picture: imageOne,
+        blurDataURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPcumVbPQAG5QKgKkVifwAAAABJRU5ErkJggg=='
     },
     {
         topics: ['all', 'analytics', 'socials'],
@@ -53,6 +57,7 @@ const features: Readonly<{
             'That’s right, it’s time to promote your event and collect analysis data. ' +
             'Link the social medias accounts you wish to use and run ads across them and visualize real time data.',
         picture: imageTwo,
+        blurDataURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP88OR5PQAIwwM81armiAAAAABJRU5ErkJggg=='
     }
 ];
 
@@ -107,6 +112,8 @@ const FeaturesPage: NextPage = () => {
                                     src={feature.picture}
                                     alt={feature.title}
                                     layout="responsive"
+                                    placeholder="blur"
+                                    blurDataURL={feature.blurDataURL}
                                     className="rounded-2xl shadow-xl"
                                 />
                             </div>

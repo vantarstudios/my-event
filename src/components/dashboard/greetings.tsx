@@ -11,7 +11,7 @@ const Greetings: FunctionComponent = () => {
     
     return (
         <div className="flex gap-5">
-            <ProfilePicture/>
+            <ProfilePicture asLink={true} showSignUp={false}/>
             <ViewTitle>Hi, {profile.firstName}!</ViewTitle>
         </div>
     );

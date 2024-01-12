@@ -7,7 +7,7 @@ import type { TimePickerProps } from 'react-time-picker';
 import type { Value } from 'react-time-picker/dist/esm/shared/types';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import { cn } from '@/lib/utils';
+import { cn, leadingZeroFormat } from '@/lib/utils';
 import type { ParsedTime } from '@/types';
 import { Check, Cross } from '@components/ui/icons';
 
@@ -37,8 +37,12 @@ const convert12to24 = (hour12: number, amPm: AmPmType): number => {
     return hour24;
 };
 
-const getTimeString = (time: ParsedTime | null): Value | undefined => {
-    return time !== null ? `${convert24to12(time.hour)[0]}:${time.minute}` : undefined;
+const getTimeString = (time: ParsedTime | null): Value => {
+    return time !== null ? `${
+        leadingZeroFormat(convert24to12(time.hour)[0])
+    }:${
+        leadingZeroFormat(time.minute)
+    }` : '';
 };
 
 const TimeInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear, className, ...props }) => {
@@ -117,6 +121,7 @@ const TimeInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
                 hourPlaceholder="00"
                 minutePlaceholder="00"
                 onChange={handleChange}
+                onInvalidChange={() => {}}
                 clockClassName="border-0 outline-none"
                 className={cn('border-0 focus:outline-none font-medium', className)}
             />

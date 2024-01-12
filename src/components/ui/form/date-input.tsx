@@ -23,8 +23,11 @@ const DateInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
         if (newValue === null) {
             return;
         }
-
         onChange(parseDateTime((newValue as Date).toISOString(), 'date'));
+    };
+    
+    const handleClear = () => {
+        onClear();
     };
 
     return (
@@ -34,7 +37,7 @@ const DateInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
             format="dd/MM/yyyy"
             calendarIcon={null}
             showLeadingZeros={true}
-            clearIcon={<Cross onClick={onClear} className={`w-4 h-4 ${value === null && 'opacity-0'}`} />}
+            clearIcon={<Cross onClick={handleClear} className={`w-4 h-4 ${value === null && 'opacity-0'}`} />}
             dayPlaceholder="DD"
             monthPlaceholder="MM"
             yearPlaceholder="YYYY"

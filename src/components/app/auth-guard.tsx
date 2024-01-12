@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import type { FunctionComponent, PropsWithChildren } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSelector } from '@/lib/hooks';
@@ -14,20 +14,23 @@ const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const router = useRouter();
     const pathname = usePathname();
     const profile = useSelector(selectProfile);
+    const [canNavigate, setCanNavigate] = useState(true);
 
     useEffect(() => {
         if (
             Object.keys(profile).length === 0
             && routesToProtect.some((route) => pathname.startsWith(route))
         ) {
+            setCanNavigate(false);
             router.push('/auth/signin');
+        } else {
+            setCanNavigate(true);
         }
-        
     }, [router, pathname, profile]);
     
     return (
         <Fragment>
-            {children}
+            {canNavigate && children}
         </Fragment>
     );
 };

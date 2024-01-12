@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { userProfileUpdateSchema } from '@/types/users';
 import type { UserProfile, UserProfileUpdatePayload } from '@/types/users';
 import type { Mode } from '@/types';
-import { TitledArea } from '@components/ui/layouts';
+import { ProfilePicture, TitledArea } from '@components/ui/layouts';
 import { Input, PhoneNumberInput } from '@components/ui/form';
 import { Person, Photo } from '@components/ui/icons';
 import OrganizerCard from './organizer-card';
@@ -36,17 +36,19 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
             <form className="flex flex-wrap justify-center items-start gap-5 pt-5 w-full">
                 <div className="relative">
                     <div className="relative w-40 h-40 rounded-full overflow-hidden">
-                        <Image
-                            src={
-                                profilePicture
-                                    ? URL.createObjectURL(profilePicture)
-                                    : user.profilePicture || '/dash-profile.svg'
-                            }
-                            alt="Profile picture"
-                            fill
-                            quality={100}
-                            className="object-center object-cover"
-                        />
+                        {
+                            profilePicture
+                                ? (
+                                    <Image
+                                        src={URL.createObjectURL(profilePicture)}
+                                        alt="Profile picture"
+                                        fill
+                                        quality={100}
+                                        className="object-center object-cover"
+                                    />
+                                )
+                                : <ProfilePicture asLink={false} showSignUp={false}/>
+                        }
                     </div>
                     {
                         mode === 'edit' && (
@@ -115,7 +117,6 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                 <OrganizerCard
                     firstName={user.firstName}
                     lastName={user.lastName}
-                    profilePicture={user.profilePicture || '/dash-profile.svg'}
                     eventName="Event name"
                 />
             </form>

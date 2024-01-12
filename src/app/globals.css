@@ -47,6 +47,10 @@ input[type='number'] {
     -moz-appearance: textfield;
 }
 
+.skeleton {
+    @apply bg-gray-200 animate-pulse;
+}
+
 .react-date-picker__wrapper,
 .react-time-picker__wrapper {
     border: none !important;

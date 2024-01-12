@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from '@/lib/utils';
 import { authAPI } from '@/lib/api/auth';
@@ -15,7 +14,7 @@ import { signInSchema } from '@/types/auth';
 import type { SignInPayload } from '@/types/auth';
 import { Button } from '@components/ui/buttons';
 import { Input, Checkbox } from '@components/ui/form';
-import { Eye, EyeOff } from '@components/ui/icons';
+import { Eye, EyeOff, GoogleColored } from '@components/ui/icons';
 
 const SignInPage: NextPage = () => {
     const router = useRouter();
@@ -113,13 +112,9 @@ const SignInPage: NextPage = () => {
             <Link href="/auth/password-reset" className="flex justify-center items-center w-full font-medium underline">
                 Forgot password?
             </Link>
-            <Image
-                src="/images/google.png"
-                alt="Google Auth"
-                width={50}
-                height={50}
-                className="shadow-sm border rounded-full cursor-pointer"
-            />
+            <div className="w-14 h-14 p-2 shadow-sm border rounded-full cursor-pointer">
+                <GoogleColored/>
+            </div>
             <p className="flex justify-center items-center w-full pb-10">
                 Don&apos;t have an account?&nbsp;
                 <Link href="/auth/signup" className="font-medium text-primary underline">

@@ -25,6 +25,7 @@ const ContactForm: FunctionComponent = () => {
                 name="phone"
                 label="Phone number"
                 labelClassName="font-bold"
+                onChange={(value) => console.log(value)}
             />
             <Input
                 register={register('organizationName', {

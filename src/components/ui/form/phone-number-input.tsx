@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FunctionComponent } from 'react';
+import { useState, type FunctionComponent, type ChangeEvent } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import type { PhoneInputProps, CountryData } from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -8,14 +8,19 @@ import InputWrapper from './input-wrapper';
 import type { InputWrapperProps } from './input-wrapper';
 
 interface PhoneNumberInputProps extends InputWrapperProps {
-    value?: string;
-    placeholder?: string;
+    value?: HTMLInputElement['value'];
+    placeholder?: HTMLInputElement['placeholder'];
     onChange?: (value: string) => void;
     autoComplete?: HTMLInputElement['autocomplete'];
     disabled?: HTMLInputElement['disabled'];
 }
 
+const formatPhoneNumber = (value: string, dialCode: CountryData['dialCode']): string => {
+    return ['+', dialCode, value.replace(/\s/g, '')].join('');
+};
+
 const PhoneNumberInput: FunctionComponent<PhoneNumberInputProps> = ({ onChange, ...props }) => {
+    const [value, setValue] = useState<string>(props.value ?? '');
     const [countryData, setCountryData] = useState<CountryData>({
         name: 'Benin',
         dialCode: '229',
@@ -23,10 +28,22 @@ const PhoneNumberInput: FunctionComponent<PhoneNumberInputProps> = ({ onChange, 
         format: '+... ... ... ... ... ..',
     });
     
-    const handleChange: PhoneInputProps['onChange'] = (value, data, event, formattedValue) => {
+    const handleCountryCodeChange: PhoneInputProps['onChange'] = (_, data, event) => {
         event.preventDefault();
         setCountryData(data as CountryData);
-        onChange && onChange(formattedValue ?? value ?? '');
+        onChange && onChange(formatPhoneNumber(
+            value,
+            (data as CountryData).dialCode ?? countryData.dialCode
+        ));
+    };
+    
+    const handlePhoneNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const newValue = event.target.value;
+        setValue(newValue);
+        onChange && onChange(formatPhoneNumber(
+            newValue,
+            countryData.dialCode
+        ));
     };
     
     return (
@@ -43,21 +60,31 @@ const PhoneNumberInput: FunctionComponent<PhoneNumberInputProps> = ({ onChange, 
             <div className="relative w-full h-10 rounded-full">
                 {
                     !props.disabled && (
-                        <span className="absolute left-0 top-0 z-20 flex justify-center items-center w-20 h-full text-white bg-black rounded-l-full">
+                        <span
+                            className="absolute left-0 top-0 z-20 flex justify-center items-center w-20 h-full text-white bg-black rounded-l-full">
                             +{countryData.dialCode}
                         </span>
                     )
                 }
                 <PhoneInput
-                    value={props.value}
-                    onChange={handleChange}
+                    onChange={handleCountryCodeChange}
                     placeholder={props.placeholder || ''}
                     country={countryData.countryCode}
                     countryCodeEditable={false}
                     specialLabel={props.label}
+                    containerClass="!absolute !left-0 !top-0 !w-full !h-full"
                     buttonClass="!z-30 !w-20 !bg-transparent !border-none first:child:!opacity-0 first:child:!w-full"
-                    inputClass={`!w-full !text-base !rounded-full !py-2 !h-10 !border-none !focus:outline-none !ring-transparent ${
-                        props.disabled ? '!pl-3 !bg-white' : '!pl-24 !bg-gray-100'
+                    inputClass="!hidden"
+                />
+                <input
+                    type="number"
+                    autoComplete="tel-national"
+                    name={props.name}
+                    placeholder={props.placeholder}
+                    value={props.value}
+                    onChange={handlePhoneNumberChange}
+                    className={`absolute top-0 left-20 text-base rounded-r-full pl-5 py-2 w-[calc(100%-10vh)] h-full border-none focus:outline-none ring-transparent ${
+                        props.disabled ? 'bg-white' : 'bg-gray-100'
                     }`}
                 />
             </div>

@@ -18,6 +18,7 @@ const Ticket: FunctionComponent<TicketProps> = ({ ticket, mode, onDelete }) => {
                 <div className="flex items-center gap-4 w-fit py-2 h-full">
                     <p>{ticket.title}</p>
                     <Person className="w-5 h-5" />
+                    <p>({ticket.maxQuantity})</p>
                 </div>
             </div>
             <div className="flex gap-10">

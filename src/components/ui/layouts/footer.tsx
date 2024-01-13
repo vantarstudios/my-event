@@ -28,50 +28,55 @@ const thirdColumnLinks: Required<NavigationLink>[] = [
 ];
 
 const Footer = () => {
+    const currentYear = new Date().getFullYear();
+    
     return (
-        <footer className="flex justify-between items-center w-screen h-[45vh] px-10 text-white font-extralight bg-black">
-            <div className="relative h-full aspect-square">
-                <Image
-                    src="/logo-white.png"
-                    alt="Vantar Studios Logo"
-                    fill
-                />
-            </div>
-            <div className="flex justify-evenly items-center flex-1 h-full py-20">
-                {
-                    [
-                        firstColumnLinks,
-                        secondColumnLinks,
-                    ].map((links, index) => (
-                        <div key={index} className="flex flex-col justify-between items-start h-full">
-                            {
-                                links.map(({ name, href }) => (
-                                    <Link
-                                        key={name}
-                                        href={href}
-                                        className="hover:underline hover:decoration-1 hover:underline-offset-2"
-                                    >
+        <footer className="flex flex-col w-screen h-[50vh] px-10 text-white font-extralight bg-black">
+            <div className="flex justify-between items-center w-full flex-1">
+                <div className="relative h-full aspect-square">
+                    <Image
+                        src="/logo-white.png"
+                        alt="Vantar Studios Logo"
+                        fill
+                    />
+                </div>
+                <div className="flex justify-evenly items-center flex-1 h-full py-20">
+                    {
+                        [
+                            firstColumnLinks,
+                            secondColumnLinks,
+                        ].map((links, index) => (
+                            <div key={index} className="flex flex-col justify-between items-start h-full">
+                                {
+                                    links.map(({ name, href }) => (
+                                        <Link
+                                            key={name}
+                                            href={href}
+                                            className="hover:underline hover:decoration-1 hover:underline-offset-2"
+                                        >
+                                            {name}
+                                        </Link>
+                                    ))
+                                }
+                            </div>
+                        ))
+                    }
+                    <div className="flex flex-col justify-between items-start h-full">
+                        {
+                            thirdColumnLinks.map(({ name, href, icon }) => {
+                                const LinkIcon = icon;
+                                return (
+                                    <Link key={name} href={href} target="_blank" className="flex gap-4">
+                                        <LinkIcon className="w-5 h-5"/>
                                         {name}
                                     </Link>
-                                ))
-                            }
-                        </div>
-                    ))
-                }
-                <div className="flex flex-col justify-between items-start h-full">
-                    {
-                        thirdColumnLinks.map(({ name, href, icon }) => {
-                            const LinkIcon = icon;
-                            return (
-                                <Link key={name} href={href} target="_blank" className="flex gap-4">
-                                    <LinkIcon className="w-5 h-5"/>
-                                    {name}
-                                </Link>
-                            )
-                        })
-                    }
+                                )
+                            })
+                        }
+                    </div>
                 </div>
             </div>
+            <p className="w-full mb-10 text-sm text-center">Vantar Studios &copy; Copyright {currentYear}</p>
         </footer>
     );
 };

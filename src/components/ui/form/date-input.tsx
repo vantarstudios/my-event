@@ -42,7 +42,7 @@ const DateInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
             monthPlaceholder="MM"
             yearPlaceholder="YYYY"
             onChange={handleChange}
-            onInvalidChange={() => alert('Invalid date')}
+            onInvalidChange={() => {}}
             calendarClassName="border-0 outline-none"
             className={cn('border-0 focus:outline-none font-medium', className)}
         />

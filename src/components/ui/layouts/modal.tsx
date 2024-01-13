@@ -7,7 +7,7 @@ interface ModalProps {
 const Modal: FunctionComponent<PropsWithChildren<ModalProps>> = ({ isOpened, children }) => {
     return (
         <dialog
-            className={`fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-black bg-opacity-70 transition-all ${
+            className={`fixed top-0 left-0 z-40 w-screen h-screen flex justify-center items-center bg-black bg-opacity-70 transition-all ${
                 isOpened ? 'block' : 'hidden'
             }`}
         >

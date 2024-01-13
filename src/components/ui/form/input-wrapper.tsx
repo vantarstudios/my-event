@@ -14,8 +14,8 @@ export interface InputWrapperProps {
 
 const InputWrapper: FunctionComponent<PropsWithChildren<InputWrapperProps>> = (props) => {
     return (
-        <div className="flex flex-col items-start gap-1 w-full">
-            <div className={cn('relative flex flex-col items-start gap-1 w-full', props.wrapperClassName)}>
+        <div className={cn('flex flex-col items-start gap-1 w-full', props.wrapperClassName)}>
+            <div className="relative flex flex-col items-start gap-1 w-full">
                 <label className="flex w-full items-center justify-between px-3" htmlFor={props.name}>
                     <span className={cn('font-semibold', props.labelClassName)}>{props.label}</span>
                     <span className="font-medium text-red-600">{props.trailing}</span>

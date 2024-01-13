@@ -28,8 +28,16 @@ const Ticketing: FunctionComponent<TicketingProps> = ({ layout, event, newTicket
     return (
         <div className="relative flex flex-col gap-10 w-full h-full">
             {layout === 'edit' && <CreateTicketComponent />}
-            <div className="flex flex-col gap-5 px-10 overflow-y-auto">
-                { event && <TicketsList mode="edit" event={event}/> }
+            <div className="flex flex-col gap-5 h-80 px-10 overflow-y-auto">
+                {
+                    event && (
+                        <TicketsList
+                            mode="edit"
+                            event={event}
+                            showEmpty={newTickets.length === 0}
+                        />
+                    )
+                }
                 {newTickets.map((ticket, index) => (
                     <Ticket
                         key={index}

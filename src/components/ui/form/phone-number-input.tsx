@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FunctionComponent, type ChangeEvent } from 'react';
+import { useState, Fragment, type FunctionComponent, type ChangeEvent } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import type { PhoneInputProps, CountryData } from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -15,8 +15,13 @@ interface PhoneNumberInputProps extends InputWrapperProps {
     disabled?: HTMLInputElement['disabled'];
 }
 
-const formatPhoneNumber = (value: string, dialCode: CountryData['dialCode']): string => {
-    return ['+', dialCode, value.replace(/\s/g, '')].join('');
+const formatPhoneNumber = (value: string, dialCode: CountryData['dialCode'], spaceDial: boolean = false): string => {
+    return [
+        '+',
+        dialCode,
+        spaceDial ? ' ' : '',
+        value.replace(/\s/g, '')
+    ].join('');
 };
 
 const PhoneNumberInput: FunctionComponent<PhoneNumberInputProps> = ({ onChange, ...props }) => {
@@ -60,31 +65,37 @@ const PhoneNumberInput: FunctionComponent<PhoneNumberInputProps> = ({ onChange, 
             <div className="relative w-full h-10 rounded-full">
                 {
                     !props.disabled && (
-                        <span
-                            className="absolute left-0 top-0 z-20 flex justify-center items-center w-20 h-full text-white bg-black rounded-l-full">
-                            +{countryData.dialCode}
-                        </span>
+                        <Fragment>
+                            <span
+                                className="absolute left-0 top-0 z-20 flex justify-center items-center w-20 h-full text-white bg-black rounded-l-full">
+                                +{countryData.dialCode}
+                            </span>
+                            <PhoneInput
+                                onChange={handleCountryCodeChange}
+                                placeholder={props.placeholder || ''}
+                                country={countryData.countryCode}
+                                countryCodeEditable={false}
+                                specialLabel={props.label}
+                                containerClass="!absolute !left-0 !top-0 !w-full !h-full"
+                                buttonClass="!z-30 !w-20 !bg-transparent !border-none first:child:!opacity-0 first:child:!w-full"
+                                inputClass="!hidden"
+                            />
+                        </Fragment>
                     )
                 }
-                <PhoneInput
-                    onChange={handleCountryCodeChange}
-                    placeholder={props.placeholder || ''}
-                    country={countryData.countryCode}
-                    countryCodeEditable={false}
-                    specialLabel={props.label}
-                    containerClass="!absolute !left-0 !top-0 !w-full !h-full"
-                    buttonClass="!z-30 !w-20 !bg-transparent !border-none first:child:!opacity-0 first:child:!w-full"
-                    inputClass="!hidden"
-                />
                 <input
-                    type="number"
+                    type={props.disabled ? 'text' : 'number'}
                     autoComplete="tel-national"
                     name={props.name}
                     placeholder={props.placeholder}
-                    value={props.value}
+                    value={props.disabled
+                        ? formatPhoneNumber(value, countryData.dialCode, true)
+                        : value
+                    }
+                    disabled={props.disabled}
                     onChange={handlePhoneNumberChange}
-                    className={`absolute top-0 left-20 text-base rounded-r-full pl-5 py-2 w-[calc(100%-10vh)] h-full border-none focus:outline-none ring-transparent ${
-                        props.disabled ? 'bg-white' : 'bg-gray-100'
+                    className={`absolute top-0 text-base rounded-r-full py-2 h-full border-none focus:outline-none ring-transparent ${
+                        props.disabled ? 'left-0 w-full pl-3 bg-white' : 'left-20 w-[calc(100%-10vh)] pl-5 bg-gray-100'
                     }`}
                 />
             </div>

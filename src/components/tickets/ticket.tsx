@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
+import { leadingZeroFormat } from '@/lib/utils';
 import type { Ticket as TicketType, Mode } from '@/types';
 import { Button } from '@components/ui/buttons';
 import { Person, Pencil, TrashCan, Eye } from '@components/ui/icons';
@@ -18,7 +19,7 @@ const Ticket: FunctionComponent<TicketProps> = ({ ticket, mode, onDelete }) => {
                 <div className="flex items-center gap-4 w-fit py-2 h-full">
                     <p>{ticket.title}</p>
                     <Person className="w-5 h-5" />
-                    <p>({ticket.maxQuantity})</p>
+                    <p>{ticket.maxQuantity && `(${leadingZeroFormat(ticket.maxQuantity)})`}</p>
                 </div>
             </div>
             <div className="flex gap-10">

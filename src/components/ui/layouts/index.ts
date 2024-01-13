@@ -13,3 +13,5 @@ export { default as CardWithTitle } from './card-with-title';
 export { default as Modal } from './modal';
 
 export { default as ProfilePicture } from './profile-picture';
+
+export { default as DeletionConfirmModal } from './deletion-confirm-modal';

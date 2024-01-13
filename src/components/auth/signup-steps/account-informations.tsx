@@ -124,7 +124,7 @@ const AccountInformations: FunctionComponent<AccountInformationsProps> = ({ setI
                     )
                 }
             />
-            <div className="absolute left-full bottom-1/4 ml-10 p-8 text-white bg-black rounded-3xl w-max h-fit hidden peer-focus-within:block">
+            <div className="absolute right-full bottom-0 mr-10 p-8 text-white bg-black rounded-3xl w-max h-fit hidden peer-focus-within:block">
                 <p>Password must contain:</p>
                 <ul className="pl-5 list-disc">
                     <li>Capital character</li>

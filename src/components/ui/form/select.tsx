@@ -1,5 +1,4 @@
 import type { FunctionComponent, MouseEvent } from 'react';
-import { cn } from '@/lib/utils';
 import { useToggleVisibility } from '@/lib/hooks';
 import { ChevronLeft } from '@components/ui/icons';
 import InputWrapper from './input-wrapper';
@@ -24,7 +23,7 @@ const Select: FunctionComponent<SelectInputProps> = ({ value, placeholder, optio
     return (
         <InputWrapper
             {...props}
-            wrapperClassName={cn(props.wrapperClassName, 'relative')}
+            wrapperClassName={props.wrapperClassName}
             icon={<ChevronLeft
                 strokeWidth="thin"
                 className={`font-thin w-3 h-3 mb-1 transition-transform transform ${

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import type { ReactNode } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import type { NextPage } from 'next';
 import type { ZodError } from 'zod';
@@ -16,6 +15,7 @@ import type { AccountType } from '@/types';
 import { AuthStepper } from '@components/auth';
 import { AccountInformations, AccountTypeChooser } from '@components/auth/signup-steps';
 import { Button } from '@components/ui/buttons';
+import { GoogleColored } from '@components/ui/icons';
 
 const accountTypesRedirections: Partial<Record<AccountType, string>> = {
     organization: '/workspaces/signup',
@@ -137,13 +137,9 @@ const SignUpPage: NextPage = () => {
                 }
             </Button>
             {step === 2 && (
-                <Image
-                    src="/images/google.png"
-                    alt="Google Auth"
-                    width={50}
-                    height={50}
-                    className="shadow-sm border rounded-full cursor-pointer"
-                />
+                <div className="w-14 h-14 p-2 shadow-sm border rounded-full cursor-pointer">
+                    <GoogleColored/>
+                </div>
             )}
             <p className="flex justify-center items-center w-full pt-5 pb-20">
                 Already have an account?&nbsp;

@@ -9,7 +9,7 @@ import { ticketsAPI } from '@/lib/api/tickets';
 import { createEventSchema } from '@/types/events';
 import type { CreateEventPayload, UpdateEventPayload } from '@/types/events';
 import type { CreateTicketPayload } from '@/types/tickets';
-import type { EditOrCreateStep, Event, EventTypeUnion, Layout } from '@/types';
+import type { EditOrCreateStep, Event, EventTypeUnion, Layout, ApiResponse } from '@/types';
 import { Button } from '@components/ui/buttons';
 import { Ticketing } from '@components/tickets';
 import { Stepper } from '@components/ui/form';
@@ -22,6 +22,12 @@ interface EditOrCreateEventLayoutProps {
     eventType: EventTypeUnion;
     event?: Event;
 }
+
+type MutationPayload = CreateEventPayload & {
+    tickets: CreateTicketPayload[],
+    eventChanged: boolean,
+    ticketsChanged: boolean
+};
 
 const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> = ({ layout, onModeToggle, event, eventType }) => {
     const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
@@ -38,16 +44,26 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
     
     const { trigger, isMutating } = useMutationRequest(
         'create-event',
-        async (_: string, { arg: data }: { arg: CreateEventPayload }) => {
+        async (_: string, { arg: data }: { arg: MutationPayload }) => {
             let response;
             
-            if (layout === 'create') {
-                response = await eventsAPI.createEvent(data);
+            if (data.eventChanged) {
+                if (layout === 'create') {
+                    response = await eventsAPI.createEvent(data);
+                } else {
+                    response = await eventsAPI.updateEvent(event!.id, data as UpdateEventPayload);
+                }
             } else {
-                response = await eventsAPI.updateEvent(event!.id, data as UpdateEventPayload);
+                response = {
+                    data: {
+                        success: true,
+                        data: event,
+                        timestamp: new Date().toISOString()
+                    } as ApiResponse<Event>
+                };
             }
             
-            if (response.data.success) {
+            if (data.ticketsChanged && response.data.success) {
                 const createdEvent = response.data.data;
                 
                 for (const ticket of newTickets) {
@@ -127,17 +143,23 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 return;
             }
             
-            if (Object.entries(formData)
+            const eventChanged = Object.entries(formData)
                 .map(([key, value]) => event ? event[key as keyof Event] !== value : true)
-                .some(Boolean)
-            ) {
+                .some(Boolean);
+            
+            const ticketsChanged = newTickets.length > 0;
+            
+            if (eventChanged || ticketsChanged) {
                 try {
                     const parsedFormData = createEventSchema.parse(formData);
 
                     await trigger({
                         ...parsedFormData,
                         type: eventType,
-                    } as CreateEventPayload);
+                        tickets: newTickets,
+                        eventChanged,
+                        ticketsChanged,
+                    } as MutationPayload);
                 } catch (error) {
                     toast.error('An error occurred, please try again later');
                 }

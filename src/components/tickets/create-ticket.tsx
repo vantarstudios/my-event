@@ -298,7 +298,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                             value={selectedGroupSize}
                                             options={getGroupSizes(userPlanInfos.eventSizeLimit)}
                                             onChange={handleGroupSizeChange}
-                                            wrapperClassName="text-sm"
                                         />
                                     </TitledArea>
                                     <TitledArea title="Groups limit:">
@@ -307,7 +306,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                             value={selectedGroupsLimit}
                                             options={getGroupsLimit(userPlanInfos.eventSizeLimit, selectedGroupSize)}
                                             onChange={setSelectedGroupsLimit}
-                                            wrapperClassName="text-sm"
                                         />
                                     </TitledArea>
                                 </div>
@@ -335,7 +333,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                         icon={
                                             <span className="text-primary font-medium">{userPlanInfos.currency}</span>
                                         }
-                                        wrapperClassName="text-sm"
                                     />
                                 </TitledArea>
                             )}
@@ -349,7 +346,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                                 capitalize(invitationType),
                                             )}
                                             onChange={handleInvitationTypeChange}
-                                            wrapperClassName="text-sm"
                                         />
                                         {selectedInvitationType === InvitationType.UNIQUE_LINK && (
                                             <Input
@@ -439,7 +435,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                     value={expectedParticipants}
                                     options={getExpectedParticipants(userPlanInfos.eventSizeLimit)}
                                     onChange={setExpectedParticipants}
-                                    wrapperClassName="text-sm"
                                 />
                             </TitledArea>
                             <div className="flex flex-col gap-5">

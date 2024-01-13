@@ -75,7 +75,6 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         value={`${user.firstName} ${user.lastName}`}
                         variant="auth"
                         className="pl-3 w-full bg-white"
-                        wrapperClassName="w-full"
                         disabled={true}
                     />
                     <PhoneNumberInput
@@ -83,7 +82,6 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         value={user.phoneNumber}
                         name="phone-number"
                         label="Phone number:"
-                        wrapperClassName="w-full"
                         disabled={mode === 'view'}
                     />
                     <Input
@@ -93,7 +91,6 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         value={user.email}
                         variant="auth"
                         className="pl-3 w-full bg-white"
-                        wrapperClassName="w-full"
                         disabled={true}
                     />
                     <Input
@@ -106,7 +103,6 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         type="text"
                         variant="auth"
                         className={`pl-3 w-full ${mode === 'view' ? 'bg-white' : ''}`}
-                        wrapperClassName="w-full"
                         disabled={mode === 'view'}
                     />
                 </div>

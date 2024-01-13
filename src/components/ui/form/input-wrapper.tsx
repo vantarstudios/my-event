@@ -6,6 +6,7 @@ export interface InputWrapperProps {
     label?: string;
     trailing?: string;
     icon?: ReactNode;
+    iconPosition?: 'left' | 'right';
     labelClassName?: HTMLAttributes<HTMLSpanElement>['className'];
     wrapperClassName?: HTMLAttributes<HTMLDivElement>['className'];
     errors?: string | string[];
@@ -16,11 +17,15 @@ const InputWrapper: FunctionComponent<PropsWithChildren<InputWrapperProps>> = (p
         <div className="flex flex-col items-start gap-1 w-full">
             <div className={cn('relative flex flex-col items-start gap-1 w-full', props.wrapperClassName)}>
                 <label className="flex w-full items-center justify-between px-3" htmlFor={props.name}>
-                    <span className={cn('font-medium', props.labelClassName)}>{props.label}</span>
+                    <span className={cn('font-semibold', props.labelClassName)}>{props.label}</span>
                     <span className="font-medium text-red-600">{props.trailing}</span>
                 </label>
                 {props.children}
-                <div className="absolute bottom-2.5 right-4">{props.icon}</div>
+                <div className={`absolute bottom-2.5 ${
+                    props.iconPosition === 'left' ? 'left-4' : 'right-4'
+                }`}>
+                    {props.icon}
+                </div>
             </div>
             {
                 props.errors && (

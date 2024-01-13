@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { PageContainer } from '@components/root';
+import { PageContainer, SectionDivider } from '@components/root';
 import {
     HeroSection,
     EventsSection,
@@ -7,7 +7,6 @@ import {
     FreeSection,
     NewsletterSection
 } from '@components/root/home';
-import { SectionDivider } from '@components/ui/layouts';
 
 const HomePage: NextPage = () => {
     return (

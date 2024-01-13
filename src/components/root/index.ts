@@ -1,5 +1,5 @@
 export { default as PageContainer } from './page-container';
 
-export { default as OverlappingImages } from './overlapping-images';
+export { default as SectionDivider } from './section-divider';
 
-export { default as ContactForm } from './contact-form';
+export { default as OverlappingImages } from './overlapping-images';

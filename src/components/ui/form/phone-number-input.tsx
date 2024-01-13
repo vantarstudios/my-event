@@ -35,6 +35,7 @@ const PhoneNumberInput: FunctionComponent<PhoneNumberInputProps> = ({ onChange, 
             label={props.label}
             trailing={props.trailing}
             icon={props.icon}
+            iconPosition={props.iconPosition}
             errors={props.errors}
             wrapperClassName={props.wrapperClassName}
             labelClassName={props.labelClassName}

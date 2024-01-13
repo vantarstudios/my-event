@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
-import { PageContainer, ContactForm, OverlappingImages } from '@components/root';
+import { PageContainer, OverlappingImages } from '@components/root';
+import { ContactForm } from '@components/root/contact';
 
 const ContactUsPage: NextPage = () => {
     return (

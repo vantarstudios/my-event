@@ -13,3 +13,5 @@ export * from './capitalize';
 export * from './toast';
 
 export * from './get-matching-path';
+
+export * from './snake-case-sentence-case';

@@ -60,6 +60,9 @@ const tailwindConfig = {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                 'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
             },
+            borderRadius: {
+                '4xl': '6vh',
+            },
             colors: {
                 primary: '#f15a24',
                 black: '#1e1e1e',

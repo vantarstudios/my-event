@@ -5,9 +5,8 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 import type { StaticImageData } from 'next/image';
 import Link from 'next/link';
-import { PageContainer } from '@components/root';
+import { PageContainer, SectionDivider } from '@components/root';
 import { Button } from '@components/ui/buttons';
-import { SectionDivider } from '@components/ui/layouts';
 import imageOne from '@public/images/landing-2.png';
 import imageTwo from '@public/images/landing-3.png';
 

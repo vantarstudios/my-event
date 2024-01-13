@@ -2,22 +2,22 @@ import type { FunctionComponent } from 'react';
 import { toast } from '@/lib/utils';
 import { HoledDisk } from '@components/ui/icons';
 
-interface EventEditionStepperProps {
+interface StepperProps {
     currentStepIndex: number;
     onStepClick: (index: number) => void;
-    editingSteps: string[];
+    steps: string[];
     canGoToNextStep: boolean;
 }
 
-const EventEditionStepper: FunctionComponent<EventEditionStepperProps> = ({
+const Stepper: FunctionComponent<StepperProps> = ({
     currentStepIndex,
     onStepClick,
-    editingSteps,
+    steps,
     canGoToNextStep,
 }) => {
     return (
         <div className="flex flex-wrap justify-between items-center w-full">
-            {editingSteps.map((step, index) => (
+            {steps.map((step, index) => (
                 <div
                     key={step}
                     onClick={canGoToNextStep || index <= currentStepIndex
@@ -48,4 +48,4 @@ const EventEditionStepper: FunctionComponent<EventEditionStepperProps> = ({
     );
 };
 
-export default EventEditionStepper;
+export default Stepper;

@@ -23,11 +23,13 @@ const Input: FunctionComponent<InputProps> = (props) => {
             label={props.label}
             trailing={props.trailing}
             icon={props.icon}
+            iconPosition={props.iconPosition}
             errors={props.errors}
             wrapperClassName={props.wrapperClassName}
             labelClassName={props.labelClassName}
         >
             <input
+                id={props.name}
                 className={cn(
                     'w-full rounded-full pl-8 py-2 h-10 bg-gray-100 focus:outline-none ring-transparent',
                     props.icon ? 'pr-10' : 'pr-4',

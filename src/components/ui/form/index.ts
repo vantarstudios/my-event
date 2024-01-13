@@ -1,3 +1,5 @@
+export { default as InputWrapper } from './input-wrapper';
+
 export { default as Checkbox } from './checkbox';
 
 export { default as DateInput } from './date-input';
@@ -23,3 +25,7 @@ export { default as TimeInput } from './time-input';
 export { default as TimeRangeInput } from './time-range-input';
 
 export { default as PhoneNumberInput } from './phone-number-input';
+
+export { default as Stepper } from './stepper';
+
+export { default as ImageInputPlaceholder } from './image-input-placeholder';

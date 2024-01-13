@@ -12,7 +12,7 @@ import type { CreateTicketPayload } from '@/types/tickets';
 import type { EditOrCreateStep, Event, EventTypeUnion, Layout } from '@/types';
 import { Button } from '@components/ui/buttons';
 import { Ticketing } from '@components/tickets';
-import EventEditionStepper from './event-edition-stepper';
+import { Stepper } from '@components/ui/form';
 import NameAndCover from './name-and-cover';
 import DateAndLocation from './date-and-location';
 
@@ -163,10 +163,10 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                     {currentStepIndex === steps.length - 1 ? 'Finish' : 'Save and continue'}
                 </Button>
             </div>
-            <EventEditionStepper
+            <Stepper
                 currentStepIndex={currentStepIndex}
                 onStepClick={setCurrentStepIndex}
-                editingSteps={steps.map(({ title }) => title)}
+                steps={steps.map(({ title }) => title)}
                 canGoToNextStep={layout === 'create'
                     ? steps[currentStepIndex]!.isCompleted
                     : true

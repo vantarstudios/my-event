@@ -1,8 +1,7 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { PageContainer, OverlappingImages } from '@components/root';
+import { PageContainer, OverlappingImages, SectionDivider } from '@components/root';
 import { Button } from '@components/ui/buttons';
-import { SectionDivider } from '@components/ui/layouts';
 
 const PricingPage: NextPage = () => {
     return (

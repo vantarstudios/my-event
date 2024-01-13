@@ -3,7 +3,8 @@
 import { type ChangeEvent, type FunctionComponent, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@components/ui/buttons';
-import { Picture, Cross } from '@components/ui/icons';
+import { Cross } from '@components/ui/icons';
+import { ImageInputPlaceholder } from '@components/ui/form';
 
 interface CoverInputProps {
     initialCover?: string;
@@ -57,14 +58,10 @@ const CoverInput: FunctionComponent<CoverInputProps> = ({ initialCover, cover, s
                         </Button>
                     )
                     : (
-                        <div className="flex flex-col justify-center items-center gap-5 w-full h-full">
-                            <Picture className="w-1/2 aspect-square text-white"/>
-                            <div
-                                className="flex flex-col justify-center items-center gap-2.5 text-white child:w-2/3 child:text-center">
-                                <p className="min-w-max font-medium">Upload event cover image</p>
-                                <p className="text-sm">Cover image must have a specific size: 333 x 225 pixels.</p>
-                            </div>
-                        </div>
+                        <ImageInputPlaceholder
+                            message="Upload event cover image"
+                            subMessage="Cover image must have a specific size: 333 x 225 pixels."
+                        />
                     )
             }
             <input

@@ -256,3 +256,32 @@ export type Plan = {
     name: string;
     packages: PlanPackage[];
 };
+
+export enum AdRedirectionTypes {
+    EMAIL = 'email',
+    PHONE_NUMBER = 'phone_number',
+    LINK = 'link',
+}
+
+export type AdBusinessOwner<FileType> = {
+    fullName: string;
+    businessName: string;
+    email: string;
+    phoneNumber: string;
+    location: string;
+    logo: FileType;
+};
+
+export type AdContent<FileType> = {
+    description: string;
+    images: FileType[];
+};
+
+export type AdDetails = {
+    ctaText: string;
+    ctaLink: string;
+};
+
+export type Ad<FileType> = {
+    businessOwner: AdBusinessOwner<FileType>
+} & AdContent<FileType> & AdDetails;

@@ -31,6 +31,7 @@ const TextArea: FunctionComponent<TextAreaProps> = ({
             label={label}
             trailing={trailing}
             icon={icon}
+            iconPosition={props.iconPosition}
             errors={errors}
             wrapperClassName={wrapperClassName}
             labelClassName={labelClassName}

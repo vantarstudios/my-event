@@ -46,6 +46,7 @@ jobs:
           secrets: |
             "NODE_ENV=${{ secrets.NODE_ENV }}"
             "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}"
+            "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY }}"
 
   deploy:
     name: Deploy the Docker image to the server

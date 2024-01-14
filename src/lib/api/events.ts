@@ -10,11 +10,11 @@ class EventsAPI {
     }
     
     public async getAllEvents() {
-        return await this.client.get<ApiResponse<EventData[]>>('/events');
+        return await this.client.get<ApiResponse<EventData[]>>('/events?page=0');
     }
     
     public async getAllEventsForOrganizer(organizerId: User['id']) {
-        return await this.client.get<ApiResponse<EventData[]>>(`/events/organizer/${organizerId}`);
+        return await this.client.get<ApiResponse<EventData[]>>(`/events/organizer/${organizerId}?page=0`);
     }
     
     public async getEvent(id: EventData['id']) {

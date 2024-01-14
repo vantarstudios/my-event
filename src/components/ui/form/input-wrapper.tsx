@@ -7,6 +7,7 @@ export interface InputWrapperProps {
     trailing?: string;
     icon?: ReactNode;
     iconPosition?: 'left' | 'right';
+    iconClassName?: HTMLAttributes<HTMLDivElement>['className'];
     labelClassName?: HTMLAttributes<HTMLSpanElement>['className'];
     wrapperClassName?: HTMLAttributes<HTMLDivElement>['className'];
     errors?: string | string[];
@@ -21,9 +22,9 @@ const InputWrapper: FunctionComponent<PropsWithChildren<InputWrapperProps>> = (p
                     <span className="font-medium text-red-600">{props.trailing}</span>
                 </label>
                 {props.children}
-                <div className={`absolute bottom-2.5 ${
+                <div className={cn(`absolute bottom-2.5 ${
                     props.iconPosition === 'left' ? 'left-4' : 'right-4'
-                }`}>
+                }`, props.iconClassName)}>
                     {props.icon}
                 </div>
             </div>

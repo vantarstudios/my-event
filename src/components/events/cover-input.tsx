@@ -40,10 +40,9 @@ const CoverInput: FunctionComponent<CoverInputProps> = ({ initialCover, cover, s
                     <Image
                         src={initialCover}
                         alt="Event cover image"
-                        objectFit="cover"
-                        objectPosition="center"
                         quality={100}
                         fill
+                        className="object-cover object-center"
                     />
                 )
             }

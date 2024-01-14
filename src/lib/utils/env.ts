@@ -6,6 +6,7 @@ const serverEnvSchema = z.object({
 
 const clientEnvSchema = z.object({
     API_URL: z.string().trim().url(),
+    GOOGLE_MAPS_API_KEY: z.string().trim(),
 });
 
 export type ServerEnvironmentVariables = z.infer<typeof serverEnvSchema>;
@@ -28,6 +29,7 @@ export { serverEnv };
 
 export const clientEnv: ClientEnvironmentVariables = clientEnvSchema.parse({
     API_URL: process.env.NEXT_PUBLIC_API_URL,
+    GOOGLE_MAPS_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
 });
 
 export const isProduction = serverEnv.NODE_ENV === 'production';

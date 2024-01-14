@@ -4,8 +4,8 @@ import { useState, type FunctionComponent, type ChangeEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import type { AdBusinessOwner } from '@/types';
-import { Input, PhoneNumberInput } from '@components/ui/form';
-import { Photo, Location } from '@components/ui/icons';
+import { Input, LocationInput, PhoneNumberInput } from '@components/ui/form';
+import { Photo } from '@components/ui/icons';
 import { Button } from '@components/ui/buttons';
 
 interface GeneralInformationProps {
@@ -93,12 +93,11 @@ const GeneralInformation: FunctionComponent<GeneralInformationProps> = ({ busine
                 }}
                 errors={errors.businessName?.message}
             />
-            <Input
+            <LocationInput
                 name="location"
                 label="Location:"
-                icon={<Location className="w-5 h-5"/>}
-                iconPosition="left"
-                className="pl-12"
+                enableMap={false}
+                iconClassName="top-auto"
                 register={{
                     ...register('location', {
                         onChange: (event) => setBusinessOwner({

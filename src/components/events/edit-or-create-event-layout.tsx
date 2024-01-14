@@ -44,14 +44,14 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
     
     const { trigger, isMutating } = useMutationRequest(
         'create-event',
-        async (_: string, { arg: data }: { arg: MutationPayload }) => {
+        async (_: string, { arg: { eventChanged, ticketsChanged, tickets, ...payload} }: { arg: MutationPayload }) => {
             let response;
             
-            if (data.eventChanged) {
+            if (eventChanged) {
                 if (layout === 'create') {
-                    response = await eventsAPI.createEvent(data);
+                    response = await eventsAPI.createEvent(payload);
                 } else {
-                    response = await eventsAPI.updateEvent(event!.id, data as UpdateEventPayload);
+                    response = await eventsAPI.updateEvent(event!.id, payload as UpdateEventPayload);
                 }
             } else {
                 response = {
@@ -63,10 +63,10 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 };
             }
             
-            if (data.ticketsChanged && response.data.success) {
+            if (ticketsChanged && response.data.success) {
                 const createdEvent = response.data.data;
                 
-                for (const ticket of newTickets) {
+                for (const ticket of tickets) {
                     await ticketsAPI.createTicket(
                         layout === 'create' ? createdEvent.id : event!.id,
                         ticket

@@ -31,15 +31,15 @@ const Sidebar: FunctionComponent = () => {
 
     return useMemo(() => (
         <aside className="flex flex-col gap-5 w-1/5 min-w-[250px] h-full text-white bg-black transition-all">
-            <div className="relative w-2/3 aspect-square mx-auto">
-                <Link href="/">
+            <Link href="/" className="w-2/3 aspect-square mx-auto">
+                <div className="relative w-full h-full">
                     <Image
                         src="/logo-white.png"
                         alt="Logo"
                         fill
                     />
-                </Link>
-            </div>
+                </div>
+            </Link>
             <ul className="flex flex-col gap-2 w-full flex-1 -mt-5 pl-5 overflow-y-auto">
                 {views.map(({name, href, icon}, index) => {
                     const Icon = icon;

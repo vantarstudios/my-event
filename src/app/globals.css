@@ -57,6 +57,10 @@ input[type='number'] {
 }
 
 .react-time-picker__wrapper {
+    gap: 1.5vh;
+}
+
+.react-time-picker__wrapper {
     flex-direction: row-reverse;
 }
 

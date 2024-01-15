@@ -102,7 +102,7 @@ const TimeInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
     };
 
     return (
-        <div className="relative flex justify-between items-center gap-4 px-5 h-10 bg-gray-100 rounded-full min-w-max">
+        <div className="relative flex justify-between items-center gap-4 px-5 h-10 bg-gray-100 rounded-full min-w-max w-full">
             <TimePicker
                 {...props}
                 id={props.name}

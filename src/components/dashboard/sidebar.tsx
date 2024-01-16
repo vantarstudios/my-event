@@ -6,6 +6,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { getMatchingPath } from '@/lib/utils';
+import { useMutationRequest } from '@/lib/hooks';
+import { authAPI } from '@/lib/api/auth';
 import type { NavigationLink } from '@/types';
 import { Home, Calendar, Stats, Dollar, Planning, Gear, Question, Power } from '@components/ui/icons';
 
@@ -22,6 +24,14 @@ const views: Required<NavigationLink>[] = [
 const Sidebar: FunctionComponent = () => {
     const pathname = usePathname();
     const [activeViewIndex, setActiveViewIndex] = useState<number>(0);
+    
+    const { trigger } = useMutationRequest(
+        'sign-out',
+        async () => {
+            const response = await authAPI.signOut();
+            return response.data;
+        }
+    );
     
     useEffect(() => {
         const activeView = getMatchingPath(pathname, views);
@@ -72,10 +82,13 @@ const Sidebar: FunctionComponent = () => {
                     );
                 })}
             </ul>
-            <Link href="/auth/signin" className="flex justify-start items-center w-full pl-10 pb-2.5">
+            <div
+                onClick={() => trigger()}
+                className="flex justify-start items-center w-full pl-10 pb-2.5 cursor-pointer hover:text-red-500"
+            >
                 <Power className="w-5 h-5"/>
                 <p className="flex justify-start items-center flex-1 h-14 pl-5">Log out</p>
-            </Link>
+            </div>
         </aside>
     ), [activeViewIndex, pathname]);
 };

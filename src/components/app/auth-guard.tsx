@@ -22,7 +22,7 @@ const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
             && routesToProtect.some((route) => pathname.startsWith(route))
         ) {
             setCanNavigate(false);
-            router.push('/auth/signin');
+            router.replace('/auth/signin');
         } else {
             setCanNavigate(true);
         }

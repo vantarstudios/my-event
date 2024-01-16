@@ -23,6 +23,10 @@ class AuthAPI {
             role: Role.ORGANIZER
         });
     }
+    
+    public async signOut() {
+        return await this.client.post<ApiResponse>('auth/logout');
+    }
 }
 
 export const authAPI = new AuthAPI(appAPI);

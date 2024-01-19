@@ -3,19 +3,16 @@
 import { Fragment, useState } from 'react';
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import type { StaticImageData } from 'next/image';
 import Link from 'next/link';
+import { imagesPlaceholder } from '@/data/images-placeholder';
 import { PageContainer, SectionDivider } from '@components/root';
 import { Button } from '@components/ui/buttons';
-import imageOne from '@public/images/landing-2.png';
-import imageTwo from '@public/images/landing-3.png';
 
 const features: Readonly<{
     topics: string[];
     title: string;
     description: string;
-    picture: StaticImageData,
-    blurDataURL: string;
+    picture: string,
 }>[] = [
     {
         topics: ['all'],
@@ -25,8 +22,7 @@ const features: Readonly<{
             'Build teams and lead tasks across them to bring your idea or concept to life, ' +
             'all in an eco-friendly workspace customized with the best possible options: ' +
             'chat, analytics, social medias, extensions etc...',
-        picture: imageOne,
-        blurDataURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPcumVbPQAG5QKgKkVifwAAAABJRU5ErkJggg=='
+        picture: '/images/landing-1.png'
     },
     {
         topics: ['all', 'workspace'],
@@ -36,8 +32,7 @@ const features: Readonly<{
             'We got you! Create your unique workspace for you, ' +
             'your team and even contractors and start getting the work done now. ' +
             'Assign tasks, manage your staff and keep track of your overall performance with deep analytics.',
-        picture: imageTwo,
-        blurDataURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP88OR5PQAIwwM81armiAAAAABJRU5ErkJggg=='
+        picture: '/images/landing-2.png'
     },
     {
         topics: ['all', 'events'],
@@ -46,8 +41,7 @@ const features: Readonly<{
             'We made it as easy as possible: name your event, add a location, date & time and a cover image. ' +
             'That’s it! Now, set a timeline for event and assign task to your staff. ' +
             'To make it easier, you can team your staff members in groups with common or individual tasks.',
-        picture: imageOne,
-        blurDataURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPcumVbPQAG5QKgKkVifwAAAABJRU5ErkJggg=='
+        picture: '/images/landing-3.png'
     },
     {
         topics: ['all', 'analytics', 'socials'],
@@ -55,8 +49,7 @@ const features: Readonly<{
         description: 'You have created your workspace, launch your first event, what’s next? ' +
             'That’s right, it’s time to promote your event and collect analysis data. ' +
             'Link the social medias accounts you wish to use and run ads across them and visualize real time data.',
-        picture: imageTwo,
-        blurDataURL: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP88OR5PQAIwwM81armiAAAAABJRU5ErkJggg=='
+        picture: '/images/landing-2.png'
     }
 ];
 
@@ -110,9 +103,8 @@ const FeaturesPage: NextPage = () => {
                                 <Image
                                     src={feature.picture}
                                     alt={feature.title}
-                                    layout="responsive"
-                                    placeholder="blur"
-                                    blurDataURL={feature.blurDataURL}
+                                    fill
+                                    placeholder={imagesPlaceholder}
                                     className="rounded-2xl shadow-xl"
                                 />
                             </div>

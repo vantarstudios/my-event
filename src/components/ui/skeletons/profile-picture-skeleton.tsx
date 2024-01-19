@@ -1,10 +1,17 @@
 import type { FunctionComponent } from 'react';
-import { Person } from '@components/ui/icons';
+import Image from 'next/image';
+import { imagesPlaceholder } from '@/data/images-placeholder';
 
 const ProfilePictureSkeleton: FunctionComponent = () => {
     return (
-        <div className="flex justify-center items-center w-full h-full bg-gray-400">
-            <Person className="w-[50%] h-[50%] text-white" />
+        <div className="relative w-full h-full">
+            <Image
+                src="/images/cover.png"
+                alt="Profile Picture"
+                fill
+                placeholder={imagesPlaceholder}
+                className="object-cover object-center"
+            />
         </div>
     );
 };

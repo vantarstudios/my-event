@@ -5,7 +5,7 @@ import { Button } from '@components/ui/buttons';
 
 const HeroSection: FunctionComponent = () => {
     return (
-        <section className="relative flex gap-20 w-full">
+        <section className="relative flex w-full">
             <div className="flex flex-col gap-7 w-1/2">
                 <p className="text-8xl font-bold">
                     <span className="text-10xl text-primary">MyEvent:</span>

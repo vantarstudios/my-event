@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSelector } from '@/lib/hooks';
 import { selectProfile } from '@/lib/store/states/profile';
+import { imagesPlaceholder } from '@/data/images-placeholder';
 import { Button } from '@components/ui/buttons';
 import { ProfilePictureSkeleton } from '@components/ui/skeletons';
 
@@ -25,8 +26,7 @@ const Picture: FunctionComponent<{ userProfile: ReturnType<typeof selectProfile>
                             alt="Profile Picture"
                             quality={100}
                             fill
-                            placeholder="blur"
-                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOcs3h9PQAGQAJvh+e7cgAAAABJRU5ErkJggg=="
+                            placeholder={imagesPlaceholder}
                             className="object-cover object-center"
                         />
                     )

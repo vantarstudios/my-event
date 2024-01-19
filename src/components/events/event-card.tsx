@@ -2,6 +2,7 @@ import type { FunctionComponent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { leadingZeroFormat, parseDateTime, monthNumToString } from '@/lib/utils';
+import { imagesPlaceholder } from '@/data/images-placeholder';
 import type { Event } from '@/types';
 
 interface EventCardProps extends Partial<Pick<Event, 'id' | 'title' | 'startingDate'>> {
@@ -32,8 +33,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                             height={format === 'titled' ? 170 : undefined}
                             fill={format === 'unconstrained'}
                             quality={100}
-                            placeholder="blur"
-                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPcumVbPQAG5QKgKkVifwAAAABJRU5ErkJggg=="
+                            placeholder={imagesPlaceholder}
                             className={`min-w-[250px] min-h-[170px] object-cover object-center rounded-3xl ${
                                 format === 'unconstrained' ? 'h-full' : 'w-[250px] h-[170px]'
                             }`}

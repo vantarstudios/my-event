@@ -1,25 +1,26 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
-import landingImageOne from '@public/images/landing-1.png';
-import landingImageTwo from '@public/images/landing-2.png';
+import { imagesPlaceholder } from '@/data/images-placeholder';
 
 const OverlappingImages: FunctionComponent = () => {
     return (
         <div className="relative w-[45%]">
-            <Image
-                src={landingImageTwo}
-                alt="hero-section"
-                className="ml-[40%] rounded-3xl shadow-2xl animate-slide-left"
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcNXdnPQAGegKBnteyAwAAAABJRU5ErkJggg=="
-            />
-            <div className="absolute left-[15%] top-1/2 -translate-y-1/2 w-1/2">
+            <div className="relative ml-[60%] w-full h-full scale-125">
                 <Image
-                    src={landingImageOne}
+                    src="/images/landing-2.png"
                     alt="hero-section"
-                    placeholder="blur"
-                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPcumVbPQAG5QKgKkVifwAAAABJRU5ErkJggg=="
-                    className="rounded-3xl shadow-2xl animate-slide-right"
+                    fill
+                    className="rounded-3xl shadow-2xl animate-slide-left"
+                    placeholder={imagesPlaceholder}
+                />
+            </div>
+            <div className="relative scale-50 h-full -translate-y-full">
+                <Image
+                    src="/images/landing-1.png"
+                    alt="hero-section"
+                    fill
+                    placeholder={imagesPlaceholder}
+                    className="rounded-4xl shadow-2xl animate-slide-right"
                 />
             </div>
         </div>

@@ -18,7 +18,10 @@ const ViewportGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
     
     useEffect(() => {
         if (!pathname.startsWith(mobileViewPath) && viewportWidth < WIDTH_THRESHOLD) {
-            setLastValidPathname(pathname);
+            if (pathname !== mobileViewPath) {
+                setLastValidPathname(pathname);
+            }
+            
             router.replace(mobileViewPath);
         }
         

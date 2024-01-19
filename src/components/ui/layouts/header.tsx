@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getMatchingPath } from '@/lib/utils';
+import { imagesPlaceholder } from '@/data/images-placeholder';
 import type { NavigationLink } from '@/types';
 import ProfilePicture from './profile-picture';
 
@@ -36,6 +37,7 @@ const Header: FunctionComponent = () => {
                         src="/logo.png"
                         alt="Event Media Logo"
                         fill
+                        placeholder={imagesPlaceholder}
                     />
                 </div>
             </Link>

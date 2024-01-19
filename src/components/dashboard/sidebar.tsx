@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation';
 import { getMatchingPath } from '@/lib/utils';
 import { useMutationRequest } from '@/lib/hooks';
 import { authAPI } from '@/lib/api/auth';
+import { imagesPlaceholder } from '@/data/images-placeholder';
 import type { NavigationLink } from '@/types';
 import { Home, Calendar, Stats, Dollar, Planning, Gear, Question, Power } from '@components/ui/icons';
 
@@ -47,6 +48,7 @@ const Sidebar: FunctionComponent = () => {
                         src="/logo-white.png"
                         alt="Logo"
                         fill
+                        placeholder={imagesPlaceholder}
                     />
                 </div>
             </Link>

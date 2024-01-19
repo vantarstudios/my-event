@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { imagesPlaceholder } from '@/data/images-placeholder';
 import type { NavigationLink } from '@/types';
 import { Mail, LinkedIn, Instagram, Phone, Location } from '@components/ui/icons';
 
@@ -38,6 +39,7 @@ const Footer = () => {
                         src="/logo-white.png"
                         alt="Vantar Studios Logo"
                         fill
+                        placeholder={imagesPlaceholder}
                     />
                 </div>
                 <div className="flex justify-evenly items-center flex-1 h-full py-20">

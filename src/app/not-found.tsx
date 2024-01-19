@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { imagesPlaceholder } from '@/data/images-placeholder';
 import { Header } from '@components/ui/layouts';
 import { Button } from '@components/ui/buttons';
-import notFoundImage from '@public/images/404.svg';
 
 const NotFoundPage: NextPage = () => {
   return (
@@ -25,10 +25,12 @@ const NotFoundPage: NextPage = () => {
                       <Button className="h-14 px-10 font-normal hover:bg-primary">Back to Home page</Button>
                   </Link>
               </div>
-              <div className="relative">
+              <div className="relative w-full md:w-1/2 h-full">
                   <Image
-                      src={notFoundImage}
+                      src="/images/404.svg"
                       alt="404"
+                      fill
+                      placeholder={imagesPlaceholder}
                       priority={true}
                   />
               </div>

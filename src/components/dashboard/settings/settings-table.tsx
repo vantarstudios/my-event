@@ -51,6 +51,10 @@ const SettingsTable: FunctionComponent = () => {
             if (newUserProfile.success) {
                 dispatch(setProfile(newUserProfile.data));
                 setFormData({} as UserProfileUpdatePayload);
+                
+                if (window) {
+                    window.location.reload();
+                }
             }
         }
         

@@ -19,6 +19,16 @@ interface LocationInputProps extends HTMLAttributes<HTMLInputElement>, InputWrap
 const LocationInput: FunctionComponent<LocationInputProps> = ({ name, placeholder, className, onChange, enableMap, ...props }) => {
     const mapRef = useRef<HTMLDivElement>(null);
     
+    const handleFocus = () => {
+        if (enableMap) {
+            return;
+        }
+        
+        map.getGeolocation().then((myPosition) => {
+            map.createMarker(myPosition);
+        });
+    };
+    
     useEffect(() => {
         if (enableMap && mapRef.current) {
             map.createMap(mapRef.current);
@@ -43,6 +53,7 @@ const LocationInput: FunctionComponent<LocationInputProps> = ({ name, placeholde
                 name={name}
                 placeholder={placeholder}
                 onChange={onChange}
+                onFocus={handleFocus}
                 value={!props.register ? (props.value ?? '') : undefined}
                 disabled={props.disabled}
                 autoFocus={props.autoFocus}

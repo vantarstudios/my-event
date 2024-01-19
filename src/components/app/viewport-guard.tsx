@@ -13,7 +13,7 @@ const ViewportGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const [lastValidPathname, setLastValidPathname] = useState<string>(pathname);
     
     const handleWindowResize = useCallback(() => {
-        setViewportWidth(window.innerWidth);
+        setViewportWidth(Math.min(document?.documentElement?.clientWidth || 0, window?.innerWidth || 0));
     }, []);
     
     useEffect(() => {

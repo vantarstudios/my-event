@@ -48,7 +48,6 @@ class Map {
         
         this.googleMaps = window.google.maps;
         this.geocoder = new this.googleMaps.Geocoder();
-        this.position = await this.getGeolocation();
     }
     
     public createMap(element: HTMLElement) {
@@ -94,7 +93,7 @@ class Map {
         });
     }
     
-    private async getGeolocation() {
+    public async getGeolocation() {
         if (!navigator.geolocation) {
             return Promise.resolve(this.defaultPosition);
         }

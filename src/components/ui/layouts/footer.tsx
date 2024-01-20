@@ -1,7 +1,8 @@
+import { Fragment } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { imagesPlaceholder } from '@/data/images-placeholder';
 import type { NavigationLink } from '@/types';
+import { ScrollToTopButton } from '@components/root';
 import { Mail, LinkedIn, Instagram, Phone, Location } from '@components/ui/icons';
 
 const firstColumnLinks: NavigationLink[] = [
@@ -32,44 +33,46 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
     
     return (
-        <footer className="flex flex-col w-screen h-[50vh] px-10 text-white font-extralight bg-black">
-            <div className="flex justify-between items-center w-full flex-1">
-                <div className="relative h-full aspect-square">
+        <footer className="flex flex-col w-screen xl:h-[50vh] lg:px-10 text-white font-extralight bg-black">
+            <div className="flex flex-col lg:flex-row justify-between items-center w-full flex-1">
+                <div className="relative w-[50vw] md:w-[30vw] xl:w-auto lg:h-full aspect-square">
                     <Image
                         src="/logo-white.png"
                         alt="Vantar Studios Logo"
                         fill
-                        placeholder={imagesPlaceholder}
                     />
                 </div>
-                <div className="flex justify-evenly items-center flex-1 h-full py-20">
+                <div className="flex flex-col md:flex-row justify-evenly items-center w-full lg:flex-1 h-full lg:py-20">
                     {
                         [
                             firstColumnLinks,
                             secondColumnLinks,
                         ].map((links, index) => (
-                            <div key={index} className="flex flex-col justify-between items-start h-full">
-                                {
-                                    links.map(({ name, href }) => (
-                                        <Link
-                                            key={name}
-                                            href={href}
-                                            className="hover:underline hover:decoration-1 hover:underline-offset-2"
-                                        >
-                                            {name}
-                                        </Link>
-                                    ))
-                                }
-                            </div>
+                            <Fragment key={index}>
+                                <div className="flex flex-col justify-between items-center md:items-start gap-8 sm:gap-5 xl:gap-0 h-full">
+                                    {
+                                        links.map(({ name, href }) => (
+                                            <Link
+                                                key={name}
+                                                href={href}
+                                                className="hover:underline hover:decoration-1 hover:underline-offset-2"
+                                            >
+                                                {name}
+                                            </Link>
+                                        ))
+                                    }
+                                </div>
+                                <hr className="md:hidden w-20 my-6 border-2 border-white rounded-full"/>
+                            </Fragment>
                         ))
                     }
-                    <div className="flex flex-col justify-between items-start h-full">
+                    <div className="flex flex-col justify-between items-center md:items-start gap-8 sm:gap-5 xl:gap-0 h-full">
                         {
                             thirdColumnLinks.map(({ name, href, icon }) => {
                                 const LinkIcon = icon;
                                 return (
-                                    <Link key={name} href={href} target="_blank" className="flex gap-4">
-                                        <LinkIcon className="w-5 h-5"/>
+                                    <Link key={name} href={href} target="_blank" className="flex flex-col md:flex-row items-center md:items-start gap-2 md:gap-4">
+                                        <LinkIcon className="w-8 h-8 md:w-5 md:h-5"/>
                                         {name}
                                     </Link>
                                 )
@@ -78,7 +81,8 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <p className="w-full mb-10 text-sm text-center">Vantar Studios &copy; Copyright {currentYear}</p>
+            <ScrollToTopButton className="md:hidden mx-auto my-10"/>
+            <p className="w-full md:mt-10 lg:mt-0 mb-10 text-sm text-center">Vantar Studios &copy; Copyright {currentYear}</p>
         </footer>
     );
 };

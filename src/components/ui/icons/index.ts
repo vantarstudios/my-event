@@ -61,3 +61,5 @@ export { default as Power } from './power';
 export { default as Check } from './check';
 
 export { default as GoogleColored } from './google-colored';
+
+export { default as Menu } from './menu';

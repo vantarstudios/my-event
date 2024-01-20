@@ -12,7 +12,7 @@ const AppsImages: FunctionComponent = () => {
     return (
         <div
             ref={ref}
-            className="relative flex justify-center w-[45%] h-full"
+            className="relative hidden md:flex justify-center w-[50%] lg:w-[45%] h-full"
         >
             <div className="relative w-[30vh] aspect-square">
                 <Image

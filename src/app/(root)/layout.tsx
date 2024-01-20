@@ -6,7 +6,7 @@ const RootLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
     return (
         <Fragment>
             <Header/>
-            <main className="w-screen min-h-screen mt-[15vh]">
+            <main className="w-screen min-h-[86vh] md:min-h-[85vh] mt-[15vh] overflow-hidden">
                 {children}
             </main>
             <Footer/>

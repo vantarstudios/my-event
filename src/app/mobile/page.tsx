@@ -12,7 +12,6 @@ const MobilePage: NextPage = () => {
                     src="/logo.png"
                     alt="Logo"
                     fill
-                    placeholder={imagesPlaceholder}
                 />
             </div>
             <div className="flex flex-col justify-start items-center gap-5 w-full flex-1">

@@ -4,29 +4,30 @@ import { useCallback, useEffect, useState, type FunctionComponent, type PropsWit
 import { useRouter, usePathname } from 'next/navigation';
 
 const mobileViewPath = '/mobile';
+const protectedPaths = ['/auth', '/dashboard'];
 const WIDTH_THRESHOLD = 768;
 
 const ViewportGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const router = useRouter();
     const pathname = usePathname();
     const [viewportWidth, setViewportWidth] = useState<number>(WIDTH_THRESHOLD);
-    const [lastValidPathname, setLastValidPathname] = useState<string>(pathname);
+    const [lastValidPathname, setLastValidPathname] = useState<string | null>(null);
     
     const handleWindowResize = useCallback(() => {
         setViewportWidth(Math.min(document?.documentElement?.clientWidth || 0, window?.innerWidth || 0));
     }, []);
     
     useEffect(() => {
-        if (!pathname.startsWith(mobileViewPath) && viewportWidth < WIDTH_THRESHOLD) {
-            if (pathname !== mobileViewPath) {
-                setLastValidPathname(pathname);
-            }
+        if (!pathname.startsWith(mobileViewPath) && protectedPaths.some((path) => pathname.startsWith(path))) {
+            setLastValidPathname(pathname);
             
-            router.replace(mobileViewPath);
+            if (viewportWidth < WIDTH_THRESHOLD) {
+                router.replace(mobileViewPath);
+            }
         }
         
         if (pathname.startsWith(mobileViewPath) && viewportWidth >= WIDTH_THRESHOLD) {
-            router.replace(lastValidPathname);
+            router.replace(lastValidPathname || '/');
         }
         
         if (window) {

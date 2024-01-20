@@ -14,7 +14,8 @@ body {
     height: 100vh;
     max-height: 100vh;
     color: #1e1e1e;
-    @apply overflow-x-hidden overflow-y-auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 *::-webkit-scrollbar {

@@ -10,7 +10,7 @@ interface AdPricingCardProps {
 }
 const AdPricingCard: FunctionComponent<AdPricingCardProps> = ({ duration, description, price }) => {
     return (
-        <Card className="flex flex-col justify-between items-center gap-5 w-1/5 py-14 rounded-4xl">
+        <Card className="flex flex-col justify-between items-center gap-5 w-full sm:w-1/3 xl:w-1/5 py-14 rounded-3xl xl:rounded-4xl">
             <p className="w-full text-center capitalize text-4xl text-primary font-semibold">
                 {duration}
             </p>

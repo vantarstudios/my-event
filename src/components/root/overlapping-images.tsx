@@ -1,10 +1,15 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 import { imagesPlaceholder } from '@/data/images-placeholder';
 
-const OverlappingImages: FunctionComponent = () => {
+interface OverlappingImagesProps {
+    className?: string;
+}
+
+const OverlappingImages: FunctionComponent<OverlappingImagesProps> = ({ className }) => {
     return (
-        <div className="relative w-full aspect-video lg:w-[45%] lg:aspect-auto ">
+        <div className={cn('relative w-full aspect-video lg:w-[45%] lg:aspect-auto', className)}>
             <div className="relative lg:ml-[60%] w-full h-full scale-90 lg:scale-125">
                 <Image
                     src="/images/landing-2.png"

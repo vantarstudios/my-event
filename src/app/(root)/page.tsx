@@ -12,7 +12,7 @@ const HomePage: NextPage = () => {
     return (
         <PageContainer>
             <HeroSection/>
-            <SectionDivider/>
+            <SectionDivider className="lg:mt-28"/>
             <EventsSection/>
             <SectionDivider/>
             <AppsIntegrationSection/>

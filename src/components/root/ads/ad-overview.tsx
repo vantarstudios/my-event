@@ -51,7 +51,7 @@ const AdOverview: FunctionComponent<AdOverviewProps> = ({ details, otherData, se
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col justify-center items-start gap-y-5 w-1/4 mx-auto"
+            className="flex flex-col justify-center items-start gap-y-5 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto"
         >
             <Select
                 name="redirectType"

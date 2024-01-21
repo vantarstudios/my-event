@@ -1,8 +1,13 @@
 import type { FunctionComponent } from 'react';
+import { cn } from '@/lib/utils';
 
-const SectionDivider: FunctionComponent = () => {
+interface SectionDividerProps {
+    className?: string;
+}
+
+const SectionDivider: FunctionComponent<SectionDividerProps> = ({ className }) => {
     return (
-        <div className="w-32 lg:w-40 h-2 lg:h-3 mx-auto my-10 lg:my-16 bg-black rounded-full"/>
+        <div className={cn('w-32 lg:w-40 h-2 lg:h-3 mx-auto my-10 lg:my-16 bg-black rounded-full', className)} />
     );
 };
 

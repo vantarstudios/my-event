@@ -76,7 +76,7 @@ const AdCreatePage: NextPage = () => {
     
     return (
         <PageContainer>
-            <p className="mb-10 text-5xl font-bold">
+            <p className="mb-10 text-xl md:text-3xl xl:text-5xl font-bold">
                 Running ad...
             </p>
             <div className="flex flex-col gap-y-10">

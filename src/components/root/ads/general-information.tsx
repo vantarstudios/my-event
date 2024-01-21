@@ -38,10 +38,10 @@ const GeneralInformation: FunctionComponent<GeneralInformationProps> = ({ busine
                 setBusinessOwner({ ...data, logo });
                 onContinue && onContinue();
             })}
-            className="flex flex-col justify-center items-start gap-y-5 w-1/4 mx-auto"
+            className="flex flex-col justify-center items-start gap-y-5 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mx-auto"
         >
             <div className="flex flex-col items-center gap-y-5 w-full">
-                <div className="relative flex justify-center items-center w-40 h-40 bg-gray-200 rounded-full overflow-hidden">
+                <div className="relative flex justify-center items-center w-32 h-32 md:w-40 md:h-40 bg-gray-200 rounded-full overflow-hidden">
                     {
                         logo
                             ? (

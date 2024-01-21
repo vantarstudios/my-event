@@ -69,15 +69,15 @@ const FeaturesPage: NextPage = () => {
     
     return (
         <PageContainer>
-            <section className="flex flex-col gap-10">
-                <p className="w-full pl-20 text-10xl text-start font-bold">Features</p>
-                <div className="flex justify-center gap-20">
+            <section className="flex flex-col gap-5 lg:gap-10">
+                <p className="w-full lg:pl-20 text-4xl md:text-7xl xl:text-10xl text-start font-bold">Features</p>
+                <div className="flex flex-wrap lg:justify-between gap-x-5 gap-y-2.5 lg:pl-20">
                     {
                         filters.map(({ label, value }) => (
                             <Button
                                 key={value}
                                 onClick={() => filter !== value && setFilter(value)}
-                                className={`border-2 ${filter === value
+                                className={`border-2 max-md:px-5 ${filter === value
                                     ? 'text-white bg-primary border-primary'
                                     : 'text-black bg-white border-black hover:text-white hover:bg-black hover:bg-opacity-100'
                                 }`}
@@ -92,14 +92,14 @@ const FeaturesPage: NextPage = () => {
             {
                 filteredFeatures.map((feature, index) => (
                     <Fragment key={index}>
-                        <section className="flex flex-col items-center gap-10">
-                            <p className="w-full text-center text-5xl text-primary font-bold">
+                        <section className="flex flex-col items-center gap-5 lg:gap-10">
+                            <p className="w-full text-center text-3xl lg:text-5xl text-primary font-bold">
                                 {feature.title}
                             </p>
-                            <p className="w-2/3 text-lg text-center">
+                            <p className="w-full lg:w-2/3 lg:text-lg text-center">
                                 {feature.description}
                             </p>
-                            <div className="relative w-[75vh]">
+                            <div className="relative w-full lg:w-[75vh] aspect-video">
                                 <Image
                                     src={feature.picture}
                                     alt={feature.title}
@@ -108,8 +108,8 @@ const FeaturesPage: NextPage = () => {
                                     className="rounded-2xl shadow-xl"
                                 />
                             </div>
-                            <Link href="/auth/signup" className="w-fit focus:outline-none mt-10">
-                                <Button className="px-16 text-lg font-normal hover:bg-primary">
+                            <Link href="/auth/signup" className="w-fit focus:outline-none mt-5 lg:mt-10">
+                                <Button className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal hover:bg-primary">
                                     Try it now
                                 </Button>
                             </Link>

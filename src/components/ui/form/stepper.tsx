@@ -16,7 +16,7 @@ const Stepper: FunctionComponent<StepperProps> = ({
     canGoToNextStep,
 }) => {
     return (
-        <div className="flex flex-wrap justify-between items-center w-full">
+        <div className="flex flex-col sm:flex-row justify-between items-start md:items-center gap-y-5 md:gap-y-0 w-full">
             {steps.map((step, index) => (
                 <div
                     key={step}

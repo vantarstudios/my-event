@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { FunctionComponent } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
@@ -22,7 +22,9 @@ const menuLinks: NavigationLink[] = [
 
 const Header: FunctionComponent = () => {
     const pathname = usePathname();
+    const [showHeader, setShowHeader] = useState<boolean>(true);
     const [showMenu, setShowMenu] = useState<boolean>(false);
+    const [lastScrollPosition, setLastScrollPosition] = useState<number>(0);
     const [activeViewIndex, setActiveViewIndex] = useState<number>(0);
     
     useEffect(() => {
@@ -31,8 +33,29 @@ const Header: FunctionComponent = () => {
         setActiveViewIndex(menuLinks.indexOf(activeView as NavigationLink));
     }, [pathname]);
     
+    
+    const handleScroll = useCallback(() => {
+        let currentScrollPos = 0;
+        
+        if (window) {
+            currentScrollPos = window.scrollY;
+        }
+        
+        setShowHeader(currentScrollPos <= lastScrollPosition || currentScrollPos < window.innerHeight * 0.15);
+        setLastScrollPosition(currentScrollPos);
+    }, [lastScrollPosition]);
+    
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [handleScroll]);
+    
     return (
-        <header className="fixed top-0 left-0 z-50 flex justify-between items-center w-screen h-28 md:h-[15vh] max-h-[15vh] pr-10 md:px-[5vw] bg-white shadow-md">
+        <header className={`fixed top-0 left-0 z-50 flex justify-between items-center w-screen h-24 md:h-[15vh] max-h-[15vh] pr-10 md:px-[5vw] bg-white shadow-md transform transition-all duration-300 ease-out ${
+            showHeader
+                ? 'translate-y-0'
+                : '-translate-y-full'
+        }`}>
             <Link href="/" className="min-w-max min-h-max">
                 <div className="relative w-36 h-36 md:w-40 md:h-40">
                     <Image

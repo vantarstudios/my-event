@@ -2,7 +2,6 @@
 
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
-import { imagesPlaceholder } from '@/data/images-placeholder';
 import EventsStepsDynamic, { type Step } from './events-steps-dynamic';
 
 const steps: Step[] = [

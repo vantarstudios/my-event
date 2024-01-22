@@ -70,7 +70,7 @@ const SettingsTable: FunctionComponent = () => {
                 className="absolute top-0 right-20 translate-y-16"
             />
             <ProfileInformations mode={mode} user={userProfile} setInformation={updateFormData} />
-            <div className="flex flex-wrap child:basis-2/5 w-full">
+            <div className="flex justify-start gap-40 w-full">
                 <NotificationsSettings />
                 <OtherSettings mode={mode} />
             </div>

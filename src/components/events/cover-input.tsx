@@ -1,7 +1,7 @@
 'use client';
 
 import { type ChangeEvent, type FunctionComponent, useMemo, useRef, useState } from 'react';
-import Image from 'next/image';
+import { ImageWithFallback } from '@components/ui';
 import { Button } from '@components/ui/buttons';
 import { Cross } from '@components/ui/icons';
 import { ImageInputPlaceholder } from '@components/ui/form';
@@ -37,7 +37,7 @@ const CoverInput: FunctionComponent<CoverInputProps> = ({ initialCover, cover, s
         >
             {
                 (initialCover && !coverFile) && (
-                    <Image
+                    <ImageWithFallback
                         src={initialCover}
                         alt="Event cover image"
                         quality={100}

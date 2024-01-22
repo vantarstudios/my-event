@@ -19,7 +19,7 @@ const DashboardAnalyticsPage: NextPage = () => {
                     title="Tickets"
                     middle={
                         <Fragment>
-                            <p>{thousandsCommaFormat(54569)}</p>
+                            <p className="text-4xl">{thousandsCommaFormat(54569)}</p>
                             <p className="text-lg font-medium text-green-700">+2.5%</p>
                         </Fragment>
                     }

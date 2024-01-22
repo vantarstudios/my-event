@@ -1,8 +1,8 @@
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { leadingZeroFormat, parseDateTime, monthNumToString } from '@/lib/utils';
 import { imagesPlaceholder } from '@/data/images-placeholder';
+import { ImageWithFallback } from '@components/ui';
 import type { Event } from '@/types';
 
 interface EventCardProps extends Partial<Pick<Event, 'id' | 'title' | 'startingDate'>> {
@@ -23,32 +23,18 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                 !asLink && 'pointer-events-none'
             }`}
         >
-            {
-                cover
-                    ? (
-                        <Image
-                            src={cover}
-                            alt={title || 'Event cover'}
-                            width={format === 'titled' ? 250 : undefined}
-                            height={format === 'titled' ? 170 : undefined}
-                            fill={format === 'unconstrained'}
-                            quality={100}
-                            placeholder={imagesPlaceholder}
-                            className={`min-w-[250px] min-h-[170px] object-cover object-center rounded-3xl ${
-                                format === 'unconstrained' ? 'h-full' : 'w-[250px] h-[170px]'
-                            }`}
-                        />
-                    )
-                    : (
-                        <div
-                            className={`min-w-[250px] min-h-[170px] bg-cover bg-center rounded-3xl ${
-                                format === 'unconstrained' ? 'h-full' : 'w-[250px] h-[170px]'
-                            } ${
-                                !cover && ' bg-gradient-to-tl from-primary to-secondary opacity-50'
-                            }`}
-                        />
-                    )
-            }
+            <ImageWithFallback
+                src={cover}
+                alt={title || 'Event cover'}
+                width={format === 'titled' ? 250 : undefined}
+                height={format === 'titled' ? 170 : undefined}
+                fill={format === 'unconstrained'}
+                quality={100}
+                placeholder={imagesPlaceholder}
+                className={`min-w-[250px] min-h-[170px] object-cover object-center rounded-3xl ${
+                    format === 'unconstrained' ? 'h-full' : 'w-[250px] h-[170px]'
+                }`}
+            />
             {date && (
                 <div className="absolute top-5 left-6 flex flex-col justify-center items-center h-14 aspect-square text-white rounded-xl bg-primary">
                     <p className="flex justify-center items-center text-2xl font-semibold h-fit">

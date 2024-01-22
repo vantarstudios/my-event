@@ -21,7 +21,7 @@ const DashboardFinancePage: NextPage = () => {
                     title="Total balance"
                     middle={
                         <Fragment>
-                            <p>${thousandsCommaFormat(25690.3)}</p>
+                            <p className="text-4xl">${thousandsCommaFormat(25690.3)}</p>
                             <p className="text-lg font-medium text-green-700">+2.5%</p>
                         </Fragment>
                     }
@@ -29,7 +29,7 @@ const DashboardFinancePage: NextPage = () => {
                 />
                 <CardWithTitle
                     title="Ticket processing fees"
-                    middle={<p>${thousandsCommaFormat(3512.1)}</p>}
+                    middle={<p className="text-4xl">${thousandsCommaFormat(3512.1)}</p>}
                     bottom={<p className="font-medium">All</p>}
                     corner={<p className="text-lg font-medium">5%</p>}
                 />

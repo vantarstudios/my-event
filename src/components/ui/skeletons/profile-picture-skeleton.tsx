@@ -6,7 +6,7 @@ const ProfilePictureSkeleton: FunctionComponent = () => {
     return (
         <div className="relative w-full h-full">
             <Image
-                src="/images/cover.png"
+                src="/images/placeholder.png"
                 alt="Profile Picture"
                 fill
                 placeholder={imagesPlaceholder}

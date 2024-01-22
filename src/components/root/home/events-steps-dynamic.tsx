@@ -3,7 +3,6 @@
 import { useRef, useState, Fragment, type FunctionComponent } from 'react';
 import Image from 'next/image';
 import { useAnimateOnScroll } from '@/lib/hooks';
-import { imagesPlaceholder } from '@/data/images-placeholder';
 
 export type Step = {
     title: string;
@@ -73,7 +72,6 @@ const EventsStepsDynamic: FunctionComponent<EventsStepsDynamicProps> = ({ steps 
                         src={steps[activeStepIndex]!.image}
                         alt="Event Creation"
                         fill
-                        placeholder={imagesPlaceholder}
                         className="shadow-2xl rounded-3xl transition-all duration-300 ease-out hover:scale-[1.025]"
                     />
                 </div>

@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import { imagesPlaceholder } from '@/data/images-placeholder';
 
 const MobilePage: NextPage = () => {
     const currentYear = new Date().getFullYear();
@@ -25,7 +24,6 @@ const MobilePage: NextPage = () => {
                         src="/images/mobile.svg"
                         alt="Mobile"
                         fill
-                        placeholder={imagesPlaceholder}
                         priority={true}
                     />
                 </div>

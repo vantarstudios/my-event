@@ -4,7 +4,6 @@ import { Fragment, useState } from 'react';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { imagesPlaceholder } from '@/data/images-placeholder';
 import { PageContainer, SectionDivider } from '@components/root';
 import { Button } from '@components/ui/buttons';
 
@@ -104,7 +103,6 @@ const FeaturesPage: NextPage = () => {
                                     src={feature.picture}
                                     alt={feature.title}
                                     fill
-                                    placeholder={imagesPlaceholder}
                                     className="rounded-2xl shadow-xl"
                                 />
                             </div>

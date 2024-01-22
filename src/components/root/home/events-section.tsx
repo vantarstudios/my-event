@@ -42,7 +42,6 @@ const EventStep: FunctionComponent<EventStepProps> = ({ number, title, descripti
                     src={image}
                     alt="Event Creation"
                     fill
-                    placeholder={imagesPlaceholder}
                     className="shadow-md md:shadow-xl rounded-2xl md:rounded-3xl transition-all duration-300 ease-out hover:scale-[1.025]"
                 />
             </div>

@@ -65,7 +65,7 @@ const Header: FunctionComponent = () => {
             >
                 <Menu className="w-7 h-7"/>
             </button>
-            <nav className={`md:hidden fixed top-0 left-0 z-50 flex flex-col items-center w-screen gap-20 sm:w-1/2 h-screen py-16 bg-black bg-gradient-to-b from-primary/25 to-black transform transition-all duration-300 ease-out ${
+            <nav className={`md:hidden fixed top-0 left-0 z-50 flex flex-col items-center w-screen gap-12 sm:w-1/2 h-screen py-16 bg-black bg-gradient-to-b from-primary/25 to-black transform transition-all duration-300 ease-out ${
                     showMenu
                         ? 'opacity-100 translate-y-0 sm:translate-x-0 sm:translate-y-0'
                         : 'opacity-0 -translate-y-full sm:-translate-x-full sm:translate-y-0'
@@ -79,7 +79,6 @@ const Header: FunctionComponent = () => {
                                 activeViewIndex === index
                                     ? 'relative font-semibold after:w-5/6 after:h-[0.3vh] after:bg-white after:absolute after:-bottom-[1vh] after:left-0 after:transition-all after:duration-500 after:ease-out'
                                     : 'font-light'
-                                
                             }`}
                         >
                             <Link href={href} replace>{name}</Link>

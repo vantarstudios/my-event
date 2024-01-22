@@ -3,7 +3,6 @@
 import { useRef, FunctionComponent } from 'react';
 import Image from 'next/image';
 import { useAnimateOnScroll } from '@/lib/hooks';
-import { imagesPlaceholder } from '@/data/images-placeholder';
 
 const AppsImages: FunctionComponent = () => {
     const ref = useRef<HTMLDivElement>(null);
@@ -19,7 +18,6 @@ const AppsImages: FunctionComponent = () => {
                     src="/images/landing-google.png"
                     alt="Google"
                     fill
-                    placeholder={imagesPlaceholder}
                     className="transform -rotate-12"
                 />
             </div>
@@ -29,7 +27,6 @@ const AppsImages: FunctionComponent = () => {
                         src="/images/landing-slack.png"
                         alt="Slack"
                         fill
-                        placeholder={imagesPlaceholder}
                         className="transform rotate-12"
                     />
                 </div>
@@ -40,7 +37,6 @@ const AppsImages: FunctionComponent = () => {
                         src="/images/landing-figma.png"
                         alt="Figma"
                         fill
-                        placeholder={imagesPlaceholder}
                         className=""
                     />
                 </div>

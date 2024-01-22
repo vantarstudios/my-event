@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { imagesPlaceholder } from '@/data/images-placeholder';
 import { Header } from '@components/ui/layouts';
 import { Button } from '@components/ui/buttons';
 
@@ -30,7 +29,6 @@ const NotFoundPage: NextPage = () => {
                       src="/images/404.svg"
                       alt="404"
                       fill
-                      placeholder={imagesPlaceholder}
                       priority={true}
                   />
               </div>

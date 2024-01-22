@@ -1,6 +1,5 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
-import { imagesPlaceholder } from '@/data/images-placeholder';
 
 const ComingSoon: FunctionComponent = () => {
     return (
@@ -11,7 +10,6 @@ const ComingSoon: FunctionComponent = () => {
                     src="/images/coming-soon.svg"
                     alt="Coming soon"
                     fill
-                    placeholder={imagesPlaceholder}
                 />
             </div>
         </div>

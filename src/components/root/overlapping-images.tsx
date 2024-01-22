@@ -1,7 +1,6 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { imagesPlaceholder } from '@/data/images-placeholder';
 
 interface OverlappingImagesProps {
     className?: string;
@@ -16,7 +15,6 @@ const OverlappingImages: FunctionComponent<OverlappingImagesProps> = ({ classNam
                     alt="hero-section"
                     fill
                     className="rounded-xl md:rounded-3xl shadow-lg lg:shadow-2xl animate-slide-left"
-                    placeholder={imagesPlaceholder}
                 />
             </div>
             <div className="relative scale-50 h-full -translate-y-full">
@@ -24,7 +22,6 @@ const OverlappingImages: FunctionComponent<OverlappingImagesProps> = ({ classNam
                     src="/images/landing-1.png"
                     alt="hero-section"
                     fill
-                    placeholder={imagesPlaceholder}
                     className="rounded-2xl md:rounded-4xl shadow-lg lg:shadow-2xl animate-slide-right"
                 />
             </div>

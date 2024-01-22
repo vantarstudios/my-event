@@ -1,7 +1,6 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
 import type { User, Event } from '@/types';
-import { imagesPlaceholder } from '@/data/images-placeholder';
 import { Card, ProfilePicture } from '@components/ui/layouts';
 
 interface OrganizerCardProps {
@@ -23,7 +22,6 @@ const OrganizerCard: FunctionComponent<OrganizerCardProps> = ({ firstName, lastN
                         src="/images/qr-code.png"
                         alt="QR Code"
                         quality={100}
-                        placeholder={imagesPlaceholder}
                         fill
                         className="object-center object-cover"
                     />

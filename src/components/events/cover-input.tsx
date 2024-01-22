@@ -1,6 +1,6 @@
 'use client';
 
-import { type ChangeEvent, type FunctionComponent, useMemo, useRef, useState } from 'react';
+import { type ChangeEvent, type FunctionComponent, useMemo, useRef, useState, Fragment } from 'react';
 import { ImageWithFallback } from '@components/ui';
 import { Button } from '@components/ui/buttons';
 import { Cross } from '@components/ui/icons';
@@ -36,32 +36,33 @@ const CoverInput: FunctionComponent<CoverInputProps> = ({ initialCover, cover, s
             }`}
         >
             {
-                (initialCover && !coverFile) && (
-                    <ImageWithFallback
-                        src={initialCover}
-                        alt="Event cover image"
-                        quality={100}
-                        fill
-                        className="object-cover object-center"
-                    />
+                !coverFile && (
+                    <Fragment>
+                        <ImageWithFallback
+                            src={initialCover || ''}
+                            alt="Event cover image"
+                            quality={100}
+                            fill
+                            className="object-cover object-center"
+                        />
+                        <div className="absolute top-0 left-0 w-full h-full bg-opacity-40 bg-gray-500">
+                            <ImageInputPlaceholder
+                                message="Upload event cover image"
+                                subMessage="Cover image must have a specific size: 333 x 225 pixels."
+                            />
+                        </div>
+                    </Fragment>
                 )
             }
             {
-                coverFile
-                    ? (
-                        <Button
-                            onClick={handleCoverImageClear}
-                            className="absolute top-0 right-0 z-30 p-3 text-white rounded-none rounded-bl-xl drop-shadow-lg cursor-pointer bg-opacity-40 bg-primary hover:bg-opacity-100"
-                        >
-                            <Cross className="w-8 h-8"/>
-                        </Button>
-                    )
-                    : (
-                        <ImageInputPlaceholder
-                            message="Upload event cover image"
-                            subMessage="Cover image must have a specific size: 333 x 225 pixels."
-                        />
-                    )
+                coverFile && (
+                    <Button
+                        onClick={handleCoverImageClear}
+                        className="absolute top-0 right-0 z-30 p-3 text-white rounded-none rounded-bl-xl drop-shadow-lg cursor-pointer bg-opacity-40 bg-primary hover:bg-opacity-100"
+                    >
+                        <Cross className="w-8 h-8"/>
+                    </Button>
+                )
             }
             <input
                 ref={coverFileInputRef}

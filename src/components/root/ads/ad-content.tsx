@@ -68,7 +68,7 @@ const AdContentProps: FunctionComponent<AdContentProps> = ({ content, setContent
                 label="Image(s):"
                 errors={errors.images?.message}
             >
-                <div className="relative flex justify-center items-center w-full h-52 rounded-3xl overflow-hidden">
+                <div className="relative flex justify-center items-center w-full h-52 bg-gray-500 rounded-3xl overflow-hidden">
                     <ImageInputPlaceholder
                         message="Upload images"
                         subMessage="Drag and drop or click to upload"

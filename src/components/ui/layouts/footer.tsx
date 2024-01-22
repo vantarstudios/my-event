@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { NavigationLink } from '@/types';
 import { ScrollToTopButton } from '@components/root';
-import { Mail, LinkedIn, Instagram, Phone, Location } from '@components/ui/icons';
+import { Mail, Instagram, Phone } from '@components/ui/icons';
 
 const firstColumnLinks: NavigationLink[] = [
     { name: 'Features', href: '/features' },
@@ -22,11 +22,9 @@ const secondColumnLinks: NavigationLink[] = [
 ];
 
 const thirdColumnLinks: Required<NavigationLink>[] = [
-    { name: 'contact@eventmedia.com', href: 'mailto:contact@eventmedia.com', icon: Mail },
-    { name: 'eventMedia', href: 'https://www.linkedin.com/company/eventmedia', icon: LinkedIn },
-    { name: '@eventMedia', href: 'https://www.instagram.com/eventmedia', icon: Instagram },
-    { name: '+229 00000000/00000000', href: 'tel:+22900000000', icon: Phone },
-    { name: 'Zopah, Abomey-Calavi, Benin', href: 'https://maps.app.goo.gl/4N7mQ7SPNHob5oTL9', icon: Location },
+    { name: 'contact@eventmedia.com', href: 'mailto:infos@vantarstudios.com', icon: Mail },
+    { name: '@event__media', href: 'https://www.instagram.com/event__media', icon: Instagram },
+    { name: '+229 51 98 72 66', href: 'tel:+22951987266', icon: Phone },
 ];
 
 const Footer = () => {

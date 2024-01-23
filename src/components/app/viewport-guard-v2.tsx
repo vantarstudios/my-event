@@ -1,0 +1,47 @@
+'use client';
+
+import { useCallback, useEffect, useState, type FunctionComponent, type PropsWithChildren } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+
+const mobileViewPath = '/mobile';
+const protectedPaths = ['/auth', '/dashboard'];
+const WIDTH_THRESHOLD = 768;
+
+const ViewportGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const [viewportWidth, setViewportWidth] = useState<number>(WIDTH_THRESHOLD);
+    const [lastValidPathname, setLastValidPathname] = useState<string | null>(null);
+    
+    const handleWindowResize = useCallback(() => {
+        setViewportWidth(Math.min(document?.documentElement?.clientWidth || 0, window?.innerWidth || 0));
+    }, []);
+    
+    useEffect(() => {
+        if (!pathname.startsWith(mobileViewPath) && protectedPaths.some((path) => pathname.startsWith(path))) {
+            setLastValidPathname(pathname);
+            
+            if (viewportWidth < WIDTH_THRESHOLD) {
+                router.replace(mobileViewPath);
+            }
+        }
+        
+        if (pathname.startsWith(mobileViewPath) && viewportWidth >= WIDTH_THRESHOLD) {
+            router.replace(lastValidPathname || '/');
+        }
+        
+        if (window) {
+            window.addEventListener('resize', handleWindowResize);
+        }
+        
+        return () => {
+            if (window) {
+                window.removeEventListener('resize', handleWindowResize);
+            }
+        };
+    }, [pathname, router, viewportWidth, lastValidPathname, handleWindowResize]);
+    
+    return children;
+};
+
+export default ViewportGuard;

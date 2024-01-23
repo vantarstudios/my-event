@@ -22,7 +22,7 @@ const secondColumnLinks: NavigationLink[] = [
 ];
 
 const thirdColumnLinks: Required<NavigationLink>[] = [
-    { name: 'contact@eventmedia.com', href: 'mailto:infos@vantarstudios.com', icon: Mail },
+    { name: 'infos@vantarstudios.com', href: 'mailto:infos@vantarstudios.com', icon: Mail },
     { name: '@event__media', href: 'https://www.instagram.com/event__media', icon: Instagram },
     { name: '+229 51 98 72 66', href: 'tel:+22951987266', icon: Phone },
 ];
@@ -76,6 +76,7 @@ const Footer = () => {
                                 )
                             })
                         }
+                        <span/>
                     </div>
                 </div>
             </div>

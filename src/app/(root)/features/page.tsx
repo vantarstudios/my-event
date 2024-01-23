@@ -24,7 +24,7 @@ const features: Readonly<{
         picture: '/images/landing-1.png'
     },
     {
-        topics: ['all', 'workspace'],
+        topics: ['all', 'workspace', 'staff'],
         title: 'Create your workspace',
         description: 'Aren’t you tired of using all this apps to reach each member of your team? ' +
             'Or having to verbally manage task around your team and also with contractors? ' +
@@ -54,7 +54,7 @@ const features: Readonly<{
 
 const filters: Readonly<{ label: string; value: string }>[] = [
     { label: 'All', value: 'all', },
-    { label: 'Staff Management', value: 'workspace', },
+    { label: 'Staff Management', value: 'staff', },
     { label: 'Analytics', value: 'analytics', },
     { label: 'Events', value: 'events', },
     { label: 'Social Medias', value: 'socials', },

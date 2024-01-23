@@ -1,27 +1,25 @@
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
+import imageOne from '@public/images/landing-1.png';
+import imageTwo from '@public/images/landing-2.png';
 
 interface OverlappingImagesProps {
     className?: string;
 }
 
-const OverlappingImages: FunctionComponent<OverlappingImagesProps> = ({ className }) => {
+const OverlappingImages: FunctionComponent<OverlappingImagesProps> = () => {
     return (
-        <div className={cn('relative w-full aspect-video lg:w-[45%] lg:aspect-auto', className)}>
-            <div className="relative lg:ml-[60%] w-full h-full scale-90 lg:scale-125">
+        <div className="relative w-full aspect-video lg:w-[45%] lg:aspect-auto">
+            <Image
+                src={imageTwo}
+                alt="hero-section-2"
+                className="lg:ml-[45%] rounded-xl md:rounded-3xl shadow-lg lg:shadow-2xl animate-slide-left"
+            />
+            <div className="absolute top-0 left-0 scale-50">
                 <Image
-                    src="/images/landing-2.png"
-                    alt="hero-section"
-                    fill
-                    className="rounded-xl md:rounded-3xl shadow-lg lg:shadow-2xl animate-slide-left"
-                />
-            </div>
-            <div className="relative scale-50 h-full -translate-y-full">
-                <Image
-                    src="/images/landing-1.png"
-                    alt="hero-section"
-                    fill
+                    src={imageOne}
+                    alt="hero-section-1"
+                    priority
                     className="rounded-2xl md:rounded-4xl shadow-lg lg:shadow-2xl animate-slide-right"
                 />
             </div>

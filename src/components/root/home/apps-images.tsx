@@ -3,6 +3,9 @@
 import { useRef, FunctionComponent } from 'react';
 import Image from 'next/image';
 import { useAnimateOnScroll } from '@/lib/hooks';
+import googleImage from '@public/images/landing-google.png';
+import slackImage from '@public/images/landing-slack.png';
+import figmaImage from '@public/images/landing-figma.png';
 
 const AppsImages: FunctionComponent = () => {
     const ref = useRef<HTMLDivElement>(null);
@@ -15,18 +18,16 @@ const AppsImages: FunctionComponent = () => {
         >
             <div className="relative w-[30vh] aspect-square">
                 <Image
-                    src="/images/landing-google.png"
+                    src={googleImage}
                     alt="Google"
-                    fill
                     className="transform -rotate-12"
                 />
             </div>
             <div className="absolute top-1/4 left-1/2">
                 <div className="relative w-[38vh] aspect-square">
                     <Image
-                        src="/images/landing-slack.png"
+                        src={slackImage}
                         alt="Slack"
-                        fill
                         className="transform rotate-12"
                     />
                 </div>
@@ -34,9 +35,8 @@ const AppsImages: FunctionComponent = () => {
             <div className="absolute top-3/4 left-1/4">
                 <div className="relative w-[35vh] aspect-square">
                     <Image
-                        src="/images/landing-figma.png"
+                        src={figmaImage}
                         alt="Figma"
-                        fill
                         className=""
                     />
                 </div>

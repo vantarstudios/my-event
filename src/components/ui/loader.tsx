@@ -9,7 +9,7 @@ const Loader: FunctionComponent = () => {
                 alt="Loading"
                 width={150}
                 height={150}
-                priority={true}
+                priority
                 className="animate-ping"
             />
         </div>

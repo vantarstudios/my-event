@@ -29,7 +29,7 @@ const MobileView: FunctionComponent = () => {
                         src="/images/mobile.svg"
                         alt="Mobile"
                         fill
-                        priority={true}
+                        priority
                     />
                 </div>
                 <p className="text-center font-medium px-5">

@@ -29,7 +29,7 @@ const NotFoundPage: NextPage = () => {
                       src="/images/404.svg"
                       alt="404"
                       fill
-                      priority={true}
+                      priority
                   />
               </div>
           </main>

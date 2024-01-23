@@ -1,13 +1,13 @@
 'use client';
 
 import { useRef, useState, Fragment, type FunctionComponent } from 'react';
-import Image from 'next/image';
+import Image, { type StaticImageData } from 'next/image';
 import { useAnimateOnScroll } from '@/lib/hooks';
 
 export type Step = {
     title: string;
     description: string;
-    image: string;
+    image: StaticImageData;
 };
 
 interface EventStepProps extends Omit<Step, 'image'> {
@@ -22,7 +22,7 @@ interface EventsStepsDynamicProps {
 
 const EventStep: FunctionComponent<EventStepProps> = ({ number, title, description, focus, onClick }) => {
     return (
-        <div className="flex flex-col gap-5 w-full h-full pr-20">
+        <div className="flex flex-col gap-5 w-full pr-20">
             <div
                 onClick={onClick}
                 className={`flex items-center gap-12 cursor-pointer ${
@@ -52,7 +52,7 @@ const EventsStepsDynamic: FunctionComponent<EventsStepsDynamicProps> = ({ steps 
     
     return (
         <Fragment>
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col justify-start gap-10 w-2/5 h-full">
                 {
                     steps.map((step, index) => (
                         <EventStep
@@ -66,15 +66,12 @@ const EventsStepsDynamic: FunctionComponent<EventsStepsDynamicProps> = ({ steps 
                     ))
                 }
             </div>
-            <div ref={ref} className="absolute top-0 left-full w-[150vh] h-[105%]">
-                <div className="relative w-full h-full">
-                    <Image
-                        src={steps[activeStepIndex]!.image}
-                        alt="Event Creation"
-                        fill
-                        className="shadow-2xl rounded-3xl transition-all duration-300 ease-out hover:scale-[1.025]"
-                    />
-                </div>
+            <div ref={ref} className="h-[90%] aspect-video">
+                <Image
+                    src={steps[activeStepIndex]!.image}
+                    alt="Event Creation"
+                    className="shadow-2xl rounded-3xl transition-all duration-300 ease-out hover:scale-[1.015]"
+                />
             </div>
         </Fragment>
     );

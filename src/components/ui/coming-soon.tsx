@@ -10,6 +10,7 @@ const ComingSoon: FunctionComponent = () => {
                     src="/images/coming-soon.svg"
                     alt="Coming soon"
                     fill
+                    priority
                 />
             </div>
         </div>

@@ -2,23 +2,26 @@
 
 import type { FunctionComponent } from 'react';
 import Image from 'next/image';
+import imageStepOne from '@public/images/landing-3.png';
+import imageStepTwo from '@public/images/landing-4.png';
+import imageStepThree from '@public/images/landing-5.png';
 import EventsStepsDynamic, { type Step } from './events-steps-dynamic';
 
 const steps: Step[] = [
     {
         title: 'Create',
         description: 'Describe your event, set its category, name and date, add the location and the teams involved. Use the site map tool to draw with more precision your event’s site and label spaces for your passes.',
-        image: '/images/landing-3.png'
+        image: imageStepOne
     },
     {
         title: 'Manage',
         description: 'Invite your team members and assign them to the different tasks of your event. Create schedules, set deadlines and follow the progress of your event in real time.',
-        image: '/images/landing-4.png'
+        image: imageStepTwo
     },
     {
         title: 'Promote',
         description: 'Create your event’s website and social media pages. Share your event with your audience and keep them updated with the latest news.',
-        image: '/images/landing-5.png'
+        image: imageStepThree
     },
 ];
 
@@ -36,14 +39,11 @@ const EventStep: FunctionComponent<EventStepProps> = ({ number, title, descripti
             <p className="text-center leading-[3vh] transition-all duration-300 ease-out">
                 {description}
             </p>
-            <div className="relative w-full aspect-video">
-                <Image
-                    src={image}
-                    alt="Event Creation"
-                    fill
-                    className="shadow-md md:shadow-xl rounded-2xl md:rounded-3xl transition-all duration-300 ease-out hover:scale-[1.025]"
-                />
-            </div>
+            <Image
+                src={image}
+                alt="Event Creation"
+                className="shadow-md md:shadow-xl rounded-2xl md:rounded-3xl transition-all duration-300 ease-out hover:scale-[1.015]"
+            />
         </div>
     );
 };
@@ -58,7 +58,7 @@ const EventsSection: FunctionComponent = () => {
                 From creation to team management and social medias presence, your workspace is equipped with all the
                 necessary tools to easily control every step of your event.
             </p>
-            <div className="hidden lg:block relative w-2/5 h-[70vh]">
+            <div className="hidden lg:flex justify-between relative w-full h-[70vh]">
                 <EventsStepsDynamic steps={steps}/>
             </div>
             <div className="flex flex-col gap-10 lg:hidden relative w-full">

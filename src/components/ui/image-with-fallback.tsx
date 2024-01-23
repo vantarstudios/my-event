@@ -11,17 +11,18 @@ interface ImageWithFallbackProps extends ImageProps {
 const FALLBACK_SRC: ImageProps['src'] = '/images/placeholder.png';
 
 const ImageWithFallback: FunctionComponent<ImageWithFallbackProps> = (props) => {
+    const { fallbackClassName, ...otherProps } = props;
     const [src, setSrc] = useState(props.src);
     const [className, setClassName] = useState(props.className);
     
     return (
         <Image
-            {...props}
+            {...otherProps}
             src={src}
             className={className}
             onError={() => {
                 setSrc(FALLBACK_SRC);
-                setClassName(cn(className, props.fallbackClassName));
+                setClassName(cn(className, fallbackClassName));
             }}
         />
     );

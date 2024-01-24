@@ -16,6 +16,7 @@ const ScrollToTopButton: FunctionComponent<ScrollToTopButtonProps> = ({ classNam
     
     return (
         <Button
+            name="scroll-to-top-button"
             onClick={handleClick}
             className={cn(
                 'flex justify-center items-center w-12 h-12 p-2 rounded-full text-black bg-white',

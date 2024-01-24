@@ -4,6 +4,7 @@ import { useState, Fragment, type FunctionComponent, type ChangeEvent } from 're
 import PhoneInput from 'react-phone-input-2';
 import type { PhoneInputProps, CountryData } from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import { parsePhoneNumber } from 'libphonenumber-js';
 import InputWrapper from './input-wrapper';
 import type { InputWrapperProps } from './input-wrapper';
 
@@ -25,12 +26,16 @@ const formatPhoneNumber = (value: string, dialCode: CountryData['dialCode'], spa
 };
 
 const PhoneNumberInput: FunctionComponent<PhoneNumberInputProps> = ({ onChange, ...props }) => {
-    const [value, setValue] = useState<string>(props.value ?? '');
+    const parsedPhoneNumber = parsePhoneNumber(props.value ?? '', {
+        defaultCountry: 'BJ',
+        defaultCallingCode: '229',
+    });
+    const [value, setValue] = useState<string>(parsedPhoneNumber?.nationalNumber ?? '');
     const [countryData, setCountryData] = useState<CountryData>({
-        name: 'Benin',
-        dialCode: '229',
-        countryCode: 'bj',
-        format: '+... ... ... ... ... ..',
+        name: '',
+        dialCode: parsedPhoneNumber?.countryCallingCode ?? '',
+        countryCode: parsedPhoneNumber?.country?.toLowerCase() ?? '',
+        format: '',
     });
     
     const handleCountryCodeChange: PhoneInputProps['onChange'] = (_, data, event) => {

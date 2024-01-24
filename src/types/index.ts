@@ -196,6 +196,13 @@ export type NavigationLink = Readonly<{
     icon?: FunctionComponent<IconProps>;
 }>;
 
+export type EventCounts = {
+    total: number;
+    upComing: number;
+    onGoing: number;
+    past: number;
+};
+
 export type Mode = 'view' | 'edit';
 
 export type Layout = 'create' | 'edit';

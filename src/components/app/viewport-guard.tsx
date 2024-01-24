@@ -50,7 +50,7 @@ const ViewportGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
         return (
             <Fragment>
                 <MobileView/>
-                <div className="hidden md:block">
+                <div className="hidden md:block w-full h-full">
                     {children}
                 </div>
             </Fragment>

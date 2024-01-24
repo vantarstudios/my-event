@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios';
-import type { ApiResponse, User } from '@/types';
+import type { ApiResponse, User, EventCounts } from '@/types';
 import { Country } from '@/types/constants';
 import type { EventData, CreateEventPayload, UpdateEventPayload } from '@/types/events';
 import { appAPI } from './client';
@@ -42,6 +42,10 @@ class EventsAPI {
                 'Content-Type': 'multipart/form-data'
             }
         });
+    }
+    
+    public async getEventsCounts(organizerId: User['id']) {
+        return await this.client.get<ApiResponse<EventCounts>>(`/events/stats/organizer/${organizerId}`);
     }
 }
 

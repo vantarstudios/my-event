@@ -16,7 +16,7 @@ const AppsIntegrationSection: FunctionComponent = () => {
                 </p>
                 <Link href="/features" className="w-fit focus:outline-none">
                     <Button className="lg:h-14 px-10 py-4 md:px-16 rounded-full text-black font-medium border-2 border-black bg-white hover:bg-black hover:bg-opacity-100 hover:text-white">
-                        Learn More
+                        More about apps
                     </Button>
                 </Link>
             </div>

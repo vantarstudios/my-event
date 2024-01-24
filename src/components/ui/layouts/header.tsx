@@ -83,6 +83,7 @@ const Header: FunctionComponent = () => {
             </nav>
             <button
                 type="button"
+                name="menu"
                 onClick={() => setShowMenu(!showMenu)}
                 className="md:hidden text-primary"
             >
@@ -109,7 +110,7 @@ const Header: FunctionComponent = () => {
                     ))}
                 </ul>
                 <Link href="/dashboard" className="w-fit focus:outline-none">
-                    <Button className="h-14 px-16 text-lg rounded-full font-normal bg-primary">Get Started</Button>
+                    <Button name="get-started" className="h-14 px-16 text-lg rounded-full font-normal bg-primary">Get Started</Button>
                 </Link>
                 <Button
                     type="button"

@@ -12,7 +12,7 @@ const ContactForm: FunctionComponent = () => {
         message: '',
     });
     
-    const handleDataChange = (key: keyof typeof data) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleDataChange = (key: keyof typeof data) => <T extends HTMLInputElement | HTMLTextAreaElement>(event: ChangeEvent<T>) => {
         setData({
             ...data,
             [key]: event.target.value,

@@ -1,16 +1,18 @@
 'use client';
 
 import { Fragment, type FunctionComponent, type PropsWithChildren } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { Button } from '@components/ui/buttons';
 
 const protectedPaths = ['/auth', '/dashboard'];
 
 const MobileView: FunctionComponent = () => {
+    const router = useRouter();
     const currentYear = new Date().getFullYear();
     
     return (
-        <main className="md:hidden flex flex-col justify-between items-center gap-10 w-screen h-screen">
+        <main className="md:hidden flex flex-col justify-between items-center w-screen h-screen">
             <div className="relative w-1/2 aspect-square">
                 <Image
                     src="/logo.png"
@@ -35,6 +37,12 @@ const MobileView: FunctionComponent = () => {
                 <p className="text-center font-medium px-5">
                     For better experience, this website can only be accessed on a bigger screen. So, sorry about that!
                 </p>
+                <Button
+                    onClick={() => router.back()}
+                    className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal hover:bg-primary"
+                >
+                    Back to Home page
+                </Button>
             </div>
             <p className="w-full mt-auto mb-5 text-sm text-center">
                 Vantar Studios &copy; Copyright {currentYear}

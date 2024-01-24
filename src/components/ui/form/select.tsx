@@ -43,7 +43,7 @@ const Select: FunctionComponent<SelectInputProps> = ({ value, placeholder, optio
                     )
                 }
             </div>
-            <ul className={`absolute top-full left-0 translate-y-2.5 z-50 w-full h-fit max-h-96 py-2 bg-white border rounded-xl cursor-pointer overflow-x-hidden overflow-y-auto transition-all ${
+            <ul className={`absolute top-full left-0 translate-y-2.5 z-50 w-full h-fit max-h-48 py-2 bg-white border rounded-xl cursor-pointer overflow-x-hidden overflow-y-auto transition-all ${
                 !isExpanded && 'hidden'}`}
             >
                 {options.map((option) => (

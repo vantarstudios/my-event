@@ -9,7 +9,7 @@ import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import { cn, leadingZeroFormat } from '@/lib/utils';
 import type { ParsedTime } from '@/types';
-import { Check, Cross } from '@components/ui/icons';
+import { Cross } from '@components/ui/icons';
 
 interface DateInputProps extends Omit<TimePickerProps, 'value' | 'onChange'> {
     value: ParsedTime | null;
@@ -52,7 +52,6 @@ const TimeInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
     const [time, setTime] = useState<ParsedTime | null>(
         value !== null ? { hour: initialHour, minute: initialMinute } : null,
     );
-    const [showSave, setShowSave] = useState<boolean>(false);
     const [showClear, setShowClear] = useState<boolean>(value !== null);
     const [amPm, setAmPm] = useState<AmPmType>(initialAmPm);
 
@@ -62,8 +61,6 @@ const TimeInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
         }
 
         setShowClear(true);
-        setShowSave(true);
-
         const [hour, minute] = newValue.split(':');
 
         if (!hour || !minute) {
@@ -74,23 +71,22 @@ const TimeInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
             hour: +hour,
             minute: +minute,
         });
+        saveChange();
     };
 
     const handleAmPmChange = (newAmPm: AmPmType) => () => {
-        setShowSave(true);
         setAmPm(newAmPm);
+        saveChange();
     };
 
     const handleClear = () => {
         setTime(null);
         setShowClear(false);
-        setShowSave(true);
+        saveChange();
         onClear();
     };
 
     const saveChange = () => {
-        setShowSave(false);
-
         if (time === null) {
             return;
         }
@@ -110,14 +106,7 @@ const TimeInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
                 value={getTimeString(time)}
                 clockIcon={null}
                 shouldOpenClock={() => false}
-                clearIcon={(showSave || showClear)
-                    ? (
-                        <div className="flex justify-center items-center gap-3">
-                            {showSave && <Check onClick={saveChange} className="size-5 text-green-500"/>}
-                            {showClear && <Cross onClick={handleClear} className="size-4 text-red-500"/>}
-                        </div>
-                    )
-                    : null}
+                clearIcon={showClear ? <Cross onClick={handleClear} className="size-4 text-red-500"/> : null}
                 hourPlaceholder="00"
                 minutePlaceholder="00"
                 onChange={handleChange}

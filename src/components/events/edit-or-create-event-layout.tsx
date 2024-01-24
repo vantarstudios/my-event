@@ -1,13 +1,12 @@
 'use client';
 
-import { useState } from 'react';
-import type { FunctionComponent } from 'react';
+import { useState, type FunctionComponent } from 'react';
+import { useRouter, useSearchParams, usePathname, type ReadonlyURLSearchParams } from 'next/navigation';
 import { useMutationRequest } from '@/lib/hooks';
 import { toast } from '@/lib/utils';
 import { eventsAPI } from '@/lib/api/events';
 import { ticketsAPI } from '@/lib/api/tickets';
-import { createEventSchema } from '@/types/events';
-import type { CreateEventPayload, UpdateEventPayload } from '@/types/events';
+import { createEventSchema, type CreateEventPayload, type UpdateEventPayload } from '@/types/events';
 import type { CreateTicketPayload } from '@/types/tickets';
 import type { EditOrCreateStep, Event, EventTypeUnion, Layout, ApiResponse } from '@/types';
 import { Button } from '@components/ui/buttons';
@@ -29,8 +28,26 @@ type MutationPayload = CreateEventPayload & {
     ticketsChanged: boolean
 };
 
+const setCurrentStepIndexFactory = (router: ReturnType<typeof useRouter>, pathname: string, searchParams: ReadonlyURLSearchParams) => (newIndex: number) => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set('step', String(newIndex));
+    router.replace(`${pathname}?${newSearchParams.toString()}`);
+};
+
 const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> = ({ layout, onModeToggle, event, eventType }) => {
-    const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    
+    const setCurrentStepIndex = setCurrentStepIndexFactory(router, pathname, searchParams);
+    
+    const currentStepIndex = searchParams.has('step')
+        ? Number(searchParams.get('step'))
+        : (() => {
+            setCurrentStepIndex(0);
+            return 0;
+        })();
+    
     const [newTickets, setNewTickets] = useState<CreateTicketPayload[]>([]);
     const [formData, setFormData] = useState<CreateEventPayload>({
         title: event?.title || '',
@@ -129,7 +146,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
             title: 'Ticketing',
             content: <Ticketing
                 layout={layout}
-                event={event}
+                event={{ ...event, startingDate: formData.startingDate, endingDate: formData.endingDate } as Event}
                 newTickets={newTickets}
                 onTicketAdd={handleTicketChange}
             />,
@@ -189,7 +206,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 currentStepIndex={currentStepIndex}
                 onStepClick={setCurrentStepIndex}
                 steps={steps.map(({ title }) => title)}
-                canGoToNextStep={layout === 'create'
+                canGoToNextStep={layout !== 'create'
                     ? steps[currentStepIndex]!.isCompleted
                     : true
                 }

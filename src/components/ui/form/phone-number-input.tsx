@@ -26,15 +26,22 @@ const formatPhoneNumber = (value: string, dialCode: CountryData['dialCode'], spa
 };
 
 const PhoneNumberInput: FunctionComponent<PhoneNumberInputProps> = ({ onChange, ...props }) => {
-    const parsedPhoneNumber = parsePhoneNumber(props.value ?? '', {
-        defaultCountry: 'BJ',
-        defaultCallingCode: '229',
-    });
+    let parsedPhoneNumber;
+    
+    try {
+        parsedPhoneNumber = parsePhoneNumber(props.value ?? '', {
+            defaultCountry: 'BJ',
+            defaultCallingCode: '229',
+        })
+    } catch (parseError) {
+        parsedPhoneNumber = null;
+    }
+    
     const [value, setValue] = useState<string>(parsedPhoneNumber?.nationalNumber ?? '');
     const [countryData, setCountryData] = useState<CountryData>({
         name: '',
-        dialCode: parsedPhoneNumber?.countryCallingCode ?? '',
-        countryCode: parsedPhoneNumber?.country?.toLowerCase() ?? '',
+        dialCode: parsedPhoneNumber?.countryCallingCode ?? '229',
+        countryCode: parsedPhoneNumber?.country?.toLowerCase() ?? 'bj',
         format: '',
     });
     

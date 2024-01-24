@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { ReactNode } from 'react';
 import type { NextPage } from 'next';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { capitalize } from '@/lib/utils';
 import { EventType } from '@/types/constants';
 import type { EventTypeUnion } from '@/types';
@@ -20,8 +20,9 @@ const eventTypeIcons: Record<EventTypeUnion, ReactNode> = {
 
 const DashboardEditCreatePage: NextPage = () => {
     const router = useRouter();
-    const [eventType, setEventType] = useState<EventTypeUnion | null>(null);
-    const [startCreation, setStartCreation] = useState<boolean>(false);
+    const searchParams = useSearchParams();
+    const [eventType, setEventType] = useState<EventTypeUnion | null>(EventType.LIVE);
+    const [startCreation, setStartCreation] = useState<boolean>(searchParams.has('step'));
 
     const handleStartCreation = () => {
         if (eventType === null) return;
@@ -29,7 +30,7 @@ const DashboardEditCreatePage: NextPage = () => {
     };
 
     return (
-        <div className="w-full h-full">
+        <div className="flex flex-col w-full h-full">
             <Button
                 className="flex justify-center items-center gap-2 mb-5 bg-inherit text-xl text-black font-bold"
                 onClick={() => router.back()}
@@ -62,7 +63,7 @@ const DashboardEditCreatePage: NextPage = () => {
             )}
             {
                 startCreation && eventType !== null && (
-                    <div className="pl-10">
+                    <div className="pl-10 flex-1">
                         <EditOrCreateEventLayout
                             eventType={eventType}
                             layout="create"

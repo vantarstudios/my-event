@@ -68,6 +68,7 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, cover, 
                     placeholder="Briefly describe your event to your participants"
                     maxLength={700}
                     rows={7}
+                    className="py-5"
                 />
                 <TitledArea title="Category:">
                     <div className="flex flex-col items-start gap-5 w-full">

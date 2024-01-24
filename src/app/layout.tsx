@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { StoreProvider, ProfileProvider, AuthGuard, ViewportGuard } from '@components/app';
-import './globals.css';
+import './global.css';
 
 const poppinsFont = Poppins({
     weight: ['100', '200', '300', '400', '500', '600', '700'],

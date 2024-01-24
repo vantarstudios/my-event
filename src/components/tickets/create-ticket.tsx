@@ -26,19 +26,20 @@ interface CreateTicketProps {
 const userPlanInfos = {
     eventTitle: 'Event name',
     currency: 'XOF',
-    eventSizeLimit: 100,
+    eventSizeLimit: 500,
     ticketsProcessingFeesPercentage: 20,
 };
 
 const MAX_GROUP_SIZE = 10;
 
-const buildOptions = (limit: number) => {
+const buildOptions = (limit: number, step?: number) => {
     return [
         'Unlimited',
         ...Array(limit)
             .fill(0)
             .map((_, index) => `${index + 1}`)
-            .slice(1),
+            .slice(1)
+            .filter((value) => (step ? Number(value) % step === 0 : true)),
     ];
 };
 
@@ -51,7 +52,7 @@ const getGroupsLimit = (eventSizeLimit: number, groupSize: string) => {
 };
 
 const getExpectedParticipants = (eventSizeLimit: number) => {
-    return buildOptions(eventSizeLimit);
+    return buildOptions(eventSizeLimit, 10);
 };
 
 const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate, eventEndingDate, onSave }) => {
@@ -230,7 +231,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
         <Fragment>
             <Button onClick={handleModalOpen} className="text-sm">+ Add a ticket</Button>
             <Modal isOpened={isModalOpened}>
-                <Card className="w-[30vw] h-[90vh] py-5 pl-5 pr-5">
+                <Card className="min-w-max h-[90vh] py-5 pl-5 pr-5">
                     <form ref={modalRef} onSubmit={handleSubmit} className="flex flex-col gap-5 w-full h-full pl-5">
                         <div className="flex justify-between items-center">
                             <p className="text-2xl font-semibold">{ticketTitle || 'New ticket'}</p>
@@ -265,7 +266,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                 placeholder="ex: Standard Pass"
                                 rows={1}
                                 maxLength={150}
-                                className="text-sm"
+                                className="text-sm bg-gray-100"
                             />
                             <TitledArea
                                 title="Type of ticket:"
@@ -389,11 +390,11 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                 placeholder="Let participants know what are the advantages or limits of this ticket"
                                 rows={5}
                                 maxLength={150}
-                                className="py-5 text-sm"
+                                className="py-5 text-sm bg-gray-100 rounded-2xl"
                             />
-                            <TitledArea title="Sales ending date:">
-                                <div className="flex justify-between items-center w-full h-full">
-                                    <div className="flex flex-col justify-start mb-auto">
+                            <div className="flex justify-between items-start gap-10 w-full">
+                                <TitledArea title="Sales ending date:">
+                                    <div className="flex flex-col justify-start w-full h-full mb-auto">
                                         <DateInput
                                             name="sales-end-date"
                                             value={salesEndDate}
@@ -414,21 +415,21 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
                                             className="text-sm"
                                         />
                                     </div>
-                                    <div className="mb-auto p-3 text-white bg-black rounded-2xl">
-                                        {salesEndDate && (
-                                            <p className="mb-3 text-sm">
-                                                Sales will end on&nbsp;
-                                                <span className="text-primary">
+                                </TitledArea>
+                                <div className="mb-auto p-3 text-white bg-black rounded-2xl">
+                                    {salesEndDate && (
+                                        <p className="mb-3 text-sm">
+                                            Sales will end on&nbsp;
+                                            <span className="text-primary">
                                                     {salesEndDate.day} {monthNumToString(salesEndDate.month)} {salesEndDate.year}
                                                 </span>
-                                            </p>
-                                        )}
-                                        <p className="text-sm break-words">
-                                            Sales will end at 11:59 PM of that day
                                         </p>
-                                    </div>
+                                    )}
+                                    <p className="text-sm break-words">
+                                        Sales will end at 11:59 PM of that day
+                                    </p>
                                 </div>
-                            </TitledArea>
+                            </div>
                             <TitledArea title="Expected participants:">
                                 <Select
                                     name="expected-participants"

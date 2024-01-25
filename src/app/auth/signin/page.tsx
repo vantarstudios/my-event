@@ -52,8 +52,7 @@ const SignInPage: NextPage = () => {
         toast.success('You are now logged in!');
         
         setTimeout(() => {
-            router.replace('/dashboard');
-            window.location.reload();
+            router.push('/dashboard');
         }, 1000);
     };
 

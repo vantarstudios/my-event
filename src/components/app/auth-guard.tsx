@@ -14,7 +14,6 @@ const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const router = useRouter();
     const pathname = usePathname();
     const profile = useSelector(selectProfile);
-    const stringProfile = JSON.stringify(profile);
     const [canNavigate, setCanNavigate] = useState(true);
 
     useEffect(() => {
@@ -27,7 +26,7 @@ const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
         } else {
             setCanNavigate(true);
         }
-    }, [pathname, stringProfile]);
+    }, [pathname, profile, router]);
     
     return (
         <Fragment>

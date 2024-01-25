@@ -98,7 +98,8 @@ const SignUpPage: NextPage = () => {
                 
                 await trigger(formData);
                 
-                router.push('/dashboard');
+                router.replace('/dashboard');
+                window.location.reload();
             } catch (error) {
                 setFormErrors((error as ZodError).formErrors.fieldErrors as SignUpErrors);
             }

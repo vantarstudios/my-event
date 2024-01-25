@@ -6,6 +6,7 @@ import { useMutationRequest } from '@/lib/hooks';
 import { toast } from '@/lib/utils';
 import { eventsAPI } from '@/lib/api/events';
 import { ticketsAPI } from '@/lib/api/tickets';
+import { EventStatus } from '@/types/constants';
 import { createEventSchema, type CreateEventPayload, type UpdateEventPayload } from '@/types/events';
 import type { CreateTicketPayload } from '@/types/tickets';
 import type { EditOrCreateStep, Event, EventTypeUnion, Layout, ApiResponse } from '@/types';
@@ -48,6 +49,11 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
             return 0;
         })();
     
+    const toBePublished = (
+        layout === 'create'
+        || (layout === 'edit' && event?.status === EventStatus.NOT_PUBLISHED)
+    );
+    
     const [newTickets, setNewTickets] = useState<CreateTicketPayload[]>([]);
     const [formData, setFormData] = useState<CreateEventPayload>({
         title: event?.title || '',
@@ -57,11 +63,12 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
         startingDate: event?.startingDate || '',
         endingDate: event?.endingDate || '',
         location: event?.location || '',
+        status: event?.status || EventStatus.NOT_PUBLISHED,
     });
     
     const { trigger, isMutating } = useMutationRequest(
         'create-event',
-        async (_: string, { arg: { eventChanged, ticketsChanged, tickets, ...payload} }: { arg: MutationPayload }) => {
+        async (_: string, { arg: { eventChanged, ticketsChanged, tickets, ...payload } }: { arg: MutationPayload }) => {
             let response;
             
             if (eventChanged) {
@@ -154,13 +161,15 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
         },
     ];
 
-    const handleStepChange = (newIndex: number) => async () => {
+    const handleStepChange = (newIndex: number, eventStatus?: EventStatus) => async () => {
         if (newIndex === steps.length) {
             if (isMutating) {
                 return;
             }
             
-            const eventChanged = Object.entries(formData)
+            const data = { ...formData, status: eventStatus || formData.status };
+            
+            const eventChanged = Object.entries(data)
                 .map(([key, value]) => event ? event[key as keyof Event] !== value : true)
                 .some(Boolean);
             
@@ -168,7 +177,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
             
             if (eventChanged || ticketsChanged) {
                 try {
-                    const parsedFormData = createEventSchema.parse(formData);
+                    const parsedFormData = createEventSchema.parse(data);
 
                     await trigger({
                         ...parsedFormData,
@@ -193,20 +202,34 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
         <div className="flex flex-col gap-8 w-full h-full">
             <div className="flex justify-between items-center w-full">
                 <p className="text-2xl text-primary font-semibold">Event</p>
-                <Button
-                    loading={isMutating}
-                    onClick={handleStepChange(currentStepIndex + 1)}
-                    disabled={layout === 'create' && !steps[currentStepIndex]!.isCompleted}
-                    className="text-sm"
-                >
-                    {currentStepIndex === steps.length - 1 ? 'Finish' : 'Save and continue'}
-                </Button>
+                <div className="flex items-center gap-5">
+                    <Button
+                        loading={isMutating && !toBePublished}
+                        onClick={handleStepChange(currentStepIndex + 1)}
+                        disabled={layout === 'create' && !steps[currentStepIndex]!.isCompleted}
+                        className="text-sm"
+                    >
+                        {currentStepIndex === steps.length - 1 ? 'Save' : 'Save and continue'}
+                    </Button>
+                    {
+                        (currentStepIndex === steps.length - 1 && toBePublished) && (
+                            <Button
+                                loading={isMutating}
+                                onClick={handleStepChange(currentStepIndex + 1, EventStatus.PUBLISHED)}
+                                disabled={layout === 'create' && !steps[currentStepIndex]!.isCompleted}
+                                className="text-sm"
+                            >
+                                Publish
+                            </Button>
+                        )
+                    }
+                </div>
             </div>
             <Stepper
                 currentStepIndex={currentStepIndex}
                 onStepClick={setCurrentStepIndex}
                 steps={steps.map(({ title }) => title)}
-                canGoToNextStep={layout !== 'create'
+                canGoToNextStep={layout === 'create'
                     ? steps[currentStepIndex]!.isCompleted
                     : true
                 }

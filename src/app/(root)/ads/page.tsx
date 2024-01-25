@@ -9,7 +9,7 @@ const AdsPage: NextPage = () => {
         <PageContainer>
             <section className="relative flex flex-col-reverse lg:flex-row w-full gap-5">
                 <div className="flex flex-col items-center lg:items-start gap-7 w-full lg:w-1/2">
-                    <p className="text-3xl md:text-6xl xl:text-9xl md:leading-[7.5vh] xl:leading-[9vh] font-bold">
+                    <p className="text-4xl md:text-5xl xl:text-6xl font-bold">
                         The most effective environment to run your ads plans
                     </p>
                     <p className="text-center lg:text-start md:text-lg lg:text-xl lg:leading-[4.5vh]">

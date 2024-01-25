@@ -54,7 +54,7 @@ const ProfilePicture: FunctionComponent<ProfilePictureProps> = ({ showSignUp = f
                         : <Picture userProfile={userProfile}/>
                     : showSignUp && (
                         <Link href="/auth/signup">
-                            <Button className="hover:bg-primary">Sign up</Button>
+                            <Button className="min-w-max hover:bg-primary">Sign up</Button>
                         </Link>
                     )
             }

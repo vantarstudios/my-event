@@ -1,16 +1,16 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { Greetings, CreateWorkspaceButton, EventsCounts } from '@components/dashboard';
-import { Notifications, RecentEvents } from '@components/dashboard/overview';
+import { Notifications, RecentEvents, DraftEvents } from '@components/dashboard/overview';
 
 const DashboardPage: NextPage = () => {
     return (
-        <div className="flex flex-col gap-10 h-full">
-            <div className="flex justify-between items-center">
+        <div className="flex flex-col h-full">
+            <div className="flex justify-between items-center mb-5">
                 <Greetings/>
                 <CreateWorkspaceButton/>
             </div>
-            <div className="flex justify-between items-start w-full mb-10">
+            <div className="flex flex-col lg:flex-row justify-between items-center lg:items-start gap-10 lg:gap-0 w-full lg:mb-10">
                 <Notifications/>
                 <EventsCounts
                     moreActions={
@@ -20,7 +20,10 @@ const DashboardPage: NextPage = () => {
                     }
                 />
             </div>
-            <RecentEvents/>
+            <div className="flex flex-col gap-5">
+                <RecentEvents/>
+                <DraftEvents/>
+            </div>
         </div>
     );
 };

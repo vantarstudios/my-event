@@ -6,7 +6,7 @@ import { useRequest, useMutationRequest } from '@/lib/hooks';
 import { ticketsAPI } from '@/lib/api/tickets';
 import type { Mode, Event, Ticket as TicketType } from '@/types';
 import { Ticket } from '@components/tickets';
-import { DeletionConfirmModal } from '@components/ui/layouts';
+import { ConfirmModal } from '@components/ui/layouts';
 import { TicketsListSkeleton } from '@components/ui/skeletons';
 
 interface TicketsListProps {
@@ -95,11 +95,14 @@ const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event, showEmp
                                 </>
                             )
             }
-            <DeletionConfirmModal
+            <ConfirmModal
                 title={`Delete ticket " ${ticketToDelete?.title} "`}
                 description="Are you sure you want to delete this ticket? This action is irreversible."
+                confirmText="Delete"
+                cancelText="Cancel"
+                variant="danger"
                 isModalOpen={isDeletionModalOpen}
-                isDeleting={isDeleting}
+                isConfirming={isDeleting}
                 onConfirm={handleDeleteTicket}
                 onCancel={() => setIsDeletionModalOpen(false)}
             />

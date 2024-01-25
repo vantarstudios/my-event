@@ -63,3 +63,7 @@ export { default as Check } from './check';
 export { default as GoogleColored } from './google-colored';
 
 export { default as Menu } from './menu';
+
+export { default as Dots } from './dots';
+
+export { default as Search } from './search';

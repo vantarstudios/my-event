@@ -13,7 +13,7 @@ interface DashboardEditEventPageProps {
     params: { id: string };
 }
 
-const DashboardEditEventLayout: NextPage<DashboardEditEventPageProps> = ({ params }) => {
+const DashboardEventPage: NextPage<DashboardEditEventPageProps> = ({ params }) => {
     const router = useRouter();
     
     const { data: event, error, isLoading } = useRequest(
@@ -54,4 +54,4 @@ const DashboardEditEventLayout: NextPage<DashboardEditEventPageProps> = ({ param
     );
 };
 
-export default DashboardEditEventLayout;
+export default DashboardEventPage;

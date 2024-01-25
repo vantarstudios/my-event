@@ -8,7 +8,7 @@ const PricingPage: NextPage = () => {
         <PageContainer>
             <section className="relative flex flex-col-reverse lg:flex-row gap-10 md:gap-14 lg:gap-28 w-full">
                 <div className="flex flex-col items-center lg:items-start gap-5 lg:gap-7 w-full lg:w-1/2">
-                    <p className="text-center lg:text-start text-3xl md:text-7xl xl:text-9xl lg:leading-[9vh] font-bold">
+                    <p className="text-center lg:text-start text-4xl md:text-5xl xl:text-6xl font-bold">
                         We made it free and accessible as possible for you to create events
                     </p>
                     <p className="text-center lg:text-start lg:leading-[3.5vh]">

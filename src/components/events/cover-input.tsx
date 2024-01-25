@@ -47,8 +47,11 @@ const CoverInput: FunctionComponent<CoverInputProps> = ({ initialCover, cover, s
                         />
                         <div className="absolute top-0 left-0 w-full h-full bg-opacity-40 bg-gray-500">
                             <ImageInputPlaceholder
-                                message="Upload event cover image"
-                                subMessage="Cover image must have a specific size: 333 x 225 pixels."
+                                message={
+                                    initialCover
+                                        ? 'Change event cover image'
+                                        : 'Upload event cover image'
+                                }
                             />
                         </div>
                     </Fragment>

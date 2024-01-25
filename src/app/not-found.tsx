@@ -10,9 +10,9 @@ const NotFoundPage: NextPage = () => {
           <Header/>
           <main className="fixed bottom-0 left-0 flex flex-col md:flex-row justify-center items-center gap-5 w-screen h-[86vh] md:h-[85vh] mt-[15vh] overflow-hidden">
               <div className="flex flex-col items-center md:items-start gap-7 w-full md:w-1/2 px-5 md:px-10 xl:px-20">
-                  <p className="text-[7vw] leading-[7vw] font-bold">
-                      <span className="text-[7vw] leading-[7vw]">O</span>
-                      <span className="text-[7vw] leading-[7vw] text-primary">oo</span>
+                  <p className="text-6xl md:text-8xl font-bold">
+                      <span className="text-6xl md:text-8xl">O</span>
+                      <span className="text-6xl md:text-8xl text-primary">oo</span>
                       ps!
                   </p>
                   <p className="text-center lg:text-start lg:text-lg lg:leading-[3.5vh]">

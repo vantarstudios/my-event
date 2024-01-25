@@ -44,6 +44,10 @@ class EventsAPI {
         });
     }
     
+    public async deleteEvent(eventId: EventData['id']) {
+        return await this.client.delete<ApiResponse<EventData>>(`/events/${eventId}`);
+    }
+    
     public async getEventsCounts(organizerId: User['id']) {
         return await this.client.get<ApiResponse<EventCounts>>(`/events/stats/organizer/${organizerId}`);
     }

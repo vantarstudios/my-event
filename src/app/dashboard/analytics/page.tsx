@@ -27,7 +27,7 @@ const DashboardAnalyticsPage: NextPage = () => {
                     corner={<Stats className="w-5" />}
                 />
             </div>
-            <p className="fixed bottom-20 right-20 w-80 px-10 py-5 rounded-2xl text-sm text-black bg-grey bg-opacity-5">
+            <p className="fixed bottom-20 right-20 w-80 px-10 py-5 rounded-2xl text-sm text-black bg-gray-100">
                 Get more data on each event and your finances with a&nbsp;
                 <span className="underline font-medium">full-package plan.</span>
             </p>

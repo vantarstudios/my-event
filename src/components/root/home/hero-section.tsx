@@ -7,8 +7,8 @@ const HeroSection: FunctionComponent = () => {
     return (
         <section className="relative flex flex-col-reverse lg:flex-row gap-5 lg:gap-0 w-full">
             <div className="flex flex-col items-center lg:items-start gap-5 lg:gap-7 w-full lg:w-1/2">
-                <p className="text-center lg:text-start text-xl md:text-5xl xl:text-8xl font-bold">
-                    <span className="text-2xl md:text-6xl xl:text-10xl text-primary">MyEvent:</span>
+                <p className="text-center lg:text-start text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold">
+                    <span className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl text-primary">MyEvent:</span>
                     &nbsp;
                     the most powerful management tool for your events.
                 </p>

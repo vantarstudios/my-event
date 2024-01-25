@@ -69,7 +69,7 @@ const FeaturesPage: NextPage = () => {
     return (
         <PageContainer>
             <section className="flex flex-col gap-5 lg:gap-10">
-                <p className="w-full lg:pl-20 text-4xl md:text-7xl xl:text-10xl text-start font-bold">Features</p>
+                <p className="w-full lg:pl-20 text-3xl sm:text-4xl md:text-5xl xl:text-6xl text-start font-bold">Features</p>
                 <div className="flex flex-wrap lg:justify-between gap-x-5 gap-y-2.5 lg:pl-20">
                     {
                         filters.map(({ label, value }) => (
@@ -91,8 +91,8 @@ const FeaturesPage: NextPage = () => {
             {
                 filteredFeatures.map((feature, index) => (
                     <Fragment key={index}>
-                        <section className="flex flex-col items-center gap-5 lg:gap-10">
-                            <p className="w-full text-center text-3xl lg:text-5xl text-primary font-bold">
+                        <section className="flex flex-col items-center gap-5 lg:gap-5">
+                            <p className="w-full text-center text-3xl lg:text-4xl text-primary font-bold">
                                 {feature.title}
                             </p>
                             <p className="w-full lg:w-2/3 lg:text-lg text-center">

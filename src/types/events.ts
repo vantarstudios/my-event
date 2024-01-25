@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { EventType, EventCategory, dateRegex } from '@/types/constants';
+import { EventType, EventCategory, EventStatus, dateRegex } from '@/types/constants';
 import type { Event } from '@/types';
 
 export const createEventSchema = z.object({
@@ -10,6 +10,7 @@ export const createEventSchema = z.object({
     location: z.string(),
     type: z.nativeEnum(EventType),
     categories: z.array(z.nativeEnum(EventCategory)),
+    status: z.nativeEnum(EventStatus),
     cover: z.instanceof(File).optional(),
 });
 

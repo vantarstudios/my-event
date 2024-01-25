@@ -51,9 +51,9 @@ const Sidebar: FunctionComponent = () => {
     }, [pathname]);
 
     return useMemo(() => (
-        <aside className="flex flex-col gap-5 w-1/5 min-w-[250px] h-full text-white bg-black transition-all">
-            <Link href="/" className="w-2/3 aspect-square mx-auto">
-                <div className="relative w-full h-full">
+        <aside className="flex flex-col gap-5 w-1/5 min-w-[300px] h-full text-white bg-black transition-all">
+            <Link href="/" className="w-full">
+                <div className="relative w-2/3 aspect-square mx-auto">
                     <Image
                         src="/logo-white.png"
                         alt="Logo"

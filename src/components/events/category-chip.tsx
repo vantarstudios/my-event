@@ -1,4 +1,5 @@
 import type { FunctionComponent, HTMLAttributes } from 'react';
+import { upperSnakeCaseToSentenceCase } from '@/lib/utils';
 import { Cross } from '@components/ui/icons';
 
 interface CategoryChipProps {
@@ -6,15 +7,20 @@ interface CategoryChipProps {
     deletable?: boolean;
     onClick?: HTMLAttributes<HTMLDivElement>['onClick'];
     onDelete?: () => void;
+    fontSize?: 'sm' | 'base';
 }
 
-const CategoryChip: FunctionComponent<CategoryChipProps> = ({ category, deletable, onClick, onDelete }) => {
+const CategoryChip: FunctionComponent<CategoryChipProps> = ({ category, deletable, onClick, onDelete, fontSize }) => {
     return (
         <div
             onClick={onClick}
-            className="relative group flex justify-center items-center gap-1 w-fit h-fit px-2 py-2 rounded-full bg-gray-100 cursor-pointer transition-all hover:text-white hover:bg-black"
+            className={`relative group flex justify-center items-center gap-1 w-fit h-fit px-2 rounded-full bg-gray-100 cursor-pointer transition-all hover:text-white hover:bg-black ${
+                fontSize === 'sm' ? 'py-1' : 'py-2'
+            }`}
         >
-            <p className="font-medium">#{category.toLowerCase()}</p>
+            <p className={`min-w-max font-medium ${fontSize === 'sm' ? 'text-sm' : 'text-base'}`}>
+                {upperSnakeCaseToSentenceCase(category)}
+            </p>
             {
                 deletable && (
                     <Cross

@@ -10,7 +10,7 @@ const Notifications: FunctionComponent = () => {
     return (
         <TitledArea
             title={`Notifications (${leadingZeroFormat(notifications.length)})`}
-            className="w-1/2 px-2"
+            className="w-full lg:w-1/2 px-2"
             indicator={
                 <Button className="flex justify-center items-end w-fit h-fit px-0 text-sm font-medium text-primary bg-inherit -translate-x-3 hover:underline">
                     See all

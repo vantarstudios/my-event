@@ -8,7 +8,7 @@ interface InputProps extends HTMLAttributes<HTMLInputElement>, InputWrapperProps
     value?: HTMLInputElement['value'];
     placeholder?: HTMLInputElement['placeholder'];
     disabled?: HTMLInputElement['disabled'];
-    type?: 'text' | 'password' | 'email' | 'number' | 'tel';
+    type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'search';
     autoComplete?: HTMLInputElement['autocomplete'];
     variant?: 'default' | 'auth';
     className?: HTMLAttributes<HTMLInputElement>['className'];
@@ -44,6 +44,7 @@ const Input: FunctionComponent<InputProps> = (props) => {
                 disabled={props.disabled}
                 autoFocus={props.autoFocus}
                 defaultValue={props.defaultValue}
+                onKeyDown={props.onKeyDown}
                 {...props.register}
             />
         </InputWrapper>

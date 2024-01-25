@@ -16,7 +16,7 @@ interface EventsListProps {
 const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
     const userProfile = useSelector(selectProfile);
     
-    const { data: events, error, isLoading } = useRequest(
+    const { data: events, error, isLoading, mutate } = useRequest(
         userProfile?.id ? [`${userProfile.id}-events`, userProfile.id] : null,
         async ([_, organizerId]) => {
             let response;
@@ -45,20 +45,23 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents }) => {
             }
             {
                 (!isLoading && !error && events && events.data.length > 0) && (
-                    <div className="grid grid-cols-4 gap-5 w-full">
+                    <Fragment>
                         {
-                            events.data.slice(0, maxEvents).map(({ id, title, startingDate, cover }) => (
+                            events.data.slice(0, maxEvents).map(({ id, title, startingDate, status, cover }) => (
                                 <EventCard
                                     key={id}
                                     id={id}
                                     title={title}
                                     startingDate={startingDate}
+                                    status={status}
                                     cover={cover}
                                     format="titled"
+                                    withActions={true}
+                                    refreshEvent={mutate}
                                 />
                             ))
                         }
-                    </div>
+                    </Fragment>
                 )
             }
             {

@@ -28,7 +28,7 @@ const Ticketing: FunctionComponent<TicketingProps> = ({ layout, event, newTicket
     return (
         <div className="relative flex flex-col gap-10 w-full h-full">
             {layout === 'edit' && <CreateTicketComponent event={event} onTicketAdd={onTicketAdd} />}
-            <div className="flex flex-col gap-5 max-h-80 overflow-y-auto">
+            <div className="flex flex-col gap-5 max-h-72 overflow-y-auto">
                 {
                     event && (
                         <TicketsList

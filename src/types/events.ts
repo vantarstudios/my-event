@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { EventType, EventCategory, EventStatus, dateRegex } from '@/types/constants';
+import { EventType, EventCategory, EventStatus, Country, dateRegex } from '@/types/constants';
 import type { Event } from '@/types';
 
 export const createEventSchema = z.object({
@@ -42,3 +42,13 @@ export const eventDataFields = [
 ] as const;
 
 export type EventData = Pick<Event, (typeof eventDataFields)[number]>;
+
+export type EventQuery = Partial<{
+    page: number;
+    perPage: number;
+    isPrivate: boolean;
+    type: EventType | EventType[];
+    categories: EventCategory | EventCategory[];
+    status: EventStatus | EventStatus[];
+    country: Country | Country[];
+}>;

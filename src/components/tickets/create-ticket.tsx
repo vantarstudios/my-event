@@ -1,9 +1,8 @@
 'use client';
 
-import type { FormEvent, FunctionComponent, MouseEvent } from 'react';
-import { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect, type FormEvent, type FunctionComponent, type MouseEvent } from 'react';
 import { v4 as uuid4 } from 'uuid';
-import { useToggle, useToggleVisibility } from '@/lib/hooks';
+import { useToggle } from '@/lib/hooks';
 import { capitalize, monthNumToString, thousandsCommaFormat, getISOString, parseDateTime } from '@/lib/utils';
 import { InvitationType } from '@/types/constants';
 import type { InvitationTypeUnion, ParsedDate, Event } from '@/types';
@@ -18,6 +17,7 @@ import { encodeToBase64 } from 'next/dist/build/webpack/loaders/utils';
 import type { ZodError } from 'zod';
 
 interface CreateTicketProps {
+    isOpened: boolean;
     eventStartingDate?: Event['startingDate'];
     eventEndingDate?: Event['endingDate'];
     onSave: (newTicket: CreateTicketPayload) => void;
@@ -55,16 +55,11 @@ const getExpectedParticipants = (eventSizeLimit: number) => {
     return buildOptions(eventSizeLimit, 10);
 };
 
-const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate, eventEndingDate, onSave }) => {
-    const {
-        ref: modalRef,
-        isVisible: isModalOpened,
-        setIsVisible: setIsModalOpened
-    } = useToggleVisibility<HTMLFormElement>(false);
+const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventStartingDate, eventEndingDate, onSave }) => {
     const [isGroup, setIsGroup] = useState<boolean>(false);
     const [isCombo, toggleIsCombo] = useToggle<boolean>(false, true);
     const [invitationsEmails, setInvitationsEmails] = useState<string[]>([]);
-    const [invitationLink, setInvitationLink] = useState('');
+    const [invitationLink, setInvitationLink] = useState(`https://myevent-invitation-${encodeToBase64(userPlanInfos.eventTitle)}-${uuid4()}`);
     const [isInvitationLinkCopied, setIsInvitationLinkCopied] = useState<boolean>(false);
     const [selectedGroupsLimit, setSelectedGroupsLimit] = useState<string>('Unlimited');
     const [transferFees, toggleTransferFees] = useToggle<boolean>(false, true);
@@ -83,11 +78,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
     const pricePerParticipant = `${thousandsCommaFormat(
         price / (selectedGroupSize === 'Unlimited' ? MAX_GROUP_SIZE : Number(selectedGroupSize)),
     )}`;
-
-    const handleModalOpen = () => {
-        setIsModalOpened(true);
-        setInvitationLink(`https://myevent-invitation-${encodeToBase64(userPlanInfos.eventTitle)}-${uuid4()}`);
-    };
 
     const handleIsGroupClick = (value: boolean) => () => {
         setIsGroup(value);
@@ -187,7 +177,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
         }
         
         setFormErrors({} as CreateTicketErrors);
-        setIsModalOpened(false);
         onSave(validatedTicket.data);
     };
     
@@ -222,239 +211,236 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ eventStartingDate,
             }
         };
         
-        if (!isModalOpened) {
+        if (!isOpened) {
             resetForm();
         }
-    }, [isModalOpened]);
+    }, [isOpened]);
 
     return (
-        <Fragment>
-            <Button onClick={handleModalOpen} className="text-sm">+ Add a ticket</Button>
-            <Modal isOpened={isModalOpened}>
-                <Card className="min-w-max h-[90vh] py-5 pl-5 pr-5">
-                    <form ref={modalRef} onSubmit={handleSubmit} className="flex flex-col gap-5 w-full h-full pl-5">
-                        <div className="flex justify-between items-center">
-                            <p className="text-2xl font-semibold">{ticketTitle || 'New ticket'}</p>
-                            <Button type="submit">Save</Button>
-                        </div>
-                        <div className="flex flex-col gap-7 pr-5 pb-5 overflow-y-auto">
-                            <div className="flex justify-center items-center gap-5">
-                                <Card
-                                    onClick={handleIsGroupClick(false)}
-                                    className={`flex justify-between items-center gap-2 h-16 px-5 border border-opacity-10 cursor-pointer ${
-                                        isGroup ? 'text-black bg-white' : 'text-white bg-primary'
-                                    }`}
-                                >
-                                    <Person className="w-6 h-6" />
-                                    <p className="font-bold">Single ticket</p>
-                                </Card>
-                                <Card
-                                    onClick={handleIsGroupClick(true)}
-                                    className={`flex justify-between items-center gap-2 h-16 px-5 border border-opacity-10 cursor-pointer ${
-                                        isGroup ? 'text-white bg-primary' : 'text-black bg-white'
-                                    }`}
-                                >
-                                    <People className="w-8 h-8" />
-                                    <p className="font-bold">Group ticket</p>
-                                </Card>
-                            </div>
-                            <TitledTextArea
-                                title="Ticket title:"
-                                value={ticketTitle}
-                                onChange={setTicketTitle}
-                                errors={formErrors.title}
-                                placeholder="ex: Standard Pass"
-                                rows={1}
-                                maxLength={150}
-                                className="text-sm bg-gray-100"
-                            />
-                            <TitledArea
-                                title="Type of ticket:"
-                                indicator={
-                                    <div className="flex justify-between items-center gap-1 w-fit">
-                                        <p className="text-sm font-bold">Combo:</p>
-                                        <Switch onClick={handleIsComboClick} />
-                                    </div>
-                                }
+        <Modal isOpened={isOpened}>
+            <Card className="min-w-max h-[90vh] py-5 pl-5 pr-5">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full h-full pl-5">
+                    <div className="flex justify-between items-center">
+                        <p className="text-2xl font-semibold">{ticketTitle || 'New ticket'}</p>
+                        <Button type="submit">Save</Button>
+                    </div>
+                    <div className="flex flex-col gap-7 pr-5 pb-5 overflow-y-auto">
+                        <div className="flex justify-center items-center gap-5">
+                            <Card
+                                onClick={handleIsGroupClick(false)}
+                                className={`flex justify-between items-center gap-2 h-16 px-5 border border-opacity-10 cursor-pointer ${
+                                    isGroup ? 'text-black bg-white' : 'text-white bg-primary'
+                                }`}
                             >
-                                <div className="flex justify-between items-center gap-5 text-sm">
-                                    {ticketTypes.map((ticketType) => (
-                                        <Button
-                                            key={ticketType}
-                                            onClick={handleTicketTypeClick(ticketType)}
-                                            className={`w-full py-2 ${
-                                                selectedTicketTypes.includes(ticketType) && 'bg-primary'
-                                            }`}
-                                        >
-                                            {capitalize(ticketType)}
-                                        </Button>
-                                    ))}
+                                <Person className="w-6 h-6"/>
+                                <p className="font-bold">Single ticket</p>
+                            </Card>
+                            <Card
+                                onClick={handleIsGroupClick(true)}
+                                className={`flex justify-between items-center gap-2 h-16 px-5 border border-opacity-10 cursor-pointer ${
+                                    isGroup ? 'text-white bg-primary' : 'text-black bg-white'
+                                }`}
+                            >
+                                <People className="w-8 h-8"/>
+                                <p className="font-bold">Group ticket</p>
+                            </Card>
+                        </div>
+                        <TitledTextArea
+                            title="Ticket title:"
+                            value={ticketTitle}
+                            onChange={setTicketTitle}
+                            errors={formErrors.title}
+                            placeholder="ex: Standard Pass"
+                            rows={1}
+                            maxLength={150}
+                            className="text-sm bg-gray-100"
+                        />
+                        <TitledArea
+                            title="Type of ticket:"
+                            indicator={
+                                <div className="flex justify-between items-center gap-1 w-fit">
+                                    <p className="text-sm font-bold">Combo:</p>
+                                    <Switch onClick={handleIsComboClick}/>
                                 </div>
-                            </TitledArea>
-                            {isGroup && (
-                                <div className="flex justify-between items-center">
-                                    <TitledArea title="Members per group:">
-                                        <Select
-                                            name="group-size"
-                                            value={selectedGroupSize}
-                                            options={getGroupSizes(userPlanInfos.eventSizeLimit)}
-                                            onChange={handleGroupSizeChange}
-                                        />
-                                    </TitledArea>
-                                    <TitledArea title="Groups limit:">
-                                        <Select
-                                            name="groups-limit"
-                                            value={selectedGroupsLimit}
-                                            options={getGroupsLimit(userPlanInfos.eventSizeLimit, selectedGroupSize)}
-                                            onChange={setSelectedGroupsLimit}
-                                        />
-                                    </TitledArea>
-                                </div>
-                            )}
-                            {selectedTicketTypes.includes('paid') && (
-                                <TitledArea
-                                    title="Price"
-                                    indicator={
-                                        isGroup &&
-                                        selectedGroupSize !== 'Unlimited' && (
-                                            <div className="flex justify-center items-center gap-2">
-                                                <Person className="w-4 h-4" />
-                                                <p className="text-sm font-medium">
-                                                    {pricePerParticipant} {userPlanInfos.currency}
-                                                </p>
-                                            </div>
-                                        )
-                                    }
-                                >
-                                    <NumberInput
-                                        errors={formErrors.price}
-                                        name="price"
-                                        value={String(price)}
-                                        onChange={setPrice}
-                                        icon={
-                                            <span className="text-primary font-medium">{userPlanInfos.currency}</span>
-                                        }
+                            }
+                        >
+                            <div className="flex justify-between items-center gap-5 text-sm">
+                                {ticketTypes.map((ticketType) => (
+                                    <Button
+                                        key={ticketType}
+                                        onClick={handleTicketTypeClick(ticketType)}
+                                        className={`w-full py-2 ${
+                                            selectedTicketTypes.includes(ticketType) && 'bg-primary'
+                                        }`}
+                                    >
+                                        {capitalize(ticketType)}
+                                    </Button>
+                                ))}
+                            </div>
+                        </TitledArea>
+                        {isGroup && (
+                            <div className="flex justify-between items-center">
+                                <TitledArea title="Members per group:">
+                                    <Select
+                                        name="group-size"
+                                        value={selectedGroupSize}
+                                        options={getGroupSizes(userPlanInfos.eventSizeLimit)}
+                                        onChange={handleGroupSizeChange}
                                     />
                                 </TitledArea>
-                            )}
-                            {selectedTicketTypes.includes('invitation') && (
-                                <TitledArea title="Invitation type:">
-                                    <div className="flex flex-col gap-5">
-                                        <Select
-                                            name="invitation-type"
-                                            value={capitalize(selectedInvitationType)}
-                                            options={Object.values(InvitationType).map((invitationType) =>
-                                                capitalize(invitationType),
-                                            )}
-                                            onChange={handleInvitationTypeChange}
-                                        />
-                                        {selectedInvitationType === InvitationType.UNIQUE_LINK && (
-                                            <Input
-                                                name="invitation-link"
-                                                value={invitationLink}
-                                                variant="auth"
-                                                icon={
-                                                    <div className="relative">
-                                                        {isInvitationLinkCopied && (
-                                                            <p className="absolute bottom-full right-1 p-1 rounded-md text-sm text-white bg-black transition-all">
-                                                                Copied!
-                                                            </p>
-                                                        )}
-                                                        <Copy
-                                                            className="w-4 h-4 cursor-pointer"
-                                                            onClick={handleCopyInvitationLink}
-                                                        />
-                                                    </div>
-                                                }
-                                                className="underline"
-                                                disabled
-                                            />
-                                        )}
-                                        {selectedInvitationType === InvitationType.EMAIL && (
-                                            <Input
-                                                name="invitation-emails"
-                                                value={invitationsEmails.join(',')}
-                                                onChange={handleInvitationsEmailsChange}
-                                                placeholder="Separate e-mails with a comma"
-                                                variant="auth"
-                                            />
-                                        )}
-                                    </div>
+                                <TitledArea title="Groups limit:">
+                                    <Select
+                                        name="groups-limit"
+                                        value={selectedGroupsLimit}
+                                        options={getGroupsLimit(userPlanInfos.eventSizeLimit, selectedGroupSize)}
+                                        onChange={setSelectedGroupsLimit}
+                                    />
                                 </TitledArea>
-                            )}
-                            <TitledTextArea
-                                title="Description:"
-                                value={ticketDescription}
-                                onChange={setTicketDescription}
-                                errors={formErrors.description}
-                                placeholder="Let participants know what are the advantages or limits of this ticket"
-                                rows={5}
-                                maxLength={150}
-                                className="py-5 text-sm bg-gray-100 rounded-2xl"
-                            />
-                            <div className="flex justify-between items-start gap-10 w-full">
-                                <TitledArea title="Sales ending date:">
-                                    <div className="flex flex-col justify-start w-full h-full mb-auto">
-                                        <DateInput
-                                            name="sales-end-date"
-                                            value={salesEndDate}
-                                            onChange={handleSalesEndDateChange}
-                                            onClear={() => setSalesEndDate(null)}
-                                            minDate={new Date()}
-                                            maxDate={eventEndingDate ? new Date(eventEndingDate) : undefined}
-                                            className="w-fit"
-                                        />
-                                        <p className="py-2 text-sm text-red-500">
-                                            {formErrors.salesEndDate?.[0]}
-                                        </p>
-                                        <Checkbox
-                                            name="transfer-fees"
-                                            label="End sales when event starts"
-                                            checked={endSalesOnStartDate}
-                                            onChange={handleEndSalesOnStartDateChange}
-                                            className="text-sm"
-                                        />
-                                    </div>
-                                </TitledArea>
-                                <div className="mb-auto p-3 text-white bg-black rounded-2xl">
-                                    {salesEndDate && (
-                                        <p className="mb-3 text-sm">
-                                            Sales will end on&nbsp;
-                                            <span className="text-primary">
-                                                    {salesEndDate.day} {monthNumToString(salesEndDate.month)} {salesEndDate.year}
-                                                </span>
-                                        </p>
-                                    )}
-                                    <p className="text-sm break-words">
-                                        Sales will end at 11:59 PM of that day
-                                    </p>
-                                </div>
                             </div>
-                            <TitledArea title="Expected participants:">
-                                <Select
-                                    name="expected-participants"
-                                    value={expectedParticipants}
-                                    options={getExpectedParticipants(userPlanInfos.eventSizeLimit)}
-                                    onChange={setExpectedParticipants}
+                        )}
+                        {selectedTicketTypes.includes('paid') && (
+                            <TitledArea
+                                title="Price"
+                                indicator={
+                                    isGroup &&
+                                    selectedGroupSize !== 'Unlimited' && (
+                                        <div className="flex justify-center items-center gap-2">
+                                            <Person className="w-4 h-4"/>
+                                            <p className="text-sm font-medium">
+                                                {pricePerParticipant} {userPlanInfos.currency}
+                                            </p>
+                                        </div>
+                                    )
+                                }
+                            >
+                                <NumberInput
+                                    errors={formErrors.price}
+                                    name="price"
+                                    value={String(price)}
+                                    onChange={setPrice}
+                                    icon={
+                                        <span className="text-primary font-medium">{userPlanInfos.currency}</span>
+                                    }
                                 />
                             </TitledArea>
-                            <div className="flex flex-col gap-5">
-                                <p className="text-sm text-primary">
-                                    {userPlanInfos.ticketsProcessingFeesPercentage}% of tickets sales will be subtracted
-                                    as processing fees
+                        )}
+                        {selectedTicketTypes.includes('invitation') && (
+                            <TitledArea title="Invitation type:">
+                                <div className="flex flex-col gap-5">
+                                    <Select
+                                        name="invitation-type"
+                                        value={capitalize(selectedInvitationType)}
+                                        options={Object.values(InvitationType).map((invitationType) =>
+                                            capitalize(invitationType),
+                                        )}
+                                        onChange={handleInvitationTypeChange}
+                                    />
+                                    {selectedInvitationType === InvitationType.UNIQUE_LINK && (
+                                        <Input
+                                            name="invitation-link"
+                                            value={invitationLink}
+                                            variant="auth"
+                                            icon={
+                                                <div className="relative">
+                                                    {isInvitationLinkCopied && (
+                                                        <p className="absolute bottom-full right-1 p-1 rounded-md text-sm text-white bg-black transition-all">
+                                                            Copied!
+                                                        </p>
+                                                    )}
+                                                    <Copy
+                                                        className="w-4 h-4 cursor-pointer"
+                                                        onClick={handleCopyInvitationLink}
+                                                    />
+                                                </div>
+                                            }
+                                            className="underline"
+                                            disabled
+                                        />
+                                    )}
+                                    {selectedInvitationType === InvitationType.EMAIL && (
+                                        <Input
+                                            name="invitation-emails"
+                                            value={invitationsEmails.join(',')}
+                                            onChange={handleInvitationsEmailsChange}
+                                            placeholder="Separate e-mails with a comma"
+                                            variant="auth"
+                                        />
+                                    )}
+                                </div>
+                            </TitledArea>
+                        )}
+                        <TitledTextArea
+                            title="Description:"
+                            value={ticketDescription}
+                            onChange={setTicketDescription}
+                            errors={formErrors.description}
+                            placeholder="Let participants know what are the advantages or limits of this ticket"
+                            rows={5}
+                            maxLength={150}
+                            className="py-5 text-sm bg-gray-100 rounded-2xl"
+                        />
+                        <div className="flex justify-between items-start gap-10 w-full">
+                            <TitledArea title="Sales ending date:">
+                                <div className="flex flex-col justify-start w-full h-full mb-auto">
+                                    <DateInput
+                                        name="sales-end-date"
+                                        value={salesEndDate}
+                                        onChange={handleSalesEndDateChange}
+                                        onClear={() => setSalesEndDate(null)}
+                                        minDate={new Date()}
+                                        maxDate={eventEndingDate ? new Date(eventEndingDate) : undefined}
+                                        className="w-fit"
+                                    />
+                                    <p className="py-2 text-sm text-red-500">
+                                        {formErrors.salesEndDate?.[0]}
+                                    </p>
+                                    <Checkbox
+                                        name="transfer-fees"
+                                        label="End sales when event starts"
+                                        checked={endSalesOnStartDate}
+                                        onChange={handleEndSalesOnStartDateChange}
+                                        className="text-sm"
+                                    />
+                                </div>
+                            </TitledArea>
+                            <div className="mb-auto p-3 text-white bg-black rounded-2xl">
+                                {salesEndDate && (
+                                    <p className="mb-3 text-sm">
+                                        Sales will end on&nbsp;
+                                        <span className="text-primary">
+                                                    {salesEndDate.day} {monthNumToString(salesEndDate.month)} {salesEndDate.year}
+                                                </span>
+                                    </p>
+                                )}
+                                <p className="text-sm break-words">
+                                    Sales will end at 11:59 PM of that day
                                 </p>
-                                <Checkbox
-                                    name="transfer-fees"
-                                    label="Transfer processing fees to user"
-                                    checked={transferFees}
-                                    onChange={toggleTransferFees}
-                                />
                             </div>
                         </div>
-                    </form>
-                </Card>
-            </Modal>
-        </Fragment>
+                        <TitledArea title="Expected participants:">
+                            <Select
+                                name="expected-participants"
+                                value={expectedParticipants}
+                                options={getExpectedParticipants(userPlanInfos.eventSizeLimit)}
+                                onChange={setExpectedParticipants}
+                            />
+                        </TitledArea>
+                        <div className="flex flex-col gap-5">
+                            <p className="text-sm text-primary">
+                                {userPlanInfos.ticketsProcessingFeesPercentage}% of tickets sales will be subtracted
+                                as processing fees
+                            </p>
+                            <Checkbox
+                                name="transfer-fees"
+                                label="Transfer processing fees to user"
+                                checked={transferFees}
+                                onChange={toggleTransferFees}
+                            />
+                        </div>
+                    </div>
+                </form>
+            </Card>
+        </Modal>
     );
 };
 

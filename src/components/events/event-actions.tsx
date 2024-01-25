@@ -7,7 +7,7 @@ import { eventsAPI } from '@/lib/api/events';
 import { EventStatus } from '@/types/constants';
 import type { Event } from '@/types';
 import { ConfirmModal } from '@components/ui/layouts';
-import { Dots, Loader } from '@components/ui/icons';
+import { Dots } from '@components/ui/icons';
 
 interface EventActionsProps {
     eventId: Event['id'];
@@ -61,11 +61,7 @@ const EventActions: FunctionComponent<EventActionsProps> = ({ eventId, eventTitl
                 onClick={() => setIsVisible(!isVisible)}
                 className="relative cursor-pointer"
             >
-                {
-                    (isPublishing || isDeleting)
-                        ? <Loader className="w-5 h-5 animate-spin"/>
-                        : <Dots className="w-10"/>
-                }
+                <Dots className="w-10"/>
                 <ul className={`absolute top-full right-0 bg-white z-10 shadow-md rounded-lg overflow-hidden ${
                     isVisible ? 'block' : 'hidden'
                 }`}>

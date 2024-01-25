@@ -1,7 +1,8 @@
 import type { AxiosInstance } from 'axios';
+import { objectToQueryParams } from '@/lib/utils';
 import type { ApiResponse, User, EventCounts } from '@/types';
 import { Country } from '@/types/constants';
-import type { EventData, CreateEventPayload, UpdateEventPayload } from '@/types/events';
+import type { EventData, CreateEventPayload, UpdateEventPayload, EventQuery } from '@/types/events';
 import { appAPI } from './client';
 
 class EventsAPI {
@@ -13,8 +14,13 @@ class EventsAPI {
         return await this.client.get<ApiResponse<EventData[]>>('/events?page=0');
     }
     
-    public async getAllEventsForOrganizer(organizerId: User['id']) {
-        return await this.client.get<ApiResponse<EventData[]>>(`/events/organizer/${organizerId}?page=0`);
+    public async getAllEventsForOrganizer(organizerId: User['id'], query?: EventQuery) {
+        return await this.client.get<ApiResponse<EventData[]>>(`/events/organizer/${organizerId}`, {
+            params: objectToQueryParams({
+                ...query,
+                page: query?.page || 0,
+            })
+        });
     }
     
     public async getEvent(id: EventData['id']) {

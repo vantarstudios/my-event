@@ -25,8 +25,10 @@ const Picture: FunctionComponent<{ userProfile: ReturnType<typeof selectProfile>
                             src={userProfile.profilePicture}
                             alt="Profile Picture"
                             quality={100}
-                            fill
                             placeholder={imagesPlaceholder}
+                            fill
+                            sizes="100%, 100%"
+                            className="object-center object-cover"
                             fallbackClassName="scale-[1.75]"
                         />
                     )

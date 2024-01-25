@@ -38,6 +38,7 @@ const Footer = () => {
                         src="/logo-white.png"
                         alt="Vantar Studios Logo"
                         fill
+                        sizes="100%, 100%"
                     />
                 </div>
                 <div className="flex flex-col md:flex-row justify-evenly items-center w-full lg:flex-1 h-full lg:py-20">

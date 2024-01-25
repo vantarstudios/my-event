@@ -23,6 +23,7 @@ const OrganizerCard: FunctionComponent<OrganizerCardProps> = ({ firstName, lastN
                         alt="QR Code"
                         quality={100}
                         fill
+                        sizes="100%, 100%"
                         className="object-center object-cover"
                     />
                 </div>

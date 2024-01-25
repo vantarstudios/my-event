@@ -103,6 +103,7 @@ const FeaturesPage: NextPage = () => {
                                     src={feature.picture}
                                     alt={feature.title}
                                     fill
+                                    sizes="100%, 100%"
                                     className="rounded-2xl shadow-xl"
                                 />
                             </div>

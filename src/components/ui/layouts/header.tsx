@@ -62,6 +62,7 @@ const Header: FunctionComponent = () => {
                         src="/logo.png"
                         alt="Event Media Logo"
                         fill
+                        sizes="100%, 100%"
                     />
                 </div>
             </Link>

@@ -57,7 +57,10 @@ const Sidebar: FunctionComponent = () => {
                     <Image
                         src="/logo-white.png"
                         alt="Logo"
+                        quality={100}
                         fill
+                        priority
+                        sizes="100%, 100%"
                     />
                 </div>
             </Link>

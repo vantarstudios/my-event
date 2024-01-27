@@ -2,8 +2,7 @@
 
 import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
-import { useRequest, useSelector } from '@/lib/hooks';
-import { selectProfile } from '@/lib/store/states/profile';
+import { useRequest, useUserProfile } from '@/lib/hooks';
 import { eventsAPI } from '@/lib/api/events';
 import { Role } from '@/types/constants';
 import type { EventQuery } from '@/types/events';
@@ -16,14 +15,14 @@ interface EventsListProps {
 }
 
 const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents, filter }) => {
-    const userProfile = useSelector(selectProfile);
+    const { user: userProfile } = useUserProfile();
     
     const { data: events, error, isLoading, mutate } = useRequest(
-        userProfile?.id ? [`${userProfile.id}-events`, userProfile.id, filter] : null,
+        userProfile?.data.id ? [`${userProfile.data.id}-events`, userProfile.data.id, filter] : null,
         async ([_, organizerId, params]) => {
             let response;
             
-            if (userProfile.role === Role.ADMIN) {
+            if (userProfile!.data.role === Role.ADMIN) {
                 response = await eventsAPI.getAllEvents();
             } else {
                 response = await eventsAPI.getAllEventsForOrganizer(organizerId, params);

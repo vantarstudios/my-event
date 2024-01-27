@@ -2,7 +2,7 @@ import type { FunctionComponent, PropsWithChildren } from 'react';
 import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
-import { StoreProvider, ProfileProvider, AuthGuard, ViewportGuard } from '@components/app';
+import { StoreProvider, AuthGuard, ViewportGuard } from '@components/app';
 import './global.css';
 
 const poppinsFont = Poppins({
@@ -29,12 +29,10 @@ const AppLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
             <body className={poppinsFont.className}>
                 <ViewportGuard>
                     <StoreProvider>
-                        <ProfileProvider>
-                            <AuthGuard>
-                                <Toaster expand position="top-right" richColors={true}/>
-                                {children}
-                            </AuthGuard>
-                        </ProfileProvider>
+                        <AuthGuard>
+                            <Toaster expand position="top-right" richColors={true}/>
+                            {children}
+                        </AuthGuard>
                     </StoreProvider>
                 </ViewportGuard>
             </body>

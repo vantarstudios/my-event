@@ -1,7 +1,7 @@
 import type { AxiosInstance, AxiosResponse } from 'axios';
 import { appAPI } from './client';
-import type { UserProfile, UserProfileUpdatePayload } from '@/types/users';
-import type { ApiResponse } from '@/types';
+import type { UserProfile, UserProfileUpdatePayload, UserSettingsUpdatePayload } from '@/types/users';
+import type { ApiResponse, UserSettings } from '@/types';
 
 class UsersAPI {
     constructor(private readonly client: AxiosInstance) {
@@ -29,6 +29,14 @@ class UsersAPI {
         }
         
         return response;
+    }
+    
+    public async getSettings(userId: UserProfile['id']) {
+        return await this.client.get<ApiResponse<UserSettings>>(`users/${userId}/settings`);
+    }
+    
+    public async updateSettings(userId: UserProfile['id'], payload: UserSettingsUpdatePayload) {
+        return await this.client.patch<ApiResponse<UserSettings>>(`users/${userId}/settings`, payload);
     }
 }
 

@@ -10,7 +10,7 @@ const DraftEvents: FunctionComponent = () => {
                 <EventsList
                     maxEvents={4}
                     filter={{
-                        status: EventStatus.NOT_PUBLISHED
+                        status: EventStatus.DRAFT
                     }}
                 />
             </div>

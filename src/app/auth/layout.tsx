@@ -21,6 +21,7 @@ const AuthLayout: FunctionComponent<PropsWithChildren> = ({ children }) => {
             <Link href="/" className="absolute top-5 right-10">
                 <Button className="flex items-center gap-2 text-xl text-black bg-inherit">
                     <Home className="w-6 h-6"/>
+                    Home
                 </Button>
             </Link>
             {children}

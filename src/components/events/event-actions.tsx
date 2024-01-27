@@ -41,7 +41,7 @@ const EventActions: FunctionComponent<EventActionsProps> = ({ eventId, eventTitl
     );
     
     const handlePublishEvent = async () => {
-        await changeEventVisibility(isPublished ? EventStatus.NOT_PUBLISHED : EventStatus.PUBLISHED);
+        await changeEventVisibility(isPublished ? EventStatus.DRAFT : EventStatus.PUBLISHED);
         setShowPublishModal(false);
         refreshEvent && refreshEvent();
     };

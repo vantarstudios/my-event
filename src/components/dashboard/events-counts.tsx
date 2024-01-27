@@ -2,9 +2,8 @@
 
 import type { FunctionComponent, ReactNode } from 'react';
 import { leadingZeroFormat } from '@/lib/utils';
-import { useRequest, useSelector } from '@/lib/hooks';
+import { useRequest, useUserProfile } from '@/lib/hooks';
 import { eventsAPI } from '@/lib/api/events';
-import { selectProfile } from '@/lib/store/states/profile';
 import { Card } from '@components/ui/layouts';
 import { Loader } from '@components/ui/icons';
 
@@ -13,10 +12,10 @@ interface EventCountsProps {
 }
 
 const EventsCounts: FunctionComponent<EventCountsProps> = ({ moreActions }) => {
-    const profile = useSelector(selectProfile);
+    const { user, isLoading: userLoading, error: userError } = useUserProfile();
     
     const { data: eventsCounts, isLoading, error } = useRequest(
-        profile?.id ? [`events-counts-${profile.id}`, profile.id] : null,
+        user?.data.id ? [`events-counts-${user.data.id}`, user.data.id] : null,
         async ([_, organizerId]: [string, string]) => {
             const response = await eventsAPI.getEventsCounts(organizerId);
             
@@ -38,11 +37,11 @@ const EventsCounts: FunctionComponent<EventCountsProps> = ({ moreActions }) => {
             <div className="flex justify-between items-center gap-10">
                 <div className="flex flex-col justify-center items-center gap-2.5">
                     {
-                        isLoading
+                        (isLoading || userLoading)
                             ? <Loader className="w-10 h-10 animate-spin"/>
                             : (
                                 <p className="text-5xl font-medium">
-                                    {leadingZeroFormat((error || !eventsCounts) ? 0 : eventsCounts.data.total)}
+                                    {leadingZeroFormat((error || userError || !eventsCounts) ? 0 : eventsCounts.data.total)}
                                 </p>
                             )
                     }
@@ -50,11 +49,11 @@ const EventsCounts: FunctionComponent<EventCountsProps> = ({ moreActions }) => {
                 </div>
                 <div className="flex flex-col justify-center items-center gap-2.5">
                     {
-                        isLoading
+                        (isLoading || userLoading)
                             ? <Loader className="w-10 h-10 animate-spin"/>
                             : (
                                 <p className="text-5xl font-medium">
-                                    {leadingZeroFormat((error || !eventsCounts) ? 0 : eventsCounts.data.onGoing)}
+                                    {leadingZeroFormat((error || userError || !eventsCounts) ? 0 : eventsCounts.data.onGoing)}
                                 </p>
                             )
                     }
@@ -62,11 +61,11 @@ const EventsCounts: FunctionComponent<EventCountsProps> = ({ moreActions }) => {
                 </div>
                 <div className="flex flex-col justify-center items-center gap-2.5">
                     {
-                        isLoading
+                        (isLoading || userLoading)
                             ? <Loader className="w-10 h-10 animate-spin"/>
                             : (
                                 <p className="text-5xl font-medium">
-                                    {leadingZeroFormat((error || !eventsCounts) ? 0 : eventsCounts.data.upComing)}
+                                    {leadingZeroFormat((error || userError || !eventsCounts) ? 0 : eventsCounts.data.upComing)}
                                 </p>
                             )
                     }

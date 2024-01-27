@@ -1,8 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import profileReducer from './states/profile';
+import isAuthenticatedReducer from './is-authenticated.state';
 
 const rootReducer = combineReducers({
-    profile: profileReducer,
+    isAuthenticated: isAuthenticatedReducer,
 });
 
 export default rootReducer;

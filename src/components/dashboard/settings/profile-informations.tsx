@@ -9,7 +9,6 @@ import type { Mode } from '@/types';
 import { ProfilePicture, TitledArea } from '@components/ui/layouts';
 import { Input, PhoneNumberInput } from '@components/ui/form';
 import { Person, Photo } from '@components/ui/icons';
-import OrganizerCard from './organizer-card';
 
 interface ProfileInformationsProps {
     mode: Mode;
@@ -53,7 +52,7 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                     {
                         mode === 'edit' && (
                             <div
-                                className="absolute bottom-0 right-0 w-fit aspect-square text-white bg-black rounded-full overflow-hidden hover:bg-opacity-90">
+                                className="absolute bottom-2 right-2 w-fit aspect-square text-white bg-black rounded-full overflow-hidden hover:bg-opacity-90">
                                 <div className="relative flex justify-center items-center w-full h-full p-3">
                                     <Photo/>
                                     <input
@@ -68,13 +67,13 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         )
                     }
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 flex-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-3 gap-x-10 flex-1">
                     <Input
                         name="full-name"
                         label="Full name:"
                         value={`${user.firstName} ${user.lastName}`}
                         variant="auth"
-                        className="pl-3 w-full bg-white"
+                        className="pl-3 bg-white"
                         disabled={true}
                     />
                     <PhoneNumberInput
@@ -90,7 +89,7 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         type="email"
                         value={user.email}
                         variant="auth"
-                        className="pl-3 w-full bg-white"
+                        className="pl-3 bg-white"
                         disabled={true}
                     />
                     <Input
@@ -106,11 +105,6 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         disabled={mode === 'view'}
                     />
                 </div>
-                <OrganizerCard
-                    firstName={user.firstName}
-                    lastName={user.lastName}
-                    eventName="Event name"
-                />
             </form>
         </TitledArea>
     );

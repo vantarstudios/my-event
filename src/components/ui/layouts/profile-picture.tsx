@@ -3,8 +3,9 @@
 import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
-import { useSelector } from '@/lib/hooks';
-import { selectProfile } from '@/lib/store/states/profile';
+import { useUserProfile,useSelector } from '@/lib/hooks';
+import { selectIsAuthenticated } from '@/lib/store/is-authenticated.state';
+import type { UserProfile } from '@/types/users';
 import { imagesPlaceholder } from '@/data/images-placeholder';
 import { ImageWithFallback } from '@components/ui';
 import { Button } from '@components/ui/buttons';
@@ -15,14 +16,20 @@ interface ProfilePictureProps {
     asLink?: boolean;
 }
 
-const Picture: FunctionComponent<{ userProfile: ReturnType<typeof selectProfile> }> = ({ userProfile }) => {
+interface PictureProps {
+    profilePicture: UserProfile['profilePicture'];
+    isLoading: boolean;
+    error: Error;
+}
+
+const Picture: FunctionComponent<PictureProps> = ({ profilePicture, isLoading, error }) => {
     return (
         <Fragment>
             {
-                userProfile.profilePicture
+                (!isLoading && !error && profilePicture)
                     ? (
                         <ImageWithFallback
-                            src={userProfile.profilePicture}
+                            src={profilePicture}
                             alt="Profile Picture"
                             quality={100}
                             placeholder={imagesPlaceholder}
@@ -41,19 +48,21 @@ const Picture: FunctionComponent<{ userProfile: ReturnType<typeof selectProfile>
 };
 
 const ProfilePicture: FunctionComponent<ProfilePictureProps> = ({ showSignUp = false, asLink = true }) => {
-    const userProfile = useSelector(selectProfile);
+    const isAuthenticated = useSelector(selectIsAuthenticated);
+    
+    const { user, error, isLoading } = useUserProfile();
     
     return (
         <Fragment>
             {
-                userProfile?.profilePicture
+                isAuthenticated
                     ?  asLink
                         ? (
                             <Link href="/dashboard" className="relative w-14 h-14 rounded-full overflow-hidden">
-                                <Picture userProfile={userProfile}/>
+                                <Picture profilePicture={user?.data.profilePicture} isLoading={isLoading} error={error}/>
                             </Link>
                         )
-                        : <Picture userProfile={userProfile}/>
+                        : <Picture profilePicture={user?.data.profilePicture} isLoading={isLoading} error={error}/>
                     : showSignUp && (
                         <Link href="/auth/signup">
                             <Button className="min-w-max hover:bg-primary">Sign up</Button>

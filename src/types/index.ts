@@ -12,6 +12,7 @@ import {
     EventType,
     UserTicketStatus,
     InvitationType,
+    NotificationType,
 } from './constants';
 
 export type ValidationErrors<T> = Partial<Record<keyof T, string>>;
@@ -71,6 +72,8 @@ export type UserTicketStatusUnion = (typeof UserTicketStatus)[keyof typeof UserT
 
 export type InvitationTypeUnion = (typeof InvitationType)[keyof typeof InvitationType];
 
+export type NotificationTypeUnion = (typeof NotificationType)[keyof typeof NotificationType];
+
 export type Subscription = {
     id: string,
     userId: string,
@@ -81,6 +84,14 @@ export type Subscription = {
     paymentReference: string,
     paymentMethod: PaymentMethodUnion,
     facturationType: FacturationTypeUnion,
+};
+
+export type UserSettings = {
+    id: string,
+    enabledNotifications: NotificationTypeUnion[],
+    createdAt: string,
+    updatedAt: string,
+    deletedAt?: string,
 };
 
 export type User = {
@@ -98,6 +109,7 @@ export type User = {
     interestedCategories: EventCategoryUnion[],
     country: CountryUnion,
     profilePicture?: string,
+    settings?: UserSettings,
     subscriptions?: Subscription[],
     ownedEvents?: Event[],
     likedEvents?: Event[],

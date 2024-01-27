@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { getMatchingPath } from '@/lib/utils';
 import { useMutationRequest, useDispatch } from '@/lib/hooks';
-import { clearProfile } from '@/lib/store/states/profile';
+import { setIsAuthenticated } from '@/lib/store/is-authenticated.state';
 import { authAPI } from '@/lib/api/auth';
 import type { NavigationLink } from '@/types';
 import { Home, Calendar, Stats, Dollar, Planning, Gear, Question, Power } from '@components/ui/icons';
@@ -37,10 +37,10 @@ const Sidebar: FunctionComponent = () => {
     );
     
     const handleSignOut = async () => {
-        const response = await trigger();
+        const logoutResponse = await trigger();
         
-        if (response.success) {
-            dispatch(clearProfile());
+        if (logoutResponse.success) {
+            dispatch(setIsAuthenticated(false));
         }
     };
     

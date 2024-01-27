@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { toast } from '@/lib/utils';
 import { authAPI } from '@/lib/api/auth';
 import { useToggle, useMutationRequest, useDispatch } from '@/lib/hooks';
-import { setProfile } from '@/lib/store/states/profile';
+import { setIsAuthenticated } from '@/lib/store/is-authenticated.state';
 import { Role } from '@/types/constants';
 import { signInSchema } from '@/types/auth';
 import type { SignInPayload } from '@/types/auth';
@@ -48,16 +48,16 @@ const SignInPage: NextPage = () => {
             return;
         }
         
-        dispatch(setProfile(userProfile.data));
+        dispatch(setIsAuthenticated(true));
         toast.success('You are now logged in!');
         
         setTimeout(() => {
-            router.push('/dashboard');
+            router.replace('/dashboard');
         }, 1000);
     };
 
     return (
-        <div className="flex flex-col justify-start items-center gap-10 w-[max(450px,25%)] mt-20 animate-slide-right">
+        <div className="flex flex-col justify-start items-center w-[max(450px,25%)] mt-20 animate-slide-right">
             <h1 className="text-5xl font-bold">
                 Let&apos;s&nbsp;
                 <span className="text-5xl text-primary">sign</span>&nbsp; you&nbsp;
@@ -65,7 +65,7 @@ const SignInPage: NextPage = () => {
             </h1>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="child:w-full flex flex-col justify-start items-center gap-10 w-full pb-5"
+                className="child:w-full flex flex-col justify-start items-center gap-10 w-full my-10"
             >
                 <Input
                     register={register('email')}
@@ -93,27 +93,33 @@ const SignInPage: NextPage = () => {
                         )
                     }
                 />
-                <div className="flex justify-start items-center w-full pl-2">
+                <div className="flex justify-between items-center w-full px-2">
                     <Checkbox
                         name="save-login-infos"
                         label="Remember me"
                         checked={saveLoginInfos}
                         onChange={toggleSaveLoginInfos}
                     />
+                    <Link href="/auth/password-reset"
+                          className="flex justify-center items-center fon w-fit font-medium hover:underline">
+                        Forgot password?
+                    </Link>
                 </div>
-                <Button type="submit" disabled={isMutating} className="hover:bg-primary">
-                    {
-                        isMutating
-                            ? 'Loading...'
-                            : 'Sign in'
-                    }
+                <Button
+                    type="submit"
+                    disabled={isMutating}
+                    loading={isMutating}
+                    className="hover:bg-primary"
+                >
+                    <p className="mx-auto">Sign in</p>
                 </Button>
             </form>
-            <Link href="/auth/password-reset" className="flex justify-center items-center w-full font-medium underline">
-                Forgot password?
-            </Link>
-            <div className="w-14 h-14 p-2 shadow-sm border rounded-full cursor-pointer">
-                <GoogleColored/>
+            <p>or</p>
+            <div className="flex justify-start items-center gap-5 mt-5 mb-10 pr-7 shadow-md rounded-full cursor-pointer transform transition-all duration-300 hover:bg-black hover:text-white">
+                <div className="w-12 h-12 p-2">
+                    <GoogleColored/>
+                </div>
+                <p>Connect with Google</p>
             </div>
             <p className="flex justify-center items-center w-full pb-10">
                 Don&apos;t have an account?&nbsp;

@@ -70,7 +70,7 @@ export enum EventCategory {
 }
 
 export enum EventStatus {
-    NOT_PUBLISHED = 'NOT_PUBLISHED',
+    DRAFT = 'DRAFT',
     PUBLISHED = 'PUBLISHED',
     POSTPONED = 'POSTPONED',
     CANCELLED = 'CANCELLED',
@@ -91,6 +91,13 @@ export enum InvitationType {
     FREE = 'FREE',
     EMAIL = 'EMAIL',
     UNIQUE_LINK = 'UNIQUE_LINK',
+}
+
+export enum NotificationType {
+    EVENTS = 'EVENTS',
+    TICKETS = 'TICKETS',
+    FINANCES = 'FINANCES',
+    SUBSCRIPTION_PLAN = 'SUBSCRIPTION_PLAN',
 }
 
 export const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;

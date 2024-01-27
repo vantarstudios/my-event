@@ -51,7 +51,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
     
     const toBePublished = (
         layout === 'create'
-        || (layout === 'edit' && event?.status === EventStatus.NOT_PUBLISHED)
+        || (layout === 'edit' && event?.status === EventStatus.DRAFT)
     );
     
     const [newTickets, setNewTickets] = useState<CreateTicketPayload[]>([]);
@@ -63,7 +63,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
         startingDate: event?.startingDate || '',
         endingDate: event?.endingDate || '',
         location: event?.location || '',
-        status: event?.status || EventStatus.NOT_PUBLISHED,
+        status: event?.status || EventStatus.DRAFT,
     });
     
     const { trigger, isMutating } = useMutationRequest(

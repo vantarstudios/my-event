@@ -43,7 +43,9 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                 />
                 {date && (
                     <div
-                        className="absolute top-5 left-6 flex flex-col justify-center items-center h-14 aspect-square text-white rounded-xl bg-primary">
+                        className={`absolute top-5 left-6 flex flex-col justify-center items-center h-14 aspect-square text-white rounded-xl ${
+                            status === EventStatus.DRAFT ? 'bg-gray-500' : 'bg-primary'
+                        }`}>
                         <p className="flex justify-center items-center text-2xl font-semibold h-fit">
                             {leadingZeroFormat(date.day)}
                         </p>
@@ -68,7 +70,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                         <EventActions
                             eventId={id}
                             eventTitle={title}
-                            isPublished={status !== EventStatus.NOT_PUBLISHED}
+                            isPublished={status !== EventStatus.DRAFT}
                             refreshEvent={refreshEvent}
                         />
                     )

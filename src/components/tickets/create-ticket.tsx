@@ -228,7 +228,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
                         <div className="flex justify-center items-center gap-5">
                             <Card
                                 onClick={handleIsGroupClick(false)}
-                                className={`flex justify-between items-center gap-2 h-16 px-5 border border-opacity-10 cursor-pointer ${
+                                className={`flex justify-center items-center gap-5 w-full h-16 px-5 border border-opacity-10 cursor-pointer ${
                                     isGroup ? 'text-black bg-white' : 'text-white bg-primary'
                                 }`}
                             >
@@ -237,7 +237,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
                             </Card>
                             <Card
                                 onClick={handleIsGroupClick(true)}
-                                className={`flex justify-between items-center gap-2 h-16 px-5 border border-opacity-10 cursor-pointer ${
+                                className={`flex justify-center items-center gap-5 w-full h-16 px-5 border border-opacity-10 cursor-pointer ${
                                     isGroup ? 'text-white bg-primary' : 'text-black bg-white'
                                 }`}
                             >
@@ -260,7 +260,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
                             indicator={
                                 <div className="flex justify-between items-center gap-1 w-fit">
                                     <p className="text-sm font-bold">Combo:</p>
-                                    <Switch onClick={handleIsComboClick}/>
+                                    <Switch onClick={handleIsComboClick} checked={isCombo}/>
                                 </div>
                             }
                         >

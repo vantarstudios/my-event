@@ -1,38 +1,25 @@
 'use client';
 
-import { Fragment, useEffect, useState } from 'react';
 import type { FunctionComponent, PropsWithChildren } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, redirect, RedirectType } from 'next/navigation';
 import { useSelector } from '@/lib/hooks';
-import { selectProfile } from '@/lib/store/states/profile';
+import { selectIsAuthenticated } from '@/lib/store/is-authenticated.state';
 
 const routesToProtect = [
     '/dashboard',
 ];
 
 const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    const router = useRouter();
     const pathname = usePathname();
-    const profile = useSelector(selectProfile);
-    const [canNavigate, setCanNavigate] = useState(true);
-
-    useEffect(() => {
-        if (
-            Object.keys(profile).length === 0
-            && routesToProtect.some((route) => pathname.startsWith(route))
-        ) {
-            setCanNavigate(false);
-            router.replace('/auth/signin');
-        } else {
-            setCanNavigate(true);
-        }
-    }, [pathname, profile, router]);
+    const isAuthenticated = useSelector(selectIsAuthenticated);
     
-    return (
-        <Fragment>
-            {canNavigate && children}
-        </Fragment>
-    );
+    const isProtectedRoute = routesToProtect.some((route) => pathname.startsWith(route));
+    
+    if (isProtectedRoute && !isAuthenticated) {
+        redirect('/auth/signin', RedirectType.replace);
+    }
+    
+    return children;
 };
 
 export default AuthGuard;

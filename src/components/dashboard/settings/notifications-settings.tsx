@@ -40,7 +40,7 @@ const NotificationsSettings: FunctionComponent<NotificationsSettingsProps> = ({ 
     const handleToggleNotification = (notificationTypes: NotificationType[]) => async (event: ChangeEvent<HTMLInputElement>) => {
         if (isMutating || isLoading || error) return;
         
-        const enabledNotifications = userSettings?.data.enabledNotifications || [];
+        const enabledNotifications = userSettings?.data?.enabledNotifications || [];
         
         if (event.target.checked) {
             await trigger([...enabledNotifications, ...notificationTypes]);
@@ -51,7 +51,7 @@ const NotificationsSettings: FunctionComponent<NotificationsSettingsProps> = ({ 
         await mutate();
     };
     
-    const isChecked = (types: NotificationType[]) => types.every((type) => userSettings && userSettings.data.enabledNotifications.includes(type));
+    const isChecked = (types: NotificationType[]) => types.every((type) => userSettings?.data && userSettings.data.enabledNotifications.includes(type));
     
     return (
         <TitledArea title="Notifications" Icon={Bell}>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FunctionComponent } from 'react';
+import { useState, type FunctionComponent, type ChangeEvent } from 'react';
 import { hasSameDate } from '@/lib/utils';
 import type { Ticket as TicketType, Event, Layout } from '@/types';
 import type { CreateTicketPayload, UpdateTicketPayload } from '@/types/tickets';
@@ -109,7 +109,7 @@ const Ticketing: FunctionComponent<TicketingProps> = ({ layout, event, newTicket
                     name="smiCode"
                     placeholder="SMI code"
                     value={smiCode}
-                    onChange={(event) => setSmiCode(event.target.value)}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => setSmiCode(event.target.value)}
                 />
             </TitledArea>
             {

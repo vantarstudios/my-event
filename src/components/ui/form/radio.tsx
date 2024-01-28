@@ -21,7 +21,7 @@ const Radio: FunctionComponent<RadioProps> = ({ name, label, value, checked, onC
                 value={value}
                 checked={checked}
                 onChange={handleChange}
-                className="form-radio w-6 h-6 bg-white hover:bg-black focus:bg-primary checked:bg-primary checked:hover:bg-primary checked:focus:bg-primary checked:focus:ring-black cursor-pointer"
+                className="form-radio w-6 h-6 bg-white hover:bg-black focus:bg-primary focus:ring-black focus:ring-1 checked:bg-primary checked:hover:bg-primary checked:focus:bg-primary checked:focus:ring-black checked:focus:ring-1 cursor-pointer"
             />
             <label htmlFor={name}>{label}</label>
         </div>

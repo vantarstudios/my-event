@@ -67,3 +67,7 @@ export { default as Menu } from './menu';
 export { default as Dots } from './dots';
 
 export { default as Search } from './search';
+
+export { default as Paypal } from './paypal';
+
+export { default as SimCard } from './sim-card';

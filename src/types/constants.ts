@@ -28,9 +28,14 @@ export enum SubscriptionStatus {
     CANCELLED = 'CANCELLED',
 }
 
-export enum PaymentMethod {
+export enum PaymentMethodType {
     MOBILE_MONEY = 'MOBILE_MONEY',
     VISA = 'VISA',
+    PAYPAL = 'PAYPAL',
+}
+
+export enum WithdrawalMethodType {
+    MOBILE_MONEY = 'MOBILE_MONEY',
     PAYPAL = 'PAYPAL',
 }
 

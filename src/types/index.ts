@@ -3,7 +3,8 @@ import {
     Role,
     Plan as PlanEnum,
     SubscriptionStatus,
-    PaymentMethod as PaymentMethodEnum,
+    PaymentMethodType,
+    WithdrawalMethodType,
     FacturationType,
     MediaType,
     Country,
@@ -58,7 +59,9 @@ export type PlanUnion = (typeof PlanEnum)[keyof typeof PlanEnum];
 
 export type SubscriptionStatusUnion = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus];
 
-export type PaymentMethodUnion = (typeof PaymentMethodEnum)[keyof typeof PaymentMethodEnum];
+export type PaymentMethodUnion = (typeof PaymentMethodType)[keyof typeof PaymentMethodType];
+
+export type WithdrawalMethodUnion = (typeof WithdrawalMethodType)[keyof typeof WithdrawalMethodType];
 
 export type FacturationTypeUnion = (typeof FacturationType)[keyof typeof FacturationType];
 
@@ -257,8 +260,8 @@ export type ParsedDateTime = {
     time: ParsedTime | null;
 };
 
-export type PaymentMethod = {
-    type: PaymentMethodUnion;
+export type WithdrawalMethod = {
+    type: WithdrawalMethodUnion;
     label: string;
 };
 

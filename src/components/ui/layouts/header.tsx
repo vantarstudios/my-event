@@ -66,7 +66,7 @@ const Header: FunctionComponent = () => {
                     />
                 </div>
             </Link>
-            <nav className="hidden md:flex items-center gap-x-10 w-fit h-full">
+            <nav className="relative hidden md:flex items-center gap-x-10 w-fit h-full">
                 <ul className="flex flex-wrap items-center gap-x-10 h-full overflow-y-auto">
                     {menuLinks.map(({ name, href }, index) => (
                         <li

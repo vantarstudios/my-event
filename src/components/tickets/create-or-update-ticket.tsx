@@ -2,39 +2,42 @@
 
 import { useState, useEffect, type FormEvent, type FunctionComponent, type MouseEvent } from 'react';
 import { v4 as uuid4 } from 'uuid';
-import { useToggle } from '@/lib/hooks';
-import { capitalize, monthNumToString, thousandsCommaFormat, getISOString, parseDateTime } from '@/lib/utils';
-import { InvitationType } from '@/types/constants';
-import type { InvitationTypeUnion, ParsedDate, Event } from '@/types';
-import { ticketTypes } from '@/types';
-import { createTicketSchema } from '@/types/tickets';
-import type { CreateTicketPayload, CreateTicketErrors } from '@/types/tickets';
-import { Button } from '@components/ui/buttons';
-import { Checkbox, DateInput, Input, NumberInput, Select, Switch } from '@components/ui/form';
-import { Copy, People, Person } from '@components/ui/icons';
-import { Card, Modal, TitledArea, TitledTextArea } from '@components/ui/layouts';
-import { encodeToBase64 } from 'next/dist/build/webpack/loaders/utils';
 import type { ZodError } from 'zod';
+import { useToggle } from '@/lib/hooks';
+import { capitalize, monthNumToString, thousandsCommaFormat, getISOString, parseDateTime, hasSameDate, toast } from '@/lib/utils';
+import { InvitationType } from '@/types/constants';
+import { createTicketSchema, type CreateTicketPayload, type CreateTicketErrors } from '@/types/tickets';
+import { ticketTypes, type InvitationTypeUnion, type ParsedDate, type Ticket, type Event } from '@/types';
+import { Button } from '@components/ui/buttons';
+import { Copy, People, Person } from '@components/ui/icons';
+import { encodeToBase64 } from 'next/dist/build/webpack/loaders/utils';
+import { Card, Modal, TitledArea, TitledTextArea } from '@components/ui/layouts';
+import { Checkbox, DateInput, Input, NumberInput, Select, Switch } from '@components/ui/form';
 
 interface CreateTicketProps {
     isOpened: boolean;
+    ticket?: Ticket;
     eventStartingDate?: Event['startingDate'];
     eventEndingDate?: Event['endingDate'];
+    isLoading?: boolean;
+    onCancel: () => void;
     onSave: (newTicket: CreateTicketPayload) => void;
 }
+
+type TicketTypeUnion = (typeof ticketTypes)[number];
 
 const userPlanInfos = {
     eventTitle: 'Event name',
     currency: 'XOF',
     eventSizeLimit: 500,
-    ticketsProcessingFeesPercentage: 20,
+    ticketsProcessingFeesPercentage: 0.05,
 };
 
 const MAX_GROUP_SIZE = 10;
 
-const buildOptions = (limit: number, step?: number) => {
+const buildOptions = (limit: number, step?: number, limited = true): string[] => {
     return [
-        'Unlimited',
+        ...(limited ? ['Unlimited'] : []),
         ...Array(limit)
             .fill(0)
             .map((_, index) => `${index + 1}`)
@@ -43,49 +46,70 @@ const buildOptions = (limit: number, step?: number) => {
     ];
 };
 
-const getGroupSizes = (eventSizeLimit: number) => {
-    return buildOptions(Math.min(MAX_GROUP_SIZE, eventSizeLimit || MAX_GROUP_SIZE));
+const getGroupSizes = (eventSizeLimit: number): string[] => {
+    return buildOptions(Math.min(MAX_GROUP_SIZE, eventSizeLimit || MAX_GROUP_SIZE), 1, false);
 };
 
 const getGroupsLimit = (eventSizeLimit: number, groupSize: string) => {
-    return buildOptions(Math.floor(eventSizeLimit / (groupSize === 'Unlimited' ? MAX_GROUP_SIZE : Number(groupSize))));
+    return buildOptions(Math.floor(eventSizeLimit / (groupSize === '' ? MAX_GROUP_SIZE : Number(groupSize))));
 };
 
 const getExpectedParticipants = (eventSizeLimit: number) => {
     return buildOptions(eventSizeLimit, 10);
 };
 
-const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventStartingDate, eventEndingDate, onSave }) => {
-    const [isGroup, setIsGroup] = useState<boolean>(false);
-    const [isCombo, toggleIsCombo] = useToggle<boolean>(false, true);
+const CreateOrUpdateTicket: FunctionComponent<CreateTicketProps> = ({ ticket, isOpened, eventStartingDate, eventEndingDate, isLoading, onCancel, onSave }) => {
+    const endSalesOnStartDateValue = ticket?.salesEndDate && eventStartingDate
+        ? hasSameDate(ticket.salesEndDate, eventStartingDate)
+        : false;
+    
+    const [formErrors, setFormErrors] = useState<CreateTicketErrors>({} as CreateTicketErrors);
     const [invitationsEmails, setInvitationsEmails] = useState<string[]>([]);
     const [invitationLink, setInvitationLink] = useState(`https://myevent-invitation-${encodeToBase64(userPlanInfos.eventTitle)}-${uuid4()}`);
     const [isInvitationLinkCopied, setIsInvitationLinkCopied] = useState<boolean>(false);
-    const [selectedGroupsLimit, setSelectedGroupsLimit] = useState<string>('Unlimited');
+    const [selectedTicketTypes, setSelectedTicketTypes] = useState<TicketTypeUnion[]>([
+        ...(ticket?.price !== undefined
+            ? ticket?.price > 0
+                ? ['paid']
+                : ['free']
+            : []) as TicketTypeUnion[],
+        ...(ticket?.invitationType !== InvitationType.FREE ? ['invitation'] : []) as TicketTypeUnion[],
+    ]);
     const [transferFees, toggleTransferFees] = useToggle<boolean>(false, true);
-    const [selectedTicketTypes, setSelectedTicketTypes] = useState<(typeof ticketTypes)[number][]>([]);
-    const [endSalesOnStartDate, toggleEndSalesOnStartDate] = useToggle<boolean>(false, true);
-    const [formErrors, setFormErrors] = useState<CreateTicketErrors>({} as CreateTicketErrors);
+    const [isCombo, toggleIsCombo] = useToggle<boolean>(selectedTicketTypes.length > 1, selectedTicketTypes.length <= 1);
+    const [endSalesOnStartDate, toggleEndSalesOnStartDate] = useToggle<boolean>(endSalesOnStartDateValue, !endSalesOnStartDateValue);
     
-    const [ticketTitle, setTicketTitle] = useState<string>('');
-    const [ticketDescription, setTicketDescription] = useState<string>('');
-    const [salesEndDate, setSalesEndDate] = useState<ParsedDate | null>(null);
-    const [price, setPrice] = useState<number>(0);
-    const [selectedInvitationType, setSelectedInvitationType] = useState<InvitationTypeUnion>(InvitationType.FREE);
-    const [expectedParticipants, setExpectedParticipants] = useState<string>('Unlimited');
-    const [selectedGroupSize, setSelectedGroupSize] = useState<string>('Unlimited');
-
-    const pricePerParticipant = `${thousandsCommaFormat(
-        price / (selectedGroupSize === 'Unlimited' ? MAX_GROUP_SIZE : Number(selectedGroupSize)),
-    )}`;
+    const [isGroup, setIsGroup] = useState<boolean>(Boolean(ticket?.allowedPeople) && ticket!.allowedPeople > 1);
+    const [ticketTitle, setTicketTitle] = useState<string>(ticket?.title || '');
+    const [ticketDescription, setTicketDescription] = useState<string>(ticket?.description || '');
+    const [salesEndDate, setSalesEndDate] = useState<ParsedDate | null>(ticket?.salesEndDate
+        ? parseDateTime(ticket.salesEndDate, 'date')
+        : null
+    );
+    const [price, setPrice] = useState<number>(ticket?.price || 0);
+    const [selectedInvitationType, setSelectedInvitationType] = useState<InvitationTypeUnion>(ticket?.invitationType || InvitationType.FREE);
+    const [expectedParticipants, setExpectedParticipants] = useState<string>(ticket?.maxQuantity ? String(ticket.maxQuantity) : 'Unlimited');
+    const [selectedGroupSize, setSelectedGroupSize] = useState<string>(ticket?.allowedPeople ? String(ticket.allowedPeople) : '');
+    const [selectedGroupsLimit, setSelectedGroupsLimit] = useState<string>(ticket?.maxQuantity
+        ? String(Math.floor(ticket.maxQuantity / (ticket.allowedPeople || 1)))
+        : 'Unlimited'
+    );
 
     const handleIsGroupClick = (value: boolean) => () => {
         setIsGroup(value);
+        
+        if (!value) {
+            setSelectedGroupSize('Unlimited');
+            setSelectedGroupsLimit('Unlimited');
+        }
     };
 
     const handleGroupSizeChange = (value: string) => {
         setSelectedGroupSize(value);
-        setSelectedGroupsLimit('Unlimited');
+        setSelectedGroupsLimit(expectedParticipants === 'Unlimited'
+            ? 'Unlimited'
+            : String(Math.floor(Number(expectedParticipants) / Number(value)))
+        );
     };
 
     const handleIsComboClick = () => {
@@ -156,15 +180,22 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
+        if (isLoading) return;
+        
+        if (isGroup && parseInt(selectedGroupSize) === 1) {
+            toast.error('Group size must be greater than 1');
+            return;
+        }
+        
         const maxQuantity = expectedParticipants === 'Unlimited' ? undefined : Number(expectedParticipants);
         
         const newTicket: CreateTicketPayload = {
             title: ticketTitle,
             description: ticketDescription,
             salesEndDate: getISOString({ date: salesEndDate, time: null }),
-            price: price,
+            price: selectedTicketTypes.includes('paid') ? price : 0,
             invitationType: selectedInvitationType,
-            allowedPeople: isGroup && selectedGroupSize !== 'Unlimited' ? Number(selectedGroupSize) : undefined,
+            allowedPeople: isGroup ? Number(selectedGroupSize) : 1,
             maxQuantity: maxQuantity,
             limited: maxQuantity !== undefined,
         };
@@ -181,7 +212,6 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
     };
     
     useEffect(() => {
-        
         const resetForm = () => {
             setIsGroup(false);
             setInvitationsEmails([]);
@@ -219,16 +249,25 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
     return (
         <Modal isOpened={isOpened}>
             <Card className="min-w-max h-[90vh] py-5 pl-5 pr-5">
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full h-full pl-5">
+                <form
+                    onSubmit={handleSubmit}
+                    onReset={onCancel}
+                    className="flex flex-col gap-5 w-full h-full pl-5"
+                >
                     <div className="flex justify-between items-center">
-                        <p className="text-2xl font-semibold">{ticketTitle || 'New ticket'}</p>
-                        <Button type="submit">Save</Button>
+                        <p className="w-[25rem] break-all text-2xl font-semibold line-clamp-1">{ticketTitle || 'New ticket'}</p>
+                        <Button
+                            type="reset"
+                            className="px-5 py-2 text-sm text-black font-medium border-2 border-black bg-white hover:bg-black hover:bg-opacity-100 hover:text-white"
+                        >
+                            Cancel
+                        </Button>
                     </div>
                     <div className="flex flex-col gap-7 pr-5 pb-5 overflow-y-auto">
                         <div className="flex justify-center items-center gap-5">
                             <Card
                                 onClick={handleIsGroupClick(false)}
-                                className={`flex justify-center items-center gap-5 w-full h-16 px-5 border border-opacity-10 cursor-pointer ${
+                                className={`flex justify-center items-center gap-5 w-full h-16 px-5 border border-opacity-10 rounded-2xl cursor-pointer ${
                                     isGroup ? 'text-black bg-white' : 'text-white bg-primary'
                                 }`}
                             >
@@ -237,7 +276,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
                             </Card>
                             <Card
                                 onClick={handleIsGroupClick(true)}
-                                className={`flex justify-center items-center gap-5 w-full h-16 px-5 border border-opacity-10 cursor-pointer ${
+                                className={`flex justify-center items-center gap-5 w-full h-16 px-5 border border-opacity-10 rounded-2xl cursor-pointer ${
                                     isGroup ? 'text-white bg-primary' : 'text-black bg-white'
                                 }`}
                             >
@@ -260,7 +299,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
                             indicator={
                                 <div className="flex justify-between items-center gap-1 w-fit">
                                     <p className="text-sm font-bold">Combo:</p>
-                                    <Switch onClick={handleIsComboClick} checked={isCombo}/>
+                                    <Switch onChange={handleIsComboClick} checked={isCombo}/>
                                 </div>
                             }
                         >
@@ -279,8 +318,8 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
                             </div>
                         </TitledArea>
                         {isGroup && (
-                            <div className="flex justify-between items-center">
-                                <TitledArea title="Members per group:">
+                            <div className="flex justify-between items-center gap-10">
+                                <TitledArea title="Members per group:" className="w-full">
                                     <Select
                                         name="group-size"
                                         value={selectedGroupSize}
@@ -288,7 +327,7 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
                                         onChange={handleGroupSizeChange}
                                     />
                                 </TitledArea>
-                                <TitledArea title="Groups limit:">
+                                <TitledArea title="Groups limit:" className="w-full">
                                     <Select
                                         name="groups-limit"
                                         value={selectedGroupsLimit}
@@ -304,19 +343,19 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
                                 indicator={
                                     isGroup &&
                                     selectedGroupSize !== 'Unlimited' && (
-                                        <div className="flex justify-center items-center gap-2">
-                                            <Person className="w-4 h-4"/>
-                                            <p className="text-sm font-medium">
-                                                {pricePerParticipant} {userPlanInfos.currency}
-                                            </p>
-                                        </div>
+                                        <p className="px-2 py-1 text-sm text-white font-light bg-black rounded-md">
+                                            Commission:&nbsp;
+                                            <span className="text-sm font-semibold text-primary">
+                                                {thousandsCommaFormat(price * userPlanInfos.ticketsProcessingFeesPercentage)} {userPlanInfos.currency}
+                                            </span>
+                                        </p>
                                     )
                                 }
                             >
                                 <NumberInput
                                     errors={formErrors.price}
                                     name="price"
-                                    value={String(price)}
+                                    value={price.toString()}
                                     onChange={setPrice}
                                     icon={
                                         <span className="text-primary font-medium">{userPlanInfos.currency}</span>
@@ -427,16 +466,19 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
                         </TitledArea>
                         <div className="flex flex-col gap-5">
                             <p className="text-sm text-primary">
-                                {userPlanInfos.ticketsProcessingFeesPercentage}% of tickets sales will be subtracted
+                                {userPlanInfos.ticketsProcessingFeesPercentage * 100}% of tickets sales will be subtracted
                                 as processing fees
                             </p>
                             <Checkbox
                                 name="transfer-fees"
-                                label="Transfer processing fees to user"
+                                label="Transfer processing fees to a user"
                                 checked={transferFees}
                                 onChange={toggleTransferFees}
                             />
                         </div>
+                    </div>
+                    <div className="flex justify-end items-center w-full">
+                        <Button type="submit" loading={isLoading}>Save</Button>
                     </div>
                 </form>
             </Card>
@@ -444,4 +486,4 @@ const CreateTicket: FunctionComponent<CreateTicketProps> = ({ isOpened, eventSta
     );
 };
 
-export default CreateTicket;
+export default CreateOrUpdateTicket;

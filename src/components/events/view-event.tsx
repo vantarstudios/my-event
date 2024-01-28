@@ -28,7 +28,7 @@ const ViewEvent: FunctionComponent<ViewEventProps> = ({ event, onModeToggle }) =
                 <p>{event.description}</p>
                 <div className="flex flex-wrap justify-start items-center gap-2 w-full h-fit">
                     {event.categories.map((category) => (
-                        <CategoryChip key={category} category={category}/>
+                        <CategoryChip key={category} category={`#${category}`} />
                     ))}
                 </div>
                 <TitledArea title="Tickets" className="w-full">

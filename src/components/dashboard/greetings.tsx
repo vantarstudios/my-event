@@ -9,7 +9,7 @@ const Greetings: FunctionComponent = () => {
     const { user, isLoading, error } = useUserProfile();
     
     return (
-        <div className="flex items-center gap-5">
+        <div className="relative flex items-center gap-5">
             <ProfilePicture asLink={true} showSignUp={false}/>
             {
                 (!isLoading && !error && user?.success)

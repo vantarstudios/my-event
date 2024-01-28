@@ -59,3 +59,8 @@ export function getISOString(dateTime: ParsedDateTime): string {
     
     return new Date(date.year, date.month, date.day, time.hour, time.minute).toISOString();
 }
+
+
+export function hasSameDate(date1: string, date2: string) {
+    return date1.split('T')[0] === date2.split('T')[0];
+}

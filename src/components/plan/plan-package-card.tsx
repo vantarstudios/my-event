@@ -19,7 +19,7 @@ const PlanPackageCard: FunctionComponent<PlanCardProps> = ({ planPackage }) => {
             <p className="text-2xl text-primary font-medium">{planPackage.name}</p>
             <p className="flex flex-col items-center text-xl font-semibold">
                 ${thousandsCommaFormat(planPackage.price)}
-                {planPackage.monthly && <p className="text-sm">monthly</p>}
+                {planPackage.monthly && <span className="text-sm">monthly</span>}
             </p>
             {planPackage.yearly && (
                 <p className="text-sm text-primary font-semibold">${thousandsCommaFormat(planPackage.yearly)} Yearly</p>

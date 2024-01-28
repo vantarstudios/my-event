@@ -20,7 +20,7 @@ const EventsCounts: FunctionComponent<EventCountsProps> = ({ moreActions }) => {
             const response = await eventsAPI.getEventsCounts(organizerId);
             
             if (!response.data.success) {
-                throw new Error(response.data.error.message);
+                throw new Error('Unable to fetch events counts');
             }
             
             return response.data;

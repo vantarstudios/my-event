@@ -32,11 +32,13 @@ const DashboardEventPage: NextPage<DashboardEditEventPageProps> = ({ params }) =
     return (
         <div className="w-full h-full">
             <div className="flex flex-col gap-10 w-full h-full">
-                <div className="flex justify-start items-center gap-10 text-2xl font-medium">
+                <div
+                    onClick={() => router.back()}
+                    className="flex justify-start items-center gap-10 text-2xl font-medium cursor-pointer"
+                >
                     <ChevronLeft
-                        onClick={() => router.back()}
                         strokeWidth="bold"
-                        className="w-5 h-5 cursor-pointer"
+                        className="w-5 h-5"
                     />
                     {
                         isLoading

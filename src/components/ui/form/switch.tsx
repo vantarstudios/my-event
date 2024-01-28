@@ -7,10 +7,10 @@ interface SwitchProps extends HTMLAttributes<HTMLInputElement> {
     loading?: boolean;
 }
 
-const Switch: FunctionComponent<SwitchProps> = ({ className, ...props }) => {
+const Switch: FunctionComponent<SwitchProps> = ({ className, loading, ...props }) => {
     return (
         <label className={`relative inline-flex items-center cursor-pointer ${
-            props.loading && 'cursor-wait'
+            loading && 'cursor-wait'
         }`}>
             <input
                 {...props}

@@ -20,7 +20,7 @@ const NotificationsSettings: FunctionComponent<NotificationsSettingsProps> = ({ 
             const response = await usersAPI.getSettings(user.id);
             
             if (!response.data.success) {
-                throw new Error(response.data.error.message);
+                throw new Error('Unable to fetch user settings');
             }
             
             return response.data;

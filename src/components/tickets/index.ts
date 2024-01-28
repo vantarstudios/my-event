@@ -1,4 +1,4 @@
-export { default as CreateTicket } from './create-ticket';
+export { default as CreateOrUpdateTicket } from './create-or-update-ticket';
 
 export { default as Ticket } from './ticket';
 

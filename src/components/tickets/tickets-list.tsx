@@ -13,9 +13,10 @@ interface TicketsListProps {
     mode: Mode;
     event: Event;
     showEmpty?: boolean;
+    onTicketEdit?: (ticket: TicketType) => void;
 }
 
-const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event, showEmpty = true }) => {
+const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event, onTicketEdit, showEmpty = true }) => {
     const [ticketToDelete, setTicketToDelete] = useState<TicketType | null>(null);
     const [isDeletionModalOpen, setIsDeletionModalOpen] = useState(false);
     
@@ -85,7 +86,10 @@ const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event, showEmp
                                 <Ticket
                                     key={index}
                                     ticket={ticket}
+                                    eventId={event.id}
+                                    eventTitle={event.title}
                                     mode={mode}
+                                    onEdit={onTicketEdit && (() => onTicketEdit(ticket))}
                                     onDelete={askDeleteTicket(ticket)}
                                 />
                             ))

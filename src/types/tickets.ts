@@ -16,3 +16,5 @@ export const createTicketSchema = z.object({
 export type CreateTicketPayload = z.infer<typeof createTicketSchema>;
 
 export type CreateTicketErrors = ValidationErrors<CreateTicketPayload>;
+
+export type UpdateTicketPayload = Partial<CreateTicketPayload>;

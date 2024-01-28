@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FunctionComponent } from 'react';
+import { useState, type FunctionComponent, useEffect } from 'react';
 import { useRouter, useSearchParams, usePathname, type ReadonlyURLSearchParams } from 'next/navigation';
 import { useMutationRequest } from '@/lib/hooks';
 import { toast } from '@/lib/utils';
@@ -8,8 +8,15 @@ import { eventsAPI } from '@/lib/api/events';
 import { ticketsAPI } from '@/lib/api/tickets';
 import { EventStatus } from '@/types/constants';
 import { createEventSchema, type CreateEventPayload, type UpdateEventPayload } from '@/types/events';
-import type { CreateTicketPayload } from '@/types/tickets';
-import type { EditOrCreateStep, Event, EventTypeUnion, Layout, ApiResponse } from '@/types';
+import type { CreateTicketPayload, UpdateTicketPayload } from '@/types/tickets';
+import type {
+    EditOrCreateStep,
+    Event,
+    EventTypeUnion,
+    Ticket,
+    Layout,
+    ApiResponse,
+} from '@/types';
 import { Button } from '@components/ui/buttons';
 import { Ticketing } from '@components/tickets';
 import { Stepper } from '@components/ui/form';
@@ -29,7 +36,7 @@ type MutationPayload = CreateEventPayload & {
     ticketsChanged: boolean
 };
 
-const setCurrentStepIndexFactory = (router: ReturnType<typeof useRouter>, pathname: string, searchParams: ReadonlyURLSearchParams) => (newIndex: number) => {
+const currentStepIndexSetterFactory = (router: ReturnType<typeof useRouter>, pathname: string, searchParams: ReadonlyURLSearchParams) => (newIndex: number) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
     newSearchParams.set('step', String(newIndex));
     router.replace(`${pathname}?${newSearchParams.toString()}`);
@@ -40,14 +47,17 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
     const pathname = usePathname();
     const searchParams = useSearchParams();
     
-    const setCurrentStepIndex = setCurrentStepIndexFactory(router, pathname, searchParams);
+    const setCurrentStepIndex = currentStepIndexSetterFactory(router, pathname, searchParams);
     
     const currentStepIndex = searchParams.has('step')
         ? Number(searchParams.get('step'))
-        : (() => {
+        : 0;
+    
+    useEffect(() => {
+        if (!searchParams.has('step')) {
             setCurrentStepIndex(0);
-            return 0;
-        })();
+        }
+    }, [searchParams]);
     
     const toBePublished = (
         layout === 'create'
@@ -66,7 +76,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
         status: event?.status || EventStatus.DRAFT,
     });
     
-    const { trigger, isMutating } = useMutationRequest(
+    const { trigger: createOrUpdateEvent, isMutating: isCreatingOrUpdatingEvent } = useMutationRequest(
         'create-event',
         async (_: string, { arg: { eventChanged, ticketsChanged, tickets, ...payload } }: { arg: MutationPayload }) => {
             let response;
@@ -109,6 +119,25 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 : 'Event created successfully',
     );
     
+    const { trigger: updateTicket, isMutating: isUpdatingTicket } = useMutationRequest(
+        'update-ticket',
+        async (
+            _: string,
+            {
+                arg: { ticketId, data, eventId }
+            }: { arg: { ticketId: Ticket['id'], data: UpdateTicketPayload, eventId: Event['id'] } }
+        ) => {
+            const response = await ticketsAPI.updateTicket(eventId, ticketId, data);
+            
+            if (!response.data.success) {
+                throw new Error('Unable to update this ticket');
+            }
+            
+            return response.data;
+        },
+        'Ticket updated successfully'
+    );
+    
     const handleDataChange = <T extends keyof CreateEventPayload>(key: T) => (value: CreateEventPayload[T]) => {
         setFormData((currentData) => ({ ...currentData, [key]: value }));
     };
@@ -121,6 +150,14 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
             
             return [...currentTickets, ticket];
         });
+    };
+    
+    const handleTicketEdit = async (ticketId: Ticket['id'], data: UpdateTicketPayload, hasChanged: boolean) => {
+        if (!hasChanged) {
+            return;
+        }
+        
+        await updateTicket({ ticketId, data, eventId: event!.id });
     };
     
     const steps: EditOrCreateStep[] = [
@@ -155,6 +192,8 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 layout={layout}
                 event={{ ...event, startingDate: formData.startingDate, endingDate: formData.endingDate } as Event}
                 newTickets={newTickets}
+                isUpdating={isUpdatingTicket}
+                onTicketEdit={handleTicketEdit}
                 onTicketAdd={handleTicketChange}
             />,
             isCompleted: true,
@@ -163,7 +202,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
 
     const handleStepChange = (newIndex: number, eventStatus?: EventStatus) => async () => {
         if (newIndex === steps.length) {
-            if (isMutating) {
+            if (isCreatingOrUpdatingEvent || isUpdatingTicket) {
                 return;
             }
             
@@ -179,7 +218,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 try {
                     const parsedFormData = createEventSchema.parse(data);
 
-                    await trigger({
+                    await createOrUpdateEvent({
                         ...parsedFormData,
                         type: eventType,
                         tickets: newTickets,
@@ -204,7 +243,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 <p className="text-2xl text-primary font-semibold">Event</p>
                 <div className="flex items-center gap-5">
                     <Button
-                        loading={isMutating && !toBePublished}
+                        loading={isCreatingOrUpdatingEvent && !toBePublished}
                         onClick={handleStepChange(currentStepIndex + 1)}
                         disabled={layout === 'create' && !steps[currentStepIndex]!.isCompleted}
                         className="text-sm"
@@ -214,7 +253,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                     {
                         (currentStepIndex === steps.length - 1 && toBePublished) && (
                             <Button
-                                loading={isMutating}
+                                loading={isCreatingOrUpdatingEvent}
                                 onClick={handleStepChange(currentStepIndex + 1, EventStatus.PUBLISHED)}
                                 disabled={layout === 'create' && !steps[currentStepIndex]!.isCompleted}
                                 className="text-sm"

@@ -157,7 +157,7 @@ const SignUpPage: NextPage = () => {
                         <div className="w-12 h-12 p-2">
                             <GoogleColored/>
                         </div>
-                        <p>Connect with Google</p>
+                        <p>Continue with Google</p>
                     </div>
                 </Fragment>
             )}

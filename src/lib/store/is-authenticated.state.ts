@@ -9,7 +9,9 @@ interface IsAuthenticatedState {
 }
 
 const initialState: IsAuthenticatedState = {
-    value: false
+    value: typeof window !== 'undefined'
+        ? window.localStorage.getItem(AUTH_KEY) === 'false' ?? false
+        : false,
 }
 
 export const isAuthenticatedSlice = createSlice({

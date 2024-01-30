@@ -50,10 +50,6 @@ const getGroupSizes = (eventSizeLimit: number): string[] => {
     return buildOptions(Math.min(MAX_GROUP_SIZE, eventSizeLimit || MAX_GROUP_SIZE), 1, false);
 };
 
-const getGroupsLimit = (eventSizeLimit: number, groupSize: string) => {
-    return buildOptions(Math.floor(eventSizeLimit / (groupSize === '' ? MAX_GROUP_SIZE : Number(groupSize))));
-};
-
 const getExpectedParticipants = (eventSizeLimit: number) => {
     return buildOptions(eventSizeLimit, 10);
 };
@@ -89,27 +85,18 @@ const CreateOrUpdateTicket: FunctionComponent<CreateTicketProps> = ({ ticket, is
     const [price, setPrice] = useState<number>(ticket?.price || 0);
     const [selectedInvitationType, setSelectedInvitationType] = useState<InvitationTypeUnion>(ticket?.invitationType || InvitationType.FREE);
     const [expectedParticipants, setExpectedParticipants] = useState<string>(ticket?.maxQuantity ? String(ticket.maxQuantity) : 'Unlimited');
-    const [selectedGroupSize, setSelectedGroupSize] = useState<string>(ticket?.allowedPeople ? String(ticket.allowedPeople) : '');
-    const [selectedGroupsLimit, setSelectedGroupsLimit] = useState<string>(ticket?.maxQuantity
-        ? String(Math.floor(ticket.maxQuantity / (ticket.allowedPeople || 1)))
-        : 'Unlimited'
-    );
+    const [selectedGroupSize, setSelectedGroupSize] = useState<string>(ticket?.allowedPeople ? String(ticket.allowedPeople) : '1');
 
     const handleIsGroupClick = (value: boolean) => () => {
         setIsGroup(value);
         
         if (!value) {
             setSelectedGroupSize('Unlimited');
-            setSelectedGroupsLimit('Unlimited');
         }
     };
 
     const handleGroupSizeChange = (value: string) => {
         setSelectedGroupSize(value);
-        setSelectedGroupsLimit(expectedParticipants === 'Unlimited'
-            ? 'Unlimited'
-            : String(Math.floor(Number(expectedParticipants) / Number(value)))
-        );
     };
 
     const handleIsComboClick = () => {
@@ -217,7 +204,6 @@ const CreateOrUpdateTicket: FunctionComponent<CreateTicketProps> = ({ ticket, is
             setInvitationsEmails([]);
             setInvitationLink('');
             setIsInvitationLinkCopied(false);
-            setSelectedGroupsLimit('Unlimited');
             setSelectedTicketTypes([]);
             setFormErrors({} as CreateTicketErrors);
             setTicketTitle('');
@@ -318,24 +304,14 @@ const CreateOrUpdateTicket: FunctionComponent<CreateTicketProps> = ({ ticket, is
                             </div>
                         </TitledArea>
                         {isGroup && (
-                            <div className="flex justify-between items-center gap-10">
-                                <TitledArea title="Members per group:" className="w-full">
-                                    <Select
-                                        name="group-size"
-                                        value={selectedGroupSize}
-                                        options={getGroupSizes(userPlanInfos.eventSizeLimit)}
-                                        onChange={handleGroupSizeChange}
-                                    />
-                                </TitledArea>
-                                <TitledArea title="Groups limit:" className="w-full">
-                                    <Select
-                                        name="groups-limit"
-                                        value={selectedGroupsLimit}
-                                        options={getGroupsLimit(userPlanInfos.eventSizeLimit, selectedGroupSize)}
-                                        onChange={setSelectedGroupsLimit}
-                                    />
-                                </TitledArea>
-                            </div>
+                            <TitledArea title="Members per group:" className="w-full">
+                                <Select
+                                    name="group-size"
+                                    value={selectedGroupSize}
+                                    options={getGroupSizes(userPlanInfos.eventSizeLimit)}
+                                    onChange={handleGroupSizeChange}
+                                />
+                            </TitledArea>
                         )}
                         {selectedTicketTypes.includes('paid') && (
                             <TitledArea

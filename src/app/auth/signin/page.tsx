@@ -119,7 +119,7 @@ const SignInPage: NextPage = () => {
                 <div className="w-12 h-12 p-2">
                     <GoogleColored/>
                 </div>
-                <p>Connect with Google</p>
+                <p>Continue with Google</p>
             </div>
             <p className="flex justify-center items-center w-full pb-10">
                 Don&apos;t have an account?&nbsp;

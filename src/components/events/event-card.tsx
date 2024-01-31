@@ -1,10 +1,11 @@
-import type { FunctionComponent } from 'react';
+import { Fragment, type FunctionComponent } from 'react';
 import Link from 'next/link';
 import { leadingZeroFormat, parseDateTime, monthNumToString } from '@/lib/utils';
 import { imagesPlaceholder } from '@/data/images-placeholder';
 import { EventStatus } from '@/types/constants';
 import type { Event } from '@/types';
 import { ImageWithFallback } from '@components/ui';
+import EventCardModal from './event-card-modal';
 import EventActions from './event-actions';
 
 interface EventCardProps extends Partial<Pick<Event, 'id' | 'title' | 'startingDate' | 'status'>> {
@@ -20,28 +21,26 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
         ? parseDateTime(startingDate, 'both')
         : { date: undefined, time: undefined };
     
-    return (
-        <div
-            className={`relative flex flex-col gap-2 ${format === 'unconstrained' ? 'w-full h-full' : 'w-[250px]'} ${
-                !asLink && 'pointer-events-none'
-            }`}
-        >
-            <Link
-                href={asLink && id ? `/dashboard/events/${id}` : ''}
-                className="w-full h-full">
-                <ImageWithFallback
-                    src={cover}
-                    alt={title || 'Event cover'}
-                    width={format === 'titled' ? 250 : undefined}
-                    height={format === 'titled' ? 170 : undefined}
-                    fill={format === 'unconstrained'}
-                    quality={100}
-                    sizes="100%, 100%"
-                    placeholder={imagesPlaceholder}
-                    className={`min-w-[250px] min-h-[170px] object-cover object-center rounded-3xl ${
-                        format === 'unconstrained' ? 'h-full' : 'w-[250px] h-[170px]'
-                    }`}
-                />
+    const CardImage: FunctionComponent = () => {
+        return (
+            <Fragment>
+                <div className={`relative rounded-3xl overflow-hidden ${
+                    format === 'unconstrained' ? 'w-full h-full' : 'w-[250px] h-[170px]'
+                }`}>
+                    <ImageWithFallback
+                        src={cover}
+                        alt={title || 'Event cover'}
+                        width={format === 'titled' ? 250 : undefined}
+                        height={format === 'titled' ? 170 : undefined}
+                        fill={format === 'unconstrained'}
+                        quality={100}
+                        sizes="100%, 100%"
+                        placeholder={imagesPlaceholder}
+                        className={`min-w-[250px] min-h-[170px] cursor-pointer object-cover object-center transform transition-all duration-500 ease-in-out ${
+                            format === 'titled' && 'hover:scale-110'
+                        }`}
+                    />
+                </div>
                 {date && (
                     <div
                         className={`absolute top-5 left-6 flex flex-col justify-center items-center h-14 aspect-square text-white rounded-xl ${
@@ -63,7 +62,34 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                         </p>
                     </div>
                 )}
-            </Link>
+            </Fragment>
+        );
+    };
+    
+    return (
+        <div
+            className={`relative flex flex-col gap-2 ${format === 'unconstrained' ? 'w-full h-full' : 'w-[250px]'} ${
+                !asLink && ''
+            }`}
+        >
+            {
+                asLink
+                    ? (
+                        <Link
+                            href={id ? `/dashboard/events/${id}` : ''}
+                        className="w-full h-full"
+                        >
+                            <CardImage />
+                        </Link>
+                    ) : (
+                        <EventCardModal
+                            title={title}
+                            cover={cover}
+                            format={format}
+                            cardImage={<CardImage />}
+                        />
+                    )
+            }
             <div className="flex items-start gap-5">
                 {title && <div className="flex-1 break-all line-clamp-1 font-semibold">{title}</div>}
                 {

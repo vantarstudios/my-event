@@ -6,8 +6,9 @@ import { useRouter, usePathname, useSearchParams, type ReadonlyURLSearchParams }
 import type { NextPage } from 'next';
 import type { ZodError } from 'zod';
 import Cookies from 'js-cookie';
-import { authAPI } from '@/lib/api/auth';
 import { useMutationRequest } from '@/lib/hooks';
+import { authAPI } from '@/lib/api/auth';
+import { isDevelopment } from '@/lib/utils/env';
 import { IS_AUTHENTICATED_TOKEN_KEY } from '@/data/constants';
 import { signUpSchema } from '@/types/auth';
 import type { SignUpPayload, SignUpErrors } from '@/types/auth';
@@ -16,7 +17,6 @@ import { AuthStepper } from '@components/auth';
 import { AccountInformations, AccountTypeChooser } from '@components/auth/signup-steps';
 import { Button } from '@components/ui/buttons';
 import { GoogleColored } from '@components/ui/icons';
-import { isDevelopment } from '../../../lib/utils/env';
 
 const accountTypesRedirections: Partial<Record<AccountType, string>> = {
     organization: '/workspaces/signup',

@@ -2,8 +2,8 @@
 
 import type { FunctionComponent, PropsWithChildren } from 'react';
 import { usePathname, redirect, RedirectType } from 'next/navigation';
-import { useSelector } from '@/lib/hooks';
-import { selectIsAuthenticated } from '@/lib/store/is-authenticated.state';
+import Cookies from 'js-cookie';
+import { IS_AUTHENTICATED_TOKEN_KEY } from '@/data/constants';
 
 const routesToProtect = [
     '/dashboard',
@@ -11,8 +11,8 @@ const routesToProtect = [
 
 const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const pathname = usePathname();
-    const isAuthenticated = useSelector(selectIsAuthenticated);
-    
+    const isAuthenticated = !!Cookies.get(IS_AUTHENTICATED_TOKEN_KEY);
+
     const isProtectedRoute = routesToProtect.some((route) => pathname.startsWith(route));
     
     if (isProtectedRoute && !isAuthenticated) {

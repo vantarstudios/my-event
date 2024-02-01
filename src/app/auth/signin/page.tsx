@@ -5,10 +5,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 import { toast } from '@/lib/utils';
 import { authAPI } from '@/lib/api/auth';
-import { useToggle, useMutationRequest, useDispatch } from '@/lib/hooks';
-import { setIsAuthenticated } from '@/lib/store/is-authenticated.state';
+import { useToggle, useMutationRequest } from '@/lib/hooks';
+import { IS_AUTHENTICATED_TOKEN_KEY } from '@/data/constants';
+import { isDevelopment } from '@/lib/utils/env';
 import { Role } from '@/types/constants';
 import { signInSchema } from '@/types/auth';
 import type { SignInPayload } from '@/types/auth';
@@ -18,7 +20,6 @@ import { Eye, EyeOff, GoogleColored } from '@components/ui/icons';
 
 const SignInPage: NextPage = () => {
     const router = useRouter();
-    const dispatch = useDispatch();
     const [isPasswordVisible, toggleIsPasswordVisible] = useToggle<boolean>(false, true);
     const [saveLoginInfos, toggleSaveLoginInfos] = useToggle<boolean>(false, true);
     
@@ -48,8 +49,18 @@ const SignInPage: NextPage = () => {
             return;
         }
         
-        dispatch(setIsAuthenticated(true));
         toast.success('You are now logged in!');
+        Cookies.set(
+            IS_AUTHENTICATED_TOKEN_KEY,
+            'true',
+            {
+                secure: !isDevelopment,
+                sameSite: 'strict',
+                expires: saveLoginInfos
+                    ? new Date(Date.now() + 1000 * 60 * 60 * 7) // 7 hours
+                    : undefined
+            },
+        );
         
         setTimeout(() => {
             router.replace('/dashboard');

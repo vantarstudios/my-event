@@ -1,10 +1,7 @@
-import { useRequest, useDispatch } from '@/lib/hooks';
+import { useRequest } from '@/lib/hooks';
 import { usersAPI } from '@/lib/api/users';
-import { setIsAuthenticated } from '@/lib/store/is-authenticated.state';
 
 export const useUserProfile = () => {
-    const dispatch = useDispatch();
-    
     const { data, error, isLoading, mutate } = useRequest('user-profile', async () => {
         const response = await usersAPI.getProfile();
         
@@ -17,9 +14,6 @@ export const useUserProfile = () => {
         {
             showError: false,
             revalidateOnMount: true,
-            onError: () => {
-                dispatch(setIsAuthenticated(false));
-            }
         }
     )
 

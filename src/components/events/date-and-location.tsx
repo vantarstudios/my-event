@@ -37,7 +37,7 @@ const DateAndLocation: FunctionComponent<DateAndLocationProps> = ({ layout, type
     };
 
     return (
-        <div className="flex justify-between items-start gap-40 w-full pb-5">
+        <div className="flex justify-between items-start gap-40 w-full mb-10">
             <div className="flex flex-col gap-10 basis-2/5">
                 <DateRangeInput
                     startDateLabel="Starting date:"

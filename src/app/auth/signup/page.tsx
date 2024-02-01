@@ -5,9 +5,10 @@ import Link from 'next/link';
 import { useRouter, usePathname, useSearchParams, type ReadonlyURLSearchParams } from 'next/navigation';
 import type { NextPage } from 'next';
 import type { ZodError } from 'zod';
+import Cookies from 'js-cookie';
 import { authAPI } from '@/lib/api/auth';
-import { useMutationRequest, useDispatch } from '@/lib/hooks';
-import { setIsAuthenticated } from '@/lib/store/is-authenticated.state';
+import { useMutationRequest } from '@/lib/hooks';
+import { IS_AUTHENTICATED_TOKEN_KEY } from '@/data/constants';
 import { signUpSchema } from '@/types/auth';
 import type { SignUpPayload, SignUpErrors } from '@/types/auth';
 import { AccountTypes, type AccountType } from '@/types';
@@ -15,6 +16,7 @@ import { AuthStepper } from '@components/auth';
 import { AccountInformations, AccountTypeChooser } from '@components/auth/signup-steps';
 import { Button } from '@components/ui/buttons';
 import { GoogleColored } from '@components/ui/icons';
+import { isDevelopment } from '../../../lib/utils/env';
 
 const accountTypesRedirections: Partial<Record<AccountType, string>> = {
     organization: '/workspaces/signup',
@@ -34,7 +36,7 @@ const SignUpPage: NextPage = () => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const dispatch = useDispatch();
+    
     const updateSearchParams = updateSearchParamsFactory(router, pathname, searchParams);
     
     const accountType = (
@@ -113,7 +115,16 @@ const SignUpPage: NextPage = () => {
                 
                 await trigger(formData);
                 
-                dispatch(setIsAuthenticated(true));
+                Cookies.set(
+                    IS_AUTHENTICATED_TOKEN_KEY,
+                    'true',
+                    {
+                        secure: !isDevelopment,
+                        sameSite: 'strict',
+                        expires: new Date(Date.now() + 1000 * 60 * 60 * 7) // 7 hours
+                    },
+                );
+                
                 router.push('/dashboard');
             } catch (error) {
                 setFormErrors((error as ZodError).formErrors.fieldErrors as SignUpErrors);

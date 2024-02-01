@@ -4,11 +4,13 @@ import { useState, useEffect, useMemo } from 'react';
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Cookies from 'js-cookie';
 import { usePathname } from 'next/navigation';
 import { getMatchingPath } from '@/lib/utils';
-import { useMutationRequest, useDispatch } from '@/lib/hooks';
-import { setIsAuthenticated } from '@/lib/store/is-authenticated.state';
+import { useMutationRequest } from '@/lib/hooks';
+import { isDevelopment } from '@/lib/utils/env';
 import { authAPI } from '@/lib/api/auth';
+import { IS_AUTHENTICATED_TOKEN_KEY } from '@/data/constants';
 import type { NavigationLink } from '@/types';
 import { Home, Calendar, Stats, Dollar, Planning, Gear, Question, Power } from '@components/ui/icons';
 
@@ -24,7 +26,6 @@ const views: Required<NavigationLink>[] = [
 
 const Sidebar: FunctionComponent = () => {
     const pathname = usePathname();
-    const dispatch = useDispatch();
     const [activeViewIndex, setActiveViewIndex] = useState<number>(0);
     
     const { trigger } = useMutationRequest(
@@ -37,11 +38,16 @@ const Sidebar: FunctionComponent = () => {
     );
     
     const handleSignOut = async () => {
-        const logoutResponse = await trigger();
-        
-        if (logoutResponse.success) {
-            dispatch(setIsAuthenticated(false));
-        }
+        await trigger();
+        Cookies.set(
+            IS_AUTHENTICATED_TOKEN_KEY,
+            'false',
+            {
+                secure: !isDevelopment,
+                sameSite: 'strict',
+                expires: new Date(Date.now() + 1000 * 60 * 60 * 7) // 7 hours
+            },
+        );
     };
     
     useEffect(() => {

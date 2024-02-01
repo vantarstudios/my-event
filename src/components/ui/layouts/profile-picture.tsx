@@ -3,8 +3,9 @@
 import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
-import { useUserProfile,useSelector } from '@/lib/hooks';
-import { selectIsAuthenticated } from '@/lib/store/is-authenticated.state';
+import Cookies from 'js-cookie';
+import { IS_AUTHENTICATED_TOKEN_KEY } from '@/data/constants';
+import { useUserProfile } from '@/lib/hooks';
 import type { UserProfile } from '@/types/users';
 import { imagesPlaceholder } from '@/data/images-placeholder';
 import { ImageWithFallback } from '@components/ui';
@@ -48,8 +49,7 @@ const Picture: FunctionComponent<PictureProps> = ({ profilePicture, isLoading, e
 };
 
 const ProfilePicture: FunctionComponent<ProfilePictureProps> = ({ showSignUp = false, asLink = true }) => {
-    const isAuthenticated = useSelector(selectIsAuthenticated);
-    
+    const isAuthenticated = !!Cookies.get(IS_AUTHENTICATED_TOKEN_KEY);
     const { user, error, isLoading } = useUserProfile();
     
     return (

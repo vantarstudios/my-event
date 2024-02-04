@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { clientEnv } from '@/lib/utils/env';
 
-const appAPI = axios.create({
+const appAPIFactory = () => axios.create({
     baseURL: clientEnv.API_URL,
     withCredentials: true,
     headers: {
@@ -9,4 +9,4 @@ const appAPI = axios.create({
     },
 });
 
-export { appAPI };
+export { appAPIFactory };

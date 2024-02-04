@@ -5,7 +5,7 @@ import type { FunctionComponent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { getMatchingPath } from '@/lib/utils';
 import { useMutationRequest } from '@/lib/hooks';
 import { authAPI } from '@/lib/api/auth';
@@ -25,7 +25,6 @@ const views: Required<NavigationLink>[] = [
 
 const Sidebar: FunctionComponent = () => {
     const pathname = usePathname();
-    const router = useRouter();
     const [activeViewIndex, setActiveViewIndex] = useState<number>(0);
     
     const { trigger } = useMutationRequest(
@@ -40,7 +39,10 @@ const Sidebar: FunctionComponent = () => {
     const handleSignOut = async () => {
         await trigger();
         Cookies.remove(IS_AUTHENTICATED_TOKEN_KEY);
-        router.refresh();
+        
+        if (window) {
+            window.location.reload();
+        }
     };
     
     useEffect(() => {

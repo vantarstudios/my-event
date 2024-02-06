@@ -1,9 +1,8 @@
 'use client';
 
-import type { FunctionComponent, PropsWithChildren } from 'react';
-import { usePathname, redirect, RedirectType } from 'next/navigation';
-import Cookies from 'js-cookie';
-import { IS_AUTHENTICATED_TOKEN_KEY } from '@/data/constants';
+import { useEffect, type FunctionComponent, type PropsWithChildren } from 'react';
+import { usePathname, redirect } from 'next/navigation';
+import { useUserProfile } from '@/lib/hooks';
 
 const routesToProtect = [
     '/dashboard',
@@ -11,13 +10,23 @@ const routesToProtect = [
 
 const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
     const pathname = usePathname();
-    const isAuthenticated = !!Cookies.get(IS_AUTHENTICATED_TOKEN_KEY);
-
-    const isProtectedRoute = routesToProtect.some((route) => pathname.startsWith(route));
+    const { user, isLoading, error } = useUserProfile();
     
-    if (isProtectedRoute && !isAuthenticated) {
-        redirect('/auth/signin', RedirectType.replace);
-    }
+    useEffect(() => {
+        const isProtectedRoute = routesToProtect.some((route) => pathname.startsWith(route));
+        
+        if (isProtectedRoute) {
+            if (isLoading) {
+                return;
+            }
+
+            if (error || !user) {
+                console.log('error', error);
+                console.log('user', user);
+                redirect('/auth/signin');
+            }
+        }
+    }, [pathname, user, isLoading, error]);
     
     return children;
 };

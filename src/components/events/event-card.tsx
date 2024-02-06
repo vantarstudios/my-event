@@ -8,7 +8,7 @@ import { ImageWithFallback } from '@components/ui';
 import EventCardModal from './event-card-modal';
 import EventActions from './event-actions';
 
-interface EventCardProps extends Partial<Pick<Event, 'id' | 'title' | 'startingDate' | 'status'>> {
+interface EventCardProps extends Partial<Pick<Event, 'id' | 'title' | 'startingDate' | 'endingDate' | 'status'>> {
     cover: Event['cover'];
     format: 'titled' | 'unconstrained';
     asLink?: boolean;
@@ -16,7 +16,7 @@ interface EventCardProps extends Partial<Pick<Event, 'id' | 'title' | 'startingD
     refreshEvent?: () => void;
 }
 
-const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate, status, cover, format, refreshEvent, asLink = true, withActions = false }) => {
+const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate, endingDate, status, cover, format, refreshEvent, asLink = true, withActions = false }) => {
     const { date, time } = startingDate
         ? parseDateTime(startingDate, 'both')
         : { date: undefined, time: undefined };
@@ -44,7 +44,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                 {date && (
                     <div
                         className={`absolute top-5 left-6 flex flex-col justify-center items-center h-14 aspect-square text-white rounded-xl ${
-                            status === EventStatus.DRAFT ? 'bg-gray-500' : 'bg-primary'
+                            (status === EventStatus.DRAFT || (endingDate && new Date(endingDate) < new Date())) ? 'bg-gray-500' : 'bg-primary'
                         }`}>
                         <p className="flex justify-center items-center text-2xl font-semibold h-fit">
                             {leadingZeroFormat(date.day)}

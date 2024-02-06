@@ -3,8 +3,6 @@
 import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
-import Cookies from 'js-cookie';
-import { IS_AUTHENTICATED_TOKEN_KEY } from '@/data/constants';
 import { useUserProfile } from '@/lib/hooks';
 import type { UserProfile } from '@/types/users';
 import { imagesPlaceholder } from '@/data/images-placeholder';
@@ -49,13 +47,12 @@ const Picture: FunctionComponent<PictureProps> = ({ profilePicture, isLoading, e
 };
 
 const ProfilePicture: FunctionComponent<ProfilePictureProps> = ({ showSignUp = false, asLink = true }) => {
-    const isAuthenticated = !!Cookies.get(IS_AUTHENTICATED_TOKEN_KEY);
     const { user, error, isLoading } = useUserProfile();
     
     return (
         <Fragment>
             {
-                isAuthenticated
+                user?.success
                     ?  asLink
                         ? (
                             <Link href="/dashboard" className="relative w-14 h-14 rounded-full overflow-hidden">

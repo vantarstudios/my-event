@@ -5,11 +5,8 @@ import Link from 'next/link';
 import { useRouter, usePathname, useSearchParams, type ReadonlyURLSearchParams } from 'next/navigation';
 import type { NextPage } from 'next';
 import type { ZodError } from 'zod';
-import Cookies from 'js-cookie';
 import { useMutationRequest } from '@/lib/hooks';
 import { authAPI } from '@/lib/api/auth';
-import { isDevelopment } from '@/lib/utils/env';
-import { IS_AUTHENTICATED_TOKEN_KEY } from '@/data/constants';
 import { signUpSchema } from '@/types/auth';
 import type { SignUpPayload, SignUpErrors } from '@/types/auth';
 import { AccountTypes, type AccountType } from '@/types';
@@ -115,17 +112,7 @@ const SignUpPage: NextPage = () => {
                 
                 await trigger(formData);
                 
-                Cookies.set(
-                    IS_AUTHENTICATED_TOKEN_KEY,
-                    'true',
-                    {
-                        secure: !isDevelopment,
-                        sameSite: 'strict',
-                        expires: new Date(Date.now() + 1000 * 60 * 60 * 7) // 7 hours
-                    },
-                );
-                
-                router.push('/dashboard');
+                router.push('/auth/signin');
             } catch (error) {
                 setFormErrors((error as ZodError).formErrors.fieldErrors as SignUpErrors);
             }

@@ -4,12 +4,10 @@ import { useState, useEffect, useMemo } from 'react';
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Cookies from 'js-cookie';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { getMatchingPath } from '@/lib/utils';
 import { useMutationRequest } from '@/lib/hooks';
 import { authAPI } from '@/lib/api/auth';
-import { IS_AUTHENTICATED_TOKEN_KEY } from '@/data/constants';
 import type { NavigationLink } from '@/types';
 import { Home, Calendar, Stats, Dollar, Planning, Gear, Question, Power } from '@components/ui/icons';
 
@@ -25,6 +23,7 @@ const views: Required<NavigationLink>[] = [
 
 const Sidebar: FunctionComponent = () => {
     const pathname = usePathname();
+    const router = useRouter();
     const [activeViewIndex, setActiveViewIndex] = useState<number>(0);
     
     const { trigger } = useMutationRequest(
@@ -38,11 +37,7 @@ const Sidebar: FunctionComponent = () => {
     
     const handleSignOut = async () => {
         await trigger();
-        Cookies.remove(IS_AUTHENTICATED_TOKEN_KEY);
-        
-        if (window) {
-            window.location.reload();
-        }
+        router.push('/auth/signin');
     };
     
     useEffect(() => {

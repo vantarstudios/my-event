@@ -12,7 +12,7 @@ type Options = SWRConfiguration & {
 export const useRequest = <Data, SWRKey extends Key = Key>(
     key: SWRKey,
     fetcher: Fetcher<ApiResponse<Data> & { success: true }, SWRKey>,
-    options: Options = { successMessage: '', showError: true }
+    options: Options = { successMessage: '', showError: false }
 ) => {
     return useSWR(
         key,

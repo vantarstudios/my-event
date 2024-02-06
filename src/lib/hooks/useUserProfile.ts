@@ -10,12 +10,7 @@ export const useUserProfile = () => {
         }
         
         return response.data;
-    },
-        {
-            showError: false,
-            revalidateOnMount: true,
-        }
-    )
+    });
 
     return {
         user: data,

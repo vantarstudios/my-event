@@ -205,6 +205,17 @@ export type Ticket = {
     deletedAt?: string,
 };
 
+export type Notification = {
+    id: string,
+    type: NotificationTypeUnion,
+    title: string,
+    message: string,
+    read: boolean,
+    createdAt: string,
+    updatedAt: string,
+    deletedAt?: string,
+};
+
 export type NavigationLink = Readonly<{
     name: string;
     href: string;
@@ -236,11 +247,6 @@ export interface IconProps {
     onClick?: () => void;
     className?: HTMLAttributes<SVGElement>['className'];
 }
-
-export type Notification = {
-    subject: string;
-    description: string;
-};
 
 export const ticketTypes = ['free', 'paid', 'invitation'] as const;
 

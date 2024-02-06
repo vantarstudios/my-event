@@ -1,7 +1,7 @@
 import type { AxiosInstance, AxiosResponse } from 'axios';
 import { appAPIFactory } from './client';
 import type { UserProfile, UserProfileUpdatePayload, UserSettingsUpdatePayload } from '@/types/users';
-import type { ApiResponse, UserSettings } from '@/types';
+import type { ApiResponse, UserSettings, Notification } from '@/types';
 
 class UsersAPI {
     constructor(private readonly client: AxiosInstance) {
@@ -35,12 +35,16 @@ class UsersAPI {
         return response;
     }
     
-    public async getSettings(userId: UserProfile['id']) {
-        return await this.client.get<ApiResponse<UserSettings>>(`/${userId}/settings`);
+    public async getSettings() {
+        return await this.client.get<ApiResponse<UserSettings>>('/me/settings');
     }
     
-    public async updateSettings(userId: UserProfile['id'], payload: UserSettingsUpdatePayload) {
-        return await this.client.patch<ApiResponse<UserSettings>>(`/${userId}/settings`, payload);
+    public async updateSettings(payload: UserSettingsUpdatePayload) {
+        return await this.client.patch<ApiResponse<UserSettings>>('/me/settings', payload);
+    }
+    
+    async getNotifications() {
+        return this.client.get<ApiResponse<Notification[]>>('/me/notifications?page=1');
     }
 }
 

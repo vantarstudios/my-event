@@ -82,7 +82,7 @@ const SettingsTable: FunctionComponent = () => {
                                     </div>
                                 </div>
                                 <div className="flex justify-start gap-40 w-full">
-                                    <NotificationsSettings user={user.data}/>
+                                    <NotificationsSettings />
                                     <OtherSettings mode={mode}/>
                                 </div>
                             </Fragment>

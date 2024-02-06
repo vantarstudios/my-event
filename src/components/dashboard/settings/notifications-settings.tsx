@@ -4,20 +4,16 @@ import type { FunctionComponent, ChangeEvent } from 'react';
 import { useRequest, useMutationRequest } from '@/lib/hooks';
 import { usersAPI } from '@/lib/api/users';
 import { NotificationType } from '@/types/constants';
-import type { UserProfile, UserSettingsUpdatePayload } from '@/types/users';
+import type { UserSettingsUpdatePayload } from '@/types/users';
 import { TitledArea } from '@components/ui/layouts';
 import { Switch } from '@components/ui/form';
 import { Bell } from '@components/ui/icons';
 
-interface NotificationsSettingsProps {
-    user: UserProfile;
-}
-
-const NotificationsSettings: FunctionComponent<NotificationsSettingsProps> = ({ user }) => {
+const NotificationsSettings: FunctionComponent = () => {
     const { data: userSettings, isLoading, error, mutate } = useRequest(
-        user?.id ? `user-${user.id}-settings` : null,
+        'get-my-notifications-settings',
         async () => {
-            const response = await usersAPI.getSettings(user.id);
+            const response = await usersAPI.getSettings();
             
             if (!response.data.success) {
                 throw new Error('Unable to fetch user settings');
@@ -28,9 +24,9 @@ const NotificationsSettings: FunctionComponent<NotificationsSettingsProps> = ({ 
     );
     
     const { trigger, isMutating } = useMutationRequest(
-        user?.id ? `user-${user.id}-notifications` : null,
+        'update-my-notifications-settings',
         async (_: string, { arg: data }: { arg: UserSettingsUpdatePayload['enabledNotifications'][] }) => {
-            const response = await usersAPI.updateSettings(user.id, {
+            const response = await usersAPI.updateSettings({
                 enabledNotifications: data.join(',')
             });
             return response.data;

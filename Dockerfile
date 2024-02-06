@@ -6,10 +6,12 @@ COPY package.json /app/
 
 RUN --mount=type=secret,id=NODE_ENV \
     --mount=type=secret,id=NEXT_PUBLIC_API_URL \
-    --mount=type=secret,id=NEXT_PUBLIC_GOOGLE_MAPS_API_KEY \
+    --mount=type=secret,id=NEXTAUTH_URL \
+    --mount=type=secret,id=NEXTAUTH_SECRET \
     echo "NODE_ENV=$(cat /run/secrets/NODE_ENV)" >> .env.production \
     && echo "NEXT_PUBLIC_API_URL=$(cat /run/secrets/NEXT_PUBLIC_API_URL)" >> .env.production \
-    && echo "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=$(cat /run/secrets/NEXT_PUBLIC_GOOGLE_MAPS_API_KEY)" >> .env.production \
+    && echo "NEXTAUTH_URL=$(cat /run/secrets/NEXTAUTH_URL)" >> .env.production \
+    && echo "NEXTAUTH_SECRET=$(cat /run/secrets/NEXTAUTH_SECRET)" >> .env.production \
     && cat .env.production
 
 RUN yarn install

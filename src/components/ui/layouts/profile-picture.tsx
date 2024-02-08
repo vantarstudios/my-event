@@ -52,7 +52,7 @@ const ProfilePicture: FunctionComponent<ProfilePictureProps> = ({ showSignUp = f
     return (
         <Fragment>
             {
-                user?.success
+                (user?.success && !error)
                     ?  asLink
                         ? (
                             <Link href="/dashboard" className="relative w-14 h-14 rounded-full overflow-hidden">

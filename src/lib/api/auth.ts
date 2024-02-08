@@ -28,6 +28,18 @@ class AuthAPI {
         });
     }
     
+    public async googleSignIn(accessToken: string) {
+        return await this.client.post<ApiResponse<UserProfile>>('/google-login', {
+            token: accessToken
+        });
+    }
+    
+    public async googleSignUp(accessToken: string) {
+        return await this.client.post<ApiResponse<UserProfile>>('/google-signup', {
+            token: accessToken
+        });
+    }
+    
     public async signOut() {
         return await this.client.post<ApiResponse>('/logout');
     }

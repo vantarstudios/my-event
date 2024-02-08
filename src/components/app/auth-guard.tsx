@@ -21,8 +21,6 @@ const AuthGuard: FunctionComponent<PropsWithChildren> = ({ children }) => {
             }
 
             if (error || !user) {
-                console.log('error', error);
-                console.log('user', user);
                 redirect('/auth/signin');
             }
         }

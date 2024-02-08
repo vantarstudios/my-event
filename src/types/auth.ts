@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { ValidationErrors } from '@/types';
+import type { AccountType, ValidationErrors } from '@/types';
 
 export const signUpSchema = z.object({
     firstName: z.string().min(2, 'First name should have at least 2 characters'),
@@ -37,4 +37,7 @@ export const signInSchema = z.object({
 
 export type SignInPayload = z.infer<typeof signInSchema>;
 
-export type SignInErrors = ValidationErrors<SignInPayload>;
+export type GoogleAuthPayload = {
+    accessToken: string,
+    accountType?: AccountType
+};

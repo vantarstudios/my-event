@@ -11,7 +11,7 @@ RUN --mount=type=secret,id=NODE_ENV \
     echo "NODE_ENV=$(cat /run/secrets/NODE_ENV)" >> .env.production \
     && echo "NEXT_PUBLIC_API_URL=$(cat /run/secrets/NEXT_PUBLIC_API_URL)" >> .env.production \
     && echo "GOOGLE_CLIENT_ID=$(cat /run/secrets/GOOGLE_CLIENT_ID)" >> .env.production \
-    && echo "GOOGLE_CLIENT_SECRET=$(cat /run/secrets/GOOGLE_CLIENT_SECRET)" >> .
+    && echo "GOOGLE_CLIENT_SECRET=$(cat /run/secrets/GOOGLE_CLIENT_SECRET)" >> .env.production \
     && cat .env.production
 
 RUN yarn install

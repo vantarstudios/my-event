@@ -7,7 +7,7 @@ COPY package.json /app/
 RUN --mount=type=secret,id=NODE_ENV \
     --mount=type=secret,id=NEXT_PUBLIC_API_URL \
     --mount=type=secret,id=NEXT_PUBLIC_GOOGLE_CLIENT_ID \
-    --mount=type=secret,id=NEXT_PUBLIC_GOOGLE_SECRET \
+    --mount=type=secret,id=NEXT_PUBLIC_GOOGLE_CLIENT_SECRET \
     echo "NODE_ENV=$(cat /run/secrets/NODE_ENV)" >> .env.production \
     && echo "NEXT_PUBLIC_API_URL=$(cat /run/secrets/NEXT_PUBLIC_API_URL)" >> .env.production \
     && echo "NEXT_PUBLIC_GOOGLE_CLIENT_ID=$(cat /run/secrets/NEXT_PUBLIC_GOOGLE_CLIENT_ID)" >> .env.production \

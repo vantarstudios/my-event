@@ -1,9 +1,10 @@
 import type { FunctionComponent, PropsWithChildren } from 'react';
 import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
-import { getServerSession } from 'next-auth';
 import { Toaster } from 'sonner';
-import { AuthProvider, AuthGuard, ViewportGuard } from '@components/app';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { clientEnv } from '@/lib/utils/env';
+import { AuthGuard, ViewportGuard } from '@components/app';
 import './global.css';
 
 const poppinsFont = Poppins({
@@ -25,18 +26,16 @@ export const viewport: Viewport = {
 };
 
 const AppLayout: FunctionComponent<PropsWithChildren> = async ({ children }) => {
-    const session = await getServerSession();
-    
     return (
         <html lang="en">
             <body className={poppinsFont.className}>
                 <ViewportGuard>
-                    <AuthProvider session={session}>
+                    <GoogleOAuthProvider clientId={clientEnv.GOOGLE_CLIENT_ID}>
                         <AuthGuard>
                             <Toaster expand position="top-right" richColors={true}/>
                             {children}
                         </AuthGuard>
-                    </AuthProvider>
+                    </GoogleOAuthProvider>
                 </ViewportGuard>
             </body>
         </html>

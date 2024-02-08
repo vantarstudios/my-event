@@ -63,6 +63,9 @@ const NotificationsSettings: FunctionComponent = () => {
                         <p>Tickets</p>
                     </li>
                     <li className="text-sm min-w-max">
+                        <p>Followers</p>
+                    </li>
+                    <li className="text-sm min-w-max">
                         <p>Finance</p>
                     </li>
                     <li className="text-sm min-w-max">
@@ -79,15 +82,22 @@ const NotificationsSettings: FunctionComponent = () => {
                     </li>
                     <li>
                         <Switch
-                            checked={isChecked([NotificationType.EVENTS])}
-                            onChange={handleToggleNotification([NotificationType.EVENTS])}
+                            checked={isChecked([NotificationType.ORGANIZER_EVENTS])}
+                            onChange={handleToggleNotification([NotificationType.ORGANIZER_EVENTS])}
                             loading={isMutating}
                         />
                     </li>
                     <li>
                         <Switch
-                            checked={isChecked([NotificationType.TICKETS])}
-                            onChange={handleToggleNotification([NotificationType.TICKETS])}
+                            checked={isChecked([NotificationType.ORGANIZER_TICKETS])}
+                            onChange={handleToggleNotification([NotificationType.ORGANIZER_TICKETS])}
+                            loading={isMutating}
+                        />
+                    </li>
+                    <li>
+                        <Switch
+                            checked={isChecked([NotificationType.ORGANIZER_FOLLOWERS])}
+                            onChange={handleToggleNotification([NotificationType.ORGANIZER_FOLLOWERS])}
                             loading={isMutating}
                         />
                     </li>

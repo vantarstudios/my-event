@@ -2,12 +2,12 @@ import { z } from 'zod';
 
 const serverEnvSchema = z.object({
     NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-    NEXTAUTH_URL: z.string().url(),
-    NEXTAUTH_SECRET: z.string(),
 });
 
 const clientEnvSchema = z.object({
     API_URL: z.string().trim().url(),
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
 });
 
 export type ServerEnvironmentVariables = z.infer<typeof serverEnvSchema>;
@@ -16,8 +16,6 @@ export type ClientEnvironmentVariables = z.infer<typeof clientEnvSchema>;
 
 const serverEnvParseResult = serverEnvSchema.safeParse({
     NODE_ENV: process.env.NODE_ENV,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
 });
 
 let serverEnv: ServerEnvironmentVariables = {} as ServerEnvironmentVariables;
@@ -32,6 +30,8 @@ export { serverEnv };
 
 export const clientEnv: ClientEnvironmentVariables = clientEnvSchema.parse({
     API_URL: process.env.NEXT_PUBLIC_API_URL,
+    GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
 });
 
 export const isProduction = serverEnv.NODE_ENV === 'production';

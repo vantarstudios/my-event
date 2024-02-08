@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { useRouter, usePathname, useSearchParams, type ReadonlyURLSearchParams } from 'next/navigation';
 import type { NextPage } from 'next';
 import type { ZodError } from 'zod';
-import { useMutationRequest } from '@/lib/hooks';
+import { useMutationRequest, useGoogleAuth } from '@/lib/hooks';
+import { toast } from '@/lib/utils';
 import { authAPI } from '@/lib/api/auth';
 import { signUpSchema } from '@/types/auth';
 import type { SignUpPayload, SignUpErrors } from '@/types/auth';
@@ -13,7 +14,8 @@ import { AccountTypes, type AccountType } from '@/types';
 import { AuthStepper } from '@components/auth';
 import { AccountInformations, AccountTypeChooser } from '@components/auth/signup-steps';
 import { Button } from '@components/ui/buttons';
-import { GoogleColored } from '@components/ui/icons';
+import { GoogleColored, Loader } from '@components/ui/icons';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const accountTypesRedirections: Partial<Record<AccountType, string>> = {
     organization: '/workspaces/signup',
@@ -54,6 +56,26 @@ const SignUpPage: NextPage = () => {
     const [formData, setFormData] = useState<SignUpPayload>({} as SignUpPayload);
     const [formErrors, setFormErrors] = useState<SignUpErrors>({} as SignUpErrors);
     
+    const googleSignIn = useGoogleLogin({
+        flow: 'implicit',
+        onSuccess: async (response) => {
+            const res = await registerWithGoogle({
+                accountType: accountType as AccountType,
+                accessToken: response.access_token,
+            });
+            
+            if (res.success) {
+                toast.success('Your account has been created!\n You can now sign in.');
+                router.push('/auth/signin');
+            } else {
+                toast.error(res.error.message);
+            }
+        },
+        onError: (error) => {
+            toast.error(error.error_description || 'An error occurred while trying to sign up with Google.');
+        }
+    });
+    
     const { trigger, isMutating } = useMutationRequest(
         'sign-up',
         async (_: string, { arg: data }: { arg: SignUpPayload }) => {
@@ -63,6 +85,8 @@ const SignUpPage: NextPage = () => {
         },
         'Your account has been created!'
     );
+    
+    const { trigger: registerWithGoogle, isMutating: isGoogleMutating } = useGoogleAuth('sign-up');
 
     const handleStepChange = (step: number) => {
         updateSearchParams('step', String(step));
@@ -151,11 +175,14 @@ const SignUpPage: NextPage = () => {
                 <Fragment>
                     <p>or</p>
                     <div
+                        onClick={() => googleSignIn()}
                         className="flex justify-start items-center gap-5 pr-7 shadow-md rounded-full cursor-pointer transform transition-all duration-300 hover:bg-black hover:text-white">
                         <div className="w-12 h-12 p-2">
                             <GoogleColored/>
                         </div>
-                        <p>Continue with Google</p>
+                        <p className="flex items-center justify-center w-44">
+                            {isGoogleMutating ? <Loader className="w-6 h-6 text-primary animate-spin"/> : 'Continue with Google'}
+                        </p>
                     </div>
                 </Fragment>
             )}

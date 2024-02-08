@@ -39,6 +39,20 @@ export type ApiResponse<T = null> = {
     }
 );
 
+export type GoogleAuthPayload = {
+    accessToken: string,
+    accountType?: AccountType
+};
+
+export type GoogleProfile = {
+    email: string,
+    sub: string,
+    name: string,
+    given_name: string,
+    family_name: string
+    picture: string,
+};
+
 export type MediaTypeUnion = (typeof MediaType)[keyof typeof MediaType];
 
 export type Media = {

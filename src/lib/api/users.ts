@@ -46,6 +46,14 @@ class UsersAPI {
     async getNotifications() {
         return this.client.get<ApiResponse<Notification[]>>('/me/notifications?page=1');
     }
+    
+    async markNotificationAsRead(notificationId: Notification['id']) {
+        return this.client.patch<ApiResponse<Notification>>(`/me/notifications/${notificationId}/read`);
+    }
+    
+    async markAllNotificationsAsRead() {
+        return this.client.patch<ApiResponse<Notification[]>>('/me/notifications/read-all');
+    }
 }
 
 export const usersAPI = new UsersAPI(appAPIFactory());

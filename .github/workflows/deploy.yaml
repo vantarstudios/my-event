@@ -46,8 +46,8 @@ jobs:
           secrets: |
             "NODE_ENV=${{ secrets.NODE_ENV }}"
             "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}"
-            "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}"
-            "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}"
+            "NEXT_PUBLIC_GOOGLE_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_ID }}"
+            "NEXT_PUBLIC_GOOGLE_SECRET=${{ secrets.NEXT_PUBLIC_GOOGLE_SECRET }}"
 
   deploy:
     name: Deploy the Docker image to the server

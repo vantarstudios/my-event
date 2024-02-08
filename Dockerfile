@@ -6,12 +6,12 @@ COPY package.json /app/
 
 RUN --mount=type=secret,id=NODE_ENV \
     --mount=type=secret,id=NEXT_PUBLIC_API_URL \
-    --mount=type=secret,id=GOOGLE_CLIENT_ID \
-    --mount=type=secret,id=GOOGLE_CLIENT_SECRET \
+    --mount=type=secret,id=NEXT_PUBLIC_GOOGLE_ID \
+    --mount=type=secret,id=NEXT_PUBLIC_GOOGLE_SECRET \
     echo "NODE_ENV=$(cat /run/secrets/NODE_ENV)" >> .env.production \
     && echo "NEXT_PUBLIC_API_URL=$(cat /run/secrets/NEXT_PUBLIC_API_URL)" >> .env.production \
-    && echo "GOOGLE_CLIENT_ID=$(cat /run/secrets/GOOGLE_CLIENT_ID)" >> .env.production \
-    && echo "GOOGLE_CLIENT_SECRET=$(cat /run/secrets/GOOGLE_CLIENT_SECRET)" >> .env.production \
+    && echo "NEXT_PUBLIC_GOOGLE_ID=$(cat /run/secrets/NEXT_PUBLIC_GOOGLE_ID)" >> .env.production \
+    && echo "NEXT_PUBLIC_GOOGLE_SECRET=$(cat /run/secrets/NEXT_PUBLIC_GOOGLE_SECRET)" >> .env.production \
     && cat .env.production
 
 RUN yarn install

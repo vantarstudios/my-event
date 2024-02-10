@@ -245,7 +245,7 @@ export const AccountTypes = ['individual', 'organization'] as const;
 export type AccountType = (typeof AccountTypes)[number];
 
 export interface IconProps {
-    onClick?: (event?: MouseEvent<HTMLElement>) => void;
+    onClick?: (event: MouseEvent<SVGElement>) => void;
     className?: HTMLAttributes<SVGElement>['className'];
 }
 

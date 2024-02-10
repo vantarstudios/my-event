@@ -32,8 +32,8 @@ interface NotificationCardProps extends Pick<Notification, 'title' | 'message' |
 }
 
 const NotificationCard: FunctionComponent<NotificationCardProps> = ({ title, message, createdAt, onClick, onDeletion }) => {
-    const handleDeletion = (event: MouseEvent) => {
-        event.stopPropagation();
+    const handleDeletion = (event?: MouseEvent) => {
+        event?.stopPropagation();
         onDeletion?.();
     };
     

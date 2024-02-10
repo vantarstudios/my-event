@@ -36,7 +36,8 @@ class AuthAPI {
     
     public async googleSignUp(accessToken: string) {
         return await this.client.post<ApiResponse<UserProfile>>('/google-signup', {
-            token: accessToken
+            token: accessToken,
+            role: Role.ORGANIZER,
         });
     }
     

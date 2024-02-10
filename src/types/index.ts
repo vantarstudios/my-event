@@ -211,6 +211,7 @@ export type Notification = {
     title: string,
     message: string,
     read: boolean,
+    resourceId?: string,
     createdAt: string,
     updatedAt: string,
     deletedAt?: string,
@@ -244,7 +245,7 @@ export const AccountTypes = ['individual', 'organization'] as const;
 export type AccountType = (typeof AccountTypes)[number];
 
 export interface IconProps {
-    onClick?: () => void;
+    onClick?: (event?: MouseEvent<HTMLElement>) => void;
     className?: HTMLAttributes<SVGElement>['className'];
 }
 

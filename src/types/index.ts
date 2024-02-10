@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ReactNode, FunctionComponent } from 'react';
+import type { HTMLAttributes, ReactNode, FunctionComponent,MouseEvent } from 'react';
 import {
     Role,
     Plan as PlanEnum,

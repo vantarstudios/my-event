@@ -2,7 +2,7 @@ import type { FunctionComponent, ButtonHTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
 import { Loader } from '@components/ui/icons';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     loading?: boolean;
 }
 

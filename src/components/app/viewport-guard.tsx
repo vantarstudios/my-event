@@ -3,7 +3,7 @@
 import { Fragment, type FunctionComponent, type PropsWithChildren } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Button } from '@components/ui/buttons';
+import { PrimaryButton } from '@components/ui/buttons';
 import logo from '@public/logo.png';
 
 const protectedPaths = ['/auth', '/dashboard'];
@@ -37,12 +37,12 @@ const MobileView: FunctionComponent = () => {
                 <p className="text-center font-medium px-5">
                     For better experience, this website can only be accessed on a <span className="font-bold">Laptop</span>. So, sorry about that!
                 </p>
-                <Button
+                <PrimaryButton
                     onClick={() => router.back()}
-                    className="px-10 py-4 md:px-16 mt-5 rounded-full lg:text-lg font-normal hover:bg-primary"
+                    className="px-10 py-4 md:px-16 mt-5 rounded-full lg:text-lg font-normal"
                 >
                     Back to Home page
-                </Button>
+                </PrimaryButton>
             </div>
             <p className="w-full mt-auto mb-5 text-sm text-center">
                 Vantar Studios &copy; Copyright {currentYear}

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { PageContainer, OverlappingImages, SectionDivider } from '@components/root';
-import { Button } from '@components/ui/buttons';
+import { PrimaryButton, SecondaryButton } from '@components/ui/buttons';
 
 const PricingPage: NextPage = () => {
     return (
@@ -17,7 +17,7 @@ const PricingPage: NextPage = () => {
                         the best experience possible.
                     </p>
                     <Link href="/dashboard" className="w-fit focus:outline-none">
-                        <Button className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal hover:bg-primary">Get Started</Button>
+                        <PrimaryButton className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal">Get Started</PrimaryButton>
                     </Link>
                 </div>
                 <OverlappingImages/>
@@ -32,9 +32,9 @@ const PricingPage: NextPage = () => {
                     necessary tools to easily control every step of your event.
                 </p>
                 <Link href="/contact-us" className="w-fit focus:outline-none">
-                    <Button className="px-10 py-4 md:px-16 rounded-full lg:text-lg text-black font-medium border-2 border-black bg-white hover:bg-black hover:bg-opacity-100 hover:text-white">
+                    <SecondaryButton className="px-10 py-4 md:px-16 rounded-full lg:text-lg">
                         Request demo
-                    </Button>
+                    </SecondaryButton>
                 </Link>
             </section>
         </PageContainer>

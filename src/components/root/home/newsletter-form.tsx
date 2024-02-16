@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, type FunctionComponent, type ChangeEvent, type FormEvent } from 'react';
-import { Button } from '@components/ui/buttons';
+import { SecondaryButton } from '@components/ui/buttons';
 import { Input } from '@components/ui/form';
 
 const NewsletterForm: FunctionComponent = () => {
@@ -35,12 +35,12 @@ const NewsletterForm: FunctionComponent = () => {
                 value={email}
                 onChange={handleEmailChange}
             />
-            <Button
+            <SecondaryButton
                 type="submit"
-                className="w-full text-base md:text-lg text-black font-medium border-2 border-black bg-white hover:bg-black hover:bg-opacity-100 hover:text-white"
+                className="w-full text-base md:text-lg"
             >
                 Subscribe
-            </Button>
+            </SecondaryButton>
         </form>
     );
 };

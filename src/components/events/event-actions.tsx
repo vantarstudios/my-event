@@ -62,7 +62,7 @@ const EventActions: FunctionComponent<EventActionsProps> = ({ eventId, eventTitl
                 className="relative cursor-pointer"
             >
                 <Dots className="w-10"/>
-                <ul className={`absolute top-full right-0 bg-white z-10 shadow-md rounded-lg overflow-hidden ${
+                <ul className={`absolute bottom-full right-0 bg-white z-10 shadow-md rounded-lg overflow-hidden ${
                     isVisible ? 'block' : 'hidden'
                 }`}>
                     <li

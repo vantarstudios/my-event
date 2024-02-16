@@ -8,7 +8,7 @@ import { useRequest, useMutationRequest } from '@/lib/hooks';
 import { usersAPI } from '@/lib/api/users';
 import type { Notification } from '@/types';
 import { NotificationType } from '@/types/constants';
-import { Button } from '@components/ui/buttons';
+import { Button, PrimaryButton } from '@components/ui/buttons';
 import { Cross } from '@components/ui/icons';
 import { Card, TitledArea, Modal } from '@components/ui/layouts';
 
@@ -160,17 +160,13 @@ const Notifications: FunctionComponent = () => {
                                     ))}
                                 </div>
                                 <div className="flex justify-between w-full px-10 py-5">
-                                    <Button
+                                    <PrimaryButton
                                         onClick={handleMarkAllAsRead}
                                         loading={isMutating}
-                                        className="hover:bg-primary hover:bg-opacity-100"
                                     >
                                         Mark all as read
-                                    </Button>
-                                    <Button
-                                        onClick={() => setShowNotificationsModal(false)}
-                                        className=""
-                                    >
+                                    </PrimaryButton>
+                                    <Button onClick={() => setShowNotificationsModal(false)}>
                                         Close
                                     </Button>
                                 </div>

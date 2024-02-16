@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import { Modal, Card } from '@components/ui/layouts';
-import { Button } from '@components/ui/buttons';
+import { Button, SecondaryButton } from '@components/ui/buttons';
 
 interface DeletionConfirmModalProps {
     title: string;
@@ -21,12 +21,9 @@ const ConfirmModal: FunctionComponent<DeletionConfirmModalProps> = ({ title, des
                 <p className="text-xl font-bold">{title}</p>
                 <p>{description}</p>
                 <div className="flex justify-end items-center gap-5 w-full">
-                    <Button
-                        className="text-black font-medium border border-black bg-white hover:bg-black hover:bg-opacity-100 hover:text-white"
-                        onClick={onCancel}
-                    >
+                    <SecondaryButton onClick={onCancel}>
                         {cancelText}
-                    </Button>
+                    </SecondaryButton>
                     <Button
                         loading={isConfirming}
                         onClick={onConfirm}

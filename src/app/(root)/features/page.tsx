@@ -5,7 +5,7 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PageContainer, SectionDivider } from '@components/root';
-import { Button } from '@components/ui/buttons';
+import { Button, PrimaryButton } from '@components/ui/buttons';
 
 const features: Readonly<{
     topics: string[];
@@ -108,9 +108,9 @@ const FeaturesPage: NextPage = () => {
                                 />
                             </div>
                             <Link href="/auth/signup" className="w-fit focus:outline-none mt-5 lg:mt-10">
-                                <Button className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal hover:bg-primary">
+                                <PrimaryButton className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal">
                                     Try it now
-                                </Button>
+                                </PrimaryButton>
                             </Link>
                         </section>
                         {index < filteredFeatures.length - 1 && <SectionDivider/>}

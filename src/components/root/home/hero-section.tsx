@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
 import { OverlappingImages } from '@components/root';
-import { Button } from '@components/ui/buttons';
+import { PrimaryButton } from '@components/ui/buttons';
 
 const HeroSection: FunctionComponent = () => {
     return (
@@ -18,7 +18,7 @@ const HeroSection: FunctionComponent = () => {
                     promote and boost your events easily.
                 </p>
                 <Link href="/dashboard" className="w-fit focus:outline-none">
-                    <Button className="px-10 py-4 md:px-16 rounded-full lg:h-14 lg:text-lg font-normal hover:bg-primary">Get Started</Button>
+                    <PrimaryButton className="px-10 py-4 md:px-16 rounded-full lg:h-14 lg:text-lg font-normal">Get Started</PrimaryButton>
                 </Link>
             </div>
             <OverlappingImages/>

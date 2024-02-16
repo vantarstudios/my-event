@@ -1,7 +1,7 @@
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
 import { Card } from '@components/ui/layouts';
-import { Button } from '@components/ui/buttons';
+import { PrimaryButton } from '@components/ui/buttons';
 
 interface AdPricingCardProps {
     duration: string;
@@ -23,9 +23,9 @@ const AdPricingCard: FunctionComponent<AdPricingCardProps> = ({ duration, descri
                 </p>
                 <hr className="w-3/4 mx-auto border-2 border-primary"/>
                 <Link href="/ads/create" className="w-fit focus:outline-none">
-                    <Button className="hover:bg-primary hover:bg-opacity-100">
+                    <PrimaryButton>
                         Run now
-                    </Button>
+                    </PrimaryButton>
                 </Link>
             </div>
         </Card>

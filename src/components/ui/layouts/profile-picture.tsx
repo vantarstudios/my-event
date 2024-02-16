@@ -7,7 +7,7 @@ import { useUserProfile } from '@/lib/hooks';
 import type { User } from '@/types';
 import { imagesPlaceholder } from '@/data/images-placeholder';
 import { ImageWithFallback } from '@components/ui';
-import { Button } from '@components/ui/buttons';
+import { PrimaryButton } from '@components/ui/buttons';
 import { ProfilePictureSkeleton } from '@components/ui/skeletons';
 
 interface ProfilePictureProps {
@@ -62,7 +62,7 @@ const ProfilePicture: FunctionComponent<ProfilePictureProps> = ({ showSignUp = f
                         : <Picture profilePicture={user.profilePicture} isLoading={isLoading} error={error}/>
                     : showSignUp && (
                         <Link href="/auth/signup">
-                            <Button className="min-w-max hover:bg-primary">Sign up</Button>
+                            <PrimaryButton className="min-w-max">Sign up</PrimaryButton>
                         </Link>
                     )
             }

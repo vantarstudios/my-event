@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
-import { Button } from '@components/ui/buttons';
+import { PrimaryButton } from '@components/ui/buttons';
 
 const FreeSection: FunctionComponent = () => {
     return (
@@ -13,7 +13,7 @@ const FreeSection: FunctionComponent = () => {
                 reason we made it free for you. Go and start organizing the next event of the year.
             </p>
             <Link href="/dashboard" className="w-fit focus:outline-none">
-                <Button className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal hover:bg-primary">Get Started</Button>
+                <PrimaryButton className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal">Get Started</PrimaryButton>
             </Link>
         </section>
     );

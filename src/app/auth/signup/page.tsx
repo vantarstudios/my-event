@@ -13,7 +13,7 @@ import type { SignUpPayload, SignUpErrors } from '@/types/auth';
 import { AccountTypes, type AccountType } from '@/types';
 import { AuthStepper } from '@components/auth';
 import { AccountInformations, AccountTypeChooser } from '@components/auth/signup-steps';
-import { Button } from '@components/ui/buttons';
+import { PrimaryButton } from '@components/ui/buttons';
 import { GoogleColored, Loader } from '@components/ui/icons';
 import { useGoogleLogin } from '@react-oauth/google';
 
@@ -157,16 +157,14 @@ const SignUpPage: NextPage = () => {
                 <span className="text-5xl text-primary">up!</span>
             </h1>
             {signUpSteps[step - 1]}
-            <Button
-                className={`w-full ${
-                    (accountType !== null && !isMutating) && 'hover:bg-primary'
-                }`}
+            <PrimaryButton
                 onClick={goToNextStep}
                 disabled={accountType === null || isMutating}
                 loading={isMutating}
+                className="w-full"
             >
                 <p className="mx-auto">{step === signUpSteps.length ? 'Sign up' : 'Next'}</p>
-            </Button>
+            </PrimaryButton>
             {step === 2 && (
                 <Fragment>
                     <p>or</p>

@@ -15,6 +15,7 @@ interface AccountInformationsProps {
 
 const AccountInformations: FunctionComponent<AccountInformationsProps> = ({ setInformation, informationsErrors }) => {
     const [isPasswordVisible, toggleIsPasswordVisible] = useToggle<boolean>(false, true);
+    const [isConfirmPasswordVisible, toggleIsConfirmPasswordVisible] = useToggle<boolean>(false, true);
     const { register } = useForm<SignUpPayload>();
     
     const handleInputChange = <T extends keyof SignUpPayload>(key: T) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -114,13 +115,13 @@ const AccountInformations: FunctionComponent<AccountInformationsProps> = ({ setI
                 trailing="*"
                 wrapperClassName="peer"
                 autoComplete="new-password"
-                type={isPasswordVisible ? 'text' : 'password'}
+                type={isConfirmPasswordVisible ? 'text' : 'password'}
                 variant="auth"
                 icon={
-                    isPasswordVisible ? (
-                        <Eye className="w-4 h-4 cursor-pointer" onClick={toggleIsPasswordVisible}/>
+                    isConfirmPasswordVisible ? (
+                        <Eye className="w-4 h-4 cursor-pointer" onClick={toggleIsConfirmPasswordVisible}/>
                     ) : (
-                        <EyeOff className="w-4 h-4 cursor-pointer" onClick={toggleIsPasswordVisible}/>
+                        <EyeOff className="w-4 h-4 cursor-pointer" onClick={toggleIsConfirmPasswordVisible}/>
                     )
                 }
             />

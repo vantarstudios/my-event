@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Header } from '@components/ui/layouts';
-import { Button } from '@components/ui/buttons';
+import { PrimaryButton } from '@components/ui/buttons';
 
 const NotFoundPage: NextPage = () => {
   return (
@@ -21,7 +21,7 @@ const NotFoundPage: NextPage = () => {
                       but in the main time feel free to create the next big event.
                   </p>
                   <Link href="/" className="w-fit focus:outline-none">
-                      <Button className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal hover:bg-primary">Back to Home page</Button>
+                      <PrimaryButton className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal">Back to Home page</PrimaryButton>
                   </Link>
               </div>
               <div className="relative w-full aspect-video md:w-1/2 md:h-full md:aspect-auto">

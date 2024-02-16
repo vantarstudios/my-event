@@ -13,8 +13,8 @@ import { useToggle, useMutationRequest, useGoogleAuth } from '@/lib/hooks';
 import { Role } from '@/types/constants';
 import { signInSchema, type SignInPayload } from '@/types/auth';
 import type { User } from '@/types';
-import { Button } from '@components/ui/buttons';
-import { Input, Checkbox } from '@components/ui/form';
+import { PrimaryButton } from '@components/ui/buttons';
+import { Input } from '@components/ui/form';
 import { Eye, EyeOff, GoogleColored, Loader } from '@components/ui/icons';
 import { Loader as PageLoader } from '@components/ui';
 
@@ -31,7 +31,6 @@ const SignInPage: NextPage = () => {
         }
     });
     const [isPasswordVisible, toggleIsPasswordVisible] = useToggle<boolean>(false, true);
-    const [saveLoginInfos, toggleSaveLoginInfos] = useToggle<boolean>(false, true);
     const [waitForDashboard, setWaitForDashboard] = useState<boolean>(false);
     
     const { register, handleSubmit, formState: { errors } } = useForm<SignInPayload>({
@@ -101,42 +100,35 @@ const SignInPage: NextPage = () => {
                     autoComplete="email"
                     autoFocus
                 />
-                <Input
-                    register={register('password')}
-                    errors={errors.password?.message}
-                    type={isPasswordVisible ? 'text' : 'password'}
-                    label="Password"
-                    name="password"
-                    variant="auth"
-                    autoComplete="current-password"
-                    icon={
-                        isPasswordVisible ? (
-                            <Eye className="w-4 h-4 cursor-pointer" onClick={toggleIsPasswordVisible} />
-                        ) : (
-                            <EyeOff className="w-4 h-4 cursor-pointer" onClick={toggleIsPasswordVisible} />
-                        )
-                    }
-                />
-                <div className="flex justify-between items-center w-full px-2">
-                    <Checkbox
-                        name="save-login-infos"
-                        label="Remember me"
-                        checked={saveLoginInfos}
-                        onChange={toggleSaveLoginInfos}
+                <div className="flex flex-col gap-y-5 w-full">
+                    <Input
+                        register={register('password')}
+                        errors={errors.password?.message}
+                        type={isPasswordVisible ? 'text' : 'password'}
+                        label="Password"
+                        name="password"
+                        variant="auth"
+                        autoComplete="current-password"
+                        icon={
+                            isPasswordVisible ? (
+                                <Eye className="w-4 h-4 cursor-pointer" onClick={toggleIsPasswordVisible}/>
+                            ) : (
+                                <EyeOff className="w-4 h-4 cursor-pointer" onClick={toggleIsPasswordVisible}/>
+                            )
+                        }
                     />
-                    <Link href="/auth/password-reset"
-                          className="flex justify-center items-center fon w-fit font-medium hover:underline">
-                        Forgot password?
+                    <Link href="/auth/forgot-password"
+                          className="text-sm flex justify-center items-center ml-auto w-fit font-medium hover:underline">
+                        Forgot password ?
                     </Link>
                 </div>
-                <Button
+                <PrimaryButton
                     type="submit"
                     disabled={isMutating || isGoogleMutating}
                     loading={isMutating}
-                    className="hover:bg-primary"
                 >
                     <p className="mx-auto">Sign in</p>
-                </Button>
+                </PrimaryButton>
             </form>
             <p>or</p>
             <button

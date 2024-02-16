@@ -5,7 +5,7 @@ import { thousandsCommaFormat, upperSnakeCaseToSentenceCase } from '@/lib/utils'
 import { WithdrawalMethodType } from '@/types/constants';
 import { Modal, Card, TitledArea } from '@components/ui/layouts';
 import { Input, Radio } from '@components/ui/form';
-import { Button } from '@components/ui/buttons';
+import { PrimaryButton, SecondaryButton } from '@components/ui/buttons';
 import { BankCard } from '@components/ui/icons';
 import { withdrawalMethods, withdrawalMethodsIcons } from '@/data/withdrawal-methods';
 
@@ -34,12 +34,12 @@ const WithdrawModalAndButton: FunctionComponent = () => {
     
     return (
         <Fragment>
-            <Button
+            <PrimaryButton
                 onClick={() => setIsOpen(true)}
                 className="text-sm"
             >
                 Withdraw
-            </Button>
+            </PrimaryButton>
             <Modal isOpened={isOpen}>
                 <Card className="w-1/3 min-w-max max-h-[75vh] py-5">
                     <form
@@ -49,12 +49,12 @@ const WithdrawModalAndButton: FunctionComponent = () => {
                     >
                         <div className="flex justify-between items-center gap-5">
                             <p className="text-2xl font-semibold">Withdraw funds</p>
-                            <Button
+                            <SecondaryButton
                                 type="reset"
-                                className="px-5 py-2 text-sm text-black font-medium border-2 border-black bg-white hover:bg-black hover:bg-opacity-100 hover:text-white"
+                                className="px-5 py-2 text-sm font-medium"
                             >
                                 Cancel
-                            </Button>
+                            </SecondaryButton>
                         </div>
                         <TitledArea title="Available funds" className="w-full">
                             <div className="flex justify-between items-center gap-10">
@@ -100,12 +100,12 @@ const WithdrawModalAndButton: FunctionComponent = () => {
                                 }
                             </div>
                         </TitledArea>
-                        <Button
+                        <PrimaryButton
                             type="submit"
-                            className="w-full mt-5 hover:bg-primary hiver:bg-opacity-100"
+                            className="w-full mt-5"
                         >
                             Withdraw
-                        </Button>
+                        </PrimaryButton>
                     </form>
                 </Card>
             </Modal>

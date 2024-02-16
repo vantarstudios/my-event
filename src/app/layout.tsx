@@ -32,7 +32,7 @@ const AppLayout: FunctionComponent<PropsWithChildren> = async ({ children }) => 
                 <ViewportGuard>
                     <GoogleOAuthProvider clientId={clientEnv.GOOGLE_CLIENT_ID}>
                         <AuthGuard>
-                            <Toaster expand position="top-right" richColors={true}/>
+                            <Toaster expand position="bottom-right" />
                             {children}
                         </AuthGuard>
                     </GoogleOAuthProvider>

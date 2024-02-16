@@ -8,7 +8,7 @@ import { capitalize, monthNumToString, thousandsCommaFormat, getISOString, parse
 import { InvitationType } from '@/types/constants';
 import { createTicketSchema, type CreateTicketPayload, type CreateTicketErrors } from '@/types/tickets';
 import { ticketTypes, type InvitationTypeUnion, type ParsedDate, type Ticket, type Event } from '@/types';
-import { Button } from '@components/ui/buttons';
+import { Button, SecondaryButton } from '@components/ui/buttons';
 import { Copy, People, Person } from '@components/ui/icons';
 import { encodeToBase64 } from 'next/dist/build/webpack/loaders/utils';
 import { Card, Modal, TitledArea, TitledTextArea } from '@components/ui/layouts';
@@ -242,12 +242,12 @@ const CreateOrUpdateTicket: FunctionComponent<CreateTicketProps> = ({ ticket, is
                 >
                     <div className="flex justify-between items-center">
                         <p className="w-[25rem] break-all text-2xl font-semibold line-clamp-1">{ticketTitle || 'New ticket'}</p>
-                        <Button
+                        <SecondaryButton
                             type="reset"
-                            className="px-5 py-2 text-sm text-black font-medium border-2 border-black bg-white hover:bg-black hover:bg-opacity-100 hover:text-white"
+                            className="px-5 py-2 text-sm"
                         >
                             Cancel
-                        </Button>
+                        </SecondaryButton>
                     </div>
                     <div className="flex flex-col gap-7 pr-5 pb-5 overflow-y-auto">
                         <div className="flex justify-center items-center gap-5">

@@ -5,7 +5,7 @@ import { useMutationRequest, useUserProfile } from '@/lib/hooks';
 import { toast } from '@/lib/utils';
 import { supportAPI } from '@/lib/api/support';
 import { supportPayloadSchema, type SupportPayload } from '@/types/support';
-import { Button } from '@components/ui/buttons';
+import { PrimaryButton } from '@components/ui/buttons';
 import { Input, PhoneNumberInput, TextArea } from '@components/ui/form';
 
 const ContactForm: FunctionComponent = () => {
@@ -96,13 +96,13 @@ const ContactForm: FunctionComponent = () => {
                     className="bg-gray-100"
                 />
             </div>
-            <Button
+            <PrimaryButton
                 type="submit"
                 loading={isMutating}
-                className="font-light px-12 mt-6 mx-auto lg:mr-auto lg:ml-0 hover:bg-primary hover:bg-opacity-100"
+                className="font-light px-12 mt-6 mx-auto lg:mr-auto lg:ml-0"
             >
                 Submit
-            </Button>
+            </PrimaryButton>
         </form>
     );
 };

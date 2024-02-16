@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { PageContainer, OverlappingImages, SectionDivider } from '@components/root';
 import { AdPricingCard } from '@components/root/ads';
-import { Button } from '@components/ui/buttons';
+import { PrimaryButton } from '@components/ui/buttons';
 
 const AdsPage: NextPage = () => {
     return (
@@ -16,9 +16,9 @@ const AdsPage: NextPage = () => {
                         Explore our advertising solution meticulously crafted to cater to your unique requirements.
                     </p>
                     <Link href="/ads/create" className="w-fit focus:outline-none">
-                        <Button className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal hover:bg-primary">
+                        <PrimaryButton className="px-10 py-4 md:px-16 rounded-full lg:text-lg font-normal">
                             Run an ad
-                        </Button>
+                        </PrimaryButton>
                     </Link>
                 </div>
                 <OverlappingImages/>

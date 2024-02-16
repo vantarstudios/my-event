@@ -1,6 +1,6 @@
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
-import { Button } from '@components/ui/buttons';
+import { SecondaryButton } from '@components/ui/buttons';
 import AppsImages from './apps-images';
 
 const AppsIntegrationSection: FunctionComponent = () => {
@@ -15,9 +15,9 @@ const AppsIntegrationSection: FunctionComponent = () => {
                     you don’t need to use many apps at the same time. Add extensions and enjoy a complete workspace
                 </p>
                 <Link href="/features" className="w-fit focus:outline-none">
-                    <Button className="lg:h-14 px-10 py-4 md:px-16 rounded-full text-black font-medium border-2 border-black bg-white hover:bg-black hover:bg-opacity-100 hover:text-white">
+                    <SecondaryButton className="lg:h-14 px-10 py-4 md:px-16 rounded-full">
                         More about apps
-                    </Button>
+                    </SecondaryButton>
                 </Link>
             </div>
             <AppsImages/>

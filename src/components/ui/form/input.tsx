@@ -10,7 +10,6 @@ interface InputProps extends HTMLAttributes<HTMLInputElement>, InputWrapperProps
     disabled?: HTMLInputElement['disabled'];
     type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'search';
     autoComplete?: HTMLInputElement['autocomplete'];
-    variant?: 'default' | 'auth';
     className?: HTMLAttributes<HTMLInputElement>['className'];
     register?: UseFormRegisterReturn;
     errors?: string | string[];

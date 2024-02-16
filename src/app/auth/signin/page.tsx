@@ -96,7 +96,6 @@ const SignInPage: NextPage = () => {
                     type="email"
                     label="Email"
                     name="email"
-                    variant="auth"
                     autoComplete="email"
                     autoFocus
                 />
@@ -107,7 +106,6 @@ const SignInPage: NextPage = () => {
                         type={isPasswordVisible ? 'text' : 'password'}
                         label="Password"
                         name="password"
-                        variant="auth"
                         autoComplete="current-password"
                         icon={
                             isPasswordVisible ? (

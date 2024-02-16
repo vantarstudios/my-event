@@ -70,6 +70,7 @@ const GeneralInformation: FunctionComponent<GeneralInformationProps> = ({ busine
             <Input
                 name="fullName"
                 label="Full Name:"
+                autoFocus
                 register={{
                     ...register('fullName', {
                         onChange: (event) => setBusinessOwner({

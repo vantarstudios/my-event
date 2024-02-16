@@ -31,7 +31,6 @@ const NewsletterForm: FunctionComponent = () => {
                 name="email"
                 placeholder="user@gmail.com"
                 className="w-full h-12 text-base md:text-lg"
-                variant="auth"
                 value={email}
                 onChange={handleEmailChange}
             />

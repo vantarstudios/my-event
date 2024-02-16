@@ -71,7 +71,6 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         name="full-name"
                         label="Full name:"
                         value={`${user.firstName} ${user.lastName}`}
-                        variant="auth"
                         className="pl-3 bg-white"
                         disabled={true}
                     />
@@ -87,7 +86,6 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         label="Email:"
                         type="email"
                         value={user.email}
-                        variant="auth"
                         className="pl-3 bg-white"
                         disabled={true}
                     />
@@ -99,7 +97,6 @@ const ProfileInformations: FunctionComponent<ProfileInformationsProps> = ({ mode
                         name="text"
                         label="Username:"
                         type="text"
-                        variant="auth"
                         className={`pl-3 w-full ${mode === 'view' ? 'bg-white' : ''}`}
                         disabled={mode === 'view'}
                     />

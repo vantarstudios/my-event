@@ -34,7 +34,6 @@ const AccountInformations: FunctionComponent<AccountInformationsProps> = ({ setI
                 label="First name"
                 trailing="*"
                 autoComplete="given-name"
-                variant="auth"
                 autoFocus
             />
             <Input
@@ -47,7 +46,6 @@ const AccountInformations: FunctionComponent<AccountInformationsProps> = ({ setI
                 label="Last name"
                 trailing="*"
                 autoComplete="family-name"
-                variant="auth"
             />
             <Input
                 register={register('email', {
@@ -60,7 +58,6 @@ const AccountInformations: FunctionComponent<AccountInformationsProps> = ({ setI
                 trailing="*"
                 autoComplete="email"
                 type="email"
-                variant="auth"
             />
             <Input
                 register={register('username', {
@@ -73,7 +70,6 @@ const AccountInformations: FunctionComponent<AccountInformationsProps> = ({ setI
                 trailing="*"
                 autoComplete="username"
                 type="text"
-                variant="auth"
             />
             <PhoneNumberInput
                 onChange={(value) => setInformation('phoneNumber', value)}
@@ -95,7 +91,6 @@ const AccountInformations: FunctionComponent<AccountInformationsProps> = ({ setI
                 wrapperClassName="peer"
                 autoComplete="new-password"
                 type={isPasswordVisible ? 'text' : 'password'}
-                variant="auth"
                 icon={
                     isPasswordVisible ? (
                         <Eye className="w-4 h-4 cursor-pointer" onClick={toggleIsPasswordVisible}/>
@@ -116,7 +111,6 @@ const AccountInformations: FunctionComponent<AccountInformationsProps> = ({ setI
                 wrapperClassName="peer"
                 autoComplete="new-password"
                 type={isConfirmPasswordVisible ? 'text' : 'password'}
-                variant="auth"
                 icon={
                     isConfirmPasswordVisible ? (
                         <Eye className="w-4 h-4 cursor-pointer" onClick={toggleIsConfirmPasswordVisible}/>

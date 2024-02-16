@@ -354,7 +354,6 @@ const CreateOrUpdateTicket: FunctionComponent<CreateTicketProps> = ({ ticket, is
                                         <Input
                                             name="invitation-link"
                                             value={invitationLink}
-                                            variant="auth"
                                             icon={
                                                 <div className="relative">
                                                     {isInvitationLinkCopied && (
@@ -378,7 +377,6 @@ const CreateOrUpdateTicket: FunctionComponent<CreateTicketProps> = ({ ticket, is
                                             value={invitationsEmails.join(',')}
                                             onChange={handleInvitationsEmailsChange}
                                             placeholder="Separate e-mails with a comma"
-                                            variant="auth"
                                         />
                                     )}
                                 </div>

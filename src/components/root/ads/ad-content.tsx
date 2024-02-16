@@ -53,6 +53,7 @@ const AdContentProps: FunctionComponent<AdContentProps> = ({ content, setContent
                 name="description"
                 label="Description:"
                 rows={5}
+                autoFocus
                 register={{
                     ...register('description', {
                         onChange: (event) => setContent({

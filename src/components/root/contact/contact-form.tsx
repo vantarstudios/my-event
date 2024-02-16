@@ -61,6 +61,7 @@ const ContactForm: FunctionComponent = () => {
                     name="email"
                     label="Email"
                     trailing="*"
+                    autoFocus
                     labelClassName="font-bold"
                     value={data.email}
                     onChange={handleDataChange('email')}

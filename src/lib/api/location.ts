@@ -1,6 +1,5 @@
 import type { AxiosInstance } from 'axios';
 import { appAPIFactory } from './client';
-import type { ApiResponse } from '@/types';
 import type {
     Address,
     Coordinates,
@@ -20,15 +19,15 @@ class LocationAPI {
     }
 
     public async getAddressesByCoordinates(payload: GetAddressesPayload) {
-        return this.client.post<ApiResponse<Address[]>>('/addresses', payload);
+        return this.client.post<Address[]>('/addresses', payload);
     }
     
     public async getCoordinatesByAddress(payload: GetCoordinatesPayload) {
-        return this.client.post<ApiResponse<Coordinates>>('/coordinates', payload);
+        return this.client.post<Coordinates>('/coordinates', payload);
     }
     
     public async getPointsOfInterest(payload: GetPointOfInterestPayload) {
-        return this.client.post<ApiResponse<PointOfInterest[]>>('/points-of-interest', payload);
+        return this.client.post<PointOfInterest[]>('/points-of-interest', payload);
     }
 }
 

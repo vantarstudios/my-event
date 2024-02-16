@@ -11,8 +11,8 @@ import { Input, PhoneNumberInput, TextArea } from '@components/ui/form';
 const ContactForm: FunctionComponent = () => {
     const { user } = useUserProfile();
     const initialData: SupportPayload = {
-        email: user?.data.email || '',
-        phone: user?.data.phoneNumber || '',
+        email: user?.email || '',
+        phone: user?.phoneNumber || '',
         organizationName: '',
         message: '',
     };
@@ -99,7 +99,7 @@ const ContactForm: FunctionComponent = () => {
             <Button
                 type="submit"
                 loading={isMutating}
-                className="font-light px-12 mt-6 mx-auto lg:mr-auto lg:ml-0"
+                className="font-light px-12 mt-6 mx-auto lg:mr-auto lg:ml-0 hover:bg-primary hover:bg-opacity-100"
             >
                 Submit
             </Button>

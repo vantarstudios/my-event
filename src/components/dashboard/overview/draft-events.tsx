@@ -10,7 +10,7 @@ const DraftEvents: FunctionComponent = () => {
                 <EventsList
                     maxEvents={4}
                     filter={{
-                        status: EventStatus.DRAFT
+                        statuses: [EventStatus.DRAFT]
                     }}
                 />
             </div>

@@ -67,11 +67,6 @@ const Notifications: FunctionComponent = () => {
         'get-my-notifications',
         async () => {
             const response = await usersAPI.getNotifications();
-            
-            if (!response.data.success) {
-                throw new Error('Unable to fetch notifications');
-            }
-            
             return response.data;
         }
     );
@@ -80,11 +75,6 @@ const Notifications: FunctionComponent = () => {
         'mark-notification-as-read',
         async (_: string, { arg: notificationId }: { arg: Notification['id'] }) => {
             const response = await usersAPI.markNotificationAsRead(notificationId);
-            
-            if (!response.data.success) {
-                throw new Error('Unable to mark notification as read');
-            }
-            
             return response.data;
         }
     );
@@ -93,11 +83,6 @@ const Notifications: FunctionComponent = () => {
         'mark-all-notifications-as-read',
         async () => {
             const response = await usersAPI.markAllNotificationsAsRead();
-            
-            if (!response.data.success) {
-                throw new Error('Unable to mark all notifications as read');
-            }
-            
             return response.data;
         }
     );
@@ -122,13 +107,13 @@ const Notifications: FunctionComponent = () => {
     
     return (
         <TitledArea
-            title={`Notifications ${(!isLoading && !error && notifications && notifications.data.length > 0)
-                ? `(${leadingZeroFormat(notifications.data.length)})`
+            title={`Notifications ${(!isLoading && !error && notifications && notifications.total > 0)
+                ? `(${leadingZeroFormat(notifications.total)})`
                 : ''
             }`}
             className="w-full lg:w-1/2 px-2"
             indicator={
-                (!isLoading && !error && notifications && notifications.data.length > 0) && (
+                (!isLoading && !error && notifications && notifications.total > 0) && (
                     <Button
                         onClick={() => setShowNotificationsModal(true)}
                         className="flex justify-center items-end w-fit h-fit px-0 text-sm font-medium text-primary bg-inherit -translate-x-3 hover:underline"
@@ -147,7 +132,7 @@ const Notifications: FunctionComponent = () => {
                 )
             }
             {
-                (!isLoading && !error && notifications && notifications.data.length > 0) && (
+                (!isLoading && !error && notifications && notifications.total > 0) && (
                     <div className="flex flex-col gap-4 w-full h-full">
                         {notifications.data.slice(0, NOTIFICATIONS_PREVIEW_LIMIT).map((notification, index) => (
                             <NotificationCard
@@ -161,6 +146,7 @@ const Notifications: FunctionComponent = () => {
                         ))}
                         <Modal isOpened={showNotificationsModal}>
                             <Card className="flex flex-col w-1/3 min-w-max h-[75vh] p-0">
+                                <p className="w-full text-xl font-semibold">Notifications</p>
                                 <div className="flex flex-col gap-y-4 w-full flex-1 px-10 py-5 my-5 overflow-y-auto">
                                     {notifications.data.map((notification, index) => (
                                         <NotificationCard
@@ -194,7 +180,7 @@ const Notifications: FunctionComponent = () => {
                 )
             }
             {
-                (!isLoading && !error && notifications?.data.length === 0) && (
+                (!isLoading && !error && notifications && notifications.total === 0) && (
                     <p className="w-full my-10 text-gray-500">No notifications</p>
                 )
             }

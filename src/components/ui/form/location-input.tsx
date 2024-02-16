@@ -34,11 +34,6 @@ const LocationInput: FunctionComponent<LocationInputProps> = ({ name, placeholde
         (enableMap && props.value) ? `${props.value}-coordinates` : null,
         async () => {
             const response = await locationAPI.getCoordinatesByAddress({ address: props.value! });
-            
-            if (!response.data.success) {
-                throw new Error(response.data.error.message);
-            }
-            
             return response.data;
         },
     );
@@ -49,11 +44,6 @@ const LocationInput: FunctionComponent<LocationInputProps> = ({ name, placeholde
             const response = await locationAPI.getAddressesByCoordinates(
                 { latitude: coords.lat, longitude: coords.lng }
             );
-            
-            if (!response.data.success) {
-                throw new Error(response.data.error.message);
-            }
-            
             return response.data;
         },
     );
@@ -68,9 +58,9 @@ const LocationInput: FunctionComponent<LocationInputProps> = ({ name, placeholde
     const handleMarkerMove = async (newCoords: LatLngLiteral) => {
         await fetchAddress(newCoords);
         
-        if (valueAddress?.success) {
+        if (valueAddress) {
             onChange && onChange(
-                { target: { value: valueAddress.data[0] } } as unknown as ChangeEvent<HTMLInputElement>
+                { target: { value: valueAddress[0] } } as unknown as ChangeEvent<HTMLInputElement>
             );
         }
         
@@ -78,8 +68,8 @@ const LocationInput: FunctionComponent<LocationInputProps> = ({ name, placeholde
     };
     
     useEffect(() => {
-        if (valueCoordinates?.success) {
-            const { latitude, longitude } = valueCoordinates.data;
+        if (valueCoordinates) {
+            const { latitude, longitude } = valueCoordinates;
             setPosition({ lat: latitude, lng: longitude });
             map?.setView({ lat: latitude, lng: longitude }, MAP_DEFAULT_ZOOM);
         }

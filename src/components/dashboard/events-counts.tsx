@@ -15,14 +15,9 @@ const EventsCounts: FunctionComponent<EventCountsProps> = ({ moreActions }) => {
     const { user, isLoading: userLoading, error: userError } = useUserProfile();
     
     const { data: eventsCounts, isLoading, error } = useRequest(
-        user?.data.id ? [`events-counts-${user.data.id}`, user.data.id] : null,
+        user?.id ? [`events-counts-${user.id}`, user.id] : null,
         async ([_, organizerId]: [string, string]) => {
             const response = await eventsAPI.getEventsCounts(organizerId);
-            
-            if (!response.data.success) {
-                throw new Error('Unable to fetch events counts');
-            }
-            
             return response.data;
         },
         { showError: false }
@@ -41,7 +36,7 @@ const EventsCounts: FunctionComponent<EventCountsProps> = ({ moreActions }) => {
                             ? <Loader className="w-10 h-10 animate-spin"/>
                             : (
                                 <p className="text-5xl font-medium">
-                                    {leadingZeroFormat((error || userError || !eventsCounts) ? 0 : eventsCounts.data.total)}
+                                    {leadingZeroFormat((error || userError || !eventsCounts) ? 0 : eventsCounts.total)}
                                 </p>
                             )
                     }
@@ -53,7 +48,7 @@ const EventsCounts: FunctionComponent<EventCountsProps> = ({ moreActions }) => {
                             ? <Loader className="w-10 h-10 animate-spin"/>
                             : (
                                 <p className="text-5xl font-medium">
-                                    {leadingZeroFormat((error || userError || !eventsCounts) ? 0 : eventsCounts.data.onGoing)}
+                                    {leadingZeroFormat((error || userError || !eventsCounts) ? 0 : eventsCounts.onGoing)}
                                 </p>
                             )
                     }
@@ -65,7 +60,7 @@ const EventsCounts: FunctionComponent<EventCountsProps> = ({ moreActions }) => {
                             ? <Loader className="w-10 h-10 animate-spin"/>
                             : (
                                 <p className="text-5xl font-medium">
-                                    {leadingZeroFormat((error || userError || !eventsCounts) ? 0 : eventsCounts.data.upComing)}
+                                    {leadingZeroFormat((error || userError || !eventsCounts) ? 0 : eventsCounts.upComing)}
                                 </p>
                             )
                     }

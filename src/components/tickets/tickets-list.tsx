@@ -24,11 +24,6 @@ const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event, onTicke
         event?.id ? [`event-${event.id}-tickets`, event.id] : null,
         async ([_, eventId]) => {
             const response = await ticketsAPI.getTicketsForEvent(eventId);
-            
-            if (!response.data.success) {
-                throw new Error('Unable to fetch tickets for this event');
-            }
-            
             return response.data;
         },
         { showError: false }
@@ -43,11 +38,6 @@ const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event, onTicke
             { arg: { eventId, ticketId } }: { arg: { eventId: Event['id'], ticketId:TicketType['id'] } }
         ) => {
             const response = await ticketsAPI.deleteTicket(eventId, ticketId);
-            
-            if (!response.data.success) {
-                throw new Error('Unable to delete this ticket');
-            }
-            
             return response.data;
         },
         'Ticket deleted successfully'
@@ -81,8 +71,8 @@ const TicketsList: FunctionComponent<TicketsListProps> = ({ mode, event, onTicke
                     ? <TicketsListSkeleton number={3}/>
                     : error
                         ? <p className="text-sm text-center w-full">Unable to fetch existing tickets</p>
-                        : eventTickets?.data && eventTickets.data.length > 0
-                            ? eventTickets?.data.map((ticket, index) => (
+                        : eventTickets && eventTickets.total > 0
+                            ? eventTickets.data.map((ticket, index) => (
                                 <Ticket
                                     key={index}
                                     ticket={ticket}

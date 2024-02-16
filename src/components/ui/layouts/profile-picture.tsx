@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 import type { FunctionComponent } from 'react';
 import Link from 'next/link';
 import { useUserProfile } from '@/lib/hooks';
-import type { UserProfile } from '@/types/users';
+import type { User } from '@/types';
 import { imagesPlaceholder } from '@/data/images-placeholder';
 import { ImageWithFallback } from '@components/ui';
 import { Button } from '@components/ui/buttons';
@@ -16,7 +16,7 @@ interface ProfilePictureProps {
 }
 
 interface PictureProps {
-    profilePicture: UserProfile['profilePicture'];
+    profilePicture: User['profilePicture'];
     isLoading: boolean;
     error: Error;
 }
@@ -28,7 +28,7 @@ const Picture: FunctionComponent<PictureProps> = ({ profilePicture, isLoading, e
                 (!isLoading && !error && profilePicture)
                     ? (
                         <ImageWithFallback
-                            src={profilePicture}
+                            src={profilePicture.url}
                             alt="Profile Picture"
                             quality={100}
                             placeholder={imagesPlaceholder}
@@ -52,14 +52,14 @@ const ProfilePicture: FunctionComponent<ProfilePictureProps> = ({ showSignUp = f
     return (
         <Fragment>
             {
-                (user?.success && !error)
+                (user && !error)
                     ?  asLink
                         ? (
                             <Link href="/dashboard" className="relative w-14 h-14 rounded-full overflow-hidden">
-                                <Picture profilePicture={user?.data.profilePicture} isLoading={isLoading} error={error}/>
+                                <Picture profilePicture={user.profilePicture} isLoading={isLoading} error={error}/>
                             </Link>
                         )
-                        : <Picture profilePicture={user?.data.profilePicture} isLoading={isLoading} error={error}/>
+                        : <Picture profilePicture={user.profilePicture} isLoading={isLoading} error={error}/>
                     : showSignUp && (
                         <Link href="/auth/signup">
                             <Button className="min-w-max hover:bg-primary">Sign up</Button>

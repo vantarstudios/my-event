@@ -1,26 +1,5 @@
 import { z } from 'zod';
 import { NotificationType } from './constants';
-import type { User } from './index';
-
-const userProfileFields = [
-    'id',
-    'email',
-    'username',
-    'firstName',
-    'lastName',
-    'phoneNumber',
-    'country',
-    'role',
-    'bio',
-    'profilePicture',
-    'isSuspended',
-    'isActivated',
-    'createdAt',
-    'updatedAt',
-    'followersCount'
-] as const;
-
-export type UserProfile = Pick<User, (typeof userProfileFields)[number]>;
 
 export const userProfileUpdateSchema = z.object({
     firstName: z.string().optional(),

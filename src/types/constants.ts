@@ -106,4 +106,9 @@ export enum NotificationType {
     SUBSCRIPTION_PLAN = 'SUBSCRIPTION_PLAN',
 }
 
+export enum SortOrder {
+    ASC = 'asc',
+    DESC = 'desc',
+}
+
 export const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;

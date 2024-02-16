@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { NextPage } from 'next';
@@ -11,11 +12,11 @@ import { authAPI } from '@/lib/api/auth';
 import { useToggle, useMutationRequest, useGoogleAuth } from '@/lib/hooks';
 import { Role } from '@/types/constants';
 import { signInSchema, type SignInPayload } from '@/types/auth';
-import type { UserProfile } from '@/types/users';
-import type { ApiResponse } from '@/types';
+import type { User } from '@/types';
 import { Button } from '@components/ui/buttons';
 import { Input, Checkbox } from '@components/ui/form';
 import { Eye, EyeOff, GoogleColored, Loader } from '@components/ui/icons';
+import { Loader as PageLoader } from '@components/ui';
 
 const SignInPage: NextPage = () => {
     const router = useRouter();
@@ -31,6 +32,7 @@ const SignInPage: NextPage = () => {
     });
     const [isPasswordVisible, toggleIsPasswordVisible] = useToggle<boolean>(false, true);
     const [saveLoginInfos, toggleSaveLoginInfos] = useToggle<boolean>(false, true);
+    const [waitForDashboard, setWaitForDashboard] = useState<boolean>(false);
     
     const { register, handleSubmit, formState: { errors } } = useForm<SignInPayload>({
         resolver: zodResolver(signInSchema),
@@ -46,29 +48,37 @@ const SignInPage: NextPage = () => {
     
     const { trigger: loginWithGoogle, isMutating: isGoogleMutating } = useGoogleAuth('sign-in');
     
-    const postLogin = (userProfile: ApiResponse<UserProfile>) => {
-        if (userProfile.success && ![Role.ORGANIZER, Role.ADMIN].includes(userProfile.data.role)) {
+    const postLogin = (userProfile: User) => {
+        if (![Role.ORGANIZER, Role.ADMIN].includes(userProfile.role)) {
             toast.error('You are not allowed to access this website!');
             router.push('/auth/signup');
             return;
         }
         
-        if (!userProfile.success) {
-            toast.error(userProfile.error.message);
+        if (!userProfile) {
+            toast.error('An error occurred while trying to sign in.');
             return;
         }
         
         toast.success('You are now logged in!');
         
+        router.prefetch('/dashboard');
+        setWaitForDashboard(true);
+        
         setTimeout(() => {
+            setWaitForDashboard(false);
             router.replace('/dashboard');
-        }, 1000);
+        }, 3000);
     };
 
     const onSubmit = async (data: SignInPayload) => {
         const userProfile = await loginWithCredential(data);
         postLogin(userProfile);
     };
+    
+    if (waitForDashboard) {
+        return <PageLoader />;
+    }
 
     return (
         <div className="flex flex-col justify-start items-center w-[max(450px,25%)] mt-20 animate-slide-right">

@@ -10,7 +10,7 @@ const RecentEvents: FunctionComponent = () => {
                 <EventsList
                     maxEvents={4}
                     filter={{
-                        status: [EventStatus.PUBLISHED, EventStatus.POSTPONED, EventStatus.CANCELLED]
+                        statuses: [EventStatus.PUBLISHED, EventStatus.POSTPONED, EventStatus.CANCELLED]
                     }}
                 />
             </div>

@@ -1,9 +1,8 @@
 import type { AxiosInstance } from 'axios';
 import { appAPIFactory } from './client';
-import type { ApiResponse } from '@/types';
 import { Role, Country } from '@/types/constants';
-import type { SignUpPayload, SignInPayload } from '@/types/auth';
-import type { UserProfile } from '@/types/users';
+import type { SignUpPayload, SignInPayload, RecoveryCodeVerificationPayload, PasswordResetPayload } from '@/types/auth';
+import type { User } from '@/types';
 
 class AuthAPI {
     constructor(private readonly client: AxiosInstance) {
@@ -15,11 +14,11 @@ class AuthAPI {
     }
 
     public async signIn(payload: SignInPayload) {
-        return await this.client.post<ApiResponse<UserProfile>>('/login', payload);
+        return this.client.post<User>('/login', payload);
     }
 
     public async signUp(payload: Omit<SignUpPayload, 'confirmPassword'>) {
-        return await this.client.post<ApiResponse<UserProfile>>(
+        return this.client.post<User>(
         '/signup',
         {
             ...payload,
@@ -29,20 +28,34 @@ class AuthAPI {
     }
     
     public async googleSignIn(accessToken: string) {
-        return await this.client.post<ApiResponse<UserProfile>>('/google-login', {
+        return this.client.post<User>('/google/login', {
             token: accessToken
         });
     }
     
     public async googleSignUp(accessToken: string) {
-        return await this.client.post<ApiResponse<UserProfile>>('/google-signup', {
+        return this.client.post<User>('/google/signup', {
             token: accessToken,
             role: Role.ORGANIZER,
         });
     }
     
     public async signOut() {
-        return await this.client.post<ApiResponse>('/logout');
+        return this.client.post<null>('/logout');
+    }
+    
+    public async sendPasswordResetCode(email: string) {
+        return this.client.get<null>('/password-recovery/send-code', {
+            params: { email }
+        });
+    }
+    
+    public async verifyPasswordResetCode(payload: RecoveryCodeVerificationPayload) {
+        return this.client.post<null>('/password-recovery/verify-code', payload);
+    }
+    
+    public async resetPassword(payload: PasswordResetPayload) {
+        return this.client.post<null>('/password-recovery/reset-password', payload);
     }
 }
 

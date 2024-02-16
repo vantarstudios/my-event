@@ -1,13 +1,12 @@
 import type { AxiosResponse } from 'axios';
 import { authAPI } from '@/lib/api/auth';
-import type { UserProfile } from '@/types/users';
+import type { User } from '@/types';
 import type { GoogleAuthPayload } from '@/types/auth';
-import type { ApiResponse } from '@/types';
 import { useMutationRequest } from './useMutationRequest';
 
 export const useGoogleAuth = (type: 'sign-in' | 'sign-up') => useMutationRequest(
     'google-auth', async (_: string, { arg: { accessToken, accountType } }: { arg: GoogleAuthPayload }) => {
-        let response: AxiosResponse<ApiResponse<UserProfile>>;
+        let response: AxiosResponse<User>;
         
         switch (type) {
             case 'sign-in':

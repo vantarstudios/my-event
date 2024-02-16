@@ -41,3 +41,18 @@ export type GoogleAuthPayload = {
     accessToken: string,
     accountType?: AccountType
 };
+
+export const recoveryCodeVerificationSchema = z.object({
+    email: z.string().email(),
+    code: z.string(),
+});
+
+export type RecoveryCodeVerificationPayload = z.infer<typeof recoveryCodeVerificationSchema>;
+
+export const passwordResetSchema = z.object({
+    email: z.string().email(),
+    code: z.string(),
+    newPassword: z.string()
+});
+
+export type PasswordResetPayload = z.infer<typeof passwordResetSchema>;

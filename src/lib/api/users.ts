@@ -1,7 +1,7 @@
 import type { AxiosInstance, AxiosResponse } from 'axios';
+import type { UserProfileUpdatePayload, UserSettingsUpdatePayload } from '@/types/users';
+import type { Paginated, User, UserSettings, Notification } from '@/types';
 import { appAPIFactory } from './client';
-import type { UserProfile, UserProfileUpdatePayload, UserSettingsUpdatePayload } from '@/types/users';
-import type { ApiResponse, UserSettings, Notification } from '@/types';
 
 class UsersAPI {
     constructor(private readonly client: AxiosInstance) {
@@ -13,17 +13,17 @@ class UsersAPI {
     }
 
     public async getProfile() {
-        return await this.client.get<ApiResponse<UserProfile>>('/me');
+        return await this.client.get<User>('/me');
     }
     
-    public async updateProfile(userId: UserProfile['id'], payload: UserProfileUpdatePayload) {
-        let response: AxiosResponse<ApiResponse<UserProfile>>;
+    public async updateProfile(payload: UserProfileUpdatePayload) {
+        let response: AxiosResponse<User>;
         const { profilePicture, ...payloadRest } = payload;
         
-        response = await this.client.patch<ApiResponse<UserProfile>>(`/${userId}`, payloadRest);
+        response = await this.client.patch<User>(`/me`, payloadRest);
         
         if (profilePicture) {
-            response = await this.client.put<ApiResponse<UserProfile>>(`/${userId}/profile-picture`, {
+            response = await this.client.put<User>(`/me/profile-picture`, {
                 profilePicture,
             }, {
                 headers: {
@@ -36,23 +36,23 @@ class UsersAPI {
     }
     
     public async getSettings() {
-        return await this.client.get<ApiResponse<UserSettings>>('/me/settings');
+        return await this.client.get<UserSettings>('/me/settings');
     }
     
     public async updateSettings(payload: UserSettingsUpdatePayload) {
-        return await this.client.patch<ApiResponse<UserSettings>>('/me/settings', payload);
+        return await this.client.patch<UserSettings>('/me/settings', payload);
     }
     
     async getNotifications() {
-        return this.client.get<ApiResponse<Notification[]>>('/me/notifications?page=1');
+        return this.client.get<Paginated<Notification>>('/me/notifications?page=1');
     }
     
     async markNotificationAsRead(notificationId: Notification['id']) {
-        return this.client.patch<ApiResponse<Notification>>(`/me/notifications/${notificationId}/read`);
+        return this.client.patch<Notification>(`/me/notifications/${notificationId}/read`);
     }
     
     async markAllNotificationsAsRead() {
-        return this.client.patch<ApiResponse<Notification[]>>('/me/notifications/read-all');
+        return this.client.patch<null>('/me/notifications/read-all');
     }
 }
 

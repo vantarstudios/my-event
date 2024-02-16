@@ -32,7 +32,7 @@ const EventCardModal: FunctionComponent<EventCardModalProps> = ({ title, cover, 
                 >
                     <div className="relative w-3/4 aspect-video">
                         <ImageWithFallback
-                            src={cover}
+                            src={cover.url}
                             alt={title || 'Event cover'}
                             width={format === 'titled' ? 250 : undefined}
                             height={format === 'titled' ? 170 : undefined}

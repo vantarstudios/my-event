@@ -20,11 +20,6 @@ const DashboardEventPage: NextPage<DashboardEditEventPageProps> = ({ params }) =
         params?.id ? [`event-${params.id}`, params.id] : null,
         async ([_, eventId]) => {
             const response = await eventsAPI.getEvent(eventId);
-            
-            if (response.data.success === false) {
-                throw new Error(response.data.error.message);
-            }
-            
             return response.data;
         }
     );
@@ -43,11 +38,11 @@ const DashboardEventPage: NextPage<DashboardEditEventPageProps> = ({ params }) =
                     {
                         isLoading
                             ? <EventTitleSkeleton/>
-                            : (!error && event) && (event.data.title)
+                            : (!error && event) && (event.title)
                     }
                 </div>
                 <EditOrView
-                    event={event?.data || {} as Event}
+                    event={event || {} as Event}
                     eventError={Boolean(error)}
                     eventIsLoading={isLoading}
                 />

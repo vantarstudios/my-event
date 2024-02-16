@@ -15,7 +15,6 @@ import type {
     EventTypeUnion,
     Ticket,
     Layout,
-    ApiResponse,
 } from '@/types';
 import { Button } from '@components/ui/buttons';
 import { Ticketing } from '@components/tickets';
@@ -89,16 +88,12 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
                 }
             } else {
                 response = {
-                    data: {
-                        success: true,
-                        data: event,
-                        timestamp: new Date().toISOString()
-                    } as ApiResponse<Event>
+                    data: event,
                 };
             }
             
-            if (ticketsChanged && response.data.success) {
-                const createdEvent = response.data.data;
+            if (ticketsChanged && response.data) {
+                const createdEvent = response.data;
                 
                 for (const ticket of tickets) {
                     await ticketsAPI.createTicket(
@@ -128,11 +123,6 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
             }: { arg: { ticketId: Ticket['id'], data: UpdateTicketPayload, eventId: Event['id'] } }
         ) => {
             const response = await ticketsAPI.updateTicket(eventId, ticketId, data);
-            
-            if (!response.data.success) {
-                throw new Error('Unable to update this ticket');
-            }
-            
             return response.data;
         },
         'Ticket updated successfully'
@@ -166,7 +156,7 @@ const EditOrCreateEventLayout: FunctionComponent<EditOrCreateEventLayoutProps> =
             content: (
                 <NameAndCover
                     {...formData}
-                    initialCover={event?.cover}
+                    initialCover={event?.cover.url}
                     setOtherData={handleDataChange}
                 />
             ),

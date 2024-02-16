@@ -18,18 +18,14 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents, filter }) =
     const { user: userProfile } = useUserProfile();
     
     const { data: events, error, isLoading, mutate } = useRequest(
-        userProfile?.data.id ? [`${userProfile.data.id}-events`, userProfile.data.id, filter] : null,
+        userProfile ? [`${userProfile.id}-events`, userProfile.id, filter] : null,
         async ([_, organizerId, params]) => {
             let response;
             
-            if (userProfile!.data.role === Role.ADMIN) {
+            if (userProfile!.role === Role.ADMIN) {
                 response = await eventsAPI.getAllEvents();
             } else {
                 response = await eventsAPI.getAllEventsForOrganizer(organizerId, params);
-            }
-            
-            if (response.data.success === false) {
-                throw new Error(response!.data.error.message);
             }
             
             return response.data;
@@ -45,7 +41,7 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents, filter }) =
                 )
             }
             {
-                (!isLoading && !error && events && events.data.length > 0) && (
+                (!isLoading && !error && events && events.total > 0) && (
                     <Fragment>
                         {
                             events.data.slice(0, maxEvents).map(({ id, title, startingDate, status, cover }) => (
@@ -66,7 +62,7 @@ const EventsList: FunctionComponent<EventsListProps> = ({ maxEvents, filter }) =
                 )
             }
             {
-                (!isLoading && !error && events?.data.length === 0) && (
+                (!isLoading && !error && events && events.total === 0) && (
                     <p className="w-full my-10 text-gray-500">No events found</p>
                 )
             }

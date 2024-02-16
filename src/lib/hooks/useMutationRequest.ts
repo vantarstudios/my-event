@@ -2,12 +2,12 @@ import useSWRMutation from 'swr/mutation';
 import type { Key } from 'swr';
 import type { MutationFetcher } from 'swr/mutation';
 import type { AxiosError } from 'axios';
-import type { ApiResponse } from '@/types';
 import { toast } from '@/lib/utils';
+import type { ApiError } from '@/types';
 
 export const useMutationRequest = <Data = unknown, SWRMutationKey extends Key = Key, ExtraArg = never>(
     key: Key,
-    fetcher: MutationFetcher<ApiResponse<Data>, SWRMutationKey, ExtraArg>,
+    fetcher: MutationFetcher<Data, SWRMutationKey, ExtraArg>,
     successMessage: string = '',
 ) => {
     return useSWRMutation(
@@ -15,16 +15,10 @@ export const useMutationRequest = <Data = unknown, SWRMutationKey extends Key = 
         fetcher,
         {
             onError(error: AxiosError) {
-                const errorData = error.response?.data as ApiResponse & { success: false };
-                
-                if (errorData.success !== undefined && errorData.success === false) {
-                    toast.error(errorData.error.message);
-                } else {
-                    toast.error(error.message);
-                }
+                toast.error((error.response?.data as ApiError)?.message || error.message);
             },
-            onSuccess(data) {
-                if (data.success && successMessage !== '') {
+            onSuccess() {
+                if (successMessage !== '') {
                     toast.success(successMessage);
                 }
             },

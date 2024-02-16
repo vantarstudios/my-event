@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { EventType, EventCategory, EventStatus, Country, dateRegex } from '@/types/constants';
-import type { Event } from '@/types';
+import { EventType, EventCategory, EventStatus, Country, SortOrder, dateRegex } from '@/types/constants';
+import { BaseQuery } from '@/types';
 
 export const createEventSchema = z.object({
     title: z.string(),
@@ -18,37 +18,11 @@ export type CreateEventPayload = z.infer<typeof createEventSchema>;
 
 export type UpdateEventPayload = Partial<CreateEventPayload>;
 
-export const eventDataFields = [
-    'id',
-    'title',
-    'description',
-    'categories',
-    'startingDate',
-    'endingDate',
-    'location',
-    'cover',
-    'organizerName',
-    'country',
-    'mapUrl',
-    'status',
-    'type',
-    'isPrivate',
-    'likesCount',
-    'attendeesCount',
-    'followersCount',
-    'createdAt',
-    'updatedAt',
-    'deletedAt',
-] as const;
-
-export type EventData = Pick<Event, (typeof eventDataFields)[number]>;
-
-export type EventQuery = Partial<{
-    page: number;
-    perPage: number;
+export type EventQuery = BaseQuery & Partial<{
     isPrivate: boolean;
-    type: EventType | EventType[];
-    categories: EventCategory | EventCategory[];
-    status: EventStatus | EventStatus[];
-    country: Country | Country[];
+    types: EventType[];
+    categories: EventCategory[];
+    statuses: EventStatus[];
+    countries: Country[];
+    'orderBy[likesCount]': SortOrder;
 }>;

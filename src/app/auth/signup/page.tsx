@@ -59,17 +59,13 @@ const SignUpPage: NextPage = () => {
     const googleSignIn = useGoogleLogin({
         flow: 'implicit',
         onSuccess: async (response) => {
-            const res = await registerWithGoogle({
+            await registerWithGoogle({
                 accountType: accountType as AccountType,
                 accessToken: response.access_token,
             });
             
-            if (res.success) {
-                toast.success('Your account has been created!\n You can now sign in.');
-                router.push('/auth/signin');
-            } else {
-                toast.error(res.error.message);
-            }
+            toast.success('Your account has been created!\n You can now sign in.');
+            router.push('/auth/signin');
         },
         onError: (error) => {
             toast.error(error.error_description || 'An error occurred while trying to sign up with Google.');

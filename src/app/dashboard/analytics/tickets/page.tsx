@@ -34,11 +34,6 @@ const TicketsPage: NextPage = () => {
         eventId ? [`event-${eventId}-tickets`, eventId] : null,
         async ([_, eventId]) => {
             const response = await ticketsAPI.getTicketsForEvent(eventId);
-            
-            if (!response.data.success) {
-                throw new Error('Unable to fetch tickets for this event');
-            }
-            
             return response.data;
         },
         { showError: false }
@@ -81,8 +76,8 @@ const TicketsPage: NextPage = () => {
                         ? <TicketsListSkeleton number={3}/>
                         : error
                             ? <p className="text-sm text-center w-full">Sorry, something went wrong</p>
-                            : (eventTickets?.data && eventTickets.data.length > 0)
-                                ? eventTickets?.data.map((ticket, index) => (
+                            : (eventTickets && eventTickets.total > 0)
+                                ? eventTickets.data.map((ticket, index) => (
                                     <div
                                         key={index}
                                         onClick={handleTicketClick(ticket.id)}

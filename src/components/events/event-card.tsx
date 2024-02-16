@@ -28,7 +28,7 @@ const EventCard: FunctionComponent<EventCardProps> = ({ id, title, startingDate,
                     format === 'unconstrained' ? 'w-full h-full' : 'w-[250px] h-[170px]'
                 }`}>
                     <ImageWithFallback
-                        src={cover}
+                        src={cover.url}
                         alt={title || 'Event cover'}
                         width={format === 'titled' ? 250 : undefined}
                         height={format === 'titled' ? 170 : undefined}

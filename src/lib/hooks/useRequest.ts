@@ -1,8 +1,8 @@
 import useSWR from 'swr';
 import type { Key, Fetcher, SWRConfiguration } from 'swr';
 import type { AxiosError } from 'axios';
-import type { ApiResponse } from '@/types';
 import { toast } from '@/lib/utils';
+import type { ApiError } from '@/types';
 
 type Options = SWRConfiguration & {
     successMessage?: string;
@@ -11,7 +11,7 @@ type Options = SWRConfiguration & {
 
 export const useRequest = <Data, SWRKey extends Key = Key>(
     key: SWRKey,
-    fetcher: Fetcher<ApiResponse<Data> & { success: true }, SWRKey>,
+    fetcher: Fetcher<Data, SWRKey>,
     options: Options = { successMessage: '', showError: false }
 ) => {
     return useSWR(
@@ -23,16 +23,10 @@ export const useRequest = <Data, SWRKey extends Key = Key>(
                     return;
                 }
                 
-                const errorData = error.response?.data as ApiResponse & { success: false };
-                
-                if (errorData?.success === false) {
-                    toast.error(errorData.error.message);
-                } else {
-                    toast.error(error.message);
-                }
+                toast.error((error.response?.data as ApiError)?.message || error.message);
             },
-            onSuccess(data) {
-                if (data.success && options.successMessage && options.successMessage !== '') {
+            onSuccess() {
+                if (options.successMessage && options.successMessage !== '') {
                     toast.success(options.successMessage);
                 }
             },

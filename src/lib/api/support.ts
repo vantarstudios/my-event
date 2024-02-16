@@ -1,6 +1,5 @@
 import type { AxiosInstance } from 'axios';
 import { appAPIFactory } from './client';
-import type { ApiResponse } from '@/types';
 import type { SupportPayload } from '@/types/support';
 
 class SupportAPI {
@@ -13,7 +12,7 @@ class SupportAPI {
     }
     
     async requestSupport(payload: SupportPayload) {
-        return this.client.post<ApiResponse<unknown>>('/request', {
+        return this.client.post<null>('/request', {
             ...payload,
             origin: 'WEB'
         });

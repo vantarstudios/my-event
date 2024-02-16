@@ -3,16 +3,15 @@ import type { FunctionComponent, ChangeEvent } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { userProfileUpdateSchema } from '@/types/users';
-import type { UserProfile, UserProfileUpdatePayload } from '@/types/users';
-import type { Mode } from '@/types';
+import { userProfileUpdateSchema, type UserProfileUpdatePayload } from '@/types/users';
+import type { Mode, User } from '@/types';
 import { ProfilePicture, TitledArea } from '@components/ui/layouts';
 import { Input, PhoneNumberInput } from '@components/ui/form';
 import { Person, Photo } from '@components/ui/icons';
 
 interface ProfileInformationsProps {
     mode: Mode;
-    user: UserProfile;
+    user: User;
     setInformation: <T extends keyof UserProfileUpdatePayload>(key: T) => (value: UserProfileUpdatePayload[T]) => void;
 }
 

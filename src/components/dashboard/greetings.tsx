@@ -12,9 +12,9 @@ const Greetings: FunctionComponent = () => {
         <div className="relative flex items-center gap-5">
             <ProfilePicture asLink={true} showSignUp={false}/>
             {
-                (!isLoading && !error && user?.success)
+                (!isLoading && !error && user)
                     ? (
-                        <ViewTitle>Hi, {user.data.firstName}!</ViewTitle>
+                        <ViewTitle>Hi, {user.firstName}!</ViewTitle>
                     )
                     : <div className="w-40 h-10 skeleton rounded-md"/>
             }

@@ -14,11 +14,6 @@ const NotificationsSettings: FunctionComponent = () => {
         'get-my-notifications-settings',
         async () => {
             const response = await usersAPI.getSettings();
-            
-            if (!response.data.success) {
-                throw new Error('Unable to fetch user settings');
-            }
-            
             return response.data;
         }
     );
@@ -36,7 +31,7 @@ const NotificationsSettings: FunctionComponent = () => {
     const handleToggleNotification = (notificationTypes: NotificationType[]) => async (event: ChangeEvent<HTMLInputElement>) => {
         if (isMutating || isLoading || error) return;
         
-        const enabledNotifications = userSettings?.data?.enabledNotifications || [];
+        const enabledNotifications = userSettings?.enabledNotifications || [];
         
         if (event.target.checked) {
             await trigger([...enabledNotifications, ...notificationTypes]);
@@ -47,7 +42,7 @@ const NotificationsSettings: FunctionComponent = () => {
         await mutate();
     };
     
-    const isChecked = (types: NotificationType[]) => types.every((type) => userSettings?.data && userSettings.data.enabledNotifications.includes(type));
+    const isChecked = (types: NotificationType[]) => types.every((type) => userSettings && userSettings.enabledNotifications.includes(type));
     
     return (
         <TitledArea title="Notifications" Icon={Bell}>

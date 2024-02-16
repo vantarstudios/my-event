@@ -19,9 +19,9 @@ const SettingsTable: FunctionComponent = () => {
     const [formData, setFormData] = useState<UserProfileUpdatePayload>({} as UserProfileUpdatePayload);
     
     const { trigger, isMutating } = useMutationRequest(
-        user?.data ? `update-user-${user.data.id}` : null,
+        user?.id ? `update-user-${user.id}` : null,
         async (_: string, { arg: data }: { arg: UserProfileUpdatePayload }) => {
-            const response = await usersAPI.updateProfile(user!.data.id, data);
+            const response = await usersAPI.updateProfile(data);
             return response.data;
         },
         'Profile updated successfully!'
@@ -40,14 +40,14 @@ const SettingsTable: FunctionComponent = () => {
             && !isMutating
             && (
                 Object.entries(formData)
-                    .map(([key, value]) => user!.data[key as keyof UserProfileUpdatePayload] !== value)
+                    .map(([key, value]) => user![key as keyof UserProfileUpdatePayload] !== value)
                     .some(Boolean)
                 || formData.profilePicture
             )
         ) {
             const newUserProfile = await trigger(formData);
             
-            if (newUserProfile.success) {
+            if (newUserProfile) {
                 setFormData({} as UserProfileUpdatePayload);
                 await mutate();
             }
@@ -67,16 +67,16 @@ const SettingsTable: FunctionComponent = () => {
             {
                 isLoading
                     ? <p>Loading...</p>
-                    : (error || !user?.success)
+                    : (error || !user)
                         ? <p>Sorry, an error occurred while loading your profile.</p>
                         : (
                             <Fragment>
                                 <div className="flex flex-wrap xl:justify-between items-center gap-y-5 w-full">
-                                    <ProfileInformations mode={mode} user={user.data} setInformation={updateFormData}/>
+                                    <ProfileInformations mode={mode} user={user} setInformation={updateFormData}/>
                                     <div className="mr-10 mt-auto">
                                         <OrganizerCard
-                                            firstName={user.data.firstName}
-                                            lastName={user.data.lastName}
+                                            firstName={user.firstName}
+                                            lastName={user.lastName}
                                             eventName="Event name"
                                         />
                                     </div>

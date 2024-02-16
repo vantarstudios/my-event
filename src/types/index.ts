@@ -11,47 +11,31 @@ import {
     EventCategory,
     EventStatus,
     EventType,
-    UserTicketStatus,
     InvitationType,
     NotificationType,
+    SortOrder,
 } from './constants';
 
 export type ValidationErrors<T> = Partial<Record<keyof T, string>>;
 
 export type ApiError = {
-    readonly code: number;
-    readonly message: string;
-    readonly path: string;
-    readonly details: unknown;
+    message: string;
+    error: string;
+    statusCode: number;
 };
 
-export type ApiResponse<T = null> = {
-    success: boolean;
-    timestamp: string;
-} & (
-    | {
-        success: true;
-        data: T;
-    }
-    | {
-        success: false;
-        error: ApiError;
-    }
-);
-
-export type MediaTypeUnion = (typeof MediaType)[keyof typeof MediaType];
-
-export type Media = {
-    id: string,
-    url: string,
-    description?: string,
-    format: string,
-    type: MediaTypeUnion,
-    createdAt: string,
-    updatedAt: string,
+export type Paginated<T> = {
+    data: T[];
+    total: number;
 };
 
-export type CountryUnion = (typeof Country)[keyof typeof Country];
+export type BaseQuery = Partial<{
+    take: number;
+    skip: number;
+    page: number;
+    date: string;
+    'orderBty[createdAt]': SortOrder;
+}>;
 
 export type RoleUnion = (typeof Role)[keyof typeof Role];
 
@@ -67,15 +51,9 @@ export type FacturationTypeUnion = (typeof FacturationType)[keyof typeof Factura
 
 export type EventCategoryUnion = (typeof EventCategory)[keyof typeof EventCategory];
 
-export type EventStatusUnion = (typeof EventStatus)[keyof typeof EventStatus];
-
 export type EventTypeUnion = (typeof EventType)[keyof typeof EventType];
 
-export type UserTicketStatusUnion = (typeof UserTicketStatus)[keyof typeof UserTicketStatus];
-
 export type InvitationTypeUnion = (typeof InvitationType)[keyof typeof InvitationType];
-
-export type NotificationTypeUnion = (typeof NotificationType)[keyof typeof NotificationType];
 
 export type Subscription = {
     id: string,
@@ -89,9 +67,19 @@ export type Subscription = {
     facturationType: FacturationTypeUnion,
 };
 
+export type Media = {
+    id: string,
+    url: string,
+    description?: string,
+    format: string,
+    type: MediaType,
+    createdAt: string,
+    updatedAt: string,
+};
+
 export type UserSettings = {
     id: string,
-    enabledNotifications: NotificationTypeUnion[],
+    enabledNotifications: NotificationType[],
     createdAt: string,
     updatedAt: string,
     deletedAt?: string,
@@ -101,105 +89,57 @@ export type User = {
     id: string,
     email: string,
     username: string,
-    password: string,
     firstName: string,
     lastName: string,
     phoneNumber?: string,
     role: RoleUnion,
-    bio: string | null,
+    bio?: string,
     followersCount: number,
     deviceNotificationToken?: string,
-    interestedCategories: EventCategoryUnion[],
-    country: CountryUnion,
-    profilePicture?: string,
-    settings?: UserSettings,
-    subscriptions?: Subscription[],
-    ownedEvents?: Event[],
-    likedEvents?: Event[],
-    attendingEvents?: Event[],
-    followedEvents?: Event[],
-    ownedTickets?: UserTicket[],
-    ticketOrders?: TicketOrder[],
-    isActivated: boolean,
-    isSuspended: boolean,
-    createdAt: string,
-    updatedAt: string,
+    interestedCategories: EventCategory[],
+    country: Country,
+    profilePicture?: Media,
 };
 
 export type Event = {
     id: string,
     title: string,
     description: string,
-    categories: EventCategoryUnion[],
+    categories: EventCategory[],
+    cover: Media,
     startingDate: string,
     endingDate: string,
-    countryCode?: string,
+    organizerId: string,
+    country: Country,
     location: string,
     mapUrl?: string,
-    status: EventStatusUnion,
-    type: EventTypeUnion,
+    status: EventStatus,
+    type: EventType,
     isPrivate: boolean,
     likesCount: number,
     attendeesCount: number,
     followersCount: number,
-    cover: string,
-    organizer?: User,
-    organizerName?: string,
-    country: CountryUnion,
-    likers?: User[],
-    attendees?: User[],
-    followers?: User[],
     createdAt: string,
     updatedAt: string,
     deletedAt?: string,
 };
 
-export type TicketOrder = {
-    id: string,
-    buyerId: string,
-    totalPrice: number,
-    paymentReference: string,
-    createdAt: string,
-    updatedAt: string,
-    deletedAt?: string,
-};
-
-export type TicketOrderItem = {
-    id: string,
-    ticket: Ticket,
-    order: TicketOrder,
-    quantity: number,
-    createdAt: string,
-    updatedAt: string,
-    deletedAt?: string,
-};
-
-export type UserTicket = {
-    id: string,
-    code: string,
-    ticket: Ticket,
-    owner?: User,
-    status: UserTicketStatusUnion,
-    createdAt: string,
-    updatedAt: string,
-    deletedAt?: string,
+export type EventWithOrganizer = Event & {
+    organizer: Pick<User, 'id' | 'username' | 'firstName' | 'lastName' | 'followersCount' | 'profilePicture'>,
 };
 
 export type Ticket = {
     id: string,
     title: string,
     description: string,
+    eventId: Event['id'],
     price: number,
     salesEndDate: string,
     allowedPeople: number,
-    invitationType: InvitationTypeUnion,
-    groupTicket: boolean,
+    invitationType: InvitationType,
     limited: boolean,
     maxQuantity?: number,
     availableQuantity?: number,
-    eventId: Event['id'],
-    soldTickets?: UserTicket[],
-    ticketOrders?: TicketOrderItem[],
     createdAt: string,
     updatedAt: string,
     deletedAt?: string,
@@ -207,7 +147,7 @@ export type Ticket = {
 
 export type Notification = {
     id: string,
-    type: NotificationTypeUnion,
+    type: NotificationType,
     title: string,
     message: string,
     read: boolean,

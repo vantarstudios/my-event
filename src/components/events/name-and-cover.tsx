@@ -1,6 +1,6 @@
 import { useState, Fragment, type FunctionComponent, type ChangeEvent, type KeyboardEvent } from 'react';
 import { upperSnakeCaseToSentenceCase } from '@/lib/utils';
-import { EventCategory } from '@/types/constants';
+import { EventFormat, EventTheme } from '@/types/constants';
 import type { CreateEventPayload } from '@/types/events';
 import type { EventCategoryUnion } from '@/types';
 import CategoryChip from './category-chip';
@@ -18,33 +18,66 @@ interface EditNameAndCoverProps extends NameAndCoverProps {
 }
 
 const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, cover, description, categories, initialCover, setOtherData }) => {
-    const [searchedCategory, setSearchedCategory] = useState('');
+    const [searchedFormat, setSearchedFormat] = useState('');
+    const [searchedTheme, setSearchedTheme] = useState('');
     
-    const suggestedCategories = categories && categories.length > 0
-        ? Object.values(EventCategory).filter((category) => !categories.includes(category))
-        : Object.values(EventCategory);
+    const selectedFormats: EventFormat[] = [];
+    const selectedThemes: EventTheme[] = [];
     
-    const matchingCategories = searchedCategory.length > 0
-        ? suggestedCategories.filter((category) => category.toLowerCase().includes(searchedCategory.toLowerCase()))
+    const suggestedFormats = categories && categories.length > 0
+        ? Object.values(EventFormat).filter((format) => {
+            if (categories.includes(format)) {
+                selectedFormats.push(format);
+                return false;
+            }
+            return true;
+        })
+        : Object.values(EventFormat);
+    const suggestedThemes = categories && categories.length > 0
+        ? Object.values(EventTheme).filter((theme) => {
+            if (categories.includes(theme)) {
+                selectedThemes.push(theme);
+                return false;
+            }
+            return true;
+        
+        })
+        : Object.values(EventTheme);
+    
+    const matchingFormats = searchedFormat.length > 0
+        ? suggestedFormats.filter((format) => format.toLowerCase().includes(searchedFormat.toLowerCase()))
+        : [];
+    const matchingThemes = searchedTheme.length > 0
+        ? suggestedThemes.filter((theme) => theme.toLowerCase().includes(searchedTheme.toLowerCase()))
         : [];
     
-    const handleCategorySearch = (event: ChangeEvent<HTMLInputElement>) => {
-        setSearchedCategory(event.target.value);
+    const handleFormatSearch = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchedFormat(event.target.value);
+    };
+    const handleThemeSearch = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchedTheme(event.target.value);
     };
     
-    const handleCategorySearchKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    const handleFormatSearchKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            if (matchingCategories.length > 0) {
-                setOtherData('categories')([...(categories || []), matchingCategories[0] as EventCategoryUnion]);
+            if (matchingFormats.length > 0) {
+                setOtherData('categories')([...(categories || []), matchingFormats[0] as EventCategoryUnion]);
             }
-            setSearchedCategory('');
+            setSearchedFormat('');
+        }
+    };
+    const handleThemeSearchKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            if (matchingThemes.length > 0) {
+                setOtherData('categories')([...(categories || []), matchingThemes[0] as EventCategoryUnion]);
+            }
+            setSearchedTheme('');
         }
     };
 
     const handleSuggestedCategoryClick = (category: EventCategoryUnion) => () => {
         setOtherData('categories')([...(categories || []), category]);
     };
-    
     const handleCategoryDelete = (deletedCategory: EventCategoryUnion) => () => {
         setOtherData('categories')((categories || []).filter((category) => category !== deletedCategory));
     };
@@ -74,38 +107,101 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, cover, 
                     rows={7}
                     className="py-5"
                 />
-                <TitledArea title="Category:">
+                <TitledArea title="Format:" className="relative">
+                    <div className="flex gap-5 w-full">
+                        <div className="relative w-1/3">
+                            <Input
+                                type="search"
+                                name="search-category"
+                                placeholder="Search a format"
+                                className="pl-12 pr-5"
+                                icon={<Search className="w-5 h-5 text-black"/>}
+                                iconPosition="left"
+                                disabled={searchedTheme.length > 0}
+                                value={searchedFormat}
+                                onChange={handleFormatSearch}
+                                onKeyDown={handleFormatSearchKeyDown}
+                            />
+                            {
+                                searchedFormat.length > 0 && (
+                                    <ul className="absolute bottom-full left-0 w-full max-h-40 mb-2 bg-white rounded-xl shadow-md overflow-y-auto">
+                                        {
+                                            matchingFormats.length === 0
+                                                ? (
+                                                    <li className="text-sm w-full min-w-max h-10 px-5 py-2.5 cursor-pointer hover:bg-gray-100 transition-all">
+                                                        No matching formats
+                                                    </li>
+                                                ) : (
+                                                    matchingFormats.map((format) => (
+                                                        <li
+                                                            key={format}
+                                                            onClick={handleSuggestedCategoryClick(format)}
+                                                            className="w-full h-10 px-5 py-2.5 cursor-pointer hover:bg-gray-100 transition-all"
+                                                        >
+                                                            {upperSnakeCaseToSentenceCase(format)}
+                                                        </li>
+                                                    ))
+                                                )
+                                        }
+                                    </ul>
+                                )
+                            }
+                        </div>
+                        <div className="flex flex-nowrap justify-start items-center gap-1 w-2/3 min-h-[3rem] px-3 rounded-xl bg-gray-100 overflow-x-auto">
+                            {
+                                (!selectedFormats || selectedFormats.length === 0) && (
+                                    <p className="text-gray-500">No format selected</p>
+                                )
+                            }
+                            {
+                                selectedFormats && selectedFormats.map((format, index) => (
+                                    <Fragment key={format}>
+                                        <CategoryChip
+                                            category={format}
+                                            onDelete={handleCategoryDelete(format)}
+                                            deletable
+                                            fontSize="sm"
+                                        />
+                                        {index < selectedFormats.length - 1 && <span>-</span>}
+                                    </Fragment>
+                                ))
+                            }
+                        </div>
+                    </div>
+                </TitledArea>
+                <TitledArea title="Themes:">
                     <div className="flex flex-col items-start gap-5 w-full">
                         <div className="flex gap-5 w-full">
                             <div className="relative w-1/3">
                                 <Input
                                     type="search"
                                     name="search-category"
-                                    placeholder="Search a category"
-                                    className="pl-10 pr-5"
+                                    placeholder="Search a theme"
+                                    className="pl-12 pr-5"
                                     icon={<Search className="w-5 h-5 text-black"/>}
                                     iconPosition="left"
-                                    value={searchedCategory}
-                                    onChange={handleCategorySearch}
-                                    onKeyDown={handleCategorySearchKeyDown}
+                                    disabled={searchedFormat.length > 0}
+                                    value={searchedTheme}
+                                    onChange={handleThemeSearch}
+                                    onKeyDown={handleThemeSearchKeyDown}
                                 />
                                 {
-                                    searchedCategory.length > 0 && (
+                                    searchedTheme.length > 0 && (
                                         <ul className="absolute bottom-full left-0 w-full max-h-40 mb-2 bg-white rounded-xl shadow-md overflow-y-auto">
                                             {
-                                                matchingCategories.length === 0
+                                                matchingThemes.length === 0
                                                     ? (
                                                         <li className="text-sm w-full min-w-max h-10 px-5 py-2.5 cursor-pointer hover:bg-gray-100 transition-all">
-                                                            No matching categories
+                                                            No matching themes
                                                         </li>
                                                     ) : (
-                                                        matchingCategories.map((category) => (
+                                                        matchingThemes.map((theme) => (
                                                             <li
-                                                                key={category}
-                                                                onClick={handleSuggestedCategoryClick(category)}
+                                                                key={theme}
+                                                                onClick={handleSuggestedCategoryClick(theme)}
                                                                 className="w-full h-10 px-5 py-2.5 cursor-pointer hover:bg-gray-100 transition-all"
                                                             >
-                                                                {upperSnakeCaseToSentenceCase(category)}
+                                                                {upperSnakeCaseToSentenceCase(theme)}
                                                             </li>
                                                         ))
                                                     )
@@ -114,23 +210,22 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, cover, 
                                     )
                                 }
                             </div>
-                            <div
-                                className="flex flex-nowrap justify-start items-center gap-1 w-2/3 min-h-[3rem] px-3 rounded-xl bg-gray-100 overflow-x-auto">
+                            <div className="flex flex-nowrap justify-start items-center gap-1 w-2/3 min-h-[3rem] px-3 rounded-xl bg-gray-100 overflow-x-auto">
                                 {
-                                    (!categories || categories.length === 0) && (
-                                        <p className="text-gray-500">No category selected</p>
+                                    (!selectedThemes || selectedThemes.length === 0) && (
+                                        <p className="text-gray-500">No theme selected</p>
                                     )
                                 }
                                 {
-                                    categories && categories.map((category, index) => (
-                                        <Fragment key={category}>
+                                    selectedThemes && selectedThemes.map((theme, index) => (
+                                        <Fragment key={theme}>
                                             <CategoryChip
-                                                category={category}
-                                                onDelete={handleCategoryDelete(category)}
+                                                category={theme}
+                                                onDelete={handleCategoryDelete(theme)}
                                                 deletable
                                                 fontSize="sm"
                                             />
-                                            {index < categories.length - 1 && <span>-</span>}
+                                            {index < selectedThemes.length - 1 && <span>-</span>}
                                         </Fragment>
                                     ))
                                 }
@@ -138,13 +233,13 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, cover, 
                         </div>
                         <div className="flex flex-wrap justify-start items-center gap-x-5 gap-y-2.5 w-full">
                             <p>Suggestions: </p>
-                            {suggestedCategories.slice(0, 4).map((category) => (
+                            {suggestedThemes.slice(0, 4).map((theme) => (
                                 <Button
-                                    key={category}
-                                    onClick={handleSuggestedCategoryClick(category)}
+                                    key={theme}
+                                    onClick={handleSuggestedCategoryClick(theme)}
                                     className="flex items-center min-w-max px-3 h-8 text-sm"
                                 >
-                                    {upperSnakeCaseToSentenceCase(category)}
+                                    {upperSnakeCaseToSentenceCase(theme)}
                                 </Button>
                             ))}
                         </div>

@@ -96,7 +96,7 @@ export type User = {
     bio?: string,
     followersCount: number,
     deviceNotificationToken?: string,
-    interestedCategories: EventCategory[],
+    interestedCategories: EventCategoryUnion[],
     country: Country,
     profilePicture?: Media,
 };
@@ -105,7 +105,7 @@ export type Event = {
     id: string,
     title: string,
     description: string,
-    categories: EventCategory[],
+    categories: EventCategoryUnion[],
     cover: Media,
     startingDate: string,
     endingDate: string,
@@ -191,11 +191,13 @@ export interface IconProps {
 
 export const ticketTypes = ['free', 'paid', 'invitation'] as const;
 
-export type ParsedDate = {
+export type DateObject = {
     day: number;
     month: number;
     year: number;
 };
+
+export type ParsedDate = DateObject;
 
 export type ParsedTime = {
     hour: number;

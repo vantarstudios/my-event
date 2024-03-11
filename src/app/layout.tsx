@@ -8,7 +8,7 @@ import { AuthGuard, ViewportGuard } from '@components/app';
 import './global.css';
 
 const poppinsFont = Poppins({
-    weight: ['100', '200', '300', '400', '500', '600', '700'],
+    weight: ['200', '300', '400', '500', '600', '700'],
     subsets: ['latin'],
 });
 

@@ -44,35 +44,35 @@ export enum FacturationType {
     YEARLY = 'YEARLY',
 }
 
-export enum EventCategory {
-    CONCERT = 'CONCERT',
-    FESTIVAL = 'FESTIVAL',
-    LIVE_PERFORMANCE = 'LIVE_PERFORMANCE',
-    ART = 'ART',
-    COMEDY = 'COMEDY',
-    CINEMA = 'CINEMA',
-    CULTURE = 'CULTURE',
-    GASTRONOMY = 'GASTRONOMY',
-    FOOD = 'FOOD',
-    FASHION = 'FASHION',
-    BUSINESS = 'BUSINESS',
-    SEMINAR = 'SEMINAR',
+export enum EventFormat {
+    CONFERENCE = 'CONFERENCE',
+    WEBINAR = 'WEBINAR',
     WORKSHOP = 'WORKSHOP',
-    EDUCATION = 'EDUCATION',
-    TECHNOLOGY = 'TECHNOLOGY',
-    HACKATHON = 'HACKATHON',
-    GAMING = 'GAMING',
-    ESPORT = 'ESPORT',
-    SPORT = 'SPORT',
-    SOCIAL = 'SOCIAL',
+    PRODUCT_LAUNCH = 'PRODUCT_LAUNCH',
+    AWARD_CEREMONY = 'AWARD_CEREMONY',
+    SEMINAR = 'SEMINAR',
     GALA = 'GALA',
-    LITTERATURE = 'LITTERATURE',
-    SCIENCE = 'SCIENCE',
-    HEALTH = 'HEALTH',
-    RELIGION = 'RELIGION',
-    ENTERTAINMENT = 'ENTERTAINMENT',
-    POLITIC = 'POLITIC',
+    MEETUP = 'MEETUP',
+    GAME = 'GAME',
+    MATCH = 'MATCH',
 }
+
+export enum EventTheme {
+    FUNDRAISER = 'FUNDRAISER',
+    RETREAT = 'RETREAT',
+    EXHIBITION = 'EXHIBITION',
+    FESTIVAL = 'FESTIVAL',
+    GAMING = 'GAMING',
+    PARTY = 'PARTY',
+    SPORT = 'SPORT',
+    ARTS_AND_CRAFTS = 'ARTS_AND_CRAFTS',
+    FASHION = 'FASHION',
+    MUSIC = 'MUSIC',
+    CONCERT = 'CONCERT',
+    FAIR = 'FAIR',
+}
+
+export const EventCategory = Object.freeze(Object.assign({}, { ...EventFormat, ...EventTheme }));
 
 export enum EventStatus {
     DRAFT = 'DRAFT',

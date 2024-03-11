@@ -18,7 +18,7 @@ const HeroSection: FunctionComponent = () => {
                     promote and boost your events easily.
                 </p>
                 <Link href="/dashboard" className="w-fit focus:outline-none">
-                    <PrimaryButton className="px-10 py-4 md:px-16 rounded-full lg:h-14 lg:text-lg font-normal">Get Started</PrimaryButton>
+                    <PrimaryButton className="px-10 md:px-16 rounded-full lg:h-14 lg:text-lg font-normal">Get Started</PrimaryButton>
                 </Link>
             </div>
             <OverlappingImages/>

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { EventType, EventCategory, EventStatus, Country, SortOrder, dateRegex } from '@/types/constants';
-import { BaseQuery } from '@/types';
+import { BaseQuery, EventCategoryUnion } from '@/types';
 
 export const createEventSchema = z.object({
     title: z.string(),
@@ -21,7 +21,7 @@ export type UpdateEventPayload = Partial<CreateEventPayload>;
 export type EventQuery = BaseQuery & Partial<{
     isPrivate: boolean;
     types: EventType[];
-    categories: EventCategory[];
+    categories: EventCategoryUnion[];
     statuses: EventStatus[];
     countries: Country[];
     'orderBy[likesCount]': SortOrder;

@@ -6,7 +6,7 @@ export { default as CreateWorkspaceButton } from './create-workspace-button';
 
 export { default as EventsCounts } from './events-counts';
 
-export { default as PeriodFilter } from './period-filter';
+export { default as FiltersAndSearch } from './filters-and-search';
 
 export { default as EditSaveButton } from './edit-save-button';
 

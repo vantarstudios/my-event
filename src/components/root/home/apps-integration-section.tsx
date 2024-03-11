@@ -15,7 +15,7 @@ const AppsIntegrationSection: FunctionComponent = () => {
                     you don’t need to use many apps at the same time. Add extensions and enjoy a complete workspace
                 </p>
                 <Link href="/features" className="w-fit focus:outline-none">
-                    <SecondaryButton className="lg:h-14 px-10 py-4 md:px-16 rounded-full">
+                    <SecondaryButton className="lg:h-14 px-10 md:px-16 rounded-full">
                         More about apps
                     </SecondaryButton>
                 </Link>

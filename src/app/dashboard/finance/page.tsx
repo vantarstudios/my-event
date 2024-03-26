@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import type { NextPage } from 'next';
 import { thousandsCommaFormat } from '@/lib/utils';
-import { ViewTitle, CreateWorkspaceButton, PeriodFilter } from '@components/dashboard';
+import { ViewTitle, CreateWorkspaceButton, FiltersAndSearch } from '@components/dashboard';
 import { WithdrawalMethod, WithdrawModalAndButton } from '@components/dashboard/finance';
 import { Button } from '@components/ui/buttons';
 import { TitledArea, CardWithTitle } from '@components/ui/layouts';
@@ -15,7 +15,7 @@ const DashboardFinancePage: NextPage = () => {
                 <ViewTitle Icon={Dollar}>Finances</ViewTitle>
                 <CreateWorkspaceButton/>
             </div>
-            <PeriodFilter/>
+            <FiltersAndSearch/>
             <div className="flex flex-wrap justify-start items-start gap-10 child:2/5 w-full">
                 <CardWithTitle
                     title="Total balance"

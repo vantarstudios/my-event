@@ -7,7 +7,7 @@ import { Calendar as CalendarIcon, Cross } from '@components/ui/icons';
 import { Calendar } from '@components/ui';
 import { MONTHS, MIN_YEAR, MAX_YEAR, CURRENT_YEAR, CURRENT_MONTH, CURRENT_DAY, getDaysInMonth, type CalendarProps } from '@components/ui/calendar';
 
-interface DateInputProps extends CalendarProps {
+interface DateInputProps extends Partial<CalendarProps> {
     value: DateObject | null;
     onChange: (newDate: DateObject) => void;
     onClear: () => void;
@@ -150,7 +150,7 @@ const DateInput: FunctionComponent<DateInputProps> = ({ value, onChange, onClear
             <Calendar
                 value={value}
                 onChange={onChange}
-                className={`absolute top-full left-0 mt-2.5 z-30 ${showCalendar ? 'block' : 'hidden'}`}
+                className={`absolute top-full left-0 mt-2.5 z-30 ${showCalendar ? 'flex' : 'hidden'}`}
             />
         </div>
     );

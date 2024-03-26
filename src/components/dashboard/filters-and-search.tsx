@@ -1,6 +1,6 @@
 'use client';
 
-import type { FunctionComponent } from 'react';
+import type { FunctionComponent, ChangeEvent } from 'react';
 import { Button } from '@components/ui/buttons';
 import { Input } from '@components/ui/form';
 import { Search } from '@components/ui/icons';
@@ -13,6 +13,9 @@ interface FiltersAndSearchProps {
 }
 
 const FiltersAndSearch: FunctionComponent<FiltersAndSearchProps> = ({ withSearch = false, searchPlaceholder, searchValue, onSearch }) => {
+    const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+        onSearch?.(event.target.value);
+    }
     return (
         <div className="flex flex-wrap justify-start items-center gap-x-5 gap-y-2.5 w-full text-sm">
             <Button className="px-8 bg-primary">All</Button>
@@ -31,7 +34,7 @@ const FiltersAndSearch: FunctionComponent<FiltersAndSearchProps> = ({ withSearch
                         icon={<Search className="w-5 h-5 text-black"/>}
                         iconPosition="left"
                         value={searchValue}
-                        onChange={(event) => onSearch?.(event.target.value)}
+                        onChange={handleSearch}
                     />
                 )
             }

@@ -60,7 +60,7 @@ const Calendar: FunctionComponent<CalendarProps> = (props) => {
     };
     
     return (
-        <div className={cn('flex flex-col gap-y-5 w-80 p-5 bg-white rounded-3xl shadow-lg select-none', props.className)}>
+        <div className={cn('flex flex-col gap-y-2.5 w-80 p-5 bg-white rounded-3xl shadow-lg select-none', props.className)}>
             <div className="relative group flex justify-between w-full h-fit px-10 font-semibold overflow-x-auto overflow-y-hidden">
                 {
                     selectedYear > MIN_YEAR ? (

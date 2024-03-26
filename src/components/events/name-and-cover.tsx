@@ -97,6 +97,7 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, cover, 
                     placeholder="Enter your event title"
                     rows={1}
                     maxLength={150}
+                    className="bg-gray-100"
                 />
                 <TitledTextArea
                     value={description}
@@ -105,7 +106,7 @@ const NameAndCover: FunctionComponent<EditNameAndCoverProps> = ({ title, cover, 
                     placeholder="Briefly describe your event to your participants"
                     maxLength={700}
                     rows={7}
-                    className="py-5"
+                    className="py-5 bg-gray-100"
                 />
                 <TitledArea title="Format:" className="relative">
                     <div className="flex gap-5 w-full">

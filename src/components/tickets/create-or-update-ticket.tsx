@@ -396,7 +396,6 @@ const CreateOrUpdateTicket: FunctionComponent<CreateTicketProps> = ({ ticket, is
                             <TitledArea title="Sales ending date:">
                                 <div className="flex flex-col justify-start w-full h-full mb-auto">
                                     <DateInput
-                                        name="sales-end-date"
                                         value={salesEndDate}
                                         onChange={handleSalesEndDateChange}
                                         onClear={() => setSalesEndDate(null)}
